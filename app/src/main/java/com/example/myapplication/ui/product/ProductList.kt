@@ -110,7 +110,7 @@ class ProductList : Fragment() {
                                             lastscanprd.text= list.size.toString()
                                             msg!!.text= list.toString()
                                         if(list.size.toString() == totalBoxes.toString()){
-
+                                            submitorder(orderno.toString())
                                         }
                                     }
                                 }
@@ -244,12 +244,10 @@ class ProductList : Fragment() {
             Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
         }
     }
-    fun orderdetailsbind(orderno: String,barcode:String) {
+    fun submitorder(orderno: String) {
         //Toast.makeText(this.context, barcoded, Toast.LENGTH_SHORT).show()
         val txtorderno: TextView = binding.txtorderNo  as TextView
-        val txtstop: TextView = binding.txtstoppage  as TextView
-        val txtscanproduct: TextView = binding.txtscanproduct  as TextView
-        val txtpacked: TextView = binding.txtpackedb  as TextView
+
         val Jsonarra = JSONObject()
         val details = JSONObject()
         val JSONObj = JSONObject()
@@ -257,7 +255,7 @@ class ProductList : Fragment() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var empautoid = preferences.getString("EmpAutoId","");
         val queues = Volley.newRequestQueue(this.context)
-        details.put("OrderNO",orderno)
+        details.put("OrderNo",orderno)
         JSONObj.put("requestContainer",Jsonarra.put("appVersion",appversion))
         JSONObj.put("requestContainer",Jsonarra.put("userAutoId",empautoid))
         JSONObj.put("requestContainer",Jsonarra.put("accessToken","a2d8fjhsdkfhsbddeveloper@psmgxzn3d8xy7jewbc7x"))
@@ -273,45 +271,28 @@ class ProductList : Fragment() {
                 val  resultobj = JSONObject(responsemsg.getString("d"));
                 val  presponsmsg = resultobj.getString("responseMessage");
 //                Toast.makeText(context, presponsmsg.toString(), Toast.LENGTH_LONG).show()
-                if(presponsmsg=="Orders Found") {
-
-                    val jsondata = resultobj.getJSONArray("responseData")
-                    val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
-                    val editor1 = preferences.edit()
-                    for (i in 0 until  jsondata.length()){
-                        val dorderno = jsondata.getJSONObject(i).getString("OrderNo")
-                        val noofboxes =jsondata.getJSONObject(i).getInt("PackedBoxes")
-                        val stoppage = jsondata.getJSONObject(i).getInt("Stoppage")
-                        txtstop.text = "${stoppage?.toInt()}"
-
-                        txtorderno.text = "${dorderno?.toString()}"
-
-                        editor1.putString("OrderNO", dorderno)
-                        editor1.putInt("NoofBox", noofboxes.toInt())
-
-                        editor1.apply()
-                        list.add(0, barcode)
-                        totalBoxes = noofboxes?.toInt()
-                        txtpacked.text = list.size.toString()+ " out of "+ "${noofboxes?.toInt()}"
-                        txtscanproduct.text=list.size.toString()
-                        // Toast.makeText(context,  list.toString() , Toast.LENGTH_LONG).show()
-                        //
-                        msg!!.text=list.toString()
+                if(presponsmsg=="Order loaded successfully") {
 
 
-                    }
-//                    var pempautoid = preferences.getInt("HNOofBox",0)
-//                    Toast.makeText(context, ""+pempautoid, Toast.LENGTH_LONG).show()
-                    checkr=1
+                    val alertemail= AlertDialog.Builder(this.context)
+                    alertemail.setTitle("Order Submit"+binding.txtorderno)
+
+                    alertemail.setMessage("Order  load successfully")
+                    alertemail.setPositiveButton("ok",null)
+                    val dialog: AlertDialog =alertemail.create()
+                    dialog.show()
+                    val orderno: EditText = binding.txtorderno
+                    orderno.getText().clear()
+
                 }
 
                 else{
 
 
                     val alertemail= AlertDialog.Builder(this.context)
-                    alertemail.setTitle("Order No")
+                    alertemail.setTitle("Order Submit")
 
-                    alertemail.setMessage("Order No does not exist")
+                    alertemail.setMessage("Order  does not submit")
                     alertemail.setPositiveButton("ok",null)
                     val dialog: AlertDialog =alertemail.create()
                     dialog.show()
