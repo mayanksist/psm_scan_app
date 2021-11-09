@@ -17,13 +17,13 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="menu_home" formatted="true">PSM NJ</string>
-    <string name="menu_gallery">Scan Product</string>
+    <string name="menu_gallery">Invertory Check</string>
     <string name="menu_slideshow">Logout</string>
     <string name="title_activity_scanproduct">scanproduct</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="product_fragment_label">Product Fragment</string>
-    <string name="product_list_fragment">Product List</string>
+    <string name="product_list_fragment">Load Order</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>

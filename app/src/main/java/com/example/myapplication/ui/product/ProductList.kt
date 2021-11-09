@@ -77,8 +77,15 @@ class ProductList : Fragment() {
 
 
                     val  boxno = result1[1]
-
-
+                    if (ordernoenter.trim().isEmpty() || ordernoenter==" " || ordernoenter== null || ordernoenter== "") {
+                        val alertorder= AlertDialog.Builder(this.context)
+                        alertorder.setTitle("Order No")
+                        alertorder.setMessage("Scan order")
+                        alertorder.setPositiveButton("ok",null)
+                        val dialog:AlertDialog=alertorder.create()
+                        dialog.show()
+                    }
+                    else{
                     if(FirstorderNO=="") {
                         FirstorderNO = result1[0]
 
@@ -110,7 +117,8 @@ class ProductList : Fragment() {
                                             lastscanprd.text= list.size.toString()
                                             msg!!.text= list.toString()
                                         if(list.size.toString() == totalBoxes.toString()){
-                                            submitorder(orderno.toString())
+                                            submitorder(FirstorderNO.toString())
+//                                            Toast.makeText(this.context, FirstorderNO.toString(), Toast.LENGTH_SHORT).show()
                                         }
                                     }
                                 }
@@ -133,15 +141,17 @@ class ProductList : Fragment() {
 
                     if(checkr==0) {
                         try {
+
                             orderdetailsbind(FirstorderNO, ordernoenter)
                             orderno.getText().clear()
+
                         } catch (e: IOException) {
                             Toast.makeText(this.context, "Error", Toast.LENGTH_SHORT).show()
 
                         }
                     }
                     return@OnKeyListener true
-
+                    }
                 }
                 false
 
@@ -182,55 +192,70 @@ class ProductList : Fragment() {
                     response -> val resobj=(response.toString())
 
                 val  responsemsg = JSONObject(resobj.toString());
-
                 val  resultobj = JSONObject(responsemsg.getString("d"));
+                val  resmsg = resultobj.getString("response");
                 val  presponsmsg = resultobj.getString("responseMessage");
 //                Toast.makeText(context, presponsmsg.toString(), Toast.LENGTH_LONG).show()
-                if(presponsmsg=="Orders Found") {
+                  if(resmsg=="failed") {
+                    val alertorfailed=AlertDialog.Builder(this.context)
+                    alertorfailed.setTitle(orderno.toString().toUpperCase())
+                    alertorfailed.setMessage(presponsmsg.toString())
+                    alertorfailed.setPositiveButton("ok",null)
+                    val dialog:AlertDialog=alertorfailed.create()
+                    dialog.show()
+                    // Toast.makeText(this@MainActivity, "", Toast.LENGTH_LONG).show()
+                }
+                else {
+                    if (presponsmsg == "Orders Found") {
 
-                    val jsondata = resultobj.getJSONArray("responseData")
-                    val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
-                    val editor1 = preferences.edit()
-                    for (i in 0 until  jsondata.length()){
-                        val dorderno = jsondata.getJSONObject(i).getString("OrderNo")
-                        val noofboxes =jsondata.getJSONObject(i).getInt("PackedBoxes")
-                        val stoppage = jsondata.getJSONObject(i).getInt("Stoppage")
-                        txtstop.text = "${stoppage?.toInt()}"
+                        val jsondata = resultobj.getJSONArray("responseData")
+                        val preferences =
+                            PreferenceManager.getDefaultSharedPreferences(this.context)
+                        val editor1 = preferences.edit()
+                        for (i in 0 until jsondata.length()) {
+                            val dorderno = jsondata.getJSONObject(i).getString("OrderNo")
+                            val noofboxes = jsondata.getJSONObject(i).getInt("PackedBoxes")
+                            val stoppage = jsondata.getJSONObject(i).getInt("Stoppage")
+                            txtstop.text = "${stoppage?.toInt()}"
+                            txtorderno.text = "${dorderno?.toString()}"
+                            editor1.putString("OrderNO", dorderno)
+                            editor1.putInt("NoofBox", noofboxes.toInt())
+                            editor1.apply()
+                            list.add(0, barcode)
+                            totalBoxes = noofboxes?.toInt()
+                            txtpacked.text =
+                                list.size.toString() + " out of " + "${noofboxes?.toInt()}"
+                            txtscanproduct.text = list.size.toString()
+                            // Toast.makeText(context,  list.toString() , Toast.LENGTH_LONG).show()
+                            if (list.size.toString() == totalBoxes.toString()) {
+                                submitorder(dorderno)
+                                Toast.makeText(
+                                    this.context,
+                                    FirstorderNO.toString(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            msg!!.text = list.toString()
 
-                        txtorderno.text = "${dorderno?.toString()}"
 
-                        editor1.putString("OrderNO", dorderno)
-                        editor1.putInt("NoofBox", noofboxes.toInt())
-
-                        editor1.apply()
-                        list.add(0, barcode)
-                        totalBoxes = noofboxes?.toInt()
-                        txtpacked.text = list.size.toString()+ " out of "+ "${noofboxes?.toInt()}"
-                        txtscanproduct.text=list.size.toString()
-                       // Toast.makeText(context,  list.toString() , Toast.LENGTH_LONG).show()
-                    //
-                        msg!!.text=list.toString()
-
-
-                    }
+                        }
 //                    var pempautoid = preferences.getInt("HNOofBox",0)
 //                    Toast.makeText(context, ""+pempautoid, Toast.LENGTH_LONG).show()
-                    checkr=1
-                }
+                        checkr = 1
+                    } else {
 
-                else{
+                        val alertscanord = AlertDialog.Builder(this.context)
 
+                        alertscanord.setTitle(orderno.toString().toUpperCase())
 
-                    val alertemail= AlertDialog.Builder(this.context)
-                    alertemail.setTitle("Order No")
+                        alertscanord.setMessage("Order No does not exist")
+                        alertscanord.setPositiveButton("ok", null)
+                        val dialog: AlertDialog = alertscanord.create()
+                        dialog.show()
+                        val orderno: EditText = binding.txtorderno
+                        orderno.getText().clear()
 
-                    alertemail.setMessage("Order No does not exist")
-                    alertemail.setPositiveButton("ok",null)
-                    val dialog: AlertDialog =alertemail.create()
-                    dialog.show()
-                    val orderno: EditText = binding.txtorderno
-                    orderno.getText().clear()
-
+                    }
                 }
 
             }, {
@@ -244,61 +269,69 @@ class ProductList : Fragment() {
             Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
         }
     }
-    fun submitorder(orderno: String) {
-        //Toast.makeText(this.context, barcoded, Toast.LENGTH_SHORT).show()
-        val txtorderno: TextView = binding.txtorderNo  as TextView
+    fun submitorder(sorderno: String) {
 
         val Jsonarra = JSONObject()
-        val details = JSONObject()
+
         val JSONObj = JSONObject()
         val appversion = "1.1.0.16"
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var empautoid = preferences.getString("EmpAutoId","");
         val queues = Volley.newRequestQueue(this.context)
-        details.put("OrderNo",orderno)
+
         JSONObj.put("requestContainer",Jsonarra.put("appVersion",appversion))
         JSONObj.put("requestContainer",Jsonarra.put("userAutoId",empautoid))
         JSONObj.put("requestContainer",Jsonarra.put("accessToken","a2d8fjhsdkfhsbddeveloper@psmgxzn3d8xy7jewbc7x"))
-        JSONObj.put("requestContainer",Jsonarra.put("filterkeyword",details))
+        JSONObj.put("OrderNo",sorderno)
+        val alertsuborder= AlertDialog.Builder(this.context)
 
-
-        val resorderno= JsonObjectRequest(Request.Method.POST,APIURL,JSONObj,
+        val resordernos= JsonObjectRequest(Request.Method.POST,APISUBMITORDER,JSONObj,
             {
                     response -> val resobj=(response.toString())
 
                 val  responsemsg = JSONObject(resobj.toString());
 
                 val  resultobj = JSONObject(responsemsg.getString("d"));
-                val  presponsmsg = resultobj.getString("responseMessage");
-//                Toast.makeText(context, presponsmsg.toString(), Toast.LENGTH_LONG).show()
-                if(presponsmsg=="Order loaded successfully") {
+//                Toast.makeText(context, resultobj.toString(), Toast.LENGTH_LONG).show()
+                val  rspCode = resultobj.getString("responseCode");
+                val  rspMsg = resultobj.getString("responseMessage");
+//                val  resmsgso = resultobj.getString("response");
+                if(rspCode=="202") {
 
-
-                    val alertemail= AlertDialog.Builder(this.context)
-                    alertemail.setTitle("Order Submit"+binding.txtorderno)
-
-                    alertemail.setMessage("Order  load successfully")
-                    alertemail.setPositiveButton("ok",null)
-                    val dialog: AlertDialog =alertemail.create()
+                    alertsuborder.setTitle(sorderno.toString().toUpperCase())
+                    alertsuborder.setMessage(rspMsg.toString())
+                    alertsuborder.setPositiveButton("ok",null)
+                    val dialog:AlertDialog=alertsuborder.create()
                     dialog.show()
-                    val orderno: EditText = binding.txtorderno
-                    orderno.getText().clear()
-
+                    // Toast.makeText(this@MainActivity, "", Toast.LENGTH_LONG).show()
                 }
 
-                else{
+                else {
+                    if (rspCode.toString() == "200") {
+
+                        alertsuborder.setTitle(sorderno.toString().toUpperCase())
+
+                        alertsuborder.setMessage(rspMsg.toString())
+                        alertsuborder.setPositiveButton("ok", null)
+                        val dialog: AlertDialog = alertsuborder.create()
+                        dialog.show()
+                        // Toast.makeText(context, rspMsg.toString(), Toast.LENGTH_LONG).show()
+                        msg!!.text = ""
+                        clear()
+
+                    } else {
 
 
-                    val alertemail= AlertDialog.Builder(this.context)
-                    alertemail.setTitle("Order Submit")
+                        alertsuborder.setTitle(sorderno.toString())
 
-                    alertemail.setMessage("Order  does not submit")
-                    alertemail.setPositiveButton("ok",null)
-                    val dialog: AlertDialog =alertemail.create()
-                    dialog.show()
-                    val orderno: EditText = binding.txtorderno
-                    orderno.getText().clear()
+                        alertsuborder.setMessage("Order  does not submit!!!")
+                        alertsuborder.setPositiveButton("ok", null)
+                        val dialog: AlertDialog = alertsuborder.create()
+                        dialog.show()
+//                    val sorderno: EditText = binding.txtorderno
+//                    sorderno.getText().clear()
 
+                    }
                 }
 
             }, {
@@ -306,10 +339,21 @@ class ProductList : Fragment() {
                 Log.e("onError", error(response.toString()));
             })
         try {
-            queues.add(resorderno)
+            queues.add(resordernos)
         }
         catch (e:IOException){
             Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
         }
+    }
+
+    fun clear(){
+        val txtorderno: TextView = binding.txtorderNo  as TextView
+        val txtstop: TextView = binding.txtstoppage  as TextView
+        val txtscanproduct: TextView = binding.txtscanproduct  as TextView
+        val txtpacked: TextView = binding.txtpackedb  as TextView
+        txtorderno.setText("N/A")
+        txtstop.setText("N/A")
+        txtscanproduct.setText("N/A")
+        txtpacked.setText("0")
     }
 }
