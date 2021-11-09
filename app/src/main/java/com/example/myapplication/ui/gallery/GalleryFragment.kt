@@ -89,11 +89,12 @@ class GalleryFragment : Fragment() {
         //Toast.makeText(this.context, barcoded, Toast.LENGTH_SHORT).show()
         val produname: TextView = binding.productname
         val productId: TextView = binding.txtProductId
-        val qty: TextView = binding.productqty
         val unitype: TextView = binding.txtunitype
         val price: TextView = binding.priductprise
         val imagur: ImageView = binding.productimage
         val stock: TextView = binding.txtStock2
+        val category: TextView = binding.txtCategory
+        val sub_category: TextView = binding.txtSubCategory
         val locationval: TextView = binding.txtLocation
         val Jsonarra = JSONObject()
         val details = JSONObject()
@@ -133,9 +134,10 @@ class GalleryFragment : Fragment() {
 
                     //Toast.makeText( this.context, jsondata.toString(), Toast.LENGTH_LONG).show()
 
-
                     val jsonrepd = JSONObject(jsondata.toString())
                     val pname = jsonrepd.getString("PName")
+                    val pCategory = jsonrepd.getString("Cat")
+                    val pSubCategory = jsonrepd.getString("SCat")
                     val ProductId = jsonrepd.getString("PId")
                     val punitypa = jsonrepd.getString("UnitType")
                     val pqty = jsonrepd.getInt("Qty")
@@ -145,12 +147,20 @@ class GalleryFragment : Fragment() {
                     val location = jsonrepd.getString("Location")
                     produname.text = "${pname.toString()}"
                     productId.text = "${ProductId.toString()}"
-                    qty.text = "${pqty.toInt()}"
-                    unitype.text = "${punitypa.toString()}"
+                    if (punitypa.toString()=="Piece"){
+                        unitype.text = "Pieces"
+                    }
+                    else{
+                        unitype.text = "${punitypa.toString()}" +" ("+"${pqty.toInt()}"+" Pieces)"
+                    }
+
                     val rounded = String.format("%.2f", pprice)
                     price.text = "${"$" + rounded.toDouble()}"
                     locationval.text = "${location.toString()}"
-                    stock.text = "${cstock.toInt()}"
+                    category.text = "${pCategory.toString()}"
+                    sub_category.text = "${pSubCategory.toString()}"
+                    stock.text = "${cstock.toInt()}" +" (${punitypa.toString()})"
+
 
 //                    Glide.with(this@GalleryFragment)
 //                        .load(imagesurl)

@@ -77,64 +77,74 @@ class ProductList : Fragment() {
 
 
                     val  boxno = result1[1]
-                    if (ordernoenter.trim().isEmpty() || ordernoenter==" " || ordernoenter== null || ordernoenter== "") {
-                        val alertorder= AlertDialog.Builder(this.context)
-                        alertorder.setTitle("Order No")
-                        alertorder.setMessage("Scan order")
-                        alertorder.setPositiveButton("ok",null)
-                        val dialog:AlertDialog=alertorder.create()
-                        dialog.show()
-                    }
-                    else{
+
                     if(FirstorderNO=="") {
                         FirstorderNO = result1[0]
 
                     }
                     else
                     {
-                        if(FirstorderNO==result1[0])
-                        {
-                            if(boxno.toInt()<=totalBoxes)
-                            {
+                        if(FirstorderNO==result1[0]) {
 
-                                var count =0
-                                for(i in list) {
-                                    if (i.toString() == ordernoenter) {
-                                        orderno.getText().clear()
-                                        msg!!.text="Box Already Scanned."
+                                if (boxno.toInt() <= totalBoxes) {
+
+                                    var count = 0
+                                    for (i in list) {
+                                        if (i.toString() == ordernoenter) {
+                                            orderno.getText().clear()
+                                            msg!!.text = "Box Already Scanned."
 //                                       // Toast.makeText(
 //                                            this.context,
 //                                            "Box Already Scanned.",
 //                                            Toast.LENGTH_SHORT
 //                                        ).show()
-                                        count=1
+                                            count = 1
+                                        }
                                     }
-                                }
-                                    if(count==0){
-                                            list.add(list.size, ordernoenter)
-                                            orderno.getText().clear()
-                                            noofboxes1.text =  list.size.toString() + " out of "+ ""+totalBoxes
-                                            lastscanprd.text= list.size.toString()
-                                            msg!!.text= list.toString()
-                                        if(list.size.toString() == totalBoxes.toString()){
+
+                                    if (count == 0) {
+                                        list.add(list.size, ordernoenter)
+                                        orderno.getText().clear()
+                                        noofboxes1.text =
+                                            list.size.toString() + " out of " + "" + totalBoxes
+                                        lastscanprd.text = ordernoenter.toString()
+                                        msg!!.text = list.toString()
+                                        if (list.size.toString() == totalBoxes.toString()) {
                                             submitorder(FirstorderNO.toString())
 //                                            Toast.makeText(this.context, FirstorderNO.toString(), Toast.LENGTH_SHORT).show()
                                         }
                                     }
+
+
                                 }
 
+                              else{
+                                    msg!!.text = "invalid box number"
+                              }
 
-                            }
+                        }
                             else
                             {
-                                msg!!.text="invalid box number"
+                                val alertorfailed=AlertDialog.Builder(this.context)
+                                alertorfailed.setTitle(result1[0].toString())
+                                alertorfailed.setMessage("are you sure ?you want to scan another order")
+                                alertorfailed.setPositiveButton("No",null)
+                                alertorfailed.setNegativeButton("yes",null)
+                                val dialog:AlertDialog=alertorfailed.create()
+                                dialog.show()
+                                orderno.getText().clear()
+//                                Toast.makeText(
+//                                    this.context,
+//                                    "are you sure ?you want to scan another order",
+//                                    Toast.LENGTH_SHORT).show()
+
 //                                Toast.makeText(this.context, "invalid box number", Toast.LENGTH_SHORT).show()
                             }
 
 //                        }else
 //                        {
 //                            orderno.getText().clear()
-//                            Toast.makeText(this.context, "are you sure ?you want to scan another order", Toast.LENGTH_SHORT).show()
+//
 //                        }
                     }
 
@@ -151,7 +161,7 @@ class ProductList : Fragment() {
                         }
                     }
                     return@OnKeyListener true
-                    }
+
                 }
                 false
 
