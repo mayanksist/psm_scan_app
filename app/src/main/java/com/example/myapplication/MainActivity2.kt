@@ -1,32 +1,20 @@
 package com.example.myapplication
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityMain2Binding
-import kotlinx.coroutines.Dispatchers.Main
-import android.content.SharedPreferences
-
-import android.preference.PreferenceManager
-
-
+import com.google.android.material.navigation.NavigationView
 
 
 class MainActivity2 : AppCompatActivity() {
@@ -42,7 +30,6 @@ class MainActivity2 : AppCompatActivity() {
         val epname = intent.getStringExtra("empname")
         val nameu = intent.getStringExtra("Name")
         val EmpTypeNo = intent.getStringExtra("EmpTypeNo")
-
         val aotoidemp = intent.getStringExtra("empid")
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val editor = preferences.edit()
@@ -59,12 +46,11 @@ class MainActivity2 : AppCompatActivity() {
         val navView: NavigationView = binding.navView
         usertype = EmpTypeNo.toString()
        //Toast.makeText(applicationContext, aotoidemp, Toast.LENGTH_LONG).show()
-        val nav_Menu: Menu = navView.getMenu()
+        val nav_Menu: Menu = navView.menu
         if (usertype != "2") {
-        nav_Menu.findItem(R.id.nav_product).setVisible(false);
+            nav_Menu.findItem(R.id.nav_product).isVisible = false
 
         }
-
 
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -74,18 +60,18 @@ class MainActivity2 : AppCompatActivity() {
         val textViewName = hview.findViewById(R.id.emptype) as TextView
         val usename = hview.findViewById(R.id.username) as TextView
         //val getdetails = navView.findViewById(R.id.getdetailsc) as TextView
-        textViewName.setText(epname)
-        usename.setText(nameu)
+        textViewName.text = epname
+        usename.text = nameu
 
-            appBarConfiguration = AppBarConfiguration(
+        appBarConfiguration = AppBarConfiguration(
 
-                setOf(
+            setOf(
 
-                    R.id.nav_home, R.id.nav_slideshow, R.id.nav_product, R.id.nav_productlist
-                ), drawerLayout
+                R.id.nav_home, R.id.nav_slideshow, R.id.nav_product, R.id.nav_productlist
+            ), drawerLayout
 
-            )
-            setupActionBarWithNavController(navController, appBarConfiguration)
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
             navView.setupWithNavController(navController)
 
 
@@ -124,10 +110,32 @@ class MainActivity2 : AppCompatActivity() {
 
 
         if (id == R.id.nav_slideshow) {
-            //Toast.makeText(this, "Android Menu is Clicked", Toast.LENGTH_LONG).show()
+//
+//            SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE).setTitleText("Are you sure?")
+//                .setContentText("Won't be able to recover this file!")
+//                .setConfirmText("Yes,delete it!")
+//                .setConfirmClickListener { sDialog -> // Showing simple toast message to user
+//                    Toast.makeText(this, " You Clicked me ", Toast.LENGTH_SHORT).show()
+//                    sDialog.dismissWithAnimation()
+//                }.show()
+//
+//
+//            SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+//                .setTitleText("Are you sure?")
+//                .setContentText("You want to logout")
+//                .setConfirmText("Logout")
+//                .setConfirmClickListener {
             val intent = Intent(this, MainActivity::class.java)
             this.startActivity(intent)
             finish()
+//        }
+//                .setCancelButton(
+//                    "Cancel"
+//                ) { sDialog -> sDialog.dismissWithAnimation() }
+//                .show()
+//
+//            Toast.makeText(this, "Android Menu is Clicked", Toast.LENGTH_LONG).show()
+
             return true
 
         }

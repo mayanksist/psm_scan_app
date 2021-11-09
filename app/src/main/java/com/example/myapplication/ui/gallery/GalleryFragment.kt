@@ -2,6 +2,7 @@ package com.example.myapplication.ui.gallery
 
 import android.R
 import android.app.AlertDialog
+import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
@@ -35,11 +37,14 @@ class GalleryFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
         galleryViewModel =
             ViewModelProvider(this).get(GalleryViewModel::class.java)
 
@@ -55,6 +60,7 @@ class GalleryFragment : Fragment() {
             barcode.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
 
                 if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
+
 
                     val barcodeenter = barcode.text.toString()
                     // Toast.makeText(activityObj, barcodeenter, Toast.LENGTH_SHORT).show()
@@ -86,14 +92,20 @@ class GalleryFragment : Fragment() {
     val APIURL: String =apisettings().apiurl+"WPackerProductList.asmx/getProductsList"
 
     fun bindproductdetails(barcoded: String) {
+        val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
+        pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
+        pDialog.titleText = "Loading ..."
+        pDialog.setCancelable(true)
+        pDialog.show()
         //Toast.makeText(this.context, barcoded, Toast.LENGTH_SHORT).show()
         val produname: TextView = binding.productname
         val productId: TextView = binding.txtProductId
-        val qty: TextView = binding.productqty
         val unitype: TextView = binding.txtunitype
         val price: TextView = binding.priductprise
         val imagur: ImageView = binding.productimage
         val stock: TextView = binding.txtStock2
+        val category: TextView = binding.txtCategory
+        val sub_category: TextView = binding.txtSubCategory
         val locationval: TextView = binding.txtLocation
         val Jsonarra = JSONObject()
         val details = JSONObject()
@@ -115,6 +127,7 @@ class GalleryFragment : Fragment() {
 
             Response.Listener {
                     response ->
+
                 val resobj = (response.toString())
 
                 val responsemsg = JSONObject(resobj.toString())
@@ -133,9 +146,10 @@ class GalleryFragment : Fragment() {
 
                     //Toast.makeText( this.context, jsondata.toString(), Toast.LENGTH_LONG).show()
 
-
                     val jsonrepd = JSONObject(jsondata.toString())
                     val pname = jsonrepd.getString("PName")
+                    val pCategory = jsonrepd.getString("Cat")
+                    val pSubCategory = jsonrepd.getString("SCat")
                     val ProductId = jsonrepd.getString("PId")
                     val punitypa = jsonrepd.getString("UnitType")
                     val pqty = jsonrepd.getInt("Qty")
@@ -143,14 +157,21 @@ class GalleryFragment : Fragment() {
                     val cstock = jsonrepd.getInt("CurrentStock")
                     val imagesurl = jsonrepd.getString("ImageUrl")
                     val location = jsonrepd.getString("Location")
-                    produname.text = "${pname.toString()}"
-                    productId.text = "${ProductId.toString()}"
-                    qty.text = "${pqty.toInt()}"
-                    unitype.text = "${punitypa.toString()}"
+                    produname.text = "$pname"
+                    productId.text = "$ProductId"
+                    if (punitypa.toString() == "Piece") {
+                        unitype.text = "Pieces"
+                    } else {
+                        unitype.text = "$punitypa" + " (" + "${pqty.toInt()}" + " Pieces)"
+                    }
+                    pDialog.dismiss()
                     val rounded = String.format("%.2f", pprice)
                     price.text = "${"$" + rounded.toDouble()}"
-                    locationval.text = "${location.toString()}"
-                    stock.text = "${cstock.toInt()}"
+                    locationval.text = "$location"
+                    category.text = "$pCategory"
+                    sub_category.text = "$pSubCategory"
+                    stock.text = "${cstock.toInt()}" + " ($punitypa)"
+
 
 //                    Glide.with(this@GalleryFragment)
 //                        .load(imagesurl)
@@ -176,11 +197,14 @@ class GalleryFragment : Fragment() {
 
                     alertemail.setMessage("Barcode does not exist")
                     alertemail.setPositiveButton("ok", null)
+                    pDialog.dismiss()
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
+
                 }
 
             }, Response.ErrorListener { response ->
+                pDialog.dismiss()
                 Log.e("onError", error(response.toString()))
             })
         reqPRODUCTDETAILS.retryPolicy = DefaultRetryPolicy(
@@ -189,6 +213,7 @@ class GalleryFragment : Fragment() {
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         )
         queues.add(reqPRODUCTDETAILS)
+
     }
 
     override fun onDestroyView() {

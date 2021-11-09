@@ -4,20 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context=".ui.gallery.GalleryFragment">
 
     <EditText
         android:id="@+id/barcodetype"
         android:layout_width="365dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="6dp"
         android:background="@drawable/txtscan"
-        android:drawableLeft="@drawable/barcode"
+        android:drawableRight="@drawable/barcode"
         android:hint="Scan Barcode"
         android:maxLength="20"
         android:padding="10dp"
         android:singleLine="true"
-        android:textAlignment="center"
+
         app:counterEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
@@ -25,14 +28,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/showproductdetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
-        app:cardMaxElevation="12dp"
+        app:cardElevation="3dp"
+        app:cardMaxElevation="4dp"
+        android:visibility="invisible"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,14 +44,14 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barcodetype"
-        app:layout_constraintVertical_bias="0.01999998">
+        app:layout_constraintVertical_bias="0.0">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/showproductdetails"
+            android:id="@+id/showproductdetails1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/round_btn">
+       >
 
             <TextView
                 android:id="@+id/productname"
@@ -56,11 +60,11 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
                 android:hint="N/A"
                 android:text=""
+                android:textColor="@color/black"
                 android:textSize="18dp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></TextView>
@@ -69,9 +73,10 @@
                 android:id="@+id/txtunitype"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/allerta"
-                android:text="N/A"
 
+                android:text="N/A"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView2"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -83,39 +88,59 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/allerta"
                 android:text="N/A"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txtView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txtStock"
+                app:layout_constraintStart_toStartOf="@+id/txtCategory"
                 app:layout_constraintTop_toTopOf="@+id/txtView"></TextView>
 
+
             <TextView
-                android:id="@+id/productqty"
+                android:id="@+id/txtCategory"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="N/A"
-                android:text=""
 
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/allerta"
+                android:text="N/A"
                 android:textSize="18dp"
-                app:layout_constraintBottom_toBottomOf="@+id/txtQuantity"
+                app:layout_constraintBottom_toBottomOf="@+id/txtView2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/txtunitype"
-                app:layout_constraintTop_toTopOf="@+id/txtQuantity"></TextView>
+                app:layout_constraintStart_toEndOf="@+id/txtView3"
+                app:layout_constraintTop_toTopOf="@+id/txtView2"></TextView>
+
+            <TextView
+                android:id="@+id/txtSubCategory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/allerta"
+                android:text="N/A"
+                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtView3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/txtCategory"
+                app:layout_constraintTop_toTopOf="@+id/txtView3"></TextView>
 
             <TextView
                 android:id="@+id/priductprise"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="N/A"
+                android:layout_marginEnd="8dp"
 
+                android:hint="N/A"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txtPrice"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/productqty"
-                app:layout_constraintTop_toTopOf="@+id/txtPrice"></TextView>
-
+                app:layout_constraintStart_toStartOf="@+id/txtunitype"
+                app:layout_constraintTop_toTopOf="@+id/txtPrice"
+                app:layout_constraintVertical_bias="0.0"></TextView>
 
             <View
                 android:id="@+id/divider3"
@@ -148,31 +173,41 @@
                 android:text="Product Id :"
                 android:textSize="18dp"
                 android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/txtView3"
+                app:layout_constraintTop_toBottomOf="@+id/txtView3" />
+
+            <TextView
+                android:id="@+id/txtView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Category :"
+                android:textSize="18dp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/productname"
                 app:layout_constraintTop_toBottomOf="@+id/productname" />
+
+            <TextView
+                android:id="@+id/txtView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Subcategory :"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/txtView2"
+                app:layout_constraintTop_toBottomOf="@+id/txtView2" />
 
             <TextView
                 android:id="@+id/txtPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
                 android:layout_marginTop="2dp"
                 android:text="Price :"
                 android:textSize="18dp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/productqty" />
-
-            <TextView
-                android:id="@+id/txtQuantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="Qty :"
-                android:textSize="18dp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/txtunitype" />
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <TextView
                 android:id="@+id/txtStock"
@@ -180,7 +215,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="2dp"
-                android:text="Current Stock :"
+                android:text="In Stock :"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
