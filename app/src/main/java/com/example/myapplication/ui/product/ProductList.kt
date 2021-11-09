@@ -40,6 +40,7 @@ class ProductList : Fragment() {
     private val binding get() = _binding!!
     val list: MutableList<String> = ArrayList()
     var FirstorderNO:String=""
+    var ordernoenter:String=""
 //    var msg: TextView? =null
     var checkr=0
     var present=0
@@ -71,7 +72,7 @@ class ProductList : Fragment() {
 
                 if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
 
-                    val ordernoenter = orderno.text.toString()
+                     ordernoenter = orderno.text.toString()
                       val noofboxes2=noofboxes1.text.toString()
                     val result1 = ordernoenter.split("/")
 
@@ -107,7 +108,7 @@ class ProductList : Fragment() {
                                         orderno.getText().clear()
                                         noofboxes1.text =
                                             list.size.toString() + " out of " + "" + totalBoxes
-                                        lastscanprd.text = ordernoenter.toString()
+                                        lastscanprd.text = list.toString() + "\n"
                                         msg!!.text = list.toString()
                                         if (list.size.toString() == totalBoxes.toString()) {
                                             submitorder(FirstorderNO.toString())
@@ -127,7 +128,7 @@ class ProductList : Fragment() {
                             {
                                 val alertorfailed=AlertDialog.Builder(this.context)
                                 alertorfailed.setTitle(result1[0].toString())
-                                alertorfailed.setMessage("are you sure ?you want to scan another order")
+                                alertorfailed.setMessage("You want to skip current order " +FirstorderNO + "?")
                                 alertorfailed.setPositiveButton("No",null)
                                 alertorfailed.setNegativeButton("yes",null)
                                 val dialog:AlertDialog=alertorfailed.create()
@@ -135,17 +136,12 @@ class ProductList : Fragment() {
                                 orderno.getText().clear()
 //                                Toast.makeText(
 //                                    this.context,
-//                                    "are you sure ?you want to scan another order",
+//                                    "Are you sure? You want to scan another order",
 //                                    Toast.LENGTH_SHORT).show()
 
-//                                Toast.makeText(this.context, "invalid box number", Toast.LENGTH_SHORT).show()
+//                                Toast.makeText(this.context, "Invalid box number", Toast.LENGTH_SHORT).show()
                             }
 
-//                        }else
-//                        {
-//                            orderno.getText().clear()
-//
-//                        }
                     }
 
 
@@ -235,8 +231,8 @@ class ProductList : Fragment() {
                             totalBoxes = noofboxes?.toInt()
                             txtpacked.text =
                                 list.size.toString() + " out of " + "${noofboxes?.toInt()}"
-                            txtscanproduct.text = list.size.toString()
-                            // Toast.makeText(context,  list.toString() , Toast.LENGTH_LONG).show()
+                            txtscanproduct.text = list.toString()
+//                             Toast.makeText(context,  list.toString() , Toast.LENGTH_LONG).show()
                             if (list.size.toString() == totalBoxes.toString()) {
                                 submitorder(dorderno)
                                 Toast.makeText(
