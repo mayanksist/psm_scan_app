@@ -46,7 +46,7 @@
             android:paddingTop="15dp"
             android:paddingEnd="25dp"
             android:paddingBottom="15dp"
-            android:text="Driver Load"
+            android:text="Load Orders"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="17sp"
