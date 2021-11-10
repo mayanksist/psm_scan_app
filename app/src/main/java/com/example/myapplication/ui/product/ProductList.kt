@@ -48,7 +48,6 @@ class ProductList : Fragment() {
     val list: MutableList<String> = ArrayList()
     var FirstorderNO:String=""
     var ordernoenter:String=""
-//    var result1:String=""
     var checkr=0
     var present=0
     var totalBoxes =0
@@ -65,73 +64,64 @@ class ProductList : Fragment() {
         val orderno: EditText = binding.txtorderno
         val noofboxes1: TextView = binding.txtpackedb
         val lastscanprd: TextView = binding.txtscanproduct
-
+        val alert = AlertDialog.Builder(this.context)
          msg = binding.txtmsg
         productListViewModel.text.observe(viewLifecycleOwner, Observer {
             orderno.requestFocus();
             orderno.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
                 if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
-                     ordernoenter = orderno.text.toString()
-                      val noofboxes2=noofboxes1.text.toString()
-                  val  result1 = ordernoenter.split("/")
-                    val  boxno = result1[1]
-//                       Toast.makeText(this.context, boxno.toString(), Toast.LENGTH_SHORT).show()
-
-                    if(FirstorderNO=="") {
+                    ordernoenter = orderno.text.toString()
+                    if (ordernoenter.contains("/")) {
+                    val noofboxes2 = noofboxes1.text.toString()
+                    val result1 = ordernoenter.split("/")
+                    val boxno = result1[1]
+                    if (FirstorderNO == "") {
                         FirstorderNO = result1[0]
-                    }
-                    else
-                    {
-                        if(FirstorderNO== result1[0]) {
-                                if (boxno.toInt() <= totalBoxes) {
-
-                                    count = 0
-                                    for (i in list) {
-                                        if (i.toString() == ordernoenter) {
-                                            orderno.getText().clear()
-                                            msg!!.text = "Box Already Scanned."
-                                            count = 1
-                                        }
-                                    }
-                                    if (count == 0) {
-                                        list.add(list.size, ordernoenter)
+                    } else {
+                        if (FirstorderNO == result1[0]) {
+                            if (boxno.toInt() <= totalBoxes) {
+                                count = 0
+                                for (i in list) {
+                                    if (i.toString() == ordernoenter) {
                                         orderno.getText().clear()
-                                        noofboxes1.text =
-                                            list.size.toString() + " out of " + "" + totalBoxes
-                                        lastscanprd.text = list.toString() + "\n"
-                                        msg!!.text = list.toString()
-                                        if (list.size.toString() == totalBoxes.toString()) {
-                                            submitorder(FirstorderNO.toString())
-//                                            Toast.makeText(this.context, FirstorderNO.toString(), Toast.LENGTH_SHORT).show()
-                                        }
+                                        msg!!.text = "Box Already Scanned."
+                                        count = 1
                                     }
                                 }
-                              else{
-                                    msg!!.text = "invalid box number"
-                              }
-                        }
-                            else
-                            {
-                                val alert = AlertDialog.Builder(this.context)
-                                alert.setTitle(result1[0])
-                                alert.setMessage("Are you sure you want  to skip current order " +FirstorderNO+ "?")
-                                alert.setPositiveButton("Yes") { dialog, which ->
-                                    list.clear()
-                                    count = 0
-                                    orderdetailsbind(result1[0], ordernoenter)
-                                    FirstorderNO= result1[0]
-                                    dialog.dismiss()
+                                if (count == 0) {
+                                    list.add(list.size, ordernoenter)
+                                    orderno.getText().clear()
+                                    noofboxes1.text =
+                                        list.size.toString() + " out of " + "" + totalBoxes
+                                    lastscanprd.text = list.toString() + "\n"
+                                    msg!!.text = list.toString()
+                                    if (list.size.toString() == totalBoxes.toString()) {
+                                        submitorder(FirstorderNO.toString())
+                                    }
                                 }
-                                alert.setNegativeButton(
-                                    "No"
-                                ) { dialog, which -> dialog.dismiss() }
-
-                                alert.show()
-                                orderno.getText().clear()
+                            } else {
+                                msg!!.text = "invalid box number"
                             }
-
+                        } else {
+                            alert.setTitle(result1[0])
+                            alert.setMessage("Are you sure you want  to skip current order " + FirstorderNO + "?")
+                            alert.setPositiveButton("Yes") { dialog, which ->
+                                list.clear()
+                                count = 0
+                                orderdetailsbind(result1[0], ordernoenter)
+                                FirstorderNO = result1[0]
+                                dialog.dismiss()
+                            }
+                            alert.setNegativeButton(
+                                "No"
+                            ) { dialog, which -> dialog.dismiss() }
+                            alert.show()
+                            orderno.getText().clear()
+                        }
                     }
-                    if(checkr==0) {
+                    if (checkr == 0) {
+
+
                         try {
 
                             orderdetailsbind(FirstorderNO, ordernoenter)
@@ -142,11 +132,20 @@ class ProductList : Fragment() {
 
                         }
                     }
-                    return@OnKeyListener true
+                }
+                    else{
+                        alert.setTitle(orderno.toString().toUpperCase())
+                        alert.setMessage("Invalid Order")
+                        alert.setPositiveButton("ok", null)
+                        val dialog: AlertDialog = alert.create()
+                        dialog.show()
+                        val orderno1: EditText = binding.txtorderno
+                        orderno1.getText().clear()
+                            }
+                         return@OnKeyListener true
 
                 }
                 false
-
             })
         })
         return binding.root
@@ -177,12 +176,9 @@ class ProductList : Fragment() {
         JSONObj.put("requestContainer",Jsonarra.put("userAutoId",empautoid))
         JSONObj.put("requestContainer",Jsonarra.put("accessToken","a2d8fjhsdkfhsbddeveloper@psmgxzn3d8xy7jewbc7x"))
         JSONObj.put("requestContainer",Jsonarra.put("filterkeyword",details))
-
-
-        val resorderno= JsonObjectRequest(Request.Method.POST,APIURL,JSONObj,
+          val resorderno= JsonObjectRequest(Request.Method.POST,APIURL,JSONObj,
             {
                     response -> val resobj=(response.toString())
-
                 val  responsemsg = JSONObject(resobj.toString());
                 val  resultobj = JSONObject(responsemsg.getString("d"));
                 val  resmsg = resultobj.getString("response");
@@ -193,15 +189,12 @@ class ProductList : Fragment() {
                     alertorfailed.setTitle(orderno)
                     alertorfailed.setMessage(presponsmsg.toString())
                     alertorfailed.setPositiveButton("ok",DialogInterface.OnClickListener { dialog, which ->
-
                         val orderno4: EditText = binding.txtorderno
                         orderno4.getText().clear()
-
                     })
                       FirstorderNO =""
                     val dialog:AlertDialog=alertorfailed.create()
                     dialog.show()
-                    // Toast.makeText(this@MainActivity, "", Toast.LENGTH_LONG).show()
                 }
                 else {
                     if (presponsmsg == "Orders Found") {
@@ -224,35 +217,21 @@ class ProductList : Fragment() {
                             txtpacked.text =
                                 list.size.toString() + " out of " + "${noofboxes?.toInt()}"
                             txtscanproduct.text = list.toString()
-//                             Toast.makeText(context,  list.toString() , Toast.LENGTH_LONG).show()
                             if (list.size.toString() == totalBoxes.toString()) {
                                 submitorder(dorderno)
-//                                Toast.makeText(
-//                                    this.context,
-//                                    FirstorderNO.toString(),
-//                                    Toast.LENGTH_SHORT
-//                                ).show()
                             }
                             msg!!.text = list.toString()
-
-
                         }
-//                    var pempautoid = preferences.getInt("HNOofBox",0)
-//                    Toast.makeText(context, ""+pempautoid, Toast.LENGTH_LONG).show()
                         checkr = 1
                     } else {
-
                         val alertscanord = AlertDialog.Builder(this.context)
-
                         alertscanord.setTitle(orderno.toString().toUpperCase())
-
                         alertscanord.setMessage("Order No does not exist")
                         alertscanord.setPositiveButton("ok", null)
                         val dialog: AlertDialog = alertscanord.create()
                         dialog.show()
                         val orderno1: EditText = binding.txtorderno
                         orderno1.getText().clear()
-
                     }
                 }
 
@@ -270,19 +249,16 @@ class ProductList : Fragment() {
     fun submitorder(sorderno: String) {
 
         val Jsonarra = JSONObject()
-
         val JSONObj = JSONObject()
         val appversion = "1.1.0.25"
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var empautoid = preferences.getString("EmpAutoId","");
         val queues = Volley.newRequestQueue(this.context)
-
         JSONObj.put("requestContainer",Jsonarra.put("appVersion",appversion))
         JSONObj.put("requestContainer",Jsonarra.put("userAutoId",empautoid))
         JSONObj.put("requestContainer",Jsonarra.put("accessToken","a2d8fjhsdkfhsbddeveloper@psmgxzn3d8xy7jewbc7x"))
         JSONObj.put("OrderNo",sorderno)
         val alertsuborder= AlertDialog.Builder(this.context)
-
         val resordernos= JsonObjectRequest(Request.Method.POST,APISUBMITORDER,JSONObj,
             {
                     response -> val resobj=(response.toString())
@@ -290,29 +266,20 @@ class ProductList : Fragment() {
                 val  responsemsg = JSONObject(resobj.toString());
 
                 val  resultobj = JSONObject(responsemsg.getString("d"));
-//                Toast.makeText(context, resultobj.toString(), Toast.LENGTH_LONG).show()
                 val  rspCode = resultobj.getString("responseCode");
                 val  rspMsg = resultobj.getString("responseMessage");
-//                val  resmsgso = resultobj.getString("response");
                 if(rspCode=="202") {
-
                     alertsuborder.setTitle(sorderno.toString().toUpperCase())
                     alertsuborder.setMessage(rspMsg.toString())
                     alertsuborder.setNegativeButton(
                         "ok"
                     ) { dialog, which ->
-                        fragmentManager?.beginTransaction()
-                            ?.replace(R.id.OrderScanList, ProductList())
-                            ?.commit()
-                        dialog.dismiss() }
-
+                        val orderno2: EditText = binding.txtorderno
+                        orderno2.getText().clear()
+                         }
                     val dialog:AlertDialog=alertsuborder.create()
                     dialog.show()
-                    val orderno2: EditText = binding.txtorderno
-                    orderno2.getText().clear()
-                    // Toast.makeText(this@MainActivity, "", Toast.LENGTH_LONG).show()
                 }
-
                 else {
                     if (rspCode.toString() == "200") {
                         alertsuborder.setTitle(sorderno.toString().toUpperCase())
@@ -322,24 +289,23 @@ class ProductList : Fragment() {
                             orderno3.getText().clear()
                         })
                         FirstorderNO =""
+                        checkr=0
                         val dialog: AlertDialog = alertsuborder.create()
                         dialog.show()
                         list.clear()
                         clear()
                         msg!!.text = ""
                         clear()
-                    } else {
+                    }
+                    else {
                         alertsuborder.setTitle(sorderno.toString())
                         alertsuborder.setMessage("Order  does not submit!!!")
                         alertsuborder.setPositiveButton("ok", null)
                         val dialog: AlertDialog = alertsuborder.create()
                         dialog.show()
-//                    val sorderno: EditText = binding.txtorderno
-//                    sorderno.getText().clear()
 
                     }
                 }
-
             }, {
                     response ->
                 Log.e("onError", error(response.toString()));
@@ -352,7 +318,7 @@ class ProductList : Fragment() {
         }
     }
 
-    fun clear(){
+   fun clear(){
         val txtorderno: TextView = binding.txtorderNo  as TextView
         val txtstop: TextView = binding.txtstoppage  as TextView
         val txtscanproduct: TextView = binding.txtscanproduct  as TextView
