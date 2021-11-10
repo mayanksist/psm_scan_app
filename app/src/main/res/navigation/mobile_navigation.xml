@@ -10,7 +10,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.myapplication.ui.home.HomeFragment"
+        android:name="com.example.myapplication.com.example.whm.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home"
         android:layout_gravity="center"
@@ -19,13 +19,13 @@
 
     <fragment
         android:id="@+id/nav_product"
-        android:name="com.example.myapplication.ui.gallery.GalleryFragment"
+        android:name="com.example.myapplication.com.example.whm.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_productlist"
-        android:name="com.example.myapplication.ui.product.ProductList"
+        android:name="com.example.myapplication.com.example.whm.ui.product.ProductList"
         android:label="@string/product_list_fragment"
         tools:layout="@layout/fragment_product_list" />
 

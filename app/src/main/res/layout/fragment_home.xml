@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:textAlignment="center"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".com.example.whm.ui.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

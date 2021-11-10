@@ -1,15 +1,13 @@
-package com.example.myapplication.ui.slideshow
+package com.example.myapplication.com.example.whm.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SlideshowViewModel : ViewModel() {
+class HomeViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "Logout"
-
-
+        value = "text"
     }
     val text: LiveData<String> = _text
 }

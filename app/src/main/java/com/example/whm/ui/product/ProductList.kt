@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.product
+package com.example.myapplication.com.example.whm.ui.product
 
 import android.app.AlertDialog
 import android.os.Bundle

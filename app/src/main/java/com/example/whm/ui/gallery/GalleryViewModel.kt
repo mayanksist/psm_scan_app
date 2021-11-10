@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.gallery
+package com.example.myapplication.com.example.whm.ui.gallery
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

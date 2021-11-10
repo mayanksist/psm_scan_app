@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.home
+package com.example.myapplication.com.example.whm.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.example.myapplication.com.example.whm.ui.gallery.GalleryFragment
+import com.example.myapplication.com.example.whm.ui.product.ProductList
 import com.example.myapplication.databinding.FragmentHomeBinding
-import com.example.myapplication.ui.gallery.GalleryFragment
-import com.example.myapplication.ui.product.ProductList
 
 
 class HomeFragment : Fragment() {
