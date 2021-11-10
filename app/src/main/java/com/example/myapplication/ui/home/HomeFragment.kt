@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
         btnInvCheck.setOnClickListener {
 
             childFragmentManager.beginTransaction()
-                ?.replace(com.example.myapplication.R.id.mainDashboard, GalleryFragment())
+                .replace(com.example.myapplication.R.id.mainDashboard, GalleryFragment())
                 .commit()
         }
 

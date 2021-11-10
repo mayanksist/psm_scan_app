@@ -3,17 +3,17 @@ package com.example.myapplication
 
 
 
-public class apisettings {
+class apisettings {
 
-    val apiurl="http://api.a1whm.com/Packerapi/"
+    val apiurl = "http://api.a1whm.com/Packerapi/"
 
 
 }
 
 
-public class arraylist{
+class arraylist {
 
-    var orderno :String =""
+    var orderno: String = ""
 
 
 }

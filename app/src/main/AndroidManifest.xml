@@ -14,10 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".ProductList"
-            android:exported="false" />
-        <activity
+
+    <activity
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">

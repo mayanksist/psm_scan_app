@@ -1,30 +1,22 @@
 package com.example.myapplication
 
 import android.app.AlertDialog
-import android.app.DownloadManager
 import android.app.Service
-import android.nfc.Tag
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
-
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
-import kotlin.math.log
-import org.json.JSONArray
-import com.android.volley.VolleyError
-import org.json.JSONException
-import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import java.io.IOException
 
 
@@ -36,23 +28,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         checkinternet()
 
-        var email = findViewById(R.id.email) as EditText
-        var upassword=findViewById(R.id.password) as EditText
-        var btnlogin =findViewById(R.id.login) as Button
+        var email = findViewById<EditText>(R.id.email)
+        var upassword = findViewById<EditText>(R.id.password)
+        var btnlogin = findViewById<Button>(R.id.login)
 
         btnlogin.setOnClickListener {
-            val useremail = email.text.toString();
-            val password = upassword.text.toString();
-            val alertemail=AlertDialog.Builder(this)
+            val useremail = email.text.toString()
+            val password = upassword.text.toString()
+            val alertemail = AlertDialog.Builder(this)
 
 
             //check if the EditText have values or not
-            if(useremail.trim().isEmpty()) {
+            if (useremail.trim().isEmpty()) {
 
                 alertemail.setTitle("Email id")
                 alertemail.setMessage("Enter Email id")
-                alertemail.setPositiveButton("ok",null)
-                val dialog:AlertDialog=alertemail.create()
+                alertemail.setPositiveButton("ok", null)
+                val dialog: AlertDialog = alertemail.create()
                 dialog.show()
 
                 /*Toast.makeText(applicationContext, "User Name Required ", Toast.LENGTH_SHORT).show()*/
@@ -70,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             else{
                 try{
 
-                        login(useremail, password);
+                    login(useremail, password)
 
                 }
                 catch (e:IOException){
@@ -101,19 +93,20 @@ class MainActivity : AppCompatActivity() {
         val req=JsonObjectRequest(Request.Method.POST,APIURL,JSONObj,
 
     Response.Listener {
-            response -> val resobj=JSONObj.put("response",response.toString())
+            response ->
+        val resobj = JSONObj.put("response", response.toString())
 
-        val  responsemsg = JSONObject(resobj.getString("response"));
-        val  responmsg = JSONObject(responsemsg.getString("d"));
-        val  msg = responmsg.getString("response");
-       // Toast.makeText(this@MainActivity, msg, Toast.LENGTH_LONG).show()
+        val responsemsg = JSONObject(resobj.getString("response"))
+        val responmsg = JSONObject(responsemsg.getString("d"))
+        val msg = responmsg.getString("response")
+        // Toast.makeText(this@MainActivity, msg, Toast.LENGTH_LONG).show()
         // val  datan = JSONArray(responmsg.getString("responseData"));
-        if(msg=="failed") {
-            val alertemail=AlertDialog.Builder(this)
+        if (msg == "failed") {
+            val alertemail = AlertDialog.Builder(this)
             alertemail.setTitle("User")
             alertemail.setMessage("Wrong user id password")
-            alertemail.setPositiveButton("ok",null)
-            val dialog:AlertDialog=alertemail.create()
+            alertemail.setPositiveButton("ok", null)
+            val dialog: AlertDialog = alertemail.create()
             dialog.show()
             // Toast.makeText(this@MainActivity, "", Toast.LENGTH_LONG).show()
         }
@@ -153,10 +146,10 @@ class MainActivity : AppCompatActivity() {
 
             },Response.ErrorListener {
                     response ->
-                Log.e("onError", error(response.toString()));
+                Log.e("onError", error(response.toString()))
             })
         try {
-            queues.add(req);
+            queues.add(req)
         }
         catch (e:IOException){
             Toast.makeText(this.applicationContext, "Server Error", Toast.LENGTH_LONG).show()

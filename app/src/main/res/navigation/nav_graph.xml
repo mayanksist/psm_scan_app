@@ -27,7 +27,6 @@
     </fragment>
     <fragment
         android:id="@+id/ProductList"
-        android:name="com.example.myapplication.ProductList"
         android:label="@string/product_list_fragment"
         tools:layout="@layout/fragment_gallery">
 

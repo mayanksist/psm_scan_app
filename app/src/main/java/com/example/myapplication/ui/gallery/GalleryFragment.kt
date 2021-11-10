@@ -145,21 +145,20 @@ class GalleryFragment : Fragment() {
                     val cstock = jsonrepd.getInt("CurrentStock")
                     val imagesurl = jsonrepd.getString("ImageUrl")
                     val location = jsonrepd.getString("Location")
-                    produname.text = "${pname.toString()}"
-                    productId.text = "${ProductId.toString()}"
-                    if (punitypa.toString()=="Piece"){
+                    produname.text = "$pname"
+                    productId.text = "$ProductId"
+                    if (punitypa.toString() == "Piece") {
                         unitype.text = "Pieces"
-                    }
-                    else{
-                        unitype.text = "${punitypa.toString()}" +" ("+"${pqty.toInt()}"+" Pieces)"
+                    } else {
+                        unitype.text = "$punitypa" + " (" + "${pqty.toInt()}" + " Pieces)"
                     }
 
                     val rounded = String.format("%.2f", pprice)
                     price.text = "${"$" + rounded.toDouble()}"
-                    locationval.text = "${location.toString()}"
-                    category.text = "${pCategory.toString()}"
-                    sub_category.text = "${pSubCategory.toString()}"
-                    stock.text = "${cstock.toInt()}" +" (${punitypa.toString()})"
+                    locationval.text = "$location"
+                    category.text = "$pCategory"
+                    sub_category.text = "$pSubCategory"
+                    stock.text = "${cstock.toInt()}" + " ($punitypa)"
 
 
 //                    Glide.with(this@GalleryFragment)
