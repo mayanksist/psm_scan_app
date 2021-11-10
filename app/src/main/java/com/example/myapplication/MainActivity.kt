@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     fun login(email: String, password: String) {
         val Jsonarra=JSONObject()
         val JSONObj = JSONObject()
-        val appversion = "1.1.0.25"
+        val appversion = "1.1.0.16"
         val queues = Volley.newRequestQueue(this@MainActivity)
         JSONObj.put("userName",email)
         JSONObj.put("password",password)
@@ -99,12 +99,13 @@ class MainActivity : AppCompatActivity() {
         val responsemsg = JSONObject(resobj.getString("response"))
         val responmsg = JSONObject(responsemsg.getString("d"))
         val msg = responmsg.getString("response")
+        val resmsg = responmsg.getString("responseMessage")
         // Toast.makeText(this@MainActivity, msg, Toast.LENGTH_LONG).show()
         // val  datan = JSONArray(responmsg.getString("responseData"));
         if (msg == "failed") {
             val alertemail = AlertDialog.Builder(this)
             alertemail.setTitle("User")
-            alertemail.setMessage("Wrong user id password")
+            alertemail.setMessage(resmsg.toString())
             alertemail.setPositiveButton("ok", null)
             val dialog: AlertDialog = alertemail.create()
             dialog.show()
