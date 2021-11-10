@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#ffffff"
-    tools:context=".ui.gallery.GalleryFragment">
+    tools:context=".com.example.whm.ui.gallery.GalleryFragment">
 
     <EditText
         android:id="@+id/barcodetype"
@@ -20,7 +20,6 @@
         android:maxLength="20"
         android:padding="10dp"
         android:singleLine="true"
-
         app:counterEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
@@ -32,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="10dp"
         app:cardElevation="3dp"
@@ -56,7 +55,7 @@
                 android:id="@+id/productname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="4dp"
                 android:hint="N/A"
@@ -73,15 +72,15 @@
                 android:id="@+id/txtProductId"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
                 android:hint="N/A"
-                android:text="text"
                 android:textColor="@color/red_btn_bg_color"
                 android:textSize="20dp"
-                android:textStyle="italic"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></TextView>
 
@@ -90,8 +89,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:fontFamily="@font/allerta"
-
                 android:text="N/A"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView2"
@@ -103,10 +100,8 @@
                 android:id="@+id/txtCategory"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-
                 android:layout_marginStart="3dp"
                 android:layout_marginEnd="8dp"
-                android:fontFamily="@font/allerta"
                 android:text="N/A"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txtView2"
@@ -118,9 +113,7 @@
                 android:id="@+id/txtSubCategory"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-
                 android:layout_marginEnd="8dp"
-                android:fontFamily="@font/allerta"
                 android:text="N/A"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txtView3"
@@ -136,6 +129,7 @@
                 android:layout_marginEnd="8dp"
 
                 android:hint="N/A"
+                android:text="N/A"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txtPrice"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -159,7 +153,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="4dp"
                 android:text="Unit Type :"
                 android:textSize="18dp"
                 android:textStyle="bold"
@@ -170,7 +164,7 @@
                 android:id="@+id/txtView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="6dp"
                 android:text="Category :"
                 android:textSize="18dp"
                 android:textStyle="bold"
@@ -181,7 +175,7 @@
                 android:id="@+id/txtView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="4dp"
                 android:text="Subcategory :"
                 android:textSize="18dp"
                 android:textStyle="bold"
@@ -192,7 +186,7 @@
                 android:id="@+id/txtPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="4dp"
                 android:text="Price :"
                 android:textSize="18dp"
                 android:textStyle="bold"
@@ -203,42 +197,40 @@
                 android:id="@+id/txtStock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="4dp"
                 android:text="In Stock :"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtStock3" />
-
-            <TextView
-                android:id="@+id/txtStock3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="Defaultstock :"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/txtPrice"
                 app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
 
             <TextView
-                android:id="@+id/txtViewL"
+                android:id="@+id/txtStock3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="Location :"
+                android:layout_marginTop="4dp"
+                android:text="StockInPiece :"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/txtStock"
                 app:layout_constraintTop_toBottomOf="@+id/txtStock" />
 
             <TextView
+                android:id="@+id/txtViewL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Location :"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/txtStock3"
+                app:layout_constraintTop_toBottomOf="@+id/txtStock3" />
+
+            <TextView
                 android:id="@+id/txtStock2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="N/A"
-
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txtStock"
                 app:layout_constraintEnd_toEndOf="@+id/txtunitype"
@@ -271,7 +263,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/txtViewL"
                 app:layout_constraintEnd_toEndOf="@+id/txtunitype"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/priductprise"
+                app:layout_constraintStart_toEndOf="@+id/txtStock3"
                 app:layout_constraintTop_toBottomOf="@+id/txtStock"
                 app:layout_constraintVertical_bias="1.0" />
 

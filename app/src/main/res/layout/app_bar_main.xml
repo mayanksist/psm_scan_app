@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:textAlignment="center"
     android:layout_gravity="center"
-    tools:context=".MainActivity2"
+    tools:context=".com.example.whm.MainActivity2"
     >
 
     <com.google.android.material.appbar.AppBarLayout

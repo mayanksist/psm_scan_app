@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".ui.product.ProductList">
+    tools:context=".com.example.whm.ui.product.ProductList">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

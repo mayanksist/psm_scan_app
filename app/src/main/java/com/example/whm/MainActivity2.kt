@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.com.example.whm
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMain2Binding
 import com.google.android.material.navigation.NavigationView
 
@@ -54,12 +55,12 @@ class MainActivity2 : AppCompatActivity() {
 
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        // Passing each menu ID as a set of Ids because each
         val hview = navView.getHeaderView(0)
 
         val textViewName = hview.findViewById(R.id.emptype) as TextView
         val usename = hview.findViewById(R.id.username) as TextView
-        //val getdetails = navView.findViewById(R.id.getdetailsc) as TextView
+        val AppVersion = hview.findViewById(R.id.txtVersion) as TextView
+        AppVersion.text = "version : " + AppPreferences.AppVersion
         textViewName.text = epname
         usename.text = nameu
 
