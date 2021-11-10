@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#ffffff"
     tools:context=".ui.gallery.GalleryFragment">
 
@@ -32,11 +32,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:visibility="visible"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="10dp"
         app:cardElevation="3dp"
         app:cardMaxElevation="4dp"
-        android:visibility="invisible"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,21 +50,37 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/showproductdetails1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-       >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/productname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginEnd="4dp"
                 android:hint="N/A"
                 android:text=""
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtProductId"></TextView>
+
+            <TextView
+                android:id="@+id/txtProductId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:hint="N/A"
+                android:text="text"
+                android:textColor="@color/red_btn_bg_color"
+                android:textSize="20dp"
+                android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></TextView>
@@ -80,22 +96,7 @@
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/txtProductId"
-                app:layout_constraintTop_toBottomOf="@+id/txtView"></TextView>
-
-            <TextView
-                android:id="@+id/txtProductId"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-
-                android:layout_marginEnd="8dp"
-                android:fontFamily="@font/allerta"
-                android:text="N/A"
-                android:textSize="18dp"
-                app:layout_constraintBottom_toBottomOf="@+id/txtView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/txtCategory"
-                app:layout_constraintTop_toTopOf="@+id/txtView"></TextView>
+                app:layout_constraintStart_toStartOf="@+id/txtSubCategory"></TextView>
 
 
             <TextView
@@ -162,17 +163,6 @@
                 android:text="Unit Type :"
                 android:textSize="18dp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/txtView"
-                app:layout_constraintTop_toBottomOf="@+id/txtView" />
-
-            <TextView
-                android:id="@+id/txtView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="Product Id :"
-                android:textSize="18dp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/txtView3"
                 app:layout_constraintTop_toBottomOf="@+id/txtView3" />
 
@@ -213,24 +203,34 @@
                 android:id="@+id/txtStock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="2dp"
                 android:text="In Stock :"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtStock3" />
+
+            <TextView
+                android:id="@+id/txtStock3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Defaultstock :"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/txtPrice"
                 app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
 
             <TextView
                 android:id="@+id/txtViewL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
                 android:layout_marginTop="2dp"
                 android:text="Location :"
                 android:textSize="18dp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtStock"
                 app:layout_constraintTop_toBottomOf="@+id/txtStock" />
 
             <TextView
@@ -245,6 +245,20 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/priductprise"
                 app:layout_constraintTop_toTopOf="@+id/txtStock"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/txtdefaultStock"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="N/A"
+
+                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtStock3"
+                app:layout_constraintEnd_toEndOf="@+id/txtunitype"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/priductprise"
+                app:layout_constraintTop_toTopOf="@+id/txtStock3"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
@@ -263,13 +277,11 @@
 
             <ImageView
                 android:id="@+id/productimage"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:background="@color/pdbg"
                 android:padding="5dp"
                 android:src="@drawable/noproduct"
                 app:layout_constraintBottom_toBottomOf="parent"

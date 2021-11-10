@@ -93,6 +93,7 @@ class GalleryFragment : Fragment() {
         val price: TextView = binding.priductprise
         val imagur: ImageView = binding.productimage
         val stock: TextView = binding.txtStock2
+        val def_stock: TextView = binding.txtdefaultStock
         val category: TextView = binding.txtCategory
         val sub_category: TextView = binding.txtSubCategory
         val locationval: TextView = binding.txtLocation
@@ -100,19 +101,21 @@ class GalleryFragment : Fragment() {
         val details = JSONObject()
         val JSONObj = JSONObject()
         val detailsobj = JSONObject()
-        val appversion = "1.1.0.16"
-        val lauyout = binding.showproductdetails
+        val appversion = "1.1.0.25"
+        val layout = binding.showproductdetails
         val queues = Volley.newRequestQueue(this.context)
 
         details.put("barcode", barcoded)
 
-        JSONObj.put("requestContainer",Jsonarra.put("appVersion",appversion))
+        JSONObj.put("requestContainer", Jsonarra.put("appVersion", appversion))
 
-        JSONObj.put("requestContainer",Jsonarra.put("accessToken","a2d8fjhsdkfhsbddeveloper@psmgxzn3d8xy7jewbc7x"))
-        JSONObj.put("requestContainer",Jsonarra.put("filterkeyword",details))
-
-
-        val reqPRODUCTDETAILS=JsonObjectRequest(Request.Method.POST,APIURL,JSONObj,
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put("accessToken", "a2d8fjhsdkfhsbddeveloper@psmgxzn3d8xy7jewbc7x")
+        )
+        JSONObj.put("requestContainer", Jsonarra.put("filterkeyword", details))
+        val reqPRODUCTDETAILS = JsonObjectRequest(
+            Request.Method.POST, APIURL, JSONObj,
 
             Response.Listener {
                     response ->
@@ -127,8 +130,8 @@ class GalleryFragment : Fragment() {
 
                 if (presponsmsg == "Products Found") {
 
-                    lauyout.visibility = View.GONE
-                    lauyout.visibility = View.VISIBLE
+                    layout.visibility = View.GONE
+                    layout.visibility = View.VISIBLE
 
                     val jsondata = resultobj.getString("responseData")
 
@@ -143,7 +146,14 @@ class GalleryFragment : Fragment() {
                     val pqty = jsonrepd.getInt("Qty")
                     val pprice = jsonrepd.getDouble("Price")
                     val cstock = jsonrepd.getInt("CurrentStock")
-                    val imagesurl = jsonrepd.getString("ImageUrl")
+                    val DefaultStock = jsonrepd.getInt("Stock")
+                    var imagesurl = ""
+                    if (jsonrepd.getString("OPath") == null) {
+                        imagesurl = jsonrepd.getString("ImageUrl")
+                    } else {
+                        imagesurl = jsonrepd.getString("OPath")
+                    }
+
                     val location = jsonrepd.getString("Location")
                     produname.text = "$pname"
                     productId.text = "$ProductId"
@@ -159,7 +169,7 @@ class GalleryFragment : Fragment() {
                     category.text = "$pCategory"
                     sub_category.text = "$pSubCategory"
                     stock.text = "${cstock.toInt()}" + " ($punitypa)"
-
+                    def_stock.text = "${DefaultStock.toInt()}" + " ($punitypa)"
 
 //                    Glide.with(this@GalleryFragment)
 //                        .load(imagesurl)
@@ -171,15 +181,15 @@ class GalleryFragment : Fragment() {
 
                     Glide.with(this)
                         .load(imagesurl) // image url
-                        .placeholder(R.drawable.ic_delete) // any placeholder to load at start
-                        .error(R.drawable.ic_dialog_alert)  // any image in case of error
-                        .override(200, 200) // resizing
+                        .placeholder(R.drawable.ic_menu_report_image) // any placeholder to load at start
+                        .error(R.drawable.ic_menu_report_image)  // any image in case of error
+                        .override(600, 600) // resizing
                         .centerCrop()
                         .into(imagur)
                 }
                 else{
                     playSound()
-                    lauyout.visibility = View.GONE
+                    layout.visibility = View.GONE
                     val alertemail= AlertDialog.Builder(this.context)
                     alertemail.setTitle("Barcode")
 
