@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/nav_productlist"
-        android:name="com.example.myapplication.com.example.whm.ui.product.ProductList"
+        android:name="com.example.myapplication.ui.product.ProductList"
         android:label="@string/product_list_fragment"
         tools:layout="@layout/fragment_product_list" />
 

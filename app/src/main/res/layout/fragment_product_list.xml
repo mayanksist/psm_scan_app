@@ -6,16 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".com.example.whm.ui.product.ProductList">
+    tools:context="com.example.myapplication.ui.product.ProductList">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_margin="5dp"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
         app:cardMaxElevation="6dp"
         app:cardPreventCornerOverlap="true"
@@ -27,7 +27,33 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/txtorderno"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="3dp"
+                android:Margin="5dp"
+                android:background="@drawable/txtscan"
+                android:drawableRight="@drawable/barcode"
+                android:ems="10"
+                android:hint="Scan Order"
+                android:inputType="textPersonName"
+                android:padding="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/txtorderno"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtorderno" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -36,8 +62,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Order No. :"
-                android:textColor="#000000"
-                android:textSize="17dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtorderno" />
@@ -48,8 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="N/A"
-                android:textColor="#000000"
-                android:textSize="17dp"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txtscanproduct1"
@@ -59,13 +83,10 @@
                 android:id="@+id/txtscanproduct1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="6dp"
                 android:text="Scanned Boxes :"
-                android:textColor="#000000"
-                android:textSize="17dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtstoppage1"
                 app:layout_constraintTop_toBottomOf="@+id/txtstoppage1" />
 
@@ -73,9 +94,9 @@
                 android:id="@+id/txtscanproduct"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="N/A"
-                android:textColor="#000000"
-                android:textSize="17dp"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtscanproduct1"
@@ -85,10 +106,9 @@
                 android:id="@+id/txtpackedw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="6dp"
                 android:text="Packed Boxes :"
-                android:textColor="#000000"
-                android:textSize="17dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/textView4"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -100,8 +120,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textColor="#000000"
-                android:textSize="17dp"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txtpackedw"
                 app:layout_constraintEnd_toEndOf="@+id/txtorderNo"
                 app:layout_constraintStart_toStartOf="@+id/txtorderNo"
@@ -112,10 +131,9 @@
                 android:id="@+id/txtstoppage1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="6dp"
                 android:text="Stop No :"
-                android:textColor="#000000"
-                android:textSize="17dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/txtpackedw"
                 app:layout_constraintTop_toBottomOf="@+id/txtpackedw" />
@@ -125,29 +143,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="N/A"
-                android:textColor="#000000"
-                android:textSize="17dp"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txtstoppage1"
                 app:layout_constraintEnd_toEndOf="@+id/txtpackedb"
                 app:layout_constraintStart_toStartOf="@+id/txtpackedb"
                 app:layout_constraintTop_toTopOf="@+id/txtstoppage1" />
-
-            <EditText
-                android:id="@+id/txtorderno"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="3dp"
-                android:background="@drawable/txtscan"
-                android:drawableLeft="@drawable/ic_productlist_view_list_24"
-                android:ems="10"
-                android:hint="Scan Order"
-                android:inputType="textPersonName"
-                android:padding="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
