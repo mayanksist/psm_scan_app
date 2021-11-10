@@ -183,7 +183,6 @@ class ProductList : Fragment() {
                 val  resultobj = JSONObject(responsemsg.getString("d"));
                 val  resmsg = resultobj.getString("response");
                 val  presponsmsg = resultobj.getString("responseMessage");
-//                Toast.makeText(context, presponsmsg.toString(), Toast.LENGTH_LONG).show()
                   if(resmsg=="failed") {
                     val alertorfailed=AlertDialog.Builder(this.context)
                     alertorfailed.setTitle(orderno)
