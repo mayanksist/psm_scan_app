@@ -122,8 +122,8 @@ class MainActivity : AppCompatActivity() {
                 val alertemail = AlertDialog.Builder(this)
 
                 if (useremail.trim().isEmpty()) {
-                    alertemail.setTitle("Email id")
-                    alertemail.setMessage("Enter Email id")
+                    alertemail.setTitle("User Id")
+                    alertemail.setMessage("Enter User Id")
                     alertemail.setPositiveButton("ok", null)
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
