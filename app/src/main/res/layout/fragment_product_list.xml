@@ -161,6 +161,8 @@
         android:drawablePadding="10dp"
         android:ems="10"
         android:hint="Scan Order"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
         android:inputType="textPersonName"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
