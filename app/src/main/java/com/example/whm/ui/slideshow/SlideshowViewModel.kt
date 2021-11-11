@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class SlideshowViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "Logout"
+        value = "Logout !!!"
 
 
     }

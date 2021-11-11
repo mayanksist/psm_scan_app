@@ -32,5 +32,8 @@
     <fragment
         android:id="@+id/nav_slideshow"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/activity_main" />
+        android:name="com.example.myapplication.com.example.whm.ui.slideshow.SlideshowFragment"
+        tools:layout="@layout/fragment_slideshow" />
+
+
 </navigation>

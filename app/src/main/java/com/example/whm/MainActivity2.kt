@@ -16,6 +16,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMain2Binding
 import com.google.android.material.navigation.NavigationView
+import android.app.Activity
+import android.content.Context
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 
 
 class MainActivity2 : AppCompatActivity() {
@@ -27,6 +31,10 @@ class MainActivity2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+//        val imm =
+//            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//        imm.hideSoftInputFromWindow(view.windowToken, 0)
+
         val intent = intent
         val epname = intent.getStringExtra("empname")
         val nameu = intent.getStringExtra("Name")
@@ -35,6 +43,9 @@ class MainActivity2 : AppCompatActivity() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val editor = preferences.edit()
         editor.putString("EmpAutoId", aotoidemp)
+        editor.putString("EmpTypeNo", EmpTypeNo)
+        editor.putString("Empname", epname)
+        editor.putString("Username", nameu)
         editor.apply()
 
 
@@ -61,8 +72,8 @@ class MainActivity2 : AppCompatActivity() {
         val usename = hview.findViewById(R.id.username) as TextView
         val AppVersion = hview.findViewById(R.id.txtVersion) as TextView
         AppVersion.text = "version : " + AppPreferences.AppVersion
-        textViewName.text = epname
-        usename.text = nameu
+        textViewName.text = preferences.getString("Empname","")
+        usename.text =  preferences.getString("Username","")
 
         appBarConfiguration = AppBarConfiguration(
 
@@ -94,58 +105,6 @@ class MainActivity2 : AppCompatActivity() {
 
 
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        val id = item.itemId
-
-        //noinspection SimplifiableIfStatement
-
-        if (id == R.id.nav_home) {
-
-            val intent = Intent(this, MainActivity2::class.java)
-            this.startActivity(intent)
-            return true
-        }
-
-
-
-        if (id == R.id.nav_slideshow) {
-//
-//            SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE).setTitleText("Are you sure?")
-//                .setContentText("Won't be able to recover this file!")
-//                .setConfirmText("Yes,delete it!")
-//                .setConfirmClickListener { sDialog -> // Showing simple toast message to user
-//                    Toast.makeText(this, " You Clicked me ", Toast.LENGTH_SHORT).show()
-//                    sDialog.dismissWithAnimation()
-//                }.show()
-//
-//
-//            SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-//                .setTitleText("Are you sure?")
-//                .setContentText("You want to logout")
-//                .setConfirmText("Logout")
-//                .setConfirmClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            this.startActivity(intent)
-            finish()
-//        }
-//                .setCancelButton(
-//                    "Cancel"
-//                ) { sDialog -> sDialog.dismissWithAnimation() }
-//                .show()
-//
-//            Toast.makeText(this, "Android Menu is Clicked", Toast.LENGTH_LONG).show()
-
-            return true
-
-        }
-
-        return super.onOptionsItemSelected(item)
-
-    }
-
-
 
 }
 

@@ -9,12 +9,26 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.databinding.FragmentSlideshowBinding
+import cn.pedant.SweetAlert.SweetAlertDialog
+
+import android.content.Intent
+import android.preference.PreferenceManager
+import androidx.navigation.fragment.findNavController
+import cn.pedant.SweetAlert.SweetAlertDialog.OnSweetClickListener
+import com.example.myapplication.R
+import com.example.myapplication.com.example.whm.MainActivity
+import com.example.myapplication.com.example.whm.MainActivity2
+import com.example.myapplication.com.example.whm.ui.home.HomeFragment
+
+
+
+
 
 class SlideshowFragment : Fragment() {
 
     private lateinit var slideshowViewModel: SlideshowViewModel
     private var _binding: FragmentSlideshowBinding? = null
-
+    lateinit var mView: View
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -24,17 +38,25 @@ class SlideshowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        slideshowViewModel =
-            ViewModelProvider(this).get(SlideshowViewModel::class.java)
+        mView = inflater.inflate(R.layout.fragment_slideshow, container, false)
 
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
+            .setTitleText("Are you sure?")
+            .setContentText("You want to logout.")
+            .setConfirmText("Logout")
+            .setConfirmClickListener {
+                requireActivity().startActivity(Intent(this.context, MainActivity::class.java))
+                requireActivity().finish()
 
-        val textView: TextView = binding.textSlideshow
-        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+            }
+            .setCancelButton(
+                "Cancel"
+            ) {
+                    sDialog -> sDialog.dismissWithAnimation()
+                this.findNavController().navigate(com.example.myapplication.R.id.nav_productlist)
+            }
+            .show()
+        return mView
     }
 
     override fun onDestroyView() {
