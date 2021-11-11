@@ -113,23 +113,19 @@ class MainActivity : AppCompatActivity() {
         info = connectivity.activeNetworkInfo
         if ( connectivity != null )
         {
-
             if (info != null && info.isConnected == true) {
                 var email = findViewById<EditText>(R.id.email)
                 var upassword = findViewById<EditText>(R.id.password)
                 val useremail = email.text.toString()
                 val password = upassword.text.toString()
                 val alertemail = AlertDialog.Builder(this)
-
                 if (useremail.trim().isEmpty()) {
-//                    alertemail.setTitle("Alert")
                     alertemail.setMessage("Enter User Id")
                     alertemail.setPositiveButton("ok", null)
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
                 }
                 else if (password.trim().isEmpty()) {
-//                    alertemail.setTitle("Alert")
                     alertemail.setMessage("Enter Password")
                     alertemail.setPositiveButton("ok",null)
                     val dialog:AlertDialog=alertemail.create()
@@ -151,7 +147,6 @@ class MainActivity : AppCompatActivity() {
                 val dialog: AlertDialog = alertnet.create()
                 dialog.show()
             }
-
         }
     }
 }
