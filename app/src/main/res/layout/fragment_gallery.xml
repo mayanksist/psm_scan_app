@@ -17,6 +17,7 @@
         android:background="@drawable/txtscan"
         android:drawableRight="@drawable/barcode"
         android:hint="Scan Barcode"
+        android:focusableInTouchMode="false"
         android:maxLength="20"
         android:padding="10dp"
         android:singleLine="true"

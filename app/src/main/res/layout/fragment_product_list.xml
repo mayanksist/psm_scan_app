@@ -160,12 +160,14 @@
         android:drawableRight="@drawable/barcode"
         android:drawablePadding="10dp"
         android:ems="10"
+        android:focusableInTouchMode="false"
         android:hint="Scan Order"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
         android:inputType="textPersonName"
         android:padding="5dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
