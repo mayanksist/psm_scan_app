@@ -52,12 +52,14 @@ class MainActivity : AppCompatActivity() {
         val resobj = JSONObj.put("response", response.toString())
 
         val responsemsg = JSONObject(resobj.getString("response"))
+
         val responmsg = JSONObject(responsemsg.getString("d"))
         val msg = responmsg.getString("response")
+        val resmsg = responmsg.getString("responseMessage")
         if (msg == "failed") {
             val alertemail = AlertDialog.Builder(this)
             alertemail.setTitle("User")
-            alertemail.setMessage("Wrong user id password")
+            alertemail.setMessage(resmsg.toString())
             alertemail.setPositiveButton("ok", null)
             val dialog: AlertDialog = alertemail.create()
             dialog.show()
