@@ -102,7 +102,10 @@ class ProductList : Fragment() {
                             pDialog.dismiss()
                             alert.setTitle(result1[0])
                             alert.setMessage("Are you sure you want  to skip current order " + FirstorderNO + "?")
-                            alert.setPositiveButton("Yes") { dialog, which ->
+                            alert.setNegativeButton("No")
+                            { dialog, which -> dialog.dismiss() }
+                            alert.setPositiveButton("Yes")
+                            { dialog, which ->
                                 list.clear()
                                 count = 0
                                 orderdetailsbind(result1[0], ordernoenter)
@@ -110,7 +113,6 @@ class ProductList : Fragment() {
                                 dialog.dismiss()
                             }
 
-                            alert.setNegativeButton("No") { dialog, which -> dialog.dismiss() }
                             alert.show()
                             orderno.text.clear()
                         }
@@ -189,6 +191,7 @@ class ProductList : Fragment() {
                     alertorfailed.setPositiveButton(
                         "ok",
                         DialogInterface.OnClickListener { dialog, which ->
+                           clear()
                             val orderno4: EditText = binding.txtorderno
                             orderno4.text.clear()
                         })
@@ -196,6 +199,7 @@ class ProductList : Fragment() {
                     checkr = 0
                     val dialog: AlertDialog = alertorfailed.create()
                     dialog.show()
+
                 }
                 else {
                     if (presponsmsg == "Orders Found") {
@@ -277,9 +281,10 @@ class ProductList : Fragment() {
                     pDialog.dismiss()
                     alertsuborder.setTitle(sorderno.uppercase(Locale.getDefault()))
                     alertsuborder.setMessage(rspMsg.toString())
-                    alertsuborder.setNegativeButton(
+                    alertsuborder.setPositiveButton(
                         "ok"
                     ) { dialog, which ->
+                        clear()
                         val orderno2: EditText = binding.txtorderno
                         orderno2.text.clear()
                     }
