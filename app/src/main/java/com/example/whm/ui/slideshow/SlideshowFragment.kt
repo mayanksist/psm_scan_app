@@ -53,7 +53,7 @@ class SlideshowFragment : Fragment() {
                 "Cancel"
             ) {
                     sDialog -> sDialog.dismissWithAnimation()
-                this.findNavController().navigate(com.example.myapplication.R.id.nav_productlist)
+                this.findNavController().navigate(R.id.nav_home)
             }
             .show()
         return mView
