@@ -122,14 +122,14 @@ class MainActivity : AppCompatActivity() {
                 val alertemail = AlertDialog.Builder(this)
 
                 if (useremail.trim().isEmpty()) {
-                    alertemail.setTitle("User Id")
+//                    alertemail.setTitle("Alert")
                     alertemail.setMessage("Enter User Id")
                     alertemail.setPositiveButton("ok", null)
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
                 }
                 else if (password.trim().isEmpty()) {
-                    alertemail.setTitle("Password")
+//                    alertemail.setTitle("Alert")
                     alertemail.setMessage("Enter Password")
                     alertemail.setPositiveButton("ok",null)
                     val dialog:AlertDialog=alertemail.create()
