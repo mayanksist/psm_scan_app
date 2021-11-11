@@ -50,9 +50,7 @@ class MainActivity : AppCompatActivity() {
     Response.Listener {
             response ->
         val resobj = JSONObj.put("response", response.toString())
-
         val responsemsg = JSONObject(resobj.getString("response"))
-
         val responmsg = JSONObject(responsemsg.getString("d"))
         val msg = responmsg.getString("response")
         val resmsg = responmsg.getString("responseMessage")
