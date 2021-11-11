@@ -25,50 +25,17 @@ import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
-        super.onCreate(savedInstanceState)
+       super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        checkinternet()
-
-        var email = findViewById<EditText>(R.id.email)
-        var upassword = findViewById<EditText>(R.id.password)
         var btnlogin = findViewById<Button>(R.id.login)
         var AppVersion = findViewById<TextView>(R.id.txtAppVersion)
         AppVersion.text = "version : " + AppPreferences.AppVersion
         btnlogin.setOnClickListener {
-            val useremail = email.text.toString()
-            val password = upassword.text.toString()
-            val alertemail = AlertDialog.Builder(this)
-            if (useremail.trim().isEmpty()) {
-                alertemail.setTitle("Email id")
-                alertemail.setMessage("Enter Email id")
-                alertemail.setPositiveButton("ok", null)
-                val dialog: AlertDialog = alertemail.create()
-                dialog.show()
-            }
-            else if (password.trim().isEmpty()) {
-                alertemail.setTitle("Password")
-                alertemail.setMessage("Enter Password")
-                alertemail.setPositiveButton("ok",null)
-                val dialog:AlertDialog=alertemail.create()
-                dialog.show()
-            }
-            else{
-                try{
-                    login(useremail, password)
-                }
-                catch (e:IOException){
-                    Toast.makeText(applicationContext, "Error", Toast.LENGTH_SHORT).show()
-                }
-            }
+            checkinternet()
         }
     }
-
     var volleyRequestQueue: RequestQueue? = null
     val APIURL: String = apisettings().apiurl + "wpackerlogin.asmx/login"
-    val TAG = "WHM"
-
     fun login(email: String, password: String) {
         val Jsonarra=JSONObject()
         val JSONObj = JSONObject()
@@ -144,9 +111,39 @@ class MainActivity : AppCompatActivity() {
         var info : NetworkInfo? = null
         connectivity = context.getSystemService(Service.CONNECTIVITY_SERVICE)  as ConnectivityManager
         info = connectivity.activeNetworkInfo
-        if ( connectivity != null)
+        if ( connectivity != null )
         {
-            if (info == null) {
+
+            if (info != null && info.isConnected == true) {
+                var email = findViewById<EditText>(R.id.email)
+                var upassword = findViewById<EditText>(R.id.password)
+                val useremail = email.text.toString()
+                val password = upassword.text.toString()
+                val alertemail = AlertDialog.Builder(this)
+
+                if (useremail.trim().isEmpty()) {
+                    alertemail.setTitle("Email id")
+                    alertemail.setMessage("Enter Email id")
+                    alertemail.setPositiveButton("ok", null)
+                    val dialog: AlertDialog = alertemail.create()
+                    dialog.show()
+                }
+                else if (password.trim().isEmpty()) {
+                    alertemail.setTitle("Password")
+                    alertemail.setMessage("Enter Password")
+                    alertemail.setPositiveButton("ok",null)
+                    val dialog:AlertDialog=alertemail.create()
+                    dialog.show()
+                }
+                else{
+                    try{
+                        login(useremail, password)
+                    }
+                    catch (e:IOException){
+                        Toast.makeText(applicationContext, "Error", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
                 val alertnet = AlertDialog.Builder(this)
                 alertnet.setTitle("Connetction")
                 alertnet.setMessage("Check your internet connection")
@@ -154,7 +151,7 @@ class MainActivity : AppCompatActivity() {
                 val dialog: AlertDialog = alertnet.create()
                 dialog.show()
             }
+
         }
     }
-
 }

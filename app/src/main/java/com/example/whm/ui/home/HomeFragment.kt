@@ -40,6 +40,7 @@ class HomeFragment : Fragment()  {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         mView = inflater.inflate(com.example.myapplication.R.layout.fragment_home, container, false)
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         val btnInvCheck = mView.findViewById<Button>(com.example.myapplication.R.id.btnInvCheck)
