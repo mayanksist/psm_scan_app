@@ -39,6 +39,7 @@
                 android:Margin="5dp"
                 android:background="@drawable/txtscan"
                 android:drawableRight="@drawable/barcode"
+                android:drawablePadding="10dp"
                 android:ems="10"
                 android:hint="Scan Order"
                 android:inputType="textPersonName"
