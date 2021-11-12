@@ -131,7 +131,7 @@ class ProductList : Fragment() {
                     }
                     else {
                         pDialog.dismiss()
-                         alert.setMessage("Invalid scanned Order")
+                         alert.setMessage("Invalid box scanned")
                         alert.setPositiveButton("ok", null)
                         val dialog: AlertDialog = alert.create()
                         dialog.show()
