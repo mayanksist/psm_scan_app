@@ -100,11 +100,13 @@ class MainActivity : AppCompatActivity() {
                     intent.putExtra("EmpTypeNo", emptype.toString())
                     intent.putExtra("empname", empname.toString())
                     intent.putExtra("empid", empid.toString())
-                    startActivity(intent)
                     val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
                     mLayout.visibility = View.GONE
                     val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
                     mhiddenLayout.visibility = View.VISIBLE
+
+                    startActivity(intent)
+
                     Toast.makeText(
                         this,
                         "Login Successful ",
@@ -222,11 +224,12 @@ class MainActivity : AppCompatActivity() {
                             intent.putExtra("EmpTypeNo", emptype.toString())
                             intent.putExtra("empname", empname.toString())
                             intent.putExtra("empid", empid.toString())
-                            startActivity(intent)
                             val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
                             mLayout.visibility = View.GONE
                             val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
                             mhiddenLayout.visibility = View.VISIBLE
+                            startActivity(intent)
+
                         }
                     }
                     else {
