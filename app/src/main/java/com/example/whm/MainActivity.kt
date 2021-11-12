@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -24,6 +25,8 @@ import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,6 +36,13 @@ class MainActivity : AppCompatActivity() {
         btnlogin.setOnClickListener {
             checkinternet()
         }
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        if(preferences.getString("email","") != "" && preferences.getString("password","") != "" ){
+            preferences.getString("email","")?.let { login(it,
+                preferences.getString("password","")!!
+            ) }
+        }
+
     }
     var volleyRequestQueue: RequestQueue? = null
     val APIURL: String = apisettings().apiurl + "wpackerlogin.asmx/login"
@@ -41,6 +51,11 @@ class MainActivity : AppCompatActivity() {
         val JSONObj = JSONObject()
         val appversion = AppPreferences.AppVersion
         val queues = Volley.newRequestQueue(this@MainActivity)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val editor = preferences.edit()
+        editor.putString("email", email)
+        editor.putString("password", password)
+        editor.apply()
         JSONObj.put("userName",email)
         JSONObj.put("password",password)
         JSONObj.put("requestContainer",Jsonarra.put("appVersion",appversion))
