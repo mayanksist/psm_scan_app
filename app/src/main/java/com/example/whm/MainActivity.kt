@@ -1,16 +1,21 @@
 package com.example.myapplication.com.example.whm
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -25,7 +30,8 @@ import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-       super.onCreate(savedInstanceState)
+         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
         var btnlogin = findViewById<Button>(R.id.login)
         var AppVersion = findViewById<TextView>(R.id.txtAppVersion)
