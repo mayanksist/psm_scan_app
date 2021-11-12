@@ -91,6 +91,7 @@ class GalleryFragment : Fragment() {
         val category: TextView = binding.txtCategory
         val sub_category: TextView = binding.txtSubCategory
         val locationval: TextView = binding.txtLocation
+        val barcode: TextView = binding.txtBarScanned
         val Jsonarra = JSONObject()
         val details = JSONObject()
         val JSONObj = JSONObject()
@@ -152,11 +153,11 @@ class GalleryFragment : Fragment() {
                     } else {
                         stock.text = "${cstock}" + " $punitypa" +" ["+"${DefaultStock}" + " Pieces]"
                     }
-
+                   barcode.setText(""+barcoded)
                     Glide.with(this)
                         .load(imagesurl) // image url
-                        .placeholder(R.drawable.ic_menu_report_image) // any placeholder to load at start
-                        .error(R.drawable.ic_menu_report_image)  // any image in case of error
+//                        .placeholder(R.drawable.ic_menu_report_image) // any placeholder to load at start
+//                        .error(R.drawable.ic_menu_report_image)  // any image in case of error
                         .override(600, 600) // resizing
                         .centerCrop()
                         .into(imagur)
