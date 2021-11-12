@@ -55,6 +55,7 @@ class ProductList : Fragment() {
         val orderno: EditText = binding.txtorderno
         val noofboxes1: TextView = binding.txtpackedb
         val lastscanprd: TextView = binding.txtscanproduct
+
         val alert = AlertDialog.Builder(this.context)
          msg = binding.txtmsg
         productListViewModel.text.observe(viewLifecycleOwner, Observer {
@@ -67,27 +68,34 @@ class ProductList : Fragment() {
                     pDialog.setCancelable(true)
                     pDialog.show()
                     ordernoenter = orderno.text.toString().toUpperCase()
+                    val layout = binding.txtmsg
+                    layout.visibility = View.GONE
                     if (ordernoenter.contains("/")) {
                         val result1 = ordernoenter.split("/")
                         val boxno = result1[1]
                         if (FirstorderNO == "") {
                             pDialog.dismiss()
                             FirstorderNO = result1[0]
-                        } else {
+                        }
+
+                        else {
                         if (FirstorderNO == result1[0]) {
                             pDialog.dismiss()
                             if (boxno.toInt() <= totalBoxes) {
                                 count = 0
                                 for (i in list) {
                                     if (i == ordernoenter) {
-                                        orderno.text.clear()
+                                        val layout = binding.txtmsg
+                                        layout.visibility = View.VISIBLE
+                                        orderno.setText("")
                                         msg!!.text = "Box Already Scanned."
                                         count = 1
+                                        orderno.requestFocus()
                                     }
                                 }
                                 if (count == 0) {
                                     list.add(list.size, ordernoenter)
-                                    orderno.text.clear()
+                                    orderno.setText("")
                                     noofboxes1.text =
                                         list.size.toString() + " out of " + "" + totalBoxes
                                     lastscanprd.text = list.toString() + "\n"
@@ -100,30 +108,34 @@ class ProductList : Fragment() {
                             } else {
                                 msg!!.text = "invalid box number"
                             }
-                        } else {
+                        }
+                        else {
                             pDialog.dismiss()
                             alert.setTitle(result1[0])
                             alert.setMessage("Are you sure you want  to skip current order " + FirstorderNO + "?")
-                            alert.setNegativeButton("No")
-                            { dialog, which -> dialog.dismiss() }
-                            alert.setPositiveButton("Yes")
+                            alert.setNegativeButton("YES")
                             { dialog, which ->
                                 list.clear()
                                 count = 0
+                                alert.setTitle("")
                                 orderdetailsbind(result1[0], ordernoenter)
                                 FirstorderNO = result1[0]
                                 dialog.dismiss()
                             }
+                            alert.setPositiveButton("NO")
+                            { dialog, which -> dialog.dismiss()
+                                alert.setTitle("")
+                            }
 
                             alert.show()
-                            orderno.text.clear()
+                            orderno.setText("")
                         }
                         }
                         if (checkr == 0) {
                             try {
                                 pDialog.dismiss()
                                 orderdetailsbind(FirstorderNO, ordernoenter)
-                                orderno.text.clear()
+                                orderno.setText("")
                             } catch (e: IOException) {
                                 Toast.makeText(this.context, "Error", Toast.LENGTH_SHORT).show()
                             }
@@ -131,12 +143,22 @@ class ProductList : Fragment() {
                     }
                     else {
                         pDialog.dismiss()
-                         alert.setMessage("Invalid scanned Order")
-                        alert.setPositiveButton("ok", null)
-                        val dialog: AlertDialog = alert.create()
-                        dialog.show()
+
+                        alert.setMessage("Invalid box scanned")
+                        alert.setPositiveButton("ok")
+                        { dialog, which ->
+                           alert.setCancelable(true)
+                            orderno.setText("")
+
+                        }
+
+                        alert.setNegativeButton("",null)
+                        val adialog: AlertDialog = alert.create()
+                        adialog.show()
                         val orderno1: EditText = binding.txtorderno
-                        orderno1.text.clear()
+                         orderno1.setText("")
+                        msg!!.text = ""
+
                     }
                          return@OnKeyListener true
                 }

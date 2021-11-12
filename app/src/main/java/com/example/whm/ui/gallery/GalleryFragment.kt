@@ -158,7 +158,7 @@ class GalleryFragment : Fragment() {
                         .load(imagesurl) // image url
 //                        .placeholder(R.drawable.ic_menu_report_image) // any placeholder to load at start
 //                        .error(R.drawable.ic_menu_report_image)  // any image in case of error
-                        .override(600, 600) // resizing
+                        .override(300, 300) // resizing
                         .centerCrop()
                         .into(imagur)
                     pDialog.dismiss()
