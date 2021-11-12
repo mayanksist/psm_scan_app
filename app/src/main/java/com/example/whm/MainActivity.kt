@@ -62,8 +62,8 @@ class MainActivity : AppCompatActivity() {
         val queues = Volley.newRequestQueue(this@MainActivity)
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val editor = preferences.edit()
-        editor.putString("email", email)
-        editor.putString("password", password)
+        editor.putString("email", email.trim())
+        editor.putString("password", password.trim())
         editor.apply()
         JSONObj.put("userName",email)
         JSONObj.put("password",password)
@@ -121,7 +121,10 @@ class MainActivity : AppCompatActivity() {
                 alertemail.setPositiveButton("ok",null)
                 val dialog:AlertDialog=alertemail.create()
                 dialog.show()
-
+                val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+                val editor = preferences.edit()
+                editor.clear()
+                editor.apply()
             }
         }
             },Response.ErrorListener {
@@ -176,6 +179,10 @@ class MainActivity : AppCompatActivity() {
                 alertnet.setPositiveButton("ok", null)
                 val dialog: AlertDialog = alertnet.create()
                 dialog.show()
+                val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+                val editor = preferences.edit()
+                editor.clear()
+                editor.apply()
             }
         }
     }
@@ -203,12 +210,12 @@ class MainActivity : AppCompatActivity() {
                 val msg = responmsg.getString("response")
                 val resmsg = responmsg.getString("responseMessage")
                 if (msg == "failed") {
-                    val alertemail = AlertDialog.Builder(this)
-                    alertemail.setTitle("User")
-                    alertemail.setMessage(resmsg.toString())
-                    alertemail.setPositiveButton("ok", null)
-                    val dialog: AlertDialog = alertemail.create()
-                    dialog.show()
+                    val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
+                    mLayout.visibility = View.VISIBLE
+                    val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
+                    mhiddenLayout.visibility = View.GONE
+                    editor.clear()
+                    editor.apply()
                 }
                 else {
                     if (msg == "success") {
@@ -239,7 +246,8 @@ class MainActivity : AppCompatActivity() {
                         alertemail.setPositiveButton("ok",null)
                         val dialog:AlertDialog=alertemail.create()
                         dialog.show()
-
+                        editor.clear()
+                        editor.apply()
                     }
                 }
             },Response.ErrorListener {
