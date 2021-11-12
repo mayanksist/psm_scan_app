@@ -48,7 +48,7 @@ class HomeFragment : Fragment()  {
 
         var Usertype = preferences.getString("EmpTypeNo", "")
         if (Usertype.toString() != "2"){
-            btnInvCheck.visibility=   View.INVISIBLE
+            btnInvCheck.visibility=   View.GONE
         }
 
 

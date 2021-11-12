@@ -124,6 +124,7 @@ class GalleryFragment : Fragment() {
                     val pSubCategory = jsonrepd.getString("SCat")
                     val ProductId = jsonrepd.getString("PId")
                     val punitypa = jsonrepd.getString("UnitType")
+                    val uAutoId = jsonrepd.getString("UAutoId")
                     val pqty = jsonrepd.getInt("Qty")
                     val pprice = jsonrepd.getDouble("Price")
                     val cstock = jsonrepd.getInt("CurrentStock")
@@ -137,17 +138,23 @@ class GalleryFragment : Fragment() {
                     val location = jsonrepd.getString("Location")
                     produname.text = "$pname"
                     productId.text = "$ProductId"
-                    if (punitypa.toString() == "Piece") {
+                    if (uAutoId.toString() == "3") {
                         unitype.text = "Pieces"
                     } else {
-                        unitype.text = "$punitypa" + " (" + "${pqty.toInt()}" + " Pieces)"
+                        unitype.text = "$punitypa" + " (" + "${pqty}" + " Pieces)"
                     }
-                    val rounded = String.format("%.2f", pprice)
+
+                    val rounded = String.format("%.2f".format(pprice))
                     price.text = "${"$" + rounded.toDouble()}"
                     locationval.text = "$location"
                     category.text = "$pCategory"
                     sub_category.text = "$pSubCategory"
-                    stock.text = "${cstock}" + " $punitypa" +" ["+"${DefaultStock}" + " Pieces]"
+                    if (uAutoId.toString() == "3") {
+                        stock.text = "${cstock}" + " $punitypa"
+                    } else {
+                        stock.text = "${cstock}" + " $punitypa" +" ["+"${DefaultStock}" + " Pieces]"
+                    }
+
                     Glide.with(this)
                         .load(imagesurl) // image url
                         .placeholder(R.drawable.ic_menu_report_image) // any placeholder to load at start
