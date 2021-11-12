@@ -126,7 +126,7 @@ class GalleryFragment : Fragment() {
                     val punitypa = jsonrepd.getString("UnitType")
                     val uAutoId = jsonrepd.getString("UAutoId")
                     val pqty = jsonrepd.getInt("Qty")
-                    val pprice = jsonrepd.getDouble("Price")
+                    val pprice = ("%.2f".format(jsonrepd.getDouble("Price")))
                     val cstock = jsonrepd.getInt("CurrentStock")
                     val DefaultStock = jsonrepd.getInt("Stock")
                     var imagesurl = ""
@@ -143,9 +143,7 @@ class GalleryFragment : Fragment() {
                     } else {
                         unitype.text = "$punitypa" + " (" + "${pqty}" + " Pieces)"
                     }
-
-                    val rounded = String.format("%.2f".format(pprice))
-                    price.text = "${"$" + rounded.toDouble()}"
+                    price.text = "${"$" + pprice}"
                     locationval.text = "$location"
                     category.text = "$pCategory"
                     sub_category.text = "$pSubCategory"
