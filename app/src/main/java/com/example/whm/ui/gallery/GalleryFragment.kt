@@ -79,7 +79,6 @@ class GalleryFragment : Fragment() {
         val price: TextView = binding.priductprise
         val imagur: ImageView = binding.productimage
         val stock: TextView = binding.txtStock2
-        val def_stock: TextView = binding.txtdefaultStock
         val category: TextView = binding.txtCategory
         val sub_category: TextView = binding.txtSubCategory
         val locationval: TextView = binding.txtLocation
@@ -139,8 +138,7 @@ class GalleryFragment : Fragment() {
                     locationval.text = "$location"
                     category.text = "$pCategory"
                     sub_category.text = "$pSubCategory"
-                    stock.text = "${cstock.toInt()}" + " ($punitypa)"
-                    def_stock.text = "${DefaultStock.toInt()}" + " (Pieces)"
+                    stock.text = "${cstock}" + " $punitypa" +" ["+"${DefaultStock}" + " Pieces]"
                     Glide.with(this)
                         .load(imagesurl) // image url
                         .placeholder(R.drawable.ic_menu_report_image) // any placeholder to load at start
