@@ -66,7 +66,7 @@ class ProductList : Fragment() {
                     pDialog.titleText = "Fetching ..."
                     pDialog.setCancelable(true)
                     pDialog.show()
-                    ordernoenter = orderno.text.toString()
+                    ordernoenter = orderno.text.toString().toUpperCase()
                     if (ordernoenter.contains("/")) {
                         val result1 = ordernoenter.split("/")
                         val boxno = result1[1]
