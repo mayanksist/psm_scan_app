@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity() {
         if(preferences.getString("email","") != "" && preferences.getString("password","") != "" ){
             val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
             mLayout.visibility = View.GONE
+            val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
+            mhiddenLayout.visibility = View.VISIBLE
             preferences.getString("email","")?.let { Autologin(it,
                 preferences.getString("password","")!!
             ) }
@@ -99,6 +101,10 @@ class MainActivity : AppCompatActivity() {
                     intent.putExtra("empname", empname.toString())
                     intent.putExtra("empid", empid.toString())
                     startActivity(intent)
+                    val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
+                    mLayout.visibility = View.GONE
+                    val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
+                    mhiddenLayout.visibility = View.VISIBLE
                     Toast.makeText(
                         this,
                         "Login Successful ",
@@ -217,6 +223,10 @@ class MainActivity : AppCompatActivity() {
                             intent.putExtra("empname", empname.toString())
                             intent.putExtra("empid", empid.toString())
                             startActivity(intent)
+                            val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
+                            mLayout.visibility = View.GONE
+                            val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
+                            mhiddenLayout.visibility = View.VISIBLE
                         }
                     }
                     else {
