@@ -53,8 +53,17 @@ class GalleryFragment : Fragment() {
                 if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
                     val barcodeenter = barcode.text.toString()
                     try {
-                        bindproductdetails(barcodeenter)
-                        barcode.text.clear()
+                        if (barcodeenter.trim().isEmpty()) {
+                            val alertemail = AlertDialog.Builder(this.context)
+                            alertemail.setMessage("Scan Barcode")
+                            alertemail.setPositiveButton("ok", null)
+                            val dialog: AlertDialog = alertemail.create()
+                            dialog.show()
+                        }
+                        else {
+                            bindproductdetails(barcodeenter)
+                            barcode.text.clear()
+                        }
                     }
                     catch (e:IOException){
                         Toast.makeText(this.context, "Error", Toast.LENGTH_SHORT).show()
@@ -154,7 +163,7 @@ class GalleryFragment : Fragment() {
                     layout.visibility = View.GONE
                     val alertemail= AlertDialog.Builder(this.context)
                     alertemail.setTitle("Barcode")
-                    alertemail.setMessage("Barcode does not exist")
+                    alertemail.setMessage(presponsmsg.toString())
                     alertemail.setPositiveButton("ok", null)
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()

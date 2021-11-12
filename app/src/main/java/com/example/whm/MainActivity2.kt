@@ -74,19 +74,13 @@ class MainActivity2 : AppCompatActivity() {
         AppVersion.text = "version : " + AppPreferences.AppVersion
         textViewName.text = preferences.getString("Empname","")
         usename.text =  preferences.getString("Username","")
-
         appBarConfiguration = AppBarConfiguration(
-
             setOf(
-
                 R.id.nav_home, R.id.nav_slideshow, R.id.nav_product, R.id.nav_productlist
             ), drawerLayout
-
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
             navView.setupWithNavController(navController)
-
-
     }
 
 
