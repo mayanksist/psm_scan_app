@@ -19,6 +19,10 @@ import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.MainActivity
 import com.example.myapplication.com.example.whm.MainActivity2
 import com.example.myapplication.com.example.whm.ui.home.HomeFragment
+import android.content.SharedPreferences
+
+
+
 
 
 
@@ -39,12 +43,15 @@ class SlideshowFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mView = inflater.inflate(R.layout.fragment_slideshow, container, false)
-
         SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
             .setTitleText("Are you sure?")
             .setContentText("You want to logout.")
             .setConfirmText("Logout")
             .setConfirmClickListener {
+                val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
+                val editor = preferences.edit()
+                editor.clear()
+                editor.apply()
                 requireActivity().startActivity(Intent(this.context, MainActivity::class.java))
                 requireActivity().finish()
 
