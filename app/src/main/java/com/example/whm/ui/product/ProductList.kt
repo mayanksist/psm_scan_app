@@ -130,6 +130,7 @@ class ProductList : Fragment() {
                             alert.show()
                             orderno.setText("")
                         }
+
                         }
                         if (checkr == 0) {
                             try {
