@@ -164,6 +164,7 @@ class GalleryFragment : Fragment() {
                     pDialog.dismiss()
                 }
                 else{
+
                     pDialog.dismiss()
                     playSound()
                     layout.visibility = View.GONE
