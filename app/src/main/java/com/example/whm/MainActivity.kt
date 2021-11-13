@@ -7,8 +7,9 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.text.Editable
 import android.util.Log
-import android.widget.Button
+import android.view.KeyEvent
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -35,12 +36,37 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
        super.onCreate(savedInstanceState)
         setContentView(com.example.myapplication.R.layout.activity_main)
-        var btnlogin = findViewById<Button>(com.example.myapplication.R.id.login)
+        val scancode = findViewById<EditText>(com.example.myapplication.R.id.scancodeu)
         var AppVersion = findViewById<TextView>(com.example.myapplication.R.id.txtAppVersion)
         AppVersion.text = "version : " + AppPreferences.AppVersion
-        btnlogin.setOnClickListener {
-            checkinternet()
+        scancode.requestFocus()
+        scancode.setOnKeyListener OnKeyListener@{ v_, keyCode, event ->
+            if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
+                try {
+                    checkinternet(scancode.text)
+                } catch(e:IOException){
+                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                }
+    //                return@OnKeyListener true
+
+                return@OnKeyListener true
+            }
+            false
         }
+//        scancode.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
+//            if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
+//                val scansecurity = scancode.text
+//                try {
+//                    checkinternet(scansecurity.toString())
+//                }
+//                catch(e:IOException){
+//                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+//                }
+//                return@OnKeyListener true
+//                }
+//            false
+//        })
+
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         if(preferences.getString("email","") != "" && preferences.getString("password","") != "" ){
             val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
@@ -138,7 +164,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this.applicationContext, "Server Error", Toast.LENGTH_LONG).show()
         }
     }
-    private fun checkinternet(){
+    private fun checkinternet(scansecurity: Editable) {
         var context = this
         var connectivity : ConnectivityManager? = null
         var info : NetworkInfo? = null
@@ -147,31 +173,29 @@ class MainActivity : AppCompatActivity() {
         if ( connectivity != null )
         {
             if (info != null && info.isConnected == true) {
-                var email = findViewById<EditText>(com.example.myapplication.R.id.email)
-                var upassword = findViewById<EditText>(com.example.myapplication.R.id.password)
-                val useremail = email.text.toString()
-                val password = upassword.text.toString()
-                val alertemail = AlertDialog.Builder(this)
-                if (useremail.trim().isEmpty()) {
-                    alertemail.setMessage("Enter User Id")
+                var scansecuritykey=scansecurity
+                if(scansecuritykey.contains("_") ){
+                    val getkey = scansecuritykey.split("_")
+                    val userid = getkey[0]
+                    val  upasswords = getkey[1]
+//                var email = findViewById<EditText>(com.example.myapplication.R.id.email)
+//                var upassword = findViewById<EditText>(com.example.myapplication.R.id.password)
+                    var useremail = userid
+                    var password = upasswords
+                    useremail=userid
+                    password=upasswords
+
+                            login(useremail, password)
+
+                }
+                else{
+                    val alertemail = AlertDialog.Builder(this)
+                    alertemail.setMessage("Invalid Security Key")
                     alertemail.setPositiveButton("ok", null)
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
                 }
-                else if (password.trim().isEmpty()) {
-                    alertemail.setMessage("Enter Password")
-                    alertemail.setPositiveButton("ok",null)
-                    val dialog:AlertDialog=alertemail.create()
-                    dialog.show()
-                }
-                else{
-                    try{
-                        login(useremail, password)
-                    }
-                    catch (e:IOException){
-                        Toast.makeText(applicationContext, "Error", Toast.LENGTH_SHORT).show()
-                    }
-                }
+
             } else {
                 val alertnet = AlertDialog.Builder(this)
                 alertnet.setTitle("Connetction")
@@ -186,6 +210,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
     fun Autologin(email: String, password: String) {
         val Jsonarra=JSONObject()
         val JSONObj = JSONObject()
