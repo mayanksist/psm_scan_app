@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else{
                     val alertemail = AlertDialog.Builder(this)
-                    alertemail.setMessage("Invalid Security Key")
+                    alertemail.setMessage("Invalid credentials")
                     alertemail.setPositiveButton("ok", null)
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()

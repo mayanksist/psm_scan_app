@@ -143,6 +143,7 @@
                         android:id="@+id/scancode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
                         android:drawableStart="@drawable/passowrd_vpn_key_24"
                         android:drawableLeft="@drawable/passowrd_vpn_key_24"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -159,7 +160,7 @@
                             android:focusable="true"
                             android:hint="@string/scancode"
                             android:inputType="textPassword"
-                            android:paddingStart="5dp" />
+                            android:paddingStart="2dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
