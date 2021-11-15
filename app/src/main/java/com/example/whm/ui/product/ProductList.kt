@@ -325,6 +325,7 @@ class ProductList : Fragment() {
                     checkr = 0
                     val dialog: AlertDialog = alertsuborder.create()
                     dialog.show()
+                    cardview1.visibility = View.GONE
                 }
                 else {
                     if (rspCode.toString() == "200") {
