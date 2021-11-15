@@ -36,10 +36,12 @@ class ProductList : Fragment() {
     private var _binding: FragmentProductListBinding? = null
     private val binding get() = _binding!!
     val list: MutableList<String> = ArrayList()
+    val boxlist: MutableList<String> = ArrayList()
     var FirstorderNO:String=""
     var ordernoenter:String=""
     var checkr=0
     var totalBoxes =0
+    var boxno:String=""
     var msg:TextView?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,7 +74,8 @@ class ProductList : Fragment() {
                     layout.visibility = View.GONE
                     if (ordernoenter.contains("/")) {
                         val result1 = ordernoenter.split("/")
-                        val boxno = result1[1]
+                         boxno = result1[1]
+
                         if (FirstorderNO == "") {
                             pDialog.dismiss()
                             FirstorderNO = result1[0]
@@ -95,10 +98,11 @@ class ProductList : Fragment() {
                                 }
                                 if (count == 0) {
                                     list.add(list.size, ordernoenter)
+                                    boxlist.add(0, boxno )
                                     orderno.setText("")
                                     noofboxes1.text =
                                         list.size.toString() + " out of " + "" + totalBoxes
-                                    lastscanprd.text = list.toString() + "\n"
+                                        lastscanprd.text = boxlist.toString()
 //                                    msg!!.text = list.toString()
                                     msg!!.text = ""
                                     if (list.size.toString() == totalBoxes.toString()) {
@@ -116,6 +120,7 @@ class ProductList : Fragment() {
                             alert.setNegativeButton("YES")
                             { dialog, which ->
                                 list.clear()
+                                boxlist.clear()
                                 count = 0
                                 alert.setTitle("")
                                 orderdetailsbind(result1[0], ordernoenter)
@@ -224,6 +229,7 @@ class ProductList : Fragment() {
                     checkr = 0
                     val dialog: AlertDialog = alertorfailed.create()
                     dialog.show()
+                    cardview.visibility = View.GONE
 
                 }
                 else {
@@ -245,10 +251,11 @@ class ProductList : Fragment() {
                             editor1.putInt("NoofBox", noofboxes)
                             editor1.apply()
                             list.add(0, barcode)
+                            boxlist.add(0, boxno)
                             totalBoxes = noofboxes.toInt()
                             txtpacked.text =
                                 list.size.toString() + " out of " + "${noofboxes}"
-                            txtscanproduct.text = list.toString()
+                            txtscanproduct.text = boxlist.toString()
                             if (list.size.toString() == totalBoxes.toString()) {
                                 submitorder(dorderno)
                             }
@@ -283,6 +290,7 @@ class ProductList : Fragment() {
         pDialog.titleText = "Fetching ..."
         pDialog.setCancelable(true)
         pDialog.show()
+        val cardview1:CardView=binding.cardView2
         val Jsonarra = JSONObject()
         val JSONObj = JSONObject()
         val appversion = AppPreferences.AppVersion
@@ -334,9 +342,11 @@ class ProductList : Fragment() {
                         val dialog: AlertDialog = alertsuborder.create()
                         dialog.show()
                         list.clear()
+                        boxlist.clear()
                         clear()
                         msg!!.text = ""
                         clear()
+                        cardview1.visibility = View.GONE
                     } else {
                         pDialog.dismiss()
                         alertsuborder.setTitle(sorderno.toString())

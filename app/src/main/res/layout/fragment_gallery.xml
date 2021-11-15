@@ -12,6 +12,7 @@
         android:layout_width="365dp"
         android:layout_height="48dp"
         android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
         android:layout_marginEnd="6dp"
         android:background="@drawable/txtscan"
         android:drawableRight="@drawable/barcode"
@@ -108,26 +109,25 @@
                     android:id="@+id/txtCategory"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
                     android:layout_marginEnd="8dp"
                     android:text="N/A"
                     android:textSize="18dp"
                     app:layout_constraintBottom_toBottomOf="@+id/txtView2"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/txtView3"
+                    app:layout_constraintStart_toStartOf="@+id/txtSubCategory"
                     app:layout_constraintTop_toTopOf="@+id/txtView2"></TextView>
 
                 <TextView
                     android:id="@+id/txtSubCategory"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
                     android:layout_marginEnd="8dp"
                     android:text="N/A"
                     android:textSize="18dp"
                     app:layout_constraintBottom_toBottomOf="@+id/txtView3"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@+id/txtCategory"
+                    app:layout_constraintStart_toEndOf="@+id/textView2"
                     app:layout_constraintTop_toTopOf="@+id/txtView3"></TextView>
 
                 <TextView
@@ -182,7 +182,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Subcategory :"
+                    android:text="Sub-cat :"
                     android:textSize="18dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/txtView2"
@@ -252,18 +252,16 @@
 
                     android:text="N/A"
                     android:textSize="18dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/txtViewL"
                     app:layout_constraintEnd_toEndOf="@+id/txtunitype"
-                    app:layout_constraintStart_toStartOf="@+id/txtCategory"
-                    app:layout_constraintTop_toTopOf="@+id/txtViewL"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintStart_toStartOf="@+id/txtunitype"
+                    app:layout_constraintTop_toTopOf="@+id/txtViewL" />
 
                 <ImageView
                     android:id="@+id/productimage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="2dp"
                     android:layout_marginBottom="4dp"
                     android:padding="5dp"
                     android:src="@drawable/noproduct"
@@ -271,7 +269,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.489"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtStock3"
+                    app:layout_constraintTop_toBottomOf="@+id/txtBarScanned"
                     app:layout_constraintVertical_bias="1.0" />
 
                 <TextView
