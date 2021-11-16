@@ -99,6 +99,7 @@ class GalleryFragment : Fragment() {
         val layout = binding.showproductdetails
         val queues = Volley.newRequestQueue(this.context)
 
+
         details.put("barcode", barcoded)
 
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
