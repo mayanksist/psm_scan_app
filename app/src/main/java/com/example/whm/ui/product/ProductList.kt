@@ -75,12 +75,10 @@ class ProductList : Fragment() {
                     if (ordernoenter.contains("/")) {
                         val result1 = ordernoenter.split("/")
                          boxno = result1[1]
-
                         if (FirstorderNO == "") {
                             pDialog.dismiss()
                             FirstorderNO = result1[0]
                         }
-
                         else {
                         if (FirstorderNO == result1[0]) {
                             pDialog.dismiss()
@@ -103,7 +101,6 @@ class ProductList : Fragment() {
                                     noofboxes1.text =
                                         list.size.toString() + " out of " + "" + totalBoxes
                                         lastscanprd.text = boxlist.toString()
-//                                    msg!!.text = list.toString()
                                     msg!!.text = ""
                                     if (list.size.toString() == totalBoxes.toString()) {
                                         submitorder(FirstorderNO)
@@ -156,6 +153,7 @@ class ProductList : Fragment() {
                            alert.setCancelable(true)
                             orderno.setText("")
 
+
                         }
 
                         alert.setNegativeButton("",null)
@@ -199,11 +197,12 @@ class ProductList : Fragment() {
         val appversion = "1.1.0.25"
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var empautoid = preferences.getString("EmpAutoId", "")
+        var accessToken = preferences.getString("accessToken", "")
         val queues = Volley.newRequestQueue(this.context)
         details.put("OrderNO", orderno)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", appversion))
         JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
-        JSONObj.put("requestContainer",Jsonarra.put("accessToken","a2d8fjhsdkfhsbddeveloper@psmgxzn3d8xy7jewbc7x"))
+        JSONObj.put("requestContainer",Jsonarra.put("accessToken",accessToken))
         JSONObj.put("requestContainer",Jsonarra.put("filterkeyword",details))
           val resorderno= JsonObjectRequest(Request.Method.POST,APIURL,JSONObj,
             {
@@ -272,6 +271,7 @@ class ProductList : Fragment() {
                         dialog.show()
                         val orderno1: EditText = binding.txtorderno
                         orderno1.text.clear()
+                        checkr = 0
                     }
                 }
             }, { response ->
@@ -296,10 +296,11 @@ class ProductList : Fragment() {
         val appversion = AppPreferences.AppVersion
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var empautoid = preferences.getString("EmpAutoId", "")
+        var accessToken = preferences.getString("accessToken", "")
         val queues = Volley.newRequestQueue(this.context)
         JSONObj.put("requestContainer",Jsonarra.put("appVersion",appversion))
         JSONObj.put("requestContainer",Jsonarra.put("userAutoId",empautoid))
-        JSONObj.put("requestContainer",Jsonarra.put("accessToken","a2d8fjhsdkfhsbddeveloper@psmgxzn3d8xy7jewbc7x"))
+        JSONObj.put("requestContainer",Jsonarra.put("accessToken",accessToken))
         JSONObj.put("OrderNo",sorderno)
         val alertsuborder= AlertDialog.Builder(this.context)
         val resordernos= JsonObjectRequest(Request.Method.POST,APISUBMITORDER,JSONObj,

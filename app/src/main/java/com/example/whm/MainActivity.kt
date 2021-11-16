@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         val editor = preferences.edit()
         editor.putString("email", email.trim())
         editor.putString("password", password.trim())
+
         editor.apply()
         JSONObj.put("userName",email)
         JSONObj.put("password",password)
@@ -126,6 +127,10 @@ class MainActivity : AppCompatActivity() {
                     intent.putExtra("EmpTypeNo", emptype.toString())
                     intent.putExtra("empname", empname.toString())
                     intent.putExtra("empid", empid.toString())
+                    editor.putString("accessToken", jsondata.getJSONObject(i).getString("accessToken"))
+
+                    editor.apply()
+
                     val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
                     mLayout.visibility = View.GONE
                     val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
@@ -257,6 +262,9 @@ class MainActivity : AppCompatActivity() {
                             intent.putExtra("EmpTypeNo", emptype.toString())
                             intent.putExtra("empname", empname.toString())
                             intent.putExtra("empid", empid.toString())
+                            editor.putString("accessToken", jsondata.getJSONObject(i).getString("accessToken"))
+
+                            editor.apply()
                             val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
                             mLayout.visibility = View.GONE
                             val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout

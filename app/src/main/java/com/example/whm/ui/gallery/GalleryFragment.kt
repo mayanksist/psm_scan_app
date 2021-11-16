@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -101,10 +102,11 @@ class GalleryFragment : Fragment() {
         details.put("barcode", barcoded)
 
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        var accessToken = preferences.getString("accessToken", "")
         JSONObj.put(
             "requestContainer",
-            Jsonarra.put("accessToken", "a2d8fjhsdkfhsbddeveloper@psmgxzn3d8xy7jewbc7x")
+            Jsonarra.put("accessToken", accessToken)
         )
         JSONObj.put("requestContainer", Jsonarra.put("filterkeyword", details))
         val reqPRODUCTDETAILS = JsonObjectRequest(

@@ -11,6 +11,6 @@ import androidx.core.content.ContextCompat.getSystemService
 
 
 object AppPreferences {
-    const val AppVersion = "1.1.0.28"
+    const val AppVersion = "1.1.0.30"
 
 }
