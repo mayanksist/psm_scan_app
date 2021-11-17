@@ -23,7 +23,7 @@
     <string name="menu_slideshow">Logout</string>
     <string name="title_activity_scanproduct">scanproduct</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label" >First Fragment</string>
+    <string name="first_fragment_label">First Fragment</string>
     <string name="product_fragment_label">Product Fragment</string>
     <string name="product_list_fragment">Load Orders</string>
     <string name="second_fragment_label">Second Fragment</string>

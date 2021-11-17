@@ -23,8 +23,6 @@ import org.json.JSONObject
 import java.io.IOException
 
 
-
-
 class LoadOrderListFragment : Fragment() {
     private val LoadorderList = ArrayList<LoadOrderModel>()
     private lateinit var LoadorderAdapter: LoadOrderListAdapter
