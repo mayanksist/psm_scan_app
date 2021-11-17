@@ -21,4 +21,6 @@
             android:id="@+id/action_ScanProduct_to_ProductList"
             app:destination="@id/ProductList" />
     </fragment>
+
+
 </navigation>

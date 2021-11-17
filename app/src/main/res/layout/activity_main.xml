@@ -9,6 +9,7 @@
     android:background="@drawable/backgroundimg"
     android:padding="16dp"
     tools:context=".com.example.whm.MainActivity">
+
     <RelativeLayout
         android:visibility="visible"
         android:layout_width="match_parent"

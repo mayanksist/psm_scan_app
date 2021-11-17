@@ -17,6 +17,14 @@
             android:icon="@drawable/ic_productlist_view_list_24"
             android:title="@string/product_list_fragment" />
         <item
+            android:id="@+id/nav_orderlist"
+            android:icon="@drawable/ic_productlist_view_list_24"
+            android:title="@string/OrderList" />
+        <item
+            android:id="@+id/nav_assignorder"
+            android:icon="@drawable/ic_productlist_view_list_24"
+            android:title="@string/menuassignorder" />
+        <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_logout"
             android:title="@string/menu_slideshow" />

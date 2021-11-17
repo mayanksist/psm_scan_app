@@ -14,8 +14,7 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home"
         android:layout_gravity="center"
-        android:textAlignment="center"
-        />
+        android:textAlignment="center" />
 
     <fragment
         android:id="@+id/nav_product"
@@ -28,7 +27,16 @@
         android:name="com.example.myapplication.ui.product.ProductList"
         android:label="@string/product_list_fragment"
         tools:layout="@layout/fragment_product_list" />
-
+    <fragment
+        android:id="@+id/nav_orderlist"
+        android:name="com.example.whm.ui.load_order_page.LoadOrderListFragment"
+        android:label="@string/OrderList"
+        tools:layout="@layout/fragment_load_order_list" />
+    <fragment
+        android:id="@+id/nav_assignorder"
+        android:label="@string/menuassignorder"
+        android:name="com.example.whm.ui.assignorder.ItemFragment"
+        tools:layout="@layout/fragment_item_list" />
     <fragment
         android:id="@+id/nav_slideshow"
         android:label="@string/menu_slideshow"

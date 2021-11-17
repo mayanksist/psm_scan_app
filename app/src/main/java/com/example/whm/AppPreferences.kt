@@ -6,4 +6,5 @@ object AppPreferences {
     const val BASEURL = "http://api.a1whm.com/AndroidAPI/"
     const val GET_ORDERS = "WDriverOrder.asmx/getOrders"
     const val SUBMIT_LOAD_ORDER = "WDriverOrder.asmx/SubmitLoadOrder"
+    const val GET_ASSIGN_ORDER = "WDriverOrder.asmx/getDriverOrderList"
 }

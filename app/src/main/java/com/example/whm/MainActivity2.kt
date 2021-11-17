@@ -47,10 +47,7 @@ class MainActivity2 : AppCompatActivity() {
         editor.putString("Empname", epname)
         editor.putString("Username", nameu)
         editor.apply()
-
-
-
-        binding = ActivityMain2Binding.inflate(layoutInflater)
+         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
 
@@ -63,8 +60,6 @@ class MainActivity2 : AppCompatActivity() {
             nav_Menu.findItem(R.id.nav_product).isVisible = false
 
         }
-
-
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         val hview = navView.getHeaderView(0)
 
@@ -76,7 +71,7 @@ class MainActivity2 : AppCompatActivity() {
         usename.text =  preferences.getString("Username","")
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_slideshow, R.id.nav_product, R.id.nav_productlist
+                R.id.nav_home, R.id.nav_slideshow, R.id.nav_product, R.id.nav_productlist,R.id.nav_assignorder,R.id.nav_orderlist
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
