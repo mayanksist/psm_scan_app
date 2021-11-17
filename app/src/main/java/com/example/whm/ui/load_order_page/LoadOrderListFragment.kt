@@ -17,7 +17,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
-import com.example.myapplication.com.example.whm.ui.load_order_page.LoadOrderAdapter
+import com.example.myapplication.com.example.whm.ui.load_order_page.LoadOrderListAdapter
 import com.example.myapplication.com.example.whm.ui.load_order_page.LoadOrderModel
 import org.json.JSONObject
 import java.io.IOException
@@ -27,7 +27,9 @@ import java.io.IOException
 
 class LoadOrderListFragment : Fragment() {
     private val LoadorderList = ArrayList<LoadOrderModel>()
-    private lateinit var LoadorderAdapter: LoadOrderAdapter
+    private lateinit var LoadorderAdapter: LoadOrderListAdapter
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,12 +39,15 @@ class LoadOrderListFragment : Fragment() {
             container,
             false
         )
-        val recyclerView: RecyclerView = view.findViewById(R.id.orderlist)
-        LoadorderAdapter = LoadOrderAdapter(LoadorderList)
+
+        val recyclerView: RecyclerView = view.findViewById(R.id.load_order)
+        LoadorderAdapter = LoadOrderListAdapter(LoadorderList)
         val layoutManager = LinearLayoutManager(this.context)
         recyclerView.layoutManager = layoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = LoadorderAdapter
+
+
         val Jsonarra = JSONObject()
         val JSONObj = JSONObject()
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -64,11 +69,11 @@ class LoadOrderListFragment : Fragment() {
                     val jsondata = resultobj.getJSONArray("responseData")
                     for (i in 0 until jsondata.length()) {
                         val OrderNo = jsondata.getJSONObject(i).getString("ONo")
-                        val Orderdate = jsondata.getJSONObject(i).getString("PB")
-                        val Stoppage = jsondata.getJSONObject(i).getString("ST")
+                        val PB = jsondata.getJSONObject(i).getInt("PB")
+                        val Stoppage = "Stop No: "+jsondata.getJSONObject(i).getString("ST")
                         DataBindLoadorder(
                             OrderNo,
-                            Orderdate,
+                            PB,
                             Stoppage
                         )
                     }
@@ -91,7 +96,7 @@ class LoadOrderListFragment : Fragment() {
     }
 
     private fun DataBindLoadorder(
-       Ono: String, PackedBoxes: String,
+        Ono: String, PackedBoxes: Int,
         Stoppage: String
     ) {
 

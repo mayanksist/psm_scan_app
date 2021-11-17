@@ -27,6 +27,7 @@ internal class AssignOrderAdapter(private var orderList: List<OrderModel>) :
             .inflate(R.layout.fragment_item, parent, false)
         return MyViewHolder(itemView)
     }
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val order = orderList[position]
         holder.CustomerName.text = order.getCustomerName()
@@ -37,6 +38,7 @@ internal class AssignOrderAdapter(private var orderList: List<OrderModel>) :
         holder.PayableAmount.text = order.getPayableAmount()
         holder.Stoppage.text = order.getStoppage()
     }
+
     override fun getItemCount(): Int {
         return orderList.size
     }

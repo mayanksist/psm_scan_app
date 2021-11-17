@@ -1,19 +1,17 @@
 package com.example.myapplication.com.example.whm.ui.load_order_page
 
-class LoadOrderModel(Ono: String, PackedBoxes: String,
-                      Stoppage: String) {
+class LoadOrderModel(
+    Ono: String, PackedBoxes: Int,
+    Stoppage: String) {
 
-    private lateinit var Ono: String
-    private lateinit var PackedBoxes: String
-    private lateinit var Stoppage: String
+    private  var Ono: String
+    private  var PackedBoxes: Int
+    private  var Stoppage: String
 
     init {
-
         this.Ono = Ono!!
         this.PackedBoxes = PackedBoxes!!
         this.Stoppage = Stoppage!!
-
-
     }
     fun getOno(): String? {
         return Ono
@@ -22,10 +20,10 @@ class LoadOrderModel(Ono: String, PackedBoxes: String,
         this.Ono = Ono!!
     }
 
-    fun getPackedBoxes():String?{
+    fun getPackedBoxes(): Int {
         return  PackedBoxes
     }
-    fun setPackedBoxes(PackedBoxes: String?){
+    fun setPackedBoxes(PackedBoxes: Int?){
 
         this.PackedBoxes = PackedBoxes!!
     }

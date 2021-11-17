@@ -76,13 +76,14 @@ class ItemFragment : Fragment() {
                 if (rescode == "201") {
                     val jsondata = resultobj.getJSONArray("responseData")
                         for (i in 0 until jsondata.length()) {
-                            val CustomerName = jsondata.getJSONObject(i).getString("CustomerName")
+                            val CustomerName = jsondata.getJSONObject(i).getString("CM")
                             val OrderNo = jsondata.getJSONObject(i).getString("ONo")
                             val Orderdate = jsondata.getJSONObject(i).getString("Od")
                             val Salesperson = jsondata.getJSONObject(i).getString("SP")
-                            val PackedBoxes = jsondata.getJSONObject(i).getString("PackedBoxes")
-                            val Stoppage = jsondata.getJSONObject(i).getString("Stoppage")
-                            val payableamount = jsondata.getJSONObject(i).getString("PayableAmount")
+                            val PackedBoxes = jsondata.getJSONObject(i).getString("PB")
+                            val Stoppage = jsondata.getJSONObject(i).getString("Stop")
+                            val payableamount = jsondata.getJSONObject(i).getString("AMT")
+                            val ST = jsondata.getJSONObject(i).getString("ST")
                             prepareMovieData(
                                 CustomerName,
                                 OrderNo,
