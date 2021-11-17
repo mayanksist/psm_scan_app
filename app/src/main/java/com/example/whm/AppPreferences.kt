@@ -7,4 +7,5 @@ object AppPreferences {
     const val GET_ORDERS = "WDriverOrder.asmx/getOrders"
     const val SUBMIT_LOAD_ORDER = "WDriverOrder.asmx/SubmitLoadOrder"
     const val GET_ASSIGN_ORDER = "WDriverOrder.asmx/getDriverOrderList"
+    const val GET_ASSIGN_ORDER_LIST = "WDriverOrder.asmx/AssignedOrderList"
 }
