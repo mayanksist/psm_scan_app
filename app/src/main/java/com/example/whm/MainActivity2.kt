@@ -26,15 +26,9 @@ class MainActivity2 : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
-   //var usertype: android.R.stringtring()
     var usertype: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        val imm =
-//            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//        imm.hideSoftInputFromWindow(view.windowToken, 0)
-
         val intent = intent
         val epname = intent.getStringExtra("empname")
         val nameu = intent.getStringExtra("Name")
@@ -54,20 +48,17 @@ class MainActivity2 : AppCompatActivity() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         usertype = EmpTypeNo.toString()
-       //Toast.makeText(applicationContext, aotoidemp, Toast.LENGTH_LONG).show()
         val nav_Menu: Menu = navView.menu
+        nav_Menu.findItem(R.id.nav_loadorder).isVisible = false
         if (usertype != "2") {
             nav_Menu.findItem(R.id.nav_product).isVisible = false
 
         }
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         val hview = navView.getHeaderView(0)
-
         val textViewName = hview.findViewById(R.id.emptype) as TextView
         val usename = hview.findViewById(R.id.username) as TextView
-        val AppVersion = hview.findViewById(R.id.txtVersion) as TextView
-        AppVersion.text = "version : " + AppPreferences.AppVersion
-        textViewName.text = preferences.getString("Empname","")
+        textViewName.text = preferences.getString("Empname","") +" ["+ preferences.getString("LName","")+"]"
         usename.text =  preferences.getString("Username","")
         appBarConfiguration = AppBarConfiguration(
             setOf(

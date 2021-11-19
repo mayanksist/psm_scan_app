@@ -16,7 +16,6 @@
         android:id="@+id/ProductList"
         android:label="@string/product_list_fragment"
         tools:layout="@layout/fragment_gallery">
-
         <action
             android:id="@+id/action_ScanProduct_to_ProductList"
             app:destination="@id/ProductList" />

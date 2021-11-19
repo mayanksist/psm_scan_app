@@ -3,25 +3,14 @@ package com.example.myapplication.com.example.whm.ui.home
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.myapplication.com.example.whm.AppPreferences
-import com.example.myapplication.com.example.whm.ui.gallery.GalleryFragment
 
 import com.example.myapplication.databinding.FragmentHomeBinding
-import com.example.myapplication.ui.product.ProductList
-import com.google.android.material.navigation.NavigationView
-import android.R
-
-
 
 
 
@@ -42,16 +31,16 @@ class HomeFragment : Fragment()  {
     ): View? {
 
         mView = inflater.inflate(com.example.myapplication.R.layout.fragment_home, container, false)
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
         val btnInvCheck = mView.findViewById<Button>(com.example.myapplication.R.id.btnInvCheck)
         val btnDriLoad = mView.findViewById<Button>(com.example.myapplication.R.id.btnDriLoad)
+        val btnUnLoadList = mView.findViewById<Button>(com.example.myapplication.R.id.btnunloadOrderlist)
+        val btnOrderList = mView.findViewById<Button>(com.example.myapplication.R.id.btnOrderList)
 
         var Usertype = preferences.getString("EmpTypeNo", "")
         if (Usertype.toString() != "2"){
             btnInvCheck.visibility=   View.GONE
         }
-
-
 
         btnInvCheck.setOnClickListener {
             this.findNavController().navigate(com.example.myapplication.R.id.nav_product)
@@ -59,6 +48,12 @@ class HomeFragment : Fragment()  {
 
         btnDriLoad.setOnClickListener {
             this.findNavController().navigate(com.example.myapplication.R.id.nav_productlist)
+        }
+        btnUnLoadList.setOnClickListener {
+            this.findNavController().navigate(com.example.myapplication.R.id.nav_assignorder)
+        }
+        btnOrderList.setOnClickListener {
+            this.findNavController().navigate(com.example.myapplication.R.id.nav_orderlist)
         }
 
 

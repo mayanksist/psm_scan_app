@@ -20,6 +20,7 @@ internal class AssignOrderAdapter(private var orderList: List<OrderModel>) :
         var PackedBoxes: TextView = view.findViewById(R.id.txtPackedBoxes)
         var PayableAmount: TextView = view.findViewById(R.id.txtPaybleAmount)
         var Stoppage: TextView = view.findViewById(R.id.txtStoppage)
+        var ST: TextView = view.findViewById(R.id.txtStatus)
     }
     @NonNull
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -35,8 +36,9 @@ internal class AssignOrderAdapter(private var orderList: List<OrderModel>) :
         holder.OrderDate.text = order.getOd()
         holder.SalesPerson.text = order.getSP()
         holder.PackedBoxes.text = order.getPackedBoxes()
-        holder.PayableAmount.text = order.getPayableAmount()
+        holder.PayableAmount.text = "$"+order.getPayableAmount()
         holder.Stoppage.text = order.getStoppage()
+        holder.ST.text = order.getST()
     }
 
     override fun getItemCount(): Int {

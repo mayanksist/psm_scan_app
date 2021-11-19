@@ -1,7 +1,7 @@
 package com.example.myapplication.com.example.whm.ui.assignorder
 
 class OrderModel( CustomerName: String, Ono: String,  Od: String,  SP: String, PackedBoxes: String,
-                  Stoppage: String,  PayableAmount: String) {
+                  Stoppage: String,  PayableAmount: String,ST:String) {
     private var CustomerName: String
     private var Ono: String
     private var Od: String
@@ -9,15 +9,17 @@ class OrderModel( CustomerName: String, Ono: String,  Od: String,  SP: String, P
     private var PackedBoxes: String
     private var Stoppage: String
     private var PayableAmount: String
+    private var ST: String
 
     init {
-        this.CustomerName = CustomerName!!
-        this.Ono = Ono!!
-        this.Od = Od!!
-        this.SP = SP!!
-        this.PackedBoxes = PackedBoxes!!
-        this.Stoppage = Stoppage!!
-        this.PayableAmount = PayableAmount!!
+        this.CustomerName = CustomerName
+        this.Ono = Ono
+        this.Od = Od
+        this.SP = SP
+        this.PackedBoxes = PackedBoxes
+        this.Stoppage = Stoppage
+        this.PayableAmount = PayableAmount
+        this.ST = ST
     }
     fun getCustomerName(): String? {
         return CustomerName
@@ -62,4 +64,8 @@ class OrderModel( CustomerName: String, Ono: String,  Od: String,  SP: String, P
     fun setPayableAmount(PayableAmount: String?) {
         this.PayableAmount = PayableAmount!!
     }
+    fun getST(): String? {
+        return ST
+    }
+
 }

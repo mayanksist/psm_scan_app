@@ -1,13 +1,12 @@
 package com.example.whm.ui.assignorder
 
 import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -15,6 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.pedant.SweetAlert.SweetAlertDialog
+import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -23,8 +24,6 @@ import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.ui.assignorder.OrderModel
 import org.json.JSONObject
 import java.io.IOException
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 /**
@@ -46,8 +45,6 @@ class ItemFragment : Fragment() {
         )
 
         val recyclerView: RecyclerView = view.findViewById(R.id.list)
-        val cardOrderList = view.findViewById<CardView>(R.id.OrderListRecyclerView)
-        val cardError = view.findViewById<CardView>(R.id.Error)
         orderAdapter = AssignOrderAdapter(orderList)
         val layoutManager = LinearLayoutManager(this.context)
         recyclerView.layoutManager = layoutManager
@@ -56,7 +53,11 @@ class ItemFragment : Fragment() {
 
         val Jsonarra = JSONObject()
         val JSONObj = JSONObject()
-
+        val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
+        pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
+        pDialog.titleText = "Fetching ..."
+        pDialog.setCancelable(false)
+        pDialog.show()
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var empautoid = preferences.getString("EmpAutoId", "")
         var accessToken = preferences.getString("accessToken", "")
@@ -91,19 +92,29 @@ class ItemFragment : Fragment() {
                                 Salesperson,
                                 PackedBoxes,
                                 Stoppage,
-                                payableamount
+                                payableamount,
+                                ST
                             )
                     }
+                    pDialog.dismiss()
                 } else {
                     val alertscanord = AlertDialog.Builder(this.context)
-                    alertscanord.setMessage("Order not found")
+                    alertscanord.setMessage("No unload order found.")
                     alertscanord.setPositiveButton("ok", null)
                     val dialog: AlertDialog = alertscanord.create()
                     dialog.show()
+                    pDialog.dismiss()
                 }
             }, { response ->
                 Log.e("onError", error(response.toString()))
+                pDialog.dismiss()
             })
+        resorderno.retryPolicy = DefaultRetryPolicy(
+            10000000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+
         try {
             queues.add(resorderno)
         } catch (e: IOException) {
@@ -116,10 +127,10 @@ class ItemFragment : Fragment() {
 
     private fun prepareMovieData(
         CustomerName: String, Ono: String, Od: String, SP: String, PackedBoxes: String,
-        Stoppage: String, PayableAmount: String
+        Stoppage: String, PayableAmount: String,ST:String
     ) {
 
-        var order = OrderModel(CustomerName, Ono, Od, SP, PackedBoxes, Stoppage, PayableAmount)
+        var order = OrderModel(CustomerName, Ono, Od, SP, PackedBoxes, Stoppage, PayableAmount,ST)
         orderList.add(order)
         orderAdapter.notifyDataSetChanged()
     }

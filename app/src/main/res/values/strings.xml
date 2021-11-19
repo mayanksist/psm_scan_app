@@ -16,16 +16,16 @@
     <string name="nav_header_subtitle">test.studio@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="OrderList">Order List</string>
+    <string name="OrderList">Assigned Order List</string>
     <string name="menu_home" formatted="true">A1 WHM</string>
     <string name="menu_gallery">Inventory Check</string>
-    <string name="menuassignorder">Assign Order</string>
+    <string name="menuassignorder">Unload Order List</string>
     <string name="menu_slideshow">Logout</string>
     <string name="title_activity_scanproduct">scanproduct</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="product_fragment_label">Product Fragment</string>
-    <string name="product_list_fragment">Load Orders</string>
+    <string name="product_list_fragment">Manual Load Order</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>

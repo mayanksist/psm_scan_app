@@ -17,10 +17,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.android.volley.*
 
-import com.android.volley.DefaultRetryPolicy
-import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
@@ -156,7 +154,7 @@ class GalleryFragment : Fragment() {
                     } else {
                         stock.text = "${cstock}" + " $punitypa" +" ["+"${DefaultStock}" + " Pieces]"
                     }
-                   barcode.setText(""+barcoded)
+                    barcode.text = ""+barcoded
                     Glide.with(this)
                         .load(imagesurl) // image url
 //                        .placeholder(R.drawable.ic_menu_report_image) // any placeholder to load at start
@@ -183,8 +181,9 @@ class GalleryFragment : Fragment() {
                 pDialog.dismiss()
                 Log.e("onError", error(response.toString()))
             })
+
         reqPRODUCTDETAILS.retryPolicy = DefaultRetryPolicy(
-            10000,
+            1000000,
             DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         )

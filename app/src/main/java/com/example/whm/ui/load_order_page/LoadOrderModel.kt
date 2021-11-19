@@ -9,9 +9,9 @@ class LoadOrderModel(
     private  var Stoppage: String
 
     init {
-        this.Ono = Ono!!
-        this.PackedBoxes = PackedBoxes!!
-        this.Stoppage = Stoppage!!
+        this.Ono = Ono
+        this.PackedBoxes = PackedBoxes
+        this.Stoppage = Stoppage
     }
     fun getOno(): String? {
         return Ono

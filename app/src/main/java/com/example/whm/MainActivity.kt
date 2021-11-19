@@ -25,9 +25,7 @@ import java.io.IOException
 import android.view.View
 
 import android.widget.RelativeLayout
-
-
-
+import com.android.volley.DefaultRetryPolicy
 
 
 class MainActivity : AppCompatActivity() {
@@ -53,20 +51,6 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
-//        scancode.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
-//            if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
-//                val scansecurity = scancode.text
-//                try {
-//                    checkinternet(scansecurity.toString())
-//                }
-//                catch(e:IOException){
-//                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-//                }
-//                return@OnKeyListener true
-//                }
-//            false
-//        })
-
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         if(preferences.getString("email","") != "" && preferences.getString("password","") != "" ){
             val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
@@ -90,7 +74,6 @@ class MainActivity : AppCompatActivity() {
         val editor = preferences.edit()
         editor.putString("email", email.trim())
         editor.putString("password", password.trim())
-
         editor.apply()
         JSONObj.put("userName",email)
         JSONObj.put("password",password)
@@ -122,14 +105,14 @@ class MainActivity : AppCompatActivity() {
                     val emptype = jsondata.getJSONObject(i).getString("EmpTypeNo")
                     val empname=jsondata.getJSONObject(i).getString("EmpType")
                     val empid=jsondata.getJSONObject(i).getString("AutoId")
+                    val LName=jsondata.getJSONObject(i).getString("LName")
                     var intent = Intent(this, MainActivity2::class.java)
                     intent.putExtra("Name", Name.toString())
                     intent.putExtra("EmpTypeNo", emptype.toString())
                     intent.putExtra("empname", empname.toString())
                     intent.putExtra("empid", empid.toString())
+                    editor.putString("LName", LName)
                     editor.putString("accessToken", jsondata.getJSONObject(i).getString("accessToken"))
-
-
                     editor.apply()
 
                     val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
@@ -163,6 +146,11 @@ class MainActivity : AppCompatActivity() {
                     response ->
                 Log.e("onError", error(response.toString()))
             })
+        req.retryPolicy = DefaultRetryPolicy(
+            1000000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
         try {
             queues.add(req)
         }
@@ -216,8 +204,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-
     fun Autologin(email: String, password: String) {
         val Jsonarra=JSONObject()
         val JSONObj = JSONObject()
@@ -258,13 +244,14 @@ class MainActivity : AppCompatActivity() {
                             val emptype = jsondata.getJSONObject(i).getString("EmpTypeNo")
                             val empname=jsondata.getJSONObject(i).getString("EmpType")
                             val empid=jsondata.getJSONObject(i).getString("AutoId")
+                            val LName=jsondata.getJSONObject(i).getString("LName")
                             var intent = Intent(this, MainActivity2::class.java)
                             intent.putExtra("Name", Name.toString())
                             intent.putExtra("EmpTypeNo", emptype.toString())
                             intent.putExtra("empname", empname.toString())
                             intent.putExtra("empid", empid.toString())
                             editor.putString("accessToken", jsondata.getJSONObject(i).getString("accessToken"))
-
+                            editor.putString("LName", LName)
                             editor.apply()
                             val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
                             mLayout.visibility = View.GONE
@@ -289,6 +276,11 @@ class MainActivity : AppCompatActivity() {
                     response ->
                 Log.e("onError", error(response.toString()))
             })
+        req.retryPolicy = DefaultRetryPolicy(
+            1000000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
         try {
             queues.add(req)
         }
