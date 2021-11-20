@@ -10,17 +10,13 @@ import android.text.Editable
 
 
 object AppPreferences {
-
-
-    const val AppVersion = "2.0.0.3"
+    const val AppVersion = "2.0.0.5"
     const val BASEURL = "http://api.a1whm.com/AndroidAPI/"
     const val GET_ORDERS = "WDriverOrder.asmx/getOrders"
     const val SUBMIT_LOAD_ORDER = "WDriverOrder.asmx/SubmitLoadOrder"
     const val GET_ASSIGN_ORDER = "WDriverOrder.asmx/getDriverOrderList"
     const val GET_ASSIGN_ORDER_LIST = "WDriverOrder.asmx/AssignedOrderList"
-
     fun internetConnectionCheck(context: Context?): Boolean {
-
         var Connected = false
         val connectivity = context?.applicationContext
             ?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -37,9 +33,7 @@ object AppPreferences {
             alertnet.setTitle("Connection")
             alertnet.setMessage("Please check your internet connection")
             alertnet.setPositiveButton("ok")
-            { dialog, which -> dialog.dismiss()
-
-            }
+            { dialog, which -> dialog.dismiss()}
             val dialog: AlertDialog = alertnet.create()
             dialog.show()
             Connected = false

@@ -1,28 +1,16 @@
 package com.example.myapplication.com.example.whm.ui.slideshow
-
+import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.example.myapplication.databinding.FragmentSlideshowBinding
-import cn.pedant.SweetAlert.SweetAlertDialog
-
-import android.content.Intent
-import android.preference.PreferenceManager
 import androidx.navigation.fragment.findNavController
-import cn.pedant.SweetAlert.SweetAlertDialog.OnSweetClickListener
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.MainActivity
-import com.example.myapplication.com.example.whm.MainActivity2
-import com.example.myapplication.com.example.whm.ui.home.HomeFragment
-import android.content.SharedPreferences
-import android.view.KeyEvent
-import android.widget.Toast
-
+import com.example.myapplication.databinding.FragmentSlideshowBinding
 
 class SlideshowFragment : Fragment() {
 
@@ -38,15 +26,7 @@ class SlideshowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mView.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    false
-                }
-                true
-            }
-            true
-        })
+        mView = inflater.inflate(R.layout.fragment_slideshow, container, false)
         SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
             .setTitleText("Are you sure?")
             .setContentText("You want to logout.")
