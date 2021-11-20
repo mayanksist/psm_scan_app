@@ -401,6 +401,7 @@ class ProductList : Fragment() {
                     cardview1.visibility = View.GONE
                 } else {
                     if (rspCode.toString() == "200") {
+                        playSound()
                         pDialog.dismiss()
                         alertsuborder.setTitle(sorderno.toString().uppercase(Locale.getDefault()))
                         alertsuborder.setMessage(rspMsg.toString())
@@ -409,6 +410,8 @@ class ProductList : Fragment() {
                             DialogInterface.OnClickListener { dialog, which ->
                                 val orderno3: EditText = binding.txtorderno
                                 orderno3.text.clear()
+                                this.findNavController()
+                                    .navigate(com.example.myapplication.R.id.nav_orderlist)
                             })
                         FirstorderNO = ""
                         checkr = 0
