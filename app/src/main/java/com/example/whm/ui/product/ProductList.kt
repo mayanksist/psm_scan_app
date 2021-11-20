@@ -73,11 +73,8 @@ class ProductList : Fragment() {
             var SharedStopNo = sharedLoadOrderPreferences.getString("Stoppage", "")
             if(PageValue.toInt()==2){
                 setHasOptionsMenu(true)
-
                 val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-
                 (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
-
                 (activity as? AppCompatActivity)?.supportActionBar?.show()
                 (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Load Order"
                 val Ono: TextView = binding.txtorderNo

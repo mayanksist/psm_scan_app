@@ -39,7 +39,9 @@ internal class LoadOrderListAdapter(private var loadorderList: List<LoadOrderMod
         holder.OrderNo.text = order.getOno()
         holder.PackedBoxes.text = order.getPackedBoxes().toString()
         holder.StopNo.text = order.getStoppage()
-        var count:String = "Load Orders ["+loadorderList.size+"]"
+        (activity as? AppCompatActivity)?.setSupportActionBar(holder.toolbar)
+        (activity as? AppCompatActivity)?.supportActionBar?.show()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setTitle("Load Orders ["+loadorderList.size+"]")
         holder.CardView.setOnClickListener(View.OnClickListener {view ->
             val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
             val sharedLoadOrderPage = sharedLoadOrderPreferences.edit()
@@ -50,9 +52,7 @@ internal class LoadOrderListAdapter(private var loadorderList: List<LoadOrderMod
             sharedLoadOrderPage.apply()
             view.findNavController().navigate(R.id.nav_productlist)
         })
-        (activity as? AppCompatActivity)?.setSupportActionBar(holder.toolbar)
-        (activity as? AppCompatActivity)?.supportActionBar?.show()
-        (activity as AppCompatActivity?)!!.supportActionBar!!.setTitle(count)
+
     }
     override fun getItemCount(): Int {
         return loadorderList.size

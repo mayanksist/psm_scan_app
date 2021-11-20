@@ -16,7 +16,7 @@
     <string name="nav_header_subtitle">test.studio@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="OrderList">Load Orders</string>
+    <string name="OrderList">Load Orders  </string>
     <string name="menu_home" formatted="true">A1 WHM</string>
     <string name="menu_gallery">Inventory Check</string>
     <string name="menuassignorder">Unload Orders</string>
