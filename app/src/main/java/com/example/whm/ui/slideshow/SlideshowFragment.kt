@@ -20,12 +20,8 @@ import com.example.myapplication.com.example.whm.MainActivity
 import com.example.myapplication.com.example.whm.MainActivity2
 import com.example.myapplication.com.example.whm.ui.home.HomeFragment
 import android.content.SharedPreferences
-
-
-
-
-
-
+import android.view.KeyEvent
+import android.widget.Toast
 
 
 class SlideshowFragment : Fragment() {
@@ -42,7 +38,15 @@ class SlideshowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mView = inflater.inflate(R.layout.fragment_slideshow, container, false)
+        mView.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    false
+                }
+                true
+            }
+            true
+        })
         SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
             .setTitleText("Are you sure?")
             .setContentText("You want to logout.")

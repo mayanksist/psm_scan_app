@@ -6,10 +6,12 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -35,6 +37,16 @@ class HomeFragment : Fragment()  {
     ): View? {
 
     mView = inflater.inflate(com.example.myapplication.R.layout.fragment_home, container, false)
+        mView.requestFocus();
+        mView.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    false
+                }
+                true
+            }
+            true
+        })
     val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
     val btnInvCheck = mView.findViewById<Button>(com.example.myapplication.R.id.btnInvCheck)
     val btnDriLoad = mView.findViewById<Button>(com.example.myapplication.R.id.btnDriLoad)

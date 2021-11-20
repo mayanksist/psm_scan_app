@@ -42,30 +42,43 @@ import kotlin.collections.ArrayList
 
 class ProductList : Fragment() {
 
-    private  lateinit var  productListViewModel: ProductListViewModel
+    private lateinit var productListViewModel: ProductListViewModel
     private var _binding: FragmentProductListBinding? = null
     private val binding get() = _binding!!
     val list: MutableList<String> = ArrayList()
     val boxlist: MutableList<String> = ArrayList()
-    var FirstorderNO:String=""
-    var ordernoenter:String=""
-    var checkr=0
-    var totalBoxes =0
-    var boxno:String=""
-    var msg:TextView?=null
+    var FirstorderNO: String = ""
+    var ordernoenter: String = ""
+    var checkr = 0
+    var totalBoxes = 0
+    var boxno: String = ""
+    var msg: TextView? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
 
-        productListViewModel= ViewModelProvider(this).get(ProductListViewModel::class.java)
+        productListViewModel = ViewModelProvider(this).get(ProductListViewModel::class.java)
         _binding = FragmentProductListBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        var count =0
-        val view=inflater.inflate(com.example.myapplication.R.layout.fragment_product_list,container,false)
-
-        if(internetConnectionCheck(this.context)) {
+        var count = 0
+        val view = inflater.inflate(
+            com.example.myapplication.R.layout.fragment_product_list,
+            container,
+            false
+        )
+        view.requestFocus();
+        view.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    false
+                }
+                true
+            }
+            true
+        })
+        if (internetConnectionCheck(this.context)) {
             val orderno: EditText = binding.txtorderno
             val noofboxes1: TextView = binding.txtpackedb
             val lastscanprd: TextView = binding.txtscanproduct
@@ -206,13 +219,13 @@ class ProductList : Fragment() {
                     false
                 })
             })
-        }
-        else{
+        } else {
             val alertnet = AlertDialog.Builder(activity)
             alertnet.setTitle("Connection")
             alertnet.setMessage("Please check your internet connection")
             alertnet.setPositiveButton("ok")
-            { dialog, which -> dialog.dismiss()
+            { dialog, which ->
+                dialog.dismiss()
                 this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
             }
             val dialog: AlertDialog = alertnet.create()
@@ -225,16 +238,18 @@ class ProductList : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-    val APIURL: String = "http://api.a1whm.com/AndroidAPI/WDriverOrder.asmx/getOrders"
-    val APISUBMITORDER : String= "https://api.a1whm.com/AndroidAPI/WDriverOrder.asmx/SubmitLoadOrder"
 
-    fun orderdetailsbind(orderno: String,barcode:String) {
+    val APIURL: String = "http://api.a1whm.com/AndroidAPI/WDriverOrder.asmx/getOrders"
+    val APISUBMITORDER: String =
+        "https://api.a1whm.com/AndroidAPI/WDriverOrder.asmx/SubmitLoadOrder"
+
+    fun orderdetailsbind(orderno: String, barcode: String) {
         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
         pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
         pDialog.titleText = "Fetching ..."
         pDialog.setCancelable(false)
         pDialog.show()
-        val cardview:CardView=binding.cardView2
+        val cardview: CardView = binding.cardView2
         //Toast.makeText(this.context, barcoded, Toast.LENGTH_SHORT).show()
         val txtorderno: TextView = binding.txtorderNo
         val txtstop: TextView = binding.txtstoppage
@@ -251,11 +266,10 @@ class ProductList : Fragment() {
         details.put("OrderNO", orderno)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", appversion))
         JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
-        JSONObj.put("requestContainer",Jsonarra.put("accessToken",accessToken))
-        JSONObj.put("requestContainer",Jsonarra.put("filterkeyword",details))
-        val resorderno= JsonObjectRequest(Request.Method.POST,APIURL,JSONObj,
-            {
-                    response ->
+        JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
+        JSONObj.put("requestContainer", Jsonarra.put("filterkeyword", details))
+        val resorderno = JsonObjectRequest(Request.Method.POST, APIURL, JSONObj,
+            { response ->
                 val resobj = (response.toString())
                 val responsemsg = JSONObject(resobj.toString())
                 val resultobj = JSONObject(responsemsg.getString("d"))
@@ -273,7 +287,8 @@ class ProductList : Fragment() {
                             clear()
                             val orderno4: EditText = binding.txtorderno
                             orderno4.text.clear()
-                            this.findNavController().navigate(com.example.myapplication.R.id.nav_orderlist)
+                            this.findNavController()
+                                .navigate(com.example.myapplication.R.id.nav_orderlist)
                         })
                     FirstorderNO = ""
                     checkr = 0
@@ -281,8 +296,7 @@ class ProductList : Fragment() {
                     dialog.show()
                     cardview.visibility = View.GONE
 
-                }
-                else {
+                } else {
                     if (presponsmsg == "Orders Found") {
                         cardview.visibility = View.GONE
                         cardview.visibility = View.VISIBLE
@@ -335,18 +349,18 @@ class ProductList : Fragment() {
         )
         try {
             queues.add(resorderno)
-        }
-        catch (e:IOException){
+        } catch (e: IOException) {
             Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
         }
     }
+
     fun submitorder(sorderno: String) {
         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
         pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
         pDialog.titleText = "Fetching ..."
         pDialog.setCancelable(false)
         pDialog.show()
-        val cardview1:CardView=binding.cardView2
+        val cardview1: CardView = binding.cardView2
         val Jsonarra = JSONObject()
         val JSONObj = JSONObject()
         val appversion = AppPreferences.AppVersion
@@ -354,14 +368,13 @@ class ProductList : Fragment() {
         var empautoid = preferences.getString("EmpAutoId", "")
         var accessToken = preferences.getString("accessToken", "")
         val queues = Volley.newRequestQueue(this.context)
-        JSONObj.put("requestContainer",Jsonarra.put("appVersion",appversion))
-        JSONObj.put("requestContainer",Jsonarra.put("userAutoId",empautoid))
-        JSONObj.put("requestContainer",Jsonarra.put("accessToken",accessToken))
-        JSONObj.put("OrderNo",sorderno)
-        val alertsuborder= AlertDialog.Builder(this.context)
-        val resordernos= JsonObjectRequest(Request.Method.POST,APISUBMITORDER,JSONObj,
-            {
-                    response ->
+        JSONObj.put("requestContainer", Jsonarra.put("appVersion", appversion))
+        JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
+        JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
+        JSONObj.put("OrderNo", sorderno)
+        val alertsuborder = AlertDialog.Builder(this.context)
+        val resordernos = JsonObjectRequest(Request.Method.POST, APISUBMITORDER, JSONObj,
+            { response ->
                 val resobj = (response.toString())
                 val responsemsg = JSONObject(resobj.toString())
                 val resultobj = JSONObject(responsemsg.getString("d"))
@@ -378,15 +391,15 @@ class ProductList : Fragment() {
                         clear()
                         val orderno2: EditText = binding.txtorderno
                         orderno2.text.clear()
-                        this.findNavController().navigate(com.example.myapplication.R.id.nav_orderlist)
+                        this.findNavController()
+                            .navigate(com.example.myapplication.R.id.nav_orderlist)
                     }
                     FirstorderNO = ""
                     checkr = 0
                     val dialog: AlertDialog = alertsuborder.create()
                     dialog.show()
                     cardview1.visibility = View.GONE
-                }
-                else {
+                } else {
                     if (rspCode.toString() == "200") {
                         pDialog.dismiss()
                         alertsuborder.setTitle(sorderno.toString().uppercase(Locale.getDefault()))
@@ -416,8 +429,8 @@ class ProductList : Fragment() {
                         dialog.show()
                     }
                 }
-            }, {
-                    response -> Log.e("onError", error(response.toString()))
+            }, { response ->
+                Log.e("onError", error(response.toString()))
             })
         resordernos.retryPolicy = DefaultRetryPolicy(
             1000000,
@@ -442,6 +455,7 @@ class ProductList : Fragment() {
         txtpacked.text = "0"
     }
 }
+
 fun internetConnectionCheck(activity: Context?): Boolean {
     var Connected = false
     val connectivity = activity?.applicationContext
@@ -451,15 +465,15 @@ fun internetConnectionCheck(activity: Context?): Boolean {
         if (info != null) for (i in info.indices) if (info[i].state == NetworkInfo.State.CONNECTED) {
 
             Connected = true
-        }
-        else {
+        } else {
         }
     } else {
         val alertnet = AlertDialog.Builder(activity)
         alertnet.setTitle("Connection")
         alertnet.setMessage("Please check your internet connection")
         alertnet.setPositiveButton("ok")
-        { dialog, which -> dialog.dismiss()
+        { dialog, which ->
+            dialog.dismiss()
 
         }
         val dialog: AlertDialog = alertnet.create()
@@ -468,8 +482,9 @@ fun internetConnectionCheck(activity: Context?): Boolean {
     }
     return Connected
 }
+
 fun playSound() {
-    var url:String="https://psmnj.a1whm.com/Audio/NOExists.mp3"
+    var url: String = "https://psmnj.a1whm.com/Audio/NOExists.mp3"
     val mediaPlayer = MediaPlayer().apply {
         setAudioAttributes(
             AudioAttributes.Builder()
@@ -482,6 +497,7 @@ fun playSound() {
         start()
     }
 }
+
 fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
 
 }

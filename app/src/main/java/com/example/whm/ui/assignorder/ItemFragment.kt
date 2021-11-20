@@ -8,6 +8,7 @@ import android.net.NetworkInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,10 @@ import com.example.myapplication.com.example.whm.ui.assignorder.OrderModel
 import com.example.myapplication.ui.product.setSupportActionBar
 import org.json.JSONObject
 import java.io.IOException
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
+
+
+
 
 
 /**
@@ -50,6 +55,14 @@ class ItemFragment : Fragment() {
             container,
             false
         )
+        view.requestFocus();
+        view.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                }
+            }
+            true
+        })
         if(internetConnectionCheck(this.context)) {
             val recyclerView: RecyclerView = view.findViewById(R.id.list)
             val sharedUnloadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
@@ -154,7 +167,6 @@ class ItemFragment : Fragment() {
         CustomerName: String, Ono: String, Od: String, SP: String, PackedBoxes: String,
         Stoppage: String, PayableAmount: String,ST:String
     ) {
-
         var order = OrderModel(CustomerName, Ono, Od, SP, PackedBoxes, Stoppage, PayableAmount,ST)
         orderList.add(order)
         orderAdapter.notifyDataSetChanged()
@@ -186,4 +198,5 @@ class ItemFragment : Fragment() {
         }
         return Connected
     }
+    
 }

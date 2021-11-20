@@ -53,7 +53,16 @@ class GalleryFragment : Fragment() {
                 container,
                 false
             )
-         if(internetConnectionCheck(this.context)) {
+        root.requestFocus();
+        root.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+                }
+            }
+            true
+        })
+        if(internetConnectionCheck(this.context)) {
             val barcode: EditText = binding.barcodetype
             galleryViewModel.text.observe(viewLifecycleOwner, Observer {
                 barcode.requestFocus()

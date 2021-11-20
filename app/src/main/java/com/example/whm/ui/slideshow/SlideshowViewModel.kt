@@ -8,8 +8,6 @@ class SlideshowViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "Logout !!!"
-
-
     }
     val text: LiveData<String> = _text
 }

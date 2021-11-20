@@ -34,6 +34,7 @@ import com.example.myapplication.ui.product.setSupportActionBar
 import org.json.JSONObject
 import java.io.IOException
 import android.app.Activity
+import android.view.KeyEvent
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.com.example.whm.MainActivity
 
@@ -47,11 +48,16 @@ class LoadOrderListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(
-            com.example.myapplication.R.layout.fragment_loadorderlists,
-            container,
-            false
-        )
+        val view = inflater.inflate(R.layout.fragment_loadorderlists, container, false)
+        view.requestFocus();
+        view.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+                }
+            }
+            true
+        })
         if(internetConnectionCheck(this.context)){
             val recyclerView: RecyclerView = view.findViewById(R.id.load_order)
             LoadorderAdapter = LoadOrderListAdapter(LoadorderList, this.context)
@@ -136,15 +142,10 @@ class LoadOrderListFragment : Fragment() {
             dialog.show()
 
         }
-
         return view
     }
 
-    private fun DataBindLoadorder(
-        Ono: String, PackedBoxes: Int,
-        Stoppage: String
-    ) {
-
+    private fun DataBindLoadorder(Ono: String, PackedBoxes: Int, Stoppage: String) {
         var Loadorder = LoadOrderModel(Ono, PackedBoxes, Stoppage)
         LoadorderList.add(Loadorder)
         LoadorderAdapter.notifyDataSetChanged()

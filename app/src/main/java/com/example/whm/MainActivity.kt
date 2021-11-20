@@ -11,7 +11,9 @@ import android.preference.PreferenceManager
 import android.text.Editable
 import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import android.widget.EditText
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,10 +25,6 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.apisettings
 import org.json.JSONObject
 import java.io.IOException
-import android.view.View
-
-import android.widget.RelativeLayout
-import androidx.navigation.fragment.findNavController
 
 
 class MainActivity : AppCompatActivity() {
@@ -45,13 +43,12 @@ class MainActivity : AppCompatActivity() {
                 } catch(e:IOException){
                     Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                 }
-    //                return@OnKeyListener true
+                    return@OnKeyListener true
 
                 return@OnKeyListener true
             }
             false
         }
-
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         if(preferences.getString("email","") != "" && preferences.getString("password","") != "" ){
             val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
@@ -62,9 +59,7 @@ class MainActivity : AppCompatActivity() {
                 preferences.getString("password","")!!
             ) }
         }
-
     }
-    var volleyRequestQueue: RequestQueue? = null
     val APIURL: String = apisettings().apiurl + "wpackerlogin.asmx/login"
     fun login(email: String, password: String) {
         val Jsonarra=JSONObject()
@@ -137,7 +132,7 @@ class MainActivity : AppCompatActivity() {
                 val alertemail=AlertDialog.Builder(this)
                 alertemail.setTitle("User")
                 alertemail.setMessage(msg.toString())
-                alertemail.setPositiveButton("ok",)
+                alertemail.setPositiveButton("ok")
                 { dialog, which -> dialog.dismiss()
                     scancode.text = ""
                 }
@@ -184,7 +179,7 @@ class MainActivity : AppCompatActivity() {
                 else{
                     val alertemail = AlertDialog.Builder(this)
                     alertemail.setMessage("Invalid credentials")
-                    alertemail.setPositiveButton("ok", )
+                    alertemail.setPositiveButton("ok")
                     { dialog, which -> dialog.dismiss()
                         scancode.text = ""
                     }
@@ -329,5 +324,12 @@ class MainActivity : AppCompatActivity() {
             Connected = false
         }
         return Connected
+    }
+    override fun onKeyDown(key_code: Int, key_event: KeyEvent?): Boolean {
+        if (key_code == KeyEvent.KEYCODE_BACK) {
+            super.onKeyDown(key_code, key_event)
+            return true
+        }
+        return false
     }
 }

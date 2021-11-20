@@ -18,6 +18,7 @@ import com.example.myapplication.databinding.ActivityMain2Binding
 import com.google.android.material.navigation.NavigationView
 import android.app.Activity
 import android.content.Context
+import android.view.KeyEvent
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 
@@ -43,6 +44,7 @@ class MainActivity2 : AppCompatActivity() {
         editor.apply()
          binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+
         setSupportActionBar(binding.appBarMain.toolbar)
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
@@ -76,12 +78,17 @@ class MainActivity2 : AppCompatActivity() {
         menuInflater.inflate(R.menu.main_activity2, menu)
         return true
     }
-
     override fun onSupportNavigateUp(): Boolean {
             val navController = findNavController(R.id.nav_host_fragment_content_main)
             return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
+    override fun onKeyDown(key_code: Int, key_event: KeyEvent?): Boolean {
+        if (key_code == KeyEvent.KEYCODE_BACK) {
+            super.onKeyDown(key_code, key_event)
+            return false
+        }
+        return true
+    }
 }
 
 
