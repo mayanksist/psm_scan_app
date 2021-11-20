@@ -263,6 +263,7 @@ class ProductList : Fragment() {
                 val presponsmsg = resultobj.getString("responseMessage")
                 if (resmsg == "failed") {
                     pDialog.dismiss()
+                    playSound()
                     val alertorfailed = AlertDialog.Builder(this.context)
                     alertorfailed.setTitle(orderno)
                     alertorfailed.setMessage(presponsmsg.toString())
@@ -272,6 +273,7 @@ class ProductList : Fragment() {
                             clear()
                             val orderno4: EditText = binding.txtorderno
                             orderno4.text.clear()
+                            this.findNavController().navigate(com.example.myapplication.R.id.nav_orderlist)
                         })
                     FirstorderNO = ""
                     checkr = 0
