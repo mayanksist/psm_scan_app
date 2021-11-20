@@ -2,6 +2,7 @@ package com.example.myapplication.com.example.whm
 
 import android.app.AlertDialog
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
@@ -25,9 +26,7 @@ import java.io.IOException
 import android.view.View
 
 import android.widget.RelativeLayout
-
-
-
+import androidx.navigation.fragment.findNavController
 
 
 class MainActivity : AppCompatActivity() {
@@ -52,19 +51,6 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
-//        scancode.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
-//            if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
-//                val scansecurity = scancode.text
-//                try {
-//                    checkinternet(scansecurity.toString())
-//                }
-//                catch(e:IOException){
-//                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-//                }
-//                return@OnKeyListener true
-//                }
-//            false
-//        })
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         if(preferences.getString("email","") != "" && preferences.getString("password","") != "" ){
@@ -188,13 +174,10 @@ class MainActivity : AppCompatActivity() {
                     val getkey = scansecuritykey.split("_")
                     val userid = getkey[0]
                     val  upasswords = getkey[1]
-//                var email = findViewById<EditText>(com.example.myapplication.R.id.email)
-//                var upassword = findViewById<EditText>(com.example.myapplication.R.id.password)
                     var useremail = userid
                     var password = upasswords
                     useremail=userid
                     password=upasswords
-
                             login(useremail, password)
 
                 }
@@ -208,10 +191,9 @@ class MainActivity : AppCompatActivity() {
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
                 }
-
             } else {
                 val alertnet = AlertDialog.Builder(this)
-                alertnet.setTitle("Connetction")
+                alertnet.setTitle("Connection")
                 alertnet.setMessage("Check your internet connection")
                 alertnet.setPositiveButton("ok")
                 { dialog, which -> dialog.dismiss()
@@ -231,78 +213,121 @@ class MainActivity : AppCompatActivity() {
         val JSONObj = JSONObject()
         val appversion = AppPreferences.AppVersion
         val queues = Volley.newRequestQueue(this@MainActivity)
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val editor = preferences.edit()
-        editor.putString("email", email)
-        editor.putString("password", password)
-        editor.apply()
-        JSONObj.put("userName",email)
-        JSONObj.put("password",password)
-        JSONObj.put("requestContainer",Jsonarra.put("appVersion",appversion))
-        // Toast.makeText(this@MainActivity, JSONObj.toString(), Toast.LENGTH_LONG).show()
-        val req=JsonObjectRequest(Request.Method.POST,APIURL,JSONObj,
+        if(internetConnectionCheck(this)) {
+            val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+            val editor = preferences.edit()
+            editor.putString("email", email)
+            editor.putString("password", password)
+            editor.apply()
+            JSONObj.put("userName", email)
+            JSONObj.put("password", password)
+            JSONObj.put("requestContainer", Jsonarra.put("appVersion", appversion))
+            // Toast.makeText(this@MainActivity, JSONObj.toString(), Toast.LENGTH_LONG).show()
+            val req = JsonObjectRequest(Request.Method.POST, APIURL, JSONObj,
 
-            Response.Listener {
-                    response ->
-                val resobj = JSONObj.put("response", response.toString())
-                val responsemsg = JSONObject(resobj.getString("response"))
-                val responmsg = JSONObject(responsemsg.getString("d"))
-                val msg = responmsg.getString("response")
-                val resmsg = responmsg.getString("responseMessage")
-                if (msg == "failed") {
-                    val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
-                    mLayout.visibility = View.VISIBLE
-                    val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
-                    mhiddenLayout.visibility = View.GONE
-                    editor.clear()
-                    editor.apply()
-                }
-                else {
-                    if (msg == "success") {
-                        val jsondata = responmsg.getJSONArray("responseData")
-                        for (i in 0 until jsondata.length()) {
-
-                            val Name = jsondata.getJSONObject(i).getString("Name")
-                            val emptype = jsondata.getJSONObject(i).getString("EmpTypeNo")
-                            val empname=jsondata.getJSONObject(i).getString("EmpType")
-                            val empid=jsondata.getJSONObject(i).getString("AutoId")
-                            val LName=jsondata.getJSONObject(i).getString("LName")
-                            var intent = Intent(this, MainActivity2::class.java)
-                            intent.putExtra("Name", Name.toString())
-                            intent.putExtra("EmpTypeNo", emptype.toString())
-                            intent.putExtra("empname", empname.toString())
-                            intent.putExtra("empid", empid.toString())
-                            editor.putString("accessToken", jsondata.getJSONObject(i).getString("accessToken"))
-                            editor.putString("LName", LName)
-                            editor.apply()
-                            val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
-                            mLayout.visibility = View.GONE
-                            val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
-                            mhiddenLayout.visibility = View.VISIBLE
-                            startActivity(intent)
-
-                        }
-                    }
-                    else {
-                        val alertemail=AlertDialog.Builder(this)
-                        alertemail.setTitle("User")
-                        alertemail.setMessage(msg.toString())
-                        alertemail.setPositiveButton("ok",null)
-                        val dialog:AlertDialog=alertemail.create()
-                        dialog.show()
+                Response.Listener { response ->
+                    val resobj = JSONObj.put("response", response.toString())
+                    val responsemsg = JSONObject(resobj.getString("response"))
+                    val responmsg = JSONObject(responsemsg.getString("d"))
+                    val msg = responmsg.getString("response")
+                    val resmsg = responmsg.getString("responseMessage")
+                    if (msg == "failed") {
+                        val mLayout =
+                            findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
+                        mLayout.visibility = View.VISIBLE
+                        val mhiddenLayout =
+                            findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
+                        mhiddenLayout.visibility = View.GONE
                         editor.clear()
                         editor.apply()
+                    } else {
+                        if (msg == "success") {
+                            val jsondata = responmsg.getJSONArray("responseData")
+                            for (i in 0 until jsondata.length()) {
+
+                                val Name = jsondata.getJSONObject(i).getString("Name")
+                                val emptype = jsondata.getJSONObject(i).getString("EmpTypeNo")
+                                val empname = jsondata.getJSONObject(i).getString("EmpType")
+                                val empid = jsondata.getJSONObject(i).getString("AutoId")
+                                val LName = jsondata.getJSONObject(i).getString("LName")
+                                var intent = Intent(this, MainActivity2::class.java)
+                                intent.putExtra("Name", Name.toString())
+                                intent.putExtra("EmpTypeNo", emptype.toString())
+                                intent.putExtra("empname", empname.toString())
+                                intent.putExtra("empid", empid.toString())
+                                editor.putString(
+                                    "accessToken",
+                                    jsondata.getJSONObject(i).getString("accessToken")
+                                )
+                                editor.putString("LName", LName)
+                                editor.apply()
+                                val mLayout =
+                                    findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
+                                mLayout.visibility = View.GONE
+                                val mhiddenLayout =
+                                    findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
+                                mhiddenLayout.visibility = View.VISIBLE
+                                startActivity(intent)
+
+                            }
+                        } else {
+                            val alertemail = AlertDialog.Builder(this)
+                            alertemail.setTitle("User")
+                            alertemail.setMessage(msg.toString())
+                            alertemail.setPositiveButton("ok", null)
+                            val dialog: AlertDialog = alertemail.create()
+                            dialog.show()
+                            editor.clear()
+                            editor.apply()
+                        }
                     }
-                }
-            },Response.ErrorListener {
-                    response ->
-                Log.e("onError", error(response.toString()))
-            })
-        try {
-            queues.add(req)
+                }, Response.ErrorListener { response ->
+                    Log.e("onError", error(response.toString()))
+                })
+            try {
+                queues.add(req)
+            } catch (e: IOException) {
+                Toast.makeText(this.applicationContext, "Server Error", Toast.LENGTH_LONG).show()
+            }
         }
-        catch (e:IOException){
-            Toast.makeText(this.applicationContext, "Server Error", Toast.LENGTH_LONG).show()
+        else{
+            val alertnet = AlertDialog.Builder(this)
+            alertnet.setTitle("Connection")
+            alertnet.setMessage("Please check your internet connection")
+            alertnet.setPositiveButton("ok")
+            { dialog, which -> dialog.dismiss()
+                var intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+            val dialog: AlertDialog = alertnet.create()
+            dialog.show()
+
         }
+    }
+    fun internetConnectionCheck(activity: Context?): Boolean {
+        var Connected = false
+        val connectivity = activity?.applicationContext
+            ?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivity != null) {
+            val info = connectivity.allNetworkInfo
+            if (info != null) for (i in info.indices) if (info[i].state == NetworkInfo.State.CONNECTED) {
+
+                Connected = true
+            }
+            else {
+            }
+        } else {
+            val alertnet = AlertDialog.Builder(activity)
+            alertnet.setTitle("Connection")
+            alertnet.setMessage("Please check your internet connection")
+            alertnet.setPositiveButton("ok")
+            { dialog, which -> dialog.dismiss()
+
+            }
+            val dialog: AlertDialog = alertnet.create()
+            dialog.show()
+            Connected = false
+        }
+        return Connected
     }
 }

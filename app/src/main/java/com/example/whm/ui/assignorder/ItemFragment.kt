@@ -1,7 +1,10 @@
 package com.example.whm.ui.assignorder
 
 import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Color
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -13,6 +16,7 @@ import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,44 +50,44 @@ class ItemFragment : Fragment() {
             container,
             false
         )
+        if(internetConnectionCheck(this.context)) {
+            val recyclerView: RecyclerView = view.findViewById(R.id.list)
+            val sharedUnloadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
+            var UnloadOrderCount = sharedUnloadOrderPreferences.getString("UnloadOrder", "[0]")
+            setHasOptionsMenu(true)
 
-        val recyclerView: RecyclerView = view.findViewById(R.id.list)
-        val sharedUnloadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
-        var UnloadOrderCount = sharedUnloadOrderPreferences.getString("UnloadOrder", "[0]")
-        setHasOptionsMenu(true)
 
+            orderAdapter = AssignOrderAdapter(orderList,this.context)
+            val layoutManager = LinearLayoutManager(this.context)
+            recyclerView.layoutManager = layoutManager
+            recyclerView.itemAnimator = DefaultItemAnimator()
+            recyclerView.adapter = orderAdapter
 
-        orderAdapter = AssignOrderAdapter(orderList,this.context)
-        val layoutManager = LinearLayoutManager(this.context)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.itemAnimator = DefaultItemAnimator()
-        recyclerView.adapter = orderAdapter
+            val Jsonarra = JSONObject()
+            val JSONObj = JSONObject()
+            val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
+            pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
+            pDialog.titleText = "Fetching ..."
+            pDialog.setCancelable(false)
+            pDialog.show()
+            val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+            var empautoid = preferences.getString("EmpAutoId", "")
+            var accessToken = preferences.getString("accessToken", "")
+            val queues = Volley.newRequestQueue(this.context)
 
-        val Jsonarra = JSONObject()
-        val JSONObj = JSONObject()
-        val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
-        pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
-        pDialog.titleText = "Fetching ..."
-        pDialog.setCancelable(false)
-        pDialog.show()
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-        var empautoid = preferences.getString("EmpAutoId", "")
-        var accessToken = preferences.getString("accessToken", "")
-        val queues = Volley.newRequestQueue(this.context)
+            JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+            JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
+            JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
 
-        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
-        JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
-
-        val resorderno = JsonObjectRequest(
-            Request.Method.POST, AppPreferences.BASEURL + AppPreferences.GET_ASSIGN_ORDER, JSONObj,
-            { response ->
-                val resobj = (response.toString())
-                val responsemsg = JSONObject(resobj.toString())
-                val resultobj = JSONObject(responsemsg.getString("d"))
-                val rescode = resultobj.getString("responseCode")
-                if (rescode == "201") {
-                    val jsondata = resultobj.getJSONArray("responseData")
+            val resorderno = JsonObjectRequest(
+                Request.Method.POST, AppPreferences.BASEURL + AppPreferences.GET_ASSIGN_ORDER, JSONObj,
+                { response ->
+                    val resobj = (response.toString())
+                    val responsemsg = JSONObject(resobj.toString())
+                    val resultobj = JSONObject(responsemsg.getString("d"))
+                    val rescode = resultobj.getString("responseCode")
+                    if (rescode == "201") {
+                        val jsondata = resultobj.getJSONArray("responseData")
                         for (i in 0 until jsondata.length()) {
                             val CustomerName = jsondata.getJSONObject(i).getString("CM")
                             val OrderNo = jsondata.getJSONObject(i).getString("ONo")
@@ -103,30 +107,43 @@ class ItemFragment : Fragment() {
                                 payableamount,
                                 ST
                             )
+                        }
+                        pDialog.dismiss()
+                    } else {
+                        val alertscanord = AlertDialog.Builder(this.context)
+                        alertscanord.setMessage("No unload order found.")
+                        alertscanord.setPositiveButton("ok", null)
+                        val dialog: AlertDialog = alertscanord.create()
+                        dialog.show()
+                        pDialog.dismiss()
                     }
+                }, { response ->
+                    Log.e("onError", error(response.toString()))
                     pDialog.dismiss()
-                } else {
-                    val alertscanord = AlertDialog.Builder(this.context)
-                    alertscanord.setMessage("No unload order found.")
-                    alertscanord.setPositiveButton("ok", null)
-                    val dialog: AlertDialog = alertscanord.create()
-                    dialog.show()
-                    pDialog.dismiss()
-                }
-            }, { response ->
-                Log.e("onError", error(response.toString()))
-                pDialog.dismiss()
-            })
-        resorderno.retryPolicy = DefaultRetryPolicy(
-            10000000,
-            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        )
+                })
+            resorderno.retryPolicy = DefaultRetryPolicy(
+                10000000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            )
 
-        try {
-            queues.add(resorderno)
-        } catch (e: IOException) {
-            Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
+            try {
+                queues.add(resorderno)
+            } catch (e: IOException) {
+                Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
+            }
+
+        }
+        else{
+            val alertnet = AlertDialog.Builder(this.context)
+            alertnet.setTitle("Connection")
+            alertnet.setMessage("Please check your internet connection")
+            alertnet.setPositiveButton("ok")
+            { dialog, which -> dialog.dismiss()
+                this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
+            }
+            val dialog: AlertDialog = alertnet.create()
+            dialog.show()
         }
 
         return view
@@ -141,5 +158,32 @@ class ItemFragment : Fragment() {
         var order = OrderModel(CustomerName, Ono, Od, SP, PackedBoxes, Stoppage, PayableAmount,ST)
         orderList.add(order)
         orderAdapter.notifyDataSetChanged()
+    }
+
+    fun internetConnectionCheck(activity: Context?): Boolean {
+        var Connected = false
+        val connectivity = activity?.applicationContext
+            ?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivity != null) {
+            val info = connectivity.allNetworkInfo
+            if (info != null) for (i in info.indices) if (info[i].state == NetworkInfo.State.CONNECTED) {
+
+                Connected = true
+            }
+            else {
+            }
+        } else {
+            val alertnet = AlertDialog.Builder(activity)
+            alertnet.setTitle("Connection")
+            alertnet.setMessage("Please check your internet connection")
+            alertnet.setPositiveButton("ok")
+            { dialog, which -> dialog.dismiss()
+
+            }
+            val dialog: AlertDialog = alertnet.create()
+            dialog.show()
+            Connected = false
+        }
+        return Connected
     }
 }

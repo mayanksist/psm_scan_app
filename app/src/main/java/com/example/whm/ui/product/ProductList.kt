@@ -1,8 +1,13 @@
 package com.example.myapplication.ui.product
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
+import android.media.AudioAttributes
+import android.media.MediaPlayer
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -19,6 +24,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
@@ -58,147 +64,160 @@ class ProductList : Fragment() {
         val root: View = binding.root
         var count =0
         val view=inflater.inflate(com.example.myapplication.R.layout.fragment_product_list,container,false)
-        val orderno: EditText = binding.txtorderno
-        val noofboxes1: TextView = binding.txtpackedb
-        val lastscanprd: TextView = binding.txtscanproduct
 
-        val alert = AlertDialog.Builder(this.context)
-        msg = binding.txtmsg
-        productListViewModel.text.observe(viewLifecycleOwner, Observer {
-            orderno.requestFocus()
-            val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
-            var PageValue = sharedLoadOrderPreferences.getInt("PageValue", 0)
-            var SharedOrderNo =  sharedLoadOrderPreferences.getString("OrderNo", "")
-            var PackedBoxes = sharedLoadOrderPreferences.getString("PackedBoxes", "")
-            var SharedStopNo = sharedLoadOrderPreferences.getString("Stoppage", "")
-            if(PageValue.toInt()==2){
-                setHasOptionsMenu(true)
-                val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-                (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
-                (activity as? AppCompatActivity)?.supportActionBar?.show()
-                (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Load Order"
-                val Ono: TextView = binding.txtorderNo
-                val StopNo: TextView = binding.txtstoppage
-                val cardview:CardView=binding.cardView2
-                cardview.visibility=View.VISIBLE
-                Ono.text = SharedOrderNo
-                noofboxes1.text = "0 out of "+PackedBoxes
+        if(internetConnectionCheck(this.context)) {
+            val orderno: EditText = binding.txtorderno
+            val noofboxes1: TextView = binding.txtpackedb
+            val lastscanprd: TextView = binding.txtscanproduct
+
+            val alert = AlertDialog.Builder(this.context)
+            msg = binding.txtmsg
+            productListViewModel.text.observe(viewLifecycleOwner, Observer {
+                orderno.requestFocus()
+                val sharedLoadOrderPreferences =
+                    PreferenceManager.getDefaultSharedPreferences(this.context)
+                var PageValue = sharedLoadOrderPreferences.getInt("PageValue", 0)
+                var SharedOrderNo = sharedLoadOrderPreferences.getString("OrderNo", "")
+                var PackedBoxes = sharedLoadOrderPreferences.getString("PackedBoxes", "")
+                var SharedStopNo = sharedLoadOrderPreferences.getString("Stoppage", "")
+                if (PageValue.toInt() == 2) {
+                    setHasOptionsMenu(true)
+                    val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+                    (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
+                    (activity as? AppCompatActivity)?.supportActionBar?.show()
+                    (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Load Order"
+                    val Ono: TextView = binding.txtorderNo
+                    val StopNo: TextView = binding.txtstoppage
+                    val cardview: CardView = binding.cardView2
+                    cardview.visibility = View.VISIBLE
+                    Ono.text = SharedOrderNo
+                    noofboxes1.text = "0 out of " + PackedBoxes
                     StopNo.text = SharedStopNo
-                val sharedLoadOrder = PreferenceManager.getDefaultSharedPreferences(activity)
-                val sharedLoadOrderPage = sharedLoadOrder.edit()
-                sharedLoadOrderPage.putString("OrderNo","")
-                sharedLoadOrderPage.putString("PackedBoxes", "")
-                sharedLoadOrderPage.putString("Stoppage", "")
-                sharedLoadOrderPage.putInt("PageValue", 0)
-                sharedLoadOrderPage.apply()
-            }
-            orderno.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
-                if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
-                    val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
-                    pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
-                    pDialog.titleText = "Fetching ..."
-                    pDialog.setCancelable(false)
-                    pDialog.show()
-                    ordernoenter = orderno.text.toString().uppercase(Locale.getDefault())
-                    val layout = binding.txtmsg
-                    layout.visibility = View.GONE
-                    if (ordernoenter.contains("/")) {
-                        val result1 = ordernoenter.split("/")
-                        boxno = result1[1]
-                        if (FirstorderNO == "") {
-                            pDialog.dismiss()
-                            FirstorderNO = result1[0]
-                        }
-                        else {
-                            if (FirstorderNO == result1[0]) {
+                    val sharedLoadOrder = PreferenceManager.getDefaultSharedPreferences(activity)
+                    val sharedLoadOrderPage = sharedLoadOrder.edit()
+                    sharedLoadOrderPage.putString("OrderNo", "")
+                    sharedLoadOrderPage.putString("PackedBoxes", "")
+                    sharedLoadOrderPage.putString("Stoppage", "")
+                    sharedLoadOrderPage.putInt("PageValue", 0)
+                    sharedLoadOrderPage.apply()
+                }
+                orderno.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
+                    if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
+                        val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
+                        pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
+                        pDialog.titleText = "Fetching ..."
+                        pDialog.setCancelable(false)
+                        pDialog.show()
+                        ordernoenter = orderno.text.toString().uppercase(Locale.getDefault())
+                        val layout = binding.txtmsg
+                        layout.visibility = View.GONE
+                        if (ordernoenter.contains("/")) {
+                            val result1 = ordernoenter.split("/")
+                            boxno = result1[1]
+                            if (FirstorderNO == "") {
                                 pDialog.dismiss()
-                                if (boxno.toInt() <= totalBoxes) {
-                                    count = 0
-                                    for (i in list) {
-                                        if (i == ordernoenter) {
-                                            val layout = binding.txtmsg
-                                            layout.visibility = View.VISIBLE
+                                FirstorderNO = result1[0]
+                            } else {
+                                if (FirstorderNO == result1[0]) {
+                                    pDialog.dismiss()
+                                    if (boxno.toInt() <= totalBoxes) {
+                                        count = 0
+                                        for (i in list) {
+                                            if (i == ordernoenter) {
+                                                val layout = binding.txtmsg
+                                                layout.visibility = View.VISIBLE
+                                                orderno.setText("")
+                                                msg!!.text = "Box Already Scanned."
+                                                count = 1
+                                                orderno.requestFocus()
+                                            }
+                                        }
+                                        if (count == 0) {
+                                            list.add(list.size, ordernoenter)
+                                            boxlist.add(0, boxno)
                                             orderno.setText("")
-                                            msg!!.text = "Box Already Scanned."
-                                            count = 1
-                                            orderno.requestFocus()
+                                            noofboxes1.text =
+                                                list.size.toString() + " out of " + "" + totalBoxes
+                                            lastscanprd.text = boxlist.toString()
+                                            msg!!.text = ""
+                                            if (list.size.toString() == totalBoxes.toString()) {
+                                                submitorder(FirstorderNO)
+                                            }
                                         }
-                                    }
-                                    if (count == 0) {
-                                        list.add(list.size, ordernoenter)
-                                        boxlist.add(0, boxno )
-                                        orderno.setText("")
-                                        noofboxes1.text =
-                                            list.size.toString() + " out of " + "" + totalBoxes
-                                        lastscanprd.text = boxlist.toString()
-                                        msg!!.text = ""
-                                        if (list.size.toString() == totalBoxes.toString()) {
-                                            submitorder(FirstorderNO)
-                                        }
+                                    } else {
+                                        msg!!.text = "invalid box number"
                                     }
                                 } else {
-                                    msg!!.text = "invalid box number"
-                                }
-                            }
-                            else {
-                                pDialog.dismiss()
-                                alert.setTitle(result1[0])
-                                alert.setMessage("Are you sure you want  to skip current order " + FirstorderNO + "?")
-                                alert.setNegativeButton("YES")
-                                { dialog, which ->
-                                    list.clear()
-                                    boxlist.clear()
-                                    count = 0
-                                    alert.setTitle("")
-                                    orderdetailsbind(result1[0], ordernoenter)
-                                    FirstorderNO = result1[0]
-                                    dialog.dismiss()
-                                }
-                                alert.setPositiveButton("NO")
-                                { dialog, which -> dialog.dismiss()
-                                    alert.setTitle("")
+                                    pDialog.dismiss()
+                                    alert.setTitle(result1[0])
+                                    alert.setMessage("Are you sure you want  to skip current order " + FirstorderNO + "?")
+                                    alert.setNegativeButton("YES")
+                                    { dialog, which ->
+                                        list.clear()
+                                        boxlist.clear()
+                                        count = 0
+                                        alert.setTitle("")
+                                        orderdetailsbind(result1[0], ordernoenter)
+                                        FirstorderNO = result1[0]
+                                        dialog.dismiss()
+                                    }
+                                    alert.setPositiveButton("NO")
+                                    { dialog, which ->
+                                        dialog.dismiss()
+                                        alert.setTitle("")
+                                    }
+
+                                    alert.show()
+                                    orderno.setText("")
                                 }
 
-                                alert.show()
+                            }
+                            if (checkr == 0) {
+                                try {
+                                    pDialog.dismiss()
+                                    orderdetailsbind(FirstorderNO, ordernoenter)
+                                    orderno.setText("")
+                                } catch (e: IOException) {
+                                    Toast.makeText(this.context, "Error", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        } else {
+                            pDialog.dismiss()
+
+                            alert.setMessage("Invalid box scanned")
+                            alert.setPositiveButton("ok")
+                            { dialog, which ->
+                                alert.setCancelable(true)
                                 orderno.setText("")
+
+
                             }
 
+                            alert.setNegativeButton("", null)
+                            val adialog: AlertDialog = alert.create()
+                            adialog.show()
+                            val orderno1: EditText = binding.txtorderno
+                            orderno1.setText("")
+                            msg!!.text = ""
+
                         }
-                        if (checkr == 0) {
-                            try {
-                                pDialog.dismiss()
-                                orderdetailsbind(FirstorderNO, ordernoenter)
-                                orderno.setText("")
-                            } catch (e: IOException) {
-                                Toast.makeText(this.context, "Error", Toast.LENGTH_SHORT).show()
-                            }
-                        }
+                        return@OnKeyListener true
                     }
-                    else {
-                        pDialog.dismiss()
-
-                        alert.setMessage("Invalid box scanned")
-                        alert.setPositiveButton("ok")
-                        { dialog, which ->
-                            alert.setCancelable(true)
-                            orderno.setText("")
-
-
-                        }
-
-                        alert.setNegativeButton("",null)
-                        val adialog: AlertDialog = alert.create()
-                        adialog.show()
-                        val orderno1: EditText = binding.txtorderno
-                        orderno1.setText("")
-                        msg!!.text = ""
-
-                    }
-                    return@OnKeyListener true
-                }
-                false
+                    false
+                })
             })
-        })
+        }
+        else{
+            val alertnet = AlertDialog.Builder(activity)
+            alertnet.setTitle("Connection")
+            alertnet.setMessage("Please check your internet connection")
+            alertnet.setPositiveButton("ok")
+            { dialog, which -> dialog.dismiss()
+                this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
+            }
+            val dialog: AlertDialog = alertnet.create()
+            dialog.show()
+        }
         return binding.root
     }
 
@@ -348,6 +367,7 @@ class ProductList : Fragment() {
                 val rspMsg = resultobj.getString("responseMessage")
                 if (rspCode == "202") {
                     pDialog.dismiss()
+                    playSound()
                     alertsuborder.setTitle(sorderno.uppercase(Locale.getDefault()))
                     alertsuborder.setMessage(rspMsg.toString())
                     alertsuborder.setPositiveButton(
@@ -356,6 +376,7 @@ class ProductList : Fragment() {
                         clear()
                         val orderno2: EditText = binding.txtorderno
                         orderno2.text.clear()
+                        this.findNavController().navigate(com.example.myapplication.R.id.nav_orderlist)
                     }
                     FirstorderNO = ""
                     checkr = 0
@@ -419,7 +440,46 @@ class ProductList : Fragment() {
         txtpacked.text = "0"
     }
 }
+fun internetConnectionCheck(activity: Context?): Boolean {
+    var Connected = false
+    val connectivity = activity?.applicationContext
+        ?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    if (connectivity != null) {
+        val info = connectivity.allNetworkInfo
+        if (info != null) for (i in info.indices) if (info[i].state == NetworkInfo.State.CONNECTED) {
 
+            Connected = true
+        }
+        else {
+        }
+    } else {
+        val alertnet = AlertDialog.Builder(activity)
+        alertnet.setTitle("Connection")
+        alertnet.setMessage("Please check your internet connection")
+        alertnet.setPositiveButton("ok")
+        { dialog, which -> dialog.dismiss()
+
+        }
+        val dialog: AlertDialog = alertnet.create()
+        dialog.show()
+        Connected = false
+    }
+    return Connected
+}
+fun playSound() {
+    var url:String="https://psmnj.a1whm.com/Audio/NOExists.mp3"
+    val mediaPlayer = MediaPlayer().apply {
+        setAudioAttributes(
+            AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .build()
+        )
+        setDataSource(url)
+        prepare()
+        start()
+    }
+}
 fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
 
 }

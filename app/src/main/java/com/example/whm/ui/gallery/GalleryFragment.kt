@@ -2,9 +2,12 @@ package com.example.myapplication.com.example.whm.ui.gallery
 
 import android.R
 import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -16,6 +19,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.android.volley.*
 
@@ -39,39 +43,59 @@ class GalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        galleryViewModel =
-            ViewModelProvider(this).get(GalleryViewModel::class.java)
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-        val view=inflater.inflate(com.example.myapplication.R.layout.fragment_gallery,container,false)
-        val barcode: EditText = binding.barcodetype
-        galleryViewModel.text.observe(viewLifecycleOwner, Observer {
-            barcode.requestFocus()
-            barcode.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
 
-                if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
-                    val barcodeenter = barcode.text.toString()
-                    try {
-                        if (barcodeenter.trim().isEmpty()) {
-                            val alertemail = AlertDialog.Builder(this.context)
-                            alertemail.setMessage("Scan Barcode")
-                            alertemail.setPositiveButton("ok", null)
-                            val dialog: AlertDialog = alertemail.create()
-                            dialog.show()
-                        }
-                        else {
-                            bindproductdetails(barcodeenter)
-                            barcode.text.clear()
-                        }
-                    }
-                    catch (e:IOException){
-                        Toast.makeText(this.context, "Error", Toast.LENGTH_SHORT).show()
-                    }
-                    return@OnKeyListener true
-                }
+            galleryViewModel =
+                ViewModelProvider(this).get(GalleryViewModel::class.java)
+            _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+            val root: View = binding.root
+            val view = inflater.inflate(
+                com.example.myapplication.R.layout.fragment_gallery,
+                container,
                 false
+            )
+         if(internetConnectionCheck(this.context)) {
+            val barcode: EditText = binding.barcodetype
+            galleryViewModel.text.observe(viewLifecycleOwner, Observer {
+                barcode.requestFocus()
+                barcode.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
+
+                    if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
+                        val barcodeenter = barcode.text.toString()
+                        try {
+
+                            if (barcodeenter.trim().isEmpty()) {
+                                val alertemail = AlertDialog.Builder(this.context)
+                                alertemail.setMessage("Scan Barcode")
+                                alertemail.setPositiveButton("ok", null)
+                                val dialog: AlertDialog = alertemail.create()
+                                dialog.show()
+                            } else {
+                                bindproductdetails(barcodeenter)
+                                barcode.text.clear()
+                            }
+
+                        } catch (e: IOException) {
+                            Toast.makeText(this.context, "Error", Toast.LENGTH_SHORT).show()
+                        }
+                        return@OnKeyListener true
+                    }
+                    false
+                })
             })
-        })
+
+
+        }
+        else{
+             val alertnet = AlertDialog.Builder(activity)
+             alertnet.setTitle("Connection")
+             alertnet.setMessage("Please check your internet connection")
+             alertnet.setPositiveButton("ok")
+             { dialog, which -> dialog.dismiss()
+                 this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
+             }
+             val dialog: AlertDialog = alertnet.create()
+             dialog.show()
+        }
         return root
     }
     val APIURL: String =apisettings().apiurl+"WPackerProductList.asmx/getProductsList"
@@ -207,6 +231,32 @@ class GalleryFragment : Fragment() {
             prepare()
             start()
         }
+    }
+    fun internetConnectionCheck(activity: Context?): Boolean {
+        var Connected = false
+        val connectivity = activity?.applicationContext
+            ?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivity != null) {
+            val info = connectivity.allNetworkInfo
+            if (info != null) for (i in info.indices) if (info[i].state == NetworkInfo.State.CONNECTED) {
+
+                Connected = true
+            }
+            else {
+            }
+        } else {
+            val alertnet = AlertDialog.Builder(activity)
+            alertnet.setTitle("Connection")
+            alertnet.setMessage("Please check your internet connection")
+            alertnet.setPositiveButton("ok")
+            { dialog, which -> dialog.dismiss()
+
+            }
+            val dialog: AlertDialog = alertnet.create()
+            dialog.show()
+            Connected = false
+        }
+        return Connected
     }
 }
 

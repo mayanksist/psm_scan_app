@@ -1,5 +1,9 @@
 package com.example.myapplication.com.example.whm.ui.home
 
+import android.app.AlertDialog
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
@@ -30,31 +34,31 @@ class HomeFragment : Fragment()  {
         savedInstanceState: Bundle?
     ): View? {
 
-        mView = inflater.inflate(com.example.myapplication.R.layout.fragment_home, container, false)
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
-        val btnInvCheck = mView.findViewById<Button>(com.example.myapplication.R.id.btnInvCheck)
-        val btnDriLoad = mView.findViewById<Button>(com.example.myapplication.R.id.btnDriLoad)
-        val btnUnLoadList = mView.findViewById<Button>(com.example.myapplication.R.id.btnunloadOrderlist)
-        val btnOrderList = mView.findViewById<Button>(com.example.myapplication.R.id.btnOrderList)
+    mView = inflater.inflate(com.example.myapplication.R.layout.fragment_home, container, false)
+    val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
+    val btnInvCheck = mView.findViewById<Button>(com.example.myapplication.R.id.btnInvCheck)
+    val btnDriLoad = mView.findViewById<Button>(com.example.myapplication.R.id.btnDriLoad)
+    val btnUnLoadList = mView.findViewById<Button>(com.example.myapplication.R.id.btnunloadOrderlist)
+    val btnOrderList = mView.findViewById<Button>(com.example.myapplication.R.id.btnOrderList)
 
-        var Usertype = preferences.getString("EmpTypeNo", "")
-        if (Usertype.toString() != "2"){
-            btnInvCheck.visibility=   View.GONE
-        }
+    var Usertype = preferences.getString("EmpTypeNo", "")
+    if (Usertype.toString() != "2"){
+        btnInvCheck.visibility=   View.GONE
+    }
 
-        btnInvCheck.setOnClickListener {
-            this.findNavController().navigate(com.example.myapplication.R.id.nav_product)
-        }
+    btnInvCheck.setOnClickListener {
+        this.findNavController().navigate(com.example.myapplication.R.id.nav_product)
+    }
 
-        btnDriLoad.setOnClickListener {
-            this.findNavController().navigate(com.example.myapplication.R.id.nav_productlist)
-        }
-        btnUnLoadList.setOnClickListener {
-            this.findNavController().navigate(com.example.myapplication.R.id.nav_assignorder)
-        }
-        btnOrderList.setOnClickListener {
-            this.findNavController().navigate(com.example.myapplication.R.id.nav_orderlist)
-        }
+    btnDriLoad.setOnClickListener {
+        this.findNavController().navigate(com.example.myapplication.R.id.nav_productlist)
+    }
+    btnUnLoadList.setOnClickListener {
+        this.findNavController().navigate(com.example.myapplication.R.id.nav_assignorder)
+    }
+    btnOrderList.setOnClickListener {
+        this.findNavController().navigate(com.example.myapplication.R.id.nav_orderlist)
+    }
 
 
         return mView
@@ -64,6 +68,7 @@ class HomeFragment : Fragment()  {
         super.onDestroyView()
         _binding = null
     }
+
 }
 
 
