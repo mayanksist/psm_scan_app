@@ -25,23 +25,24 @@ import java.io.IOException
 import android.view.View
 
 import android.widget.RelativeLayout
-import com.android.volley.DefaultRetryPolicy
+
+
+
 
 
 class MainActivity : AppCompatActivity() {
-
-
+    lateinit var scancode: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
        super.onCreate(savedInstanceState)
         setContentView(com.example.myapplication.R.layout.activity_main)
-        val scancode = findViewById<EditText>(com.example.myapplication.R.id.scancodeu)
+        scancode = findViewById<EditText>(com.example.myapplication.R.id.scancodeu)
         var AppVersion = findViewById<TextView>(com.example.myapplication.R.id.txtAppVersion)
         AppVersion.text = "version : " + AppPreferences.AppVersion
         scancode.requestFocus()
         scancode.setOnKeyListener OnKeyListener@{ v_, keyCode, event ->
             if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
                 try {
-                    checkinternet(scancode.text)
+                    checkinternet(scancode.text as Editable)
                 } catch(e:IOException){
                     Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                 }
@@ -51,6 +52,20 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
+//        scancode.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
+//            if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
+//                val scansecurity = scancode.text
+//                try {
+//                    checkinternet(scansecurity.toString())
+//                }
+//                catch(e:IOException){
+//                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+//                }
+//                return@OnKeyListener true
+//                }
+//            false
+//        })
+
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         if(preferences.getString("email","") != "" && preferences.getString("password","") != "" ){
             val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
@@ -92,7 +107,10 @@ class MainActivity : AppCompatActivity() {
             val alertemail = AlertDialog.Builder(this)
             alertemail.setTitle("User")
             alertemail.setMessage(resmsg.toString())
-            alertemail.setPositiveButton("ok", null)
+            alertemail.setPositiveButton("ok")
+            { dialog, which -> dialog.dismiss()
+                scancode.text = ""
+            }
             val dialog: AlertDialog = alertemail.create()
             dialog.show()
         }
@@ -133,7 +151,10 @@ class MainActivity : AppCompatActivity() {
                 val alertemail=AlertDialog.Builder(this)
                 alertemail.setTitle("User")
                 alertemail.setMessage(msg.toString())
-                alertemail.setPositiveButton("ok",null)
+                alertemail.setPositiveButton("ok",)
+                { dialog, which -> dialog.dismiss()
+                    scancode.text = ""
+                }
                 val dialog:AlertDialog=alertemail.create()
                 dialog.show()
                 val preferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -146,11 +167,6 @@ class MainActivity : AppCompatActivity() {
                     response ->
                 Log.e("onError", error(response.toString()))
             })
-        req.retryPolicy = DefaultRetryPolicy(
-            1000000,
-            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        )
         try {
             queues.add(req)
         }
@@ -185,7 +201,10 @@ class MainActivity : AppCompatActivity() {
                 else{
                     val alertemail = AlertDialog.Builder(this)
                     alertemail.setMessage("Invalid credentials")
-                    alertemail.setPositiveButton("ok", null)
+                    alertemail.setPositiveButton("ok", )
+                    { dialog, which -> dialog.dismiss()
+                        scancode.text = ""
+                    }
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
                 }
@@ -194,7 +213,10 @@ class MainActivity : AppCompatActivity() {
                 val alertnet = AlertDialog.Builder(this)
                 alertnet.setTitle("Connetction")
                 alertnet.setMessage("Check your internet connection")
-                alertnet.setPositiveButton("ok", null)
+                alertnet.setPositiveButton("ok")
+                { dialog, which -> dialog.dismiss()
+                    scancode.text = ""
+                }
                 val dialog: AlertDialog = alertnet.create()
                 dialog.show()
                 val preferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -276,11 +298,6 @@ class MainActivity : AppCompatActivity() {
                     response ->
                 Log.e("onError", error(response.toString()))
             })
-        req.retryPolicy = DefaultRetryPolicy(
-            1000000,
-            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        )
         try {
             queues.add(req)
         }

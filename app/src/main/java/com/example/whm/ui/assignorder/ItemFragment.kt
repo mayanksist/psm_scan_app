@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -22,6 +24,7 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.ui.assignorder.OrderModel
+import com.example.myapplication.ui.product.setSupportActionBar
 import org.json.JSONObject
 import java.io.IOException
 
@@ -45,7 +48,12 @@ class ItemFragment : Fragment() {
         )
 
         val recyclerView: RecyclerView = view.findViewById(R.id.list)
-        orderAdapter = AssignOrderAdapter(orderList)
+        val sharedUnloadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
+        var UnloadOrderCount = sharedUnloadOrderPreferences.getString("UnloadOrder", "[0]")
+        setHasOptionsMenu(true)
+
+
+        orderAdapter = AssignOrderAdapter(orderList,this.context)
         val layoutManager = LinearLayoutManager(this.context)
         recyclerView.layoutManager = layoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()

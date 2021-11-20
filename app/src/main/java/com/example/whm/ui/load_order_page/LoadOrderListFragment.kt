@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +24,7 @@ import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.ui.load_order_page.LoadOrderListAdapter
 import com.example.myapplication.com.example.whm.ui.load_order_page.LoadOrderModel
+import com.example.myapplication.ui.product.setSupportActionBar
 import org.json.JSONObject
 import java.io.IOException
 
@@ -40,7 +43,6 @@ class LoadOrderListFragment : Fragment() {
             container,
             false
         )
-
         val recyclerView: RecyclerView = view.findViewById(R.id.load_order)
         LoadorderAdapter = LoadOrderListAdapter(LoadorderList, this.context)
         val layoutManager = LinearLayoutManager(this.context)

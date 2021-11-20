@@ -1,16 +1,21 @@
 package com.example.whm.ui.assignorder
 
+import android.content.Context
+import android.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toolbar
 import androidx.annotation.NonNull
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.ui.assignorder.OrderModel
+import com.example.myapplication.ui.product.setSupportActionBar
 
 
-internal class AssignOrderAdapter(private var orderList: List<OrderModel>) :
+internal class AssignOrderAdapter(private var orderList: List<OrderModel>,var activity: Context?) :
     RecyclerView.Adapter<AssignOrderAdapter.MyViewHolder>() {
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var CustomerName: TextView = view.findViewById(R.id.txtCustName)
@@ -21,6 +26,7 @@ internal class AssignOrderAdapter(private var orderList: List<OrderModel>) :
         var PayableAmount: TextView = view.findViewById(R.id.txtPaybleAmount)
         var Stoppage: TextView = view.findViewById(R.id.txtStoppage)
         var ST: TextView = view.findViewById(R.id.txtStatus)
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
     }
     @NonNull
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -39,6 +45,9 @@ internal class AssignOrderAdapter(private var orderList: List<OrderModel>) :
         holder.PayableAmount.text = "$"+order.getPayableAmount()
         holder.Stoppage.text = order.getStoppage()
         holder.ST.text = order.getST()
+        (activity as? AppCompatActivity)?.setSupportActionBar(holder.toolbar)
+        (activity as? AppCompatActivity)?.supportActionBar?.show()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setTitle("Unload Orders"+" ["+orderList.size.toString()+"]")
     }
 
     override fun getItemCount(): Int {

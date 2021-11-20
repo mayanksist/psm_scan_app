@@ -423,6 +423,6 @@ class ProductList : Fragment() {
     }
 }
 
-private fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
+fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
 
 }
