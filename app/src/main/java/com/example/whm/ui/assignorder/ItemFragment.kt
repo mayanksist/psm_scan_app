@@ -32,7 +32,6 @@ import com.example.myapplication.com.example.whm.ui.assignorder.OrderModel
 import com.example.myapplication.ui.product.setSupportActionBar
 import org.json.JSONObject
 import java.io.IOException
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 
 
 
@@ -63,7 +62,7 @@ class ItemFragment : Fragment() {
             }
             true
         })
-        if(internetConnectionCheck(this.context)) {
+        if(AppPreferences.internetConnectionCheck(this.context)) {
             val recyclerView: RecyclerView = view.findViewById(R.id.list)
             val sharedUnloadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
             var UnloadOrderCount = sharedUnloadOrderPreferences.getString("UnloadOrder", "[0]")
@@ -161,9 +160,7 @@ class ItemFragment : Fragment() {
 
         return view
     }
-
-
-    private fun prepareMovieData(
+   private fun prepareMovieData(
         CustomerName: String, Ono: String, Od: String, SP: String, PackedBoxes: String,
         Stoppage: String, PayableAmount: String,ST:String
     ) {
@@ -172,31 +169,5 @@ class ItemFragment : Fragment() {
         orderAdapter.notifyDataSetChanged()
     }
 
-    fun internetConnectionCheck(activity: Context?): Boolean {
-        var Connected = false
-        val connectivity = activity?.applicationContext
-            ?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (connectivity != null) {
-            val info = connectivity.allNetworkInfo
-            if (info != null) for (i in info.indices) if (info[i].state == NetworkInfo.State.CONNECTED) {
-
-                Connected = true
-            }
-            else {
-            }
-        } else {
-            val alertnet = AlertDialog.Builder(activity)
-            alertnet.setTitle("Connection")
-            alertnet.setMessage("Please check your internet connection")
-            alertnet.setPositiveButton("ok")
-            { dialog, which -> dialog.dismiss()
-
-            }
-            val dialog: AlertDialog = alertnet.create()
-            dialog.show()
-            Connected = false
-        }
-        return Connected
-    }
     
 }

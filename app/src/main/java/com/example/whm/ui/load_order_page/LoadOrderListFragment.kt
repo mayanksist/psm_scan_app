@@ -38,7 +38,6 @@ import android.view.KeyEvent
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.com.example.whm.MainActivity
 
-
 class LoadOrderListFragment : Fragment() {
     private val LoadorderList = ArrayList<LoadOrderModel>()
     private lateinit var LoadorderAdapter: LoadOrderListAdapter
@@ -58,7 +57,7 @@ class LoadOrderListFragment : Fragment() {
             }
             true
         })
-        if(internetConnectionCheck(this.context)){
+        if(AppPreferences.internetConnectionCheck(this.context)){
             val recyclerView: RecyclerView = view.findViewById(R.id.load_order)
             LoadorderAdapter = LoadOrderListAdapter(LoadorderList, this.context)
             val layoutManager = LinearLayoutManager(this.context)
@@ -151,33 +150,4 @@ class LoadOrderListFragment : Fragment() {
         LoadorderAdapter.notifyDataSetChanged()
     }
 
-
-
-
-    fun internetConnectionCheck(activity: Context?): Boolean {
-        var Connected = false
-        val connectivity = activity?.applicationContext
-            ?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (connectivity != null) {
-            val info = connectivity.allNetworkInfo
-            if (info != null) for (i in info.indices) if (info[i].state == NetworkInfo.State.CONNECTED) {
-
-                Connected = true
-            }
-            else {
-            }
-        } else {
-            val alertnet = AlertDialog.Builder(activity)
-            alertnet.setTitle("Connection")
-            alertnet.setMessage("Please check your internet connection")
-            alertnet.setPositiveButton("ok")
-            { dialog, which -> dialog.dismiss()
-
-            }
-            val dialog: AlertDialog = alertnet.create()
-            dialog.show()
-            Connected = false
-        }
-        return Connected
-    }
 }

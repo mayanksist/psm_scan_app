@@ -208,7 +208,7 @@ class MainActivity : AppCompatActivity() {
         val JSONObj = JSONObject()
         val appversion = AppPreferences.AppVersion
         val queues = Volley.newRequestQueue(this@MainActivity)
-        if(internetConnectionCheck(this)) {
+        if(AppPreferences.internetConnectionCheck(this)) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(this)
             val editor = preferences.edit()
             editor.putString("email", email)
@@ -299,32 +299,7 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-    fun internetConnectionCheck(activity: Context?): Boolean {
-        var Connected = false
-        val connectivity = activity?.applicationContext
-            ?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (connectivity != null) {
-            val info = connectivity.allNetworkInfo
-            if (info != null) for (i in info.indices) if (info[i].state == NetworkInfo.State.CONNECTED) {
 
-                Connected = true
-            }
-            else {
-            }
-        } else {
-            val alertnet = AlertDialog.Builder(activity)
-            alertnet.setTitle("Connection")
-            alertnet.setMessage("Please check your internet connection")
-            alertnet.setPositiveButton("ok")
-            { dialog, which -> dialog.dismiss()
-
-            }
-            val dialog: AlertDialog = alertnet.create()
-            dialog.show()
-            Connected = false
-        }
-        return Connected
-    }
     override fun onKeyDown(key_code: Int, key_event: KeyEvent?): Boolean {
         if (key_code == KeyEvent.KEYCODE_BACK) {
             super.onKeyDown(key_code, key_event)

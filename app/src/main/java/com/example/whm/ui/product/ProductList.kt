@@ -78,7 +78,7 @@ class ProductList : Fragment() {
             }
             true
         })
-        if (internetConnectionCheck(this.context)) {
+        if(AppPreferences.internetConnectionCheck(this.context)) {
             val orderno: EditText = binding.txtorderno
             val noofboxes1: TextView = binding.txtpackedb
             val lastscanprd: TextView = binding.txtscanproduct
@@ -455,34 +455,6 @@ class ProductList : Fragment() {
         txtpacked.text = "0"
     }
 }
-
-fun internetConnectionCheck(activity: Context?): Boolean {
-    var Connected = false
-    val connectivity = activity?.applicationContext
-        ?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    if (connectivity != null) {
-        val info = connectivity.allNetworkInfo
-        if (info != null) for (i in info.indices) if (info[i].state == NetworkInfo.State.CONNECTED) {
-
-            Connected = true
-        } else {
-        }
-    } else {
-        val alertnet = AlertDialog.Builder(activity)
-        alertnet.setTitle("Connection")
-        alertnet.setMessage("Please check your internet connection")
-        alertnet.setPositiveButton("ok")
-        { dialog, which ->
-            dialog.dismiss()
-
-        }
-        val dialog: AlertDialog = alertnet.create()
-        dialog.show()
-        Connected = false
-    }
-    return Connected
-}
-
 fun playSound() {
     var url: String = "https://psmnj.a1whm.com/Audio/NOExists.mp3"
     val mediaPlayer = MediaPlayer().apply {
@@ -497,7 +469,6 @@ fun playSound() {
         start()
     }
 }
-
 fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
 
 }
