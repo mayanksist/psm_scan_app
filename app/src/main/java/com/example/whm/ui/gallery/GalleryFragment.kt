@@ -91,8 +91,6 @@ class GalleryFragment : Fragment() {
                     false
                 })
             })
-
-
         }
         else{
              val alertnet = AlertDialog.Builder(activity)
