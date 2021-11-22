@@ -113,14 +113,11 @@ class MainActivity : AppCompatActivity() {
                     editor.putString("LName", LName)
                     editor.putString("accessToken", jsondata.getJSONObject(i).getString("accessToken"))
                     editor.apply()
-
                     val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
                     mLayout.visibility = View.GONE
                     val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
                     mhiddenLayout.visibility = View.VISIBLE
-
                     startActivity(intent)
-
                     Toast.makeText(
                         this,
                         "Login Successful ",
@@ -269,7 +266,10 @@ class MainActivity : AppCompatActivity() {
                             val alertemail = AlertDialog.Builder(this)
                             alertemail.setTitle("User")
                             alertemail.setMessage(msg.toString())
-                            alertemail.setPositiveButton("ok", null)
+                            alertemail.setPositiveButton("ok")
+                            { dialog, which -> dialog.dismiss()
+                                scancode.text = ""
+                            }
                             val dialog: AlertDialog = alertemail.create()
                             dialog.show()
                             editor.clear()
