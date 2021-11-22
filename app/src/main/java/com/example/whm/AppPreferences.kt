@@ -3,6 +3,8 @@ package com.example.myapplication.com.example.whm
 import android.app.AlertDialog
 import android.app.Service
 import android.content.Context
+import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.preference.PreferenceManager
@@ -36,6 +38,21 @@ object AppPreferences {
             Connected = false
         }
         return Connected
+    }
+
+    fun playSound() {
+        var url: String = "https://psmnj.a1whm.com/audio/orderloaded.mp3"
+        val mediaPlayer = MediaPlayer().apply {
+            setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .build()
+            )
+            setDataSource(url)
+            prepare()
+            start()
+        }
     }
 }
 

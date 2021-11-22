@@ -276,7 +276,6 @@ class ProductList : Fragment() {
                 val presponsmsg = resultobj.getString("responseMessage")
                 if (resmsg == "failed") {
                     pDialog.dismiss()
-                    playSound()
                     val alertorfailed = AlertDialog.Builder(this.context)
                     alertorfailed.setTitle(orderno)
                     alertorfailed.setMessage(presponsmsg.toString())
@@ -381,7 +380,7 @@ class ProductList : Fragment() {
                 val rspMsg = resultobj.getString("responseMessage")
                 if (rspCode == "202") {
                     pDialog.dismiss()
-                    playSound()
+
                     alertsuborder.setTitle(sorderno.uppercase(Locale.getDefault()))
                     alertsuborder.setMessage(rspMsg.toString())
                     alertsuborder.setPositiveButton(
@@ -400,7 +399,7 @@ class ProductList : Fragment() {
                     cardview1.visibility = View.GONE
                 } else {
                     if (rspCode.toString() == "200") {
-                        playSound()
+                        AppPreferences.playSound()
                         pDialog.dismiss()
                         alertsuborder.setTitle(sorderno.toString().uppercase(Locale.getDefault()))
                         alertsuborder.setMessage(rspMsg.toString())
@@ -422,7 +421,8 @@ class ProductList : Fragment() {
                         msg!!.text = ""
                         clear()
                         cardview1.visibility = View.GONE
-                    } else {
+                    }
+                    else {
                         pDialog.dismiss()
                         alertsuborder.setTitle(sorderno.toString())
                         alertsuborder.setMessage("Order  does not submit!!!")
@@ -455,20 +455,6 @@ class ProductList : Fragment() {
         txtstop.text = "N/A"
         txtscanproduct.text = "N/A"
         txtpacked.text = "0"
-    }
-}
-fun playSound() {
-    var url: String = "https://psmnj.a1whm.com/Audio/NOExists.mp3"
-    val mediaPlayer = MediaPlayer().apply {
-        setAudioAttributes(
-            AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .setUsage(AudioAttributes.USAGE_MEDIA)
-                .build()
-        )
-        setDataSource(url)
-        prepare()
-        start()
     }
 }
 fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
