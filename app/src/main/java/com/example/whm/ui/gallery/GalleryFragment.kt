@@ -198,6 +198,7 @@ class GalleryFragment : Fragment() {
                     pDialog.dismiss()
                     playSound()
                     layout.visibility = View.GONE
+                    barcode.setText("")
                     val alertemail= AlertDialog.Builder(this.context)
                     alertemail.setTitle("Barcode")
                     alertemail.setMessage(presponsmsg.toString())
