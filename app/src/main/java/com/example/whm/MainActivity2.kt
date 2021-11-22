@@ -88,17 +88,7 @@ class MainActivity2 : AppCompatActivity() {
     override fun onKeyDown(key_code: Int, key_event: KeyEvent?): Boolean {
         if (key_code == KeyEvent.KEYCODE_BACK) {
             super.onKeyDown(key_code, key_event)
-            SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Exit")
-                .setContentText("You want to exit ?")
-                .setConfirmText("No")
-                .setCancelButton(
-                    "Yes"
-                ) {
-                    moveTaskToBack(true);
-                    finish();
-                }
-                .show()
+            return false
 
         }
         return true
