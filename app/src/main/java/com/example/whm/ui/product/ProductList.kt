@@ -285,8 +285,7 @@ class ProductList : Fragment() {
                             clear()
                             val orderno4: EditText = binding.txtorderno
                             orderno4.text.clear()
-                            this.findNavController()
-                                .navigate(com.example.myapplication.R.id.nav_orderlist)
+
                         })
                     FirstorderNO = ""
                     checkr = 0
@@ -389,8 +388,7 @@ class ProductList : Fragment() {
                         clear()
                         val orderno2: EditText = binding.txtorderno
                         orderno2.text.clear()
-                        this.findNavController()
-                            .navigate(com.example.myapplication.R.id.nav_orderlist)
+
                     }
                     FirstorderNO = ""
                     checkr = 0
