@@ -67,11 +67,9 @@ class GalleryFragment : Fragment() {
             galleryViewModel.text.observe(viewLifecycleOwner, Observer {
                 barcode.requestFocus()
                 barcode.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
-
                     if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
                         val barcodeenter = barcode.text.toString()
                         try {
-
                             if (barcodeenter.trim().isEmpty()) {
                                 val alertemail = AlertDialog.Builder(this.context)
                                 alertemail.setMessage("Scan Barcode")
@@ -203,7 +201,10 @@ class GalleryFragment : Fragment() {
                     val alertemail= AlertDialog.Builder(this.context)
                     alertemail.setTitle("Barcode")
                     alertemail.setMessage(presponsmsg.toString())
-                    alertemail.setPositiveButton("ok", null)
+                    alertemail.setPositiveButton("ok")
+                    { dialog, which -> dialog.dismiss()
+                        barcode.setText("")
+                    }
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
 
