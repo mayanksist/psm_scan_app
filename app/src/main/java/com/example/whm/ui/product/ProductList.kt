@@ -239,9 +239,8 @@ class ProductList : Fragment() {
         _binding = null
     }
 
-    val APIURL: String = "http://api.a1whm.com/AndroidAPI/WDriverOrder.asmx/getOrders"
-    val APISUBMITORDER: String =
-        "https://api.a1whm.com/AndroidAPI/WDriverOrder.asmx/SubmitLoadOrder"
+
+
 
     fun orderdetailsbind(orderno: String, barcode: String) {
         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
@@ -268,7 +267,7 @@ class ProductList : Fragment() {
         JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
         JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
         JSONObj.put("requestContainer", Jsonarra.put("filterkeyword", details))
-        val resorderno = JsonObjectRequest(Request.Method.POST, APIURL, JSONObj,
+        val resorderno = JsonObjectRequest(Request.Method.POST, AppPreferences.BASEURL+AppPreferences.GET_ORDERS, JSONObj,
             { response ->
                 val resobj = (response.toString())
                 val responsemsg = JSONObject(resobj.toString())
@@ -373,7 +372,7 @@ class ProductList : Fragment() {
         JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
         JSONObj.put("OrderNo", sorderno)
         val alertsuborder = AlertDialog.Builder(this.context)
-        val resordernos = JsonObjectRequest(Request.Method.POST, APISUBMITORDER, JSONObj,
+        val resordernos = JsonObjectRequest(Request.Method.POST, AppPreferences.BASEURLSU+AppPreferences.SUBMIT_LOAD_ORDER, JSONObj,
             { response ->
                 val resobj = (response.toString())
                 val responsemsg = JSONObject(resobj.toString())
