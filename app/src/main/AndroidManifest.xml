@@ -13,11 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+      >
 
         <activity
             android:name=".com.example.whm.MainActivity"
             android:exported="true"
+            android:noHistory="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +30,7 @@
         <activity
             android:name=".com.example.whm.MainActivity2"
             android:screenOrientation="portrait"
+            android:noHistory="true"
             ></activity>
 
     </application>

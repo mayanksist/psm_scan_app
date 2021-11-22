@@ -23,12 +23,8 @@ object AppPreferences {
             ?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (connectivity != null) {
             val info = connectivity.allNetworkInfo
-            if (info != null) for (i in info.indices) if (info[i].state == NetworkInfo.State.CONNECTED) {
-
-                Connected = true
-            }
-            else {
-            }
+            if (info != null) for (i in info.indices) if (info[i].state == NetworkInfo.State.CONNECTED) { Connected = true }
+            else { }
         } else {
             val alertnet = AlertDialog.Builder(context)
             alertnet.setTitle("Connection")

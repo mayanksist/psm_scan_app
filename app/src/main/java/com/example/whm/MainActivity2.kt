@@ -17,10 +17,15 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMain2Binding
 import com.google.android.material.navigation.NavigationView
 import android.app.Activity
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.view.KeyEvent
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import cn.pedant.SweetAlert.SweetAlertDialog
+import kotlin.system.exitProcess
+import android.app.ActivityManager
+import android.os.Process.myPid
 
 
 class MainActivity2 : AppCompatActivity() {
@@ -83,7 +88,18 @@ class MainActivity2 : AppCompatActivity() {
     override fun onKeyDown(key_code: Int, key_event: KeyEvent?): Boolean {
         if (key_code == KeyEvent.KEYCODE_BACK) {
             super.onKeyDown(key_code, key_event)
-            return false
+            SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Exit")
+                .setContentText("You want to exit ?")
+                .setConfirmText("No")
+                .setCancelButton(
+                    "Yes"
+                ) {
+                    moveTaskToBack(true);
+                    finish();
+                }
+                .show()
+
         }
         return true
     }
