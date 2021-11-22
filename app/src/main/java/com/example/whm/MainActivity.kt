@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
             alertemail.setMessage(resmsg.toString())
             alertemail.setPositiveButton("ok")
             { dialog, which -> dialog.dismiss()
-                scancode.text = ""
+                scancode.setText("")
             }
             val dialog: AlertDialog = alertemail.create()
             dialog.show()
@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
                 alertemail.setMessage(msg.toString())
                 alertemail.setPositiveButton("ok")
                 { dialog, which -> dialog.dismiss()
-                    scancode.text = ""
+                    scancode.setText("")
                 }
                 val dialog:AlertDialog=alertemail.create()
                 dialog.show()
@@ -181,7 +181,7 @@ class MainActivity : AppCompatActivity() {
                     alertemail.setMessage("Invalid credentials")
                     alertemail.setPositiveButton("ok")
                     { dialog, which -> dialog.dismiss()
-                        scancode.text = ""
+                        scancode.setText("")
                     }
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
@@ -192,7 +192,7 @@ class MainActivity : AppCompatActivity() {
                 alertnet.setMessage("Check your internet connection")
                 alertnet.setPositiveButton("ok")
                 { dialog, which -> dialog.dismiss()
-                    scancode.text = ""
+                    scancode.setText("")
                 }
                 val dialog: AlertDialog = alertnet.create()
                 dialog.show()
