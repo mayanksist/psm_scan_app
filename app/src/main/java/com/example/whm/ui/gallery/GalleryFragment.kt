@@ -196,7 +196,7 @@ class GalleryFragment : Fragment() {
                 else{
 
                     pDialog.dismiss()
-                    playSound()
+                    AppPreferences.playSoundbarcode()
                     layout.visibility = View.GONE
                     barcode.text = ""
                     val alertemail= AlertDialog.Builder(this.context)
@@ -226,20 +226,7 @@ class GalleryFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-    fun playSound() {
-        var url:String="https://psmnj.a1whm.com/Audio/NOExists.mp3"
-        val mediaPlayer = MediaPlayer().apply {
-            setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .build()
-            )
-            setDataSource(url)
-            prepare()
-            start()
-        }
-    }
+
 }
 
 

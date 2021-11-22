@@ -12,7 +12,7 @@ import android.text.Editable
 
 
 object AppPreferences {
-    const val AppVersion = "2.0.0.7"
+    const val AppVersion = "2.0.0.9"
     const val BASEURL = "http://api.a1whm.com/AndroidAPI/"
     const val BASEURLSU = "https://api.a1whm.com/AndroidAPI/"
     const val GET_ORDERS = "WDriverOrder.asmx/getOrders"
@@ -39,9 +39,37 @@ object AppPreferences {
         }
         return Connected
     }
-
+    fun playSoundbarcode() {
+        var url:String="https://psmnj.a1whm.com/Audio/NOExists.mp3"
+        val mediaPlayer = MediaPlayer().apply {
+            setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .build()
+            )
+            setDataSource(url)
+            prepare()
+            start()
+        }
+    }
     fun playSound() {
         var url: String = "https://psmnj.a1whm.com/audio/orderloaded.mp3"
+        val mediaPlayer = MediaPlayer().apply {
+            setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .build()
+            )
+            setDataSource(url)
+            prepare()
+            start()
+        }
+    }
+
+    fun playSoundinvalid() {
+        var url:String="https://psmnj.a1whm.com/audio/invalidboxscanned.mp3"
         val mediaPlayer = MediaPlayer().apply {
             setAudioAttributes(
                 AudioAttributes.Builder()

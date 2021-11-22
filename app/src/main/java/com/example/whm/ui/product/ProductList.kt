@@ -196,14 +196,12 @@ class ProductList : Fragment() {
                             }
                         } else {
                             pDialog.dismiss()
-
+                            AppPreferences.playSoundinvalid()
                             alert.setMessage("Invalid box scanned")
                             alert.setPositiveButton("ok")
                             { dialog, which ->
                                 alert.setCancelable(true)
                                 orderno.setText("")
-
-
                             }
 
                             alert.setNegativeButton("", null)
@@ -397,7 +395,7 @@ class ProductList : Fragment() {
                     cardview1.visibility = View.GONE
                 } else {
                     if (rspCode.toString() == "200") {
-                        AppPreferences.playSound()
+                       AppPreferences.playSound()
                         pDialog.dismiss()
                         alertsuborder.setTitle(sorderno.toString().uppercase(Locale.getDefault()))
                         alertsuborder.setMessage(rspMsg.toString())
