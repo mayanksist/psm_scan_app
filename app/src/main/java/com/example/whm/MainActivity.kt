@@ -17,6 +17,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -303,7 +304,21 @@ class MainActivity : AppCompatActivity() {
     override fun onKeyDown(key_code: Int, key_event: KeyEvent?): Boolean {
         if (key_code == KeyEvent.KEYCODE_BACK) {
             super.onKeyDown(key_code, key_event)
-            return true
+            SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Close")
+                .setContentText("You want to close app ?")
+                .setConfirmText("Yes")
+                .setConfirmClickListener {
+                    moveTaskToBack(true);
+                    finish();
+
+                }
+                .setCancelButton(
+                    "No"
+                ) {
+                        sDialog -> sDialog.dismissWithAnimation()
+                }
+                .show()
         }
         return false
     }
