@@ -68,12 +68,17 @@ class GalleryFragment : Fragment() {
                 barcode.requestFocus()
                 barcode.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
                     if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
-                        val barcodeenter = barcode.text.toString()
+                        var barcodeenter = barcode.text.toString()
                         try {
                             if (barcodeenter.trim().isEmpty()) {
                                 val alertemail = AlertDialog.Builder(this.context)
                                 alertemail.setMessage("Scan Barcode")
-                                alertemail.setPositiveButton("ok", null)
+                                alertemail.setPositiveButton("ok")
+                                { dialog, which -> dialog.dismiss()
+                                    barcode.text.clear()
+                                    barcode.setText("")
+                                    barcodeenter=""
+                                }
                                 val dialog: AlertDialog = alertemail.create()
                                 dialog.show()
                             } else {
@@ -125,10 +130,7 @@ class GalleryFragment : Fragment() {
         val JSONObj = JSONObject()
         val layout = binding.showproductdetails
         val queues = Volley.newRequestQueue(this.context)
-
-
         details.put("barcode", barcoded)
-
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var accessToken = preferences.getString("accessToken", "")
@@ -194,17 +196,21 @@ class GalleryFragment : Fragment() {
                     pDialog.dismiss()
                 }
                 else{
-
                     pDialog.dismiss()
                     AppPreferences.playSoundbarcode()
                     layout.visibility = View.GONE
+                    val barcodeC: EditText = binding.barcodetype
                     barcode.text = ""
+                    barcodeC.text.clear()
+                    barcode.setText("")
                     val alertemail= AlertDialog.Builder(this.context)
                     alertemail.setTitle("Barcode")
                     alertemail.setMessage(presponsmsg.toString())
                     alertemail.setPositiveButton("ok")
                     { dialog, which -> dialog.dismiss()
                         barcode.text = ""
+                        barcodeC.text.clear()
+                        barcode.setText("")
                     }
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
