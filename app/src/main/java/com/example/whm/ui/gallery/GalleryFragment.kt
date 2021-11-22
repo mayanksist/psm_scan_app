@@ -207,7 +207,6 @@ class GalleryFragment : Fragment() {
                     }
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
-
                 }
             }, Response.ErrorListener { response ->
                 pDialog.dismiss()
