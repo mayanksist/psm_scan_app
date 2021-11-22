@@ -198,13 +198,13 @@ class GalleryFragment : Fragment() {
                     pDialog.dismiss()
                     playSound()
                     layout.visibility = View.GONE
-                    barcode.setText("")
+                    barcode.text = ""
                     val alertemail= AlertDialog.Builder(this.context)
                     alertemail.setTitle("Barcode")
                     alertemail.setMessage(presponsmsg.toString())
                     alertemail.setPositiveButton("ok")
                     { dialog, which -> dialog.dismiss()
-                        barcode.setText("")
+                        barcode.text = ""
                     }
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
