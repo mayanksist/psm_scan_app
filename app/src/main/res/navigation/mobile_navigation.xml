@@ -43,5 +43,9 @@
         android:name="com.example.myapplication.com.example.whm.ui.slideshow.SlideshowFragment"
         tools:layout="@layout/fragment_slideshow" />
 
-
+    <fragment
+        android:id="@+id/nav_allpickbox"
+        android:label="@string/picallboxes"
+        android:name="com.example.whm.ui.pickallboxes.picallboxesFragment"
+        tools:layout="@layout/fragment_picallboxes_list2" />
 </navigation>

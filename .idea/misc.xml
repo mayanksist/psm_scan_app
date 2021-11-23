@@ -21,6 +21,9 @@
         <entry key="..\:/Akritifolder/psm_scan_app/app/src/main/res/layout/product_list_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Akritifolder/psm_scan_app/app/src/main/res/menu/activity_main_drawer.xml" value="0.25416666666666665" />
         <entry key="..\:/Akritifolder/psm_scan_app/app/src/main/res/menu/main_activity2.xml" value="0.25416666666666665" />
+        <entry key="..\:/Akritifolder/psmapp/app/src/main/res/drawable/location.xml" value="0.25925925925925924" />
+        <entry key="..\:/Akritifolder/psmapp/app/src/main/res/drawable/oval.xml" value="0.25925925925925924" />
+        <entry key="..\:/Akritifolder/psmapp/app/src/main/res/drawable/oval2.xml" value="0.25925925925925924" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/drawable/product_box_outline_blank.xml" value="0.23066666666666666" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/activity_main.xml" value="0.2934272300469484" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/activity_main2.xml" value="0.1" />
@@ -38,12 +41,16 @@
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_loadorderlists.xml" value="0.21981981981981982" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_order_list2.xml" value="0.20765765765765765" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_orderlist.xml" value="0.4142614601018676" />
+        <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_picallboxes.xml" value="0.40484429065743943" />
+        <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_picallboxes_list2.xml" value="0.264" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_product_list.xml" value="0.2" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_productlist.xml" value="0.21981981981981982" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_slideshow.xml" value="0.21981981981981982" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/nav_header_main.xml" value="0.21981981981981982" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/olist.xml" value="0.21981981981981982" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/orderassign_fragment.xml" value="0.21981981981981982" />
+        <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/pickallboxes_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/pickallboxeslist_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/product_list_detail.xml" value="0.21981981981981982" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/menu/activity_main_drawer.xml" value="0.21981981981981982" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/menu/main_activity2.xml" value="0.21981981981981982" />
@@ -63,8 +70,6 @@
         <entry key="..\:/Android/app/src/main/res/layout/activity_main2.xml" value="0.3625" />
         <entry key="..\:/Android/app/src/main/res/layout/app_bar_main.xml" value="0.3625" />
         <entry key="..\:/Android/app/src/main/res/layout/content_main.xml" value="0.3625" />
-        <entry key="..\:/Android/app/src/main/res/layout/fragment_blank.xml" value="0.26510416666666664" />
-        <entry key="..\:/Android/app/src/main/res/layout/fragment_gallery.xml" value="0.26510416666666664" />
         <entry key="..\:/Android/app/src/main/res/layout/fragment_home.xml" value="0.3625" />
         <entry key="..\:/Android/app/src/main/res/layout/fragment_item.xml" value="0.5" />
         <entry key="..\:/Android/app/src/main/res/layout/fragment_item_list.xml" value="0.33" />
@@ -76,7 +81,6 @@
         <entry key="..\:/Android/app/src/main/res/layout/loadorders_fragment.xml" value="0.3625" />
         <entry key="..\:/Android/app/src/main/res/layout/nav_header_main.xml" value="0.3625" />
         <entry key="..\:/Android/app/src/main/res/menu/activity_main_drawer.xml" value="0.3625" />
-        <entry key="..\:/Android/app/src/main/res/menu/main_activity2.xml" value="0.3625" />
         <entry key="..\:/Edoro App/MyApplication4/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.37864583333333335" />
         <entry key="..\:/Edoro App/MyApplication4/app/src/main/res/drawable/backgroundimg.xml" value="0.37864583333333335" />
         <entry key="..\:/Edoro App/MyApplication4/app/src/main/res/drawable/border.xml" value="0.37864583333333335" />
