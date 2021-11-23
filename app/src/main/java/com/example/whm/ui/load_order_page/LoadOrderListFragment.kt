@@ -89,7 +89,7 @@ class LoadOrderListFragment : Fragment() {
                     val resobj = (response.toString())
                     val responsemsg = JSONObject(resobj.toString())
                     val resultobj = JSONObject(responsemsg.getString("d"))
-                    val resmsg = responsemsg.getString("response")
+                    val resmsg = resultobj.getString("response")
                     val rescode = resultobj.getString("responseCode")
                     if (rescode == "201") {
                         LoadorderList.clear()
