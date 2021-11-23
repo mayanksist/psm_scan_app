@@ -176,8 +176,13 @@ class GalleryFragment : Fragment() {
                     } else {
                         unitype.text = "$punitypa" + " (" + "${pqty}" + " Pieces)"
                     }
-                    price.text = "${"$" + pprice}"
-                    locationval.text = "$location"
+                    price.text = "${pprice}"
+                    if ("$location" == "---"){
+                        locationval.text = "N/A"
+                    }else{
+                        locationval.text = "$location"
+                    }
+
                     category.text = "$pCategory"
                     sub_category.text = "$pSubCategory"
                     if (uAutoId.toString() == "3") {
@@ -190,7 +195,7 @@ class GalleryFragment : Fragment() {
                         .load(imagesurl) // image url
 //                        .placeholder(R.drawable.ic_menu_report_image) // any placeholder to load at start
 //                        .error(R.drawable.ic_menu_report_image)  // any image in case of error
-                        .override(300, 300) // resizing
+                        .override( 200, 200) // resizing
                         .centerCrop()
                         .into(imagur)
                     pDialog.dismiss()
