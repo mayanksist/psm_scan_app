@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:fitsSystemWindows="true"
+    android:layout_marginTop="0dp"
     tools:context=".com.example.whm.ui.gallery.GalleryFragment">
 
     <EditText
