@@ -37,12 +37,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import android.widget.LinearLayout
 import android.widget.TextView
-
-
-
-
-
-
+import androidx.appcompat.widget.LinearLayoutCompat
 
 
 class ProductList : Fragment() {
@@ -152,14 +147,20 @@ class ProductList : Fragment() {
                                                 msg!!.text = "Box Already Scanned."
                                                 count = 1
                                                 orderno.requestFocus()
-                                                val  mainlayout = view!!.findViewById(R.id.marginremove) as LinearLayout
-//                                                val layoutm = findViewById(R.id.marginremove) as LinearLayout
-                                                val params = LinearLayout.LayoutParams(
-                                                    LinearLayout.LayoutParams.MATCH_PARENT,
-                                                    LinearLayout.LayoutParams.MATCH_PARENT,
-                                                )
-                                                params.setMargins(3, 700, 3, 700)
-                                                mainlayout.layoutParams = params
+//                                                val params = LinearLayoutCompat.LayoutParams(
+//                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+//                                                    LinearLayout.LayoutParams.WRAP_CONTENT
+//                                                ).apply {
+//                                                    setMargins(0,1600,0,1600)
+//                                                }
+//                                                val  mainlayout = view!!.findViewById(R.id.marginremove) as LinearLayout
+////                                                val layoutm = findViewById(R.id.marginremove) as LinearLayout
+//                                                val params = LinearLayout.LayoutParams(
+//                                                    LinearLayout.LayoutParams.MATCH_PARENT,
+//                                                    LinearLayout.LayoutParams.MATCH_PARENT,
+//                                                )
+//                                                params.setMargins(3, 700, 3, 700)
+//                                                mainlayout.layoutParams = params
                                             }
                                         }
                                         if (count == 0) {
