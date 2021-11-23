@@ -89,6 +89,7 @@ class LoadOrderListFragment : Fragment() {
                     val resobj = (response.toString())
                     val responsemsg = JSONObject(resobj.toString())
                     val resultobj = JSONObject(responsemsg.getString("d"))
+                    val resmsg = responsemsg.getString("response")
                     val rescode = resultobj.getString("responseCode")
                     if (rescode == "201") {
                         LoadorderList.clear()
@@ -107,7 +108,7 @@ class LoadOrderListFragment : Fragment() {
                         pDialog.dismiss()
                     } else {
                         val alerts = AlertDialog.Builder(this.context)
-                        alerts.setMessage("No assigned order found.")
+                        alerts.setMessage(resmsg.toString())
                         alerts.setPositiveButton("ok", null)
                         val dialog: AlertDialog = alerts.create()
                         dialog.show()

@@ -97,6 +97,7 @@ class ItemFragment : Fragment() {
                     val resobj = (response.toString())
                     val responsemsg = JSONObject(resobj.toString())
                     val resultobj = JSONObject(responsemsg.getString("d"))
+                    val resmsg = responsemsg.getString("response")
                     val rescode = resultobj.getString("responseCode")
                     if (rescode == "201") {
                         val jsondata = resultobj.getJSONArray("responseData")
@@ -123,7 +124,7 @@ class ItemFragment : Fragment() {
                         pDialog.dismiss()
                     } else {
                         val alertscanord = AlertDialog.Builder(this.context)
-                        alertscanord.setMessage("No unload order found.")
+                        alertscanord.setMessage(resmsg.toString())
                         alertscanord.setPositiveButton("ok", null)
                         val dialog: AlertDialog = alertscanord.create()
                         dialog.show()
