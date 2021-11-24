@@ -7,7 +7,7 @@
     android:orientation="horizontal">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/OrderListRecyclerView"
+        android:id="@+id/picallboxesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible">

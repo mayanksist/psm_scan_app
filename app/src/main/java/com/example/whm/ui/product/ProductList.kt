@@ -38,6 +38,11 @@ import kotlin.collections.ArrayList
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
+import android.widget.FrameLayout
+
+import android.widget.ScrollView
+import android.view.MotionEvent
+import android.view.View.OnTouchListener
 
 
 class ProductList : Fragment() {
@@ -66,6 +71,7 @@ class ProductList : Fragment() {
         val root: View = binding.root
         var count = 0
         val txtallpicbox: TextView = binding.txtallpickbox
+
         val view = inflater.inflate(
             com.example.myapplication.R.layout.fragment_product_list,
             container,
@@ -147,20 +153,12 @@ class ProductList : Fragment() {
                                                 msg!!.text = "Box Already Scanned."
                                                 count = 1
                                                 orderno.requestFocus()
-//                                                val params = LinearLayoutCompat.LayoutParams(
-//                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-//                                                    LinearLayout.LayoutParams.WRAP_CONTENT
-//                                                ).apply {
-//                                                    setMargins(0,1600,0,1600)
-//                                                }
-//                                                val  mainlayout = view!!.findViewById(R.id.marginremove) as LinearLayout
-////                                                val layoutm = findViewById(R.id.marginremove) as LinearLayout
-//                                                val params = LinearLayout.LayoutParams(
-//                                                    LinearLayout.LayoutParams.MATCH_PARENT,
-//                                                    LinearLayout.LayoutParams.MATCH_PARENT,
-//                                                )
-//                                                params.setMargins(3, 700, 3, 700)
-//                                                mainlayout.layoutParams = params
+                                                val params = LinearLayout.LayoutParams(
+                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                                                ).apply {
+                                                    setMargins(0,70,0,70)
+                                                }
                                             }
                                         }
                                         if (count == 0) {
@@ -234,12 +232,21 @@ class ProductList : Fragment() {
                     }
                     false
                 })
-                orderno.requestFocus();
+                orderno.requestFocus()
                 txtallpicbox.setOnClickListener {
                     this.findNavController().navigate(com.example.myapplication.R.id.nav_allpickbox)
-
+                    var SharedOrderNo = sharedLoadOrderPreferences.getString("OrderNo", "")
 
                 }
+                val view:ScrollView =binding.scrollView
+                view.descendantFocusability = ViewGroup.FOCUS_BEFORE_DESCENDANTS
+                view.isFocusable = false
+                view.isFocusableInTouchMode = false
+                view.setOnTouchListener { v, event ->
+                    v.requestFocusFromTouch()
+                    false
+                }
+
             })
         } else {
             val alertnet = AlertDialog.Builder(activity)
