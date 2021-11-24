@@ -61,6 +61,7 @@ class ProductList : Fragment() {
     var totalBoxes = 0
     var boxno: String = ""
     var  maxTextSize: String = ""
+    var SharedOrderNo = ""
     var msg: TextView? = null
     var txtscanproducts: TextView? = null
     override fun onCreateView(
@@ -102,21 +103,18 @@ class ProductList : Fragment() {
                 orderno.requestFocus()
                 val sharedLoadOrderPreferences =
                     PreferenceManager.getDefaultSharedPreferences(this.context)
-                var PageValue = sharedLoadOrderPreferences.getInt("PageValue", 0)
-                var SharedOrderNo = sharedLoadOrderPreferences.getString("OrderNo", "")
+                 SharedOrderNo = sharedLoadOrderPreferences.getString("OrderNo", "").toString()
                 var PackedBoxes = sharedLoadOrderPreferences.getString("PackedBoxes", "")
                 var SharedStopNo = sharedLoadOrderPreferences.getString("Stoppage", "")
-                if (PageValue.toInt() == 2) {
                     setHasOptionsMenu(true)
                     val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
                     (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
                     (activity as? AppCompatActivity)?.supportActionBar?.show()
-                    (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Load Order"
-                    val Ono: TextView = binding.txtorderNo
+                    (activity as AppCompatActivity?)!!.supportActionBar!!.title = ""+SharedOrderNo
+                    var Ono = SharedOrderNo
                     val StopNo: TextView = binding.txtstoppage
                     val cardview: CardView = binding.cardView2
                     cardview.visibility = View.VISIBLE
-                    Ono.text = SharedOrderNo
                     noofboxes1.text = "0 out of " + PackedBoxes
                     StopNo.text = SharedStopNo
                     val sharedLoadOrder = PreferenceManager.getDefaultSharedPreferences(activity)
@@ -126,7 +124,6 @@ class ProductList : Fragment() {
                     sharedLoadOrderPage.putString("Stoppage", "")
                     sharedLoadOrderPage.putInt("PageValue", 0)
                     sharedLoadOrderPage.apply()
-                }
                 orderno.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
                     if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
                         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
@@ -297,7 +294,7 @@ class ProductList : Fragment() {
         pDialog.show()
         val cardview: CardView = binding.cardView2
         //Toast.makeText(this.context, barcoded, Toast.LENGTH_SHORT).show()
-        val txtorderno: TextView = binding.txtorderNo
+        var txtorderno =SharedOrderNo
         val txtstop: TextView = binding.txtstoppage
         val txtscanproduct: TextView = binding.txtscanproduct
         val txtpacked: TextView = binding.txtpackedb
@@ -355,7 +352,7 @@ class ProductList : Fragment() {
                             val noofboxes = jsondata.getJSONObject(i).getInt("PackedBoxes")
                             val stoppage = jsondata.getJSONObject(i).getInt("Stoppage")
                             txtstop.text = "${stoppage}"
-                            txtorderno.text = "$dorderno"
+
                             editor1.putString("OrderNO", dorderno)
                             editor1.putInt("NoofBox", noofboxes)
                             editor1.apply()
@@ -493,11 +490,11 @@ class ProductList : Fragment() {
     }
 
     fun clear() {
-        val txtorderno: TextView = binding.txtorderNo
+
         val txtstop: TextView = binding.txtstoppage
         val txtscanproduct: TextView = binding.txtscanproduct
         val txtpacked: TextView = binding.txtpackedb
-        txtorderno.text = "N/A"
+
         txtstop.text = "N/A"
         txtscanproduct.text = "N/A"
         txtpacked.text = "0"
