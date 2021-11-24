@@ -15,10 +15,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import android.widget.Toolbar
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
@@ -38,12 +35,17 @@ import org.json.JSONObject
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
 
 
 class ProductList : Fragment() {
 
     private lateinit var productListViewModel: ProductListViewModel
     private var _binding: FragmentProductListBinding? = null
+
+
     private val binding get() = _binding!!
     val list: MutableList<String> = ArrayList()
     val boxlist: MutableList<String> = ArrayList()
@@ -63,6 +65,7 @@ class ProductList : Fragment() {
         _binding = FragmentProductListBinding.inflate(inflater, container, false)
         val root: View = binding.root
         var count = 0
+        val txtallpicbox: TextView = binding.txtallpickbox
         val view = inflater.inflate(
             com.example.myapplication.R.layout.fragment_product_list,
             container,
@@ -78,6 +81,7 @@ class ProductList : Fragment() {
             }
             true
         })
+
         if(AppPreferences.internetConnectionCheck(this.context)) {
             val orderno: EditText = binding.txtorderno
             val noofboxes1: TextView = binding.txtpackedb
@@ -143,6 +147,20 @@ class ProductList : Fragment() {
                                                 msg!!.text = "Box Already Scanned."
                                                 count = 1
                                                 orderno.requestFocus()
+//                                                val params = LinearLayoutCompat.LayoutParams(
+//                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+//                                                    LinearLayout.LayoutParams.WRAP_CONTENT
+//                                                ).apply {
+//                                                    setMargins(0,1600,0,1600)
+//                                                }
+//                                                val  mainlayout = view!!.findViewById(R.id.marginremove) as LinearLayout
+////                                                val layoutm = findViewById(R.id.marginremove) as LinearLayout
+//                                                val params = LinearLayout.LayoutParams(
+//                                                    LinearLayout.LayoutParams.MATCH_PARENT,
+//                                                    LinearLayout.LayoutParams.MATCH_PARENT,
+//                                                )
+//                                                params.setMargins(3, 700, 3, 700)
+//                                                mainlayout.layoutParams = params
                                             }
                                         }
                                         if (count == 0) {
@@ -216,6 +234,12 @@ class ProductList : Fragment() {
                     }
                     false
                 })
+                orderno.requestFocus();
+                txtallpicbox.setOnClickListener {
+                    this.findNavController().navigate(com.example.myapplication.R.id.nav_allpickbox)
+
+
+                }
             })
         } else {
             val alertnet = AlertDialog.Builder(activity)
@@ -252,6 +276,7 @@ class ProductList : Fragment() {
         val txtstop: TextView = binding.txtstoppage
         val txtscanproduct: TextView = binding.txtscanproduct
         val txtpacked: TextView = binding.txtpackedb
+
         val Jsonarra = JSONObject()
         val details = JSONObject()
         val JSONObj = JSONObject()

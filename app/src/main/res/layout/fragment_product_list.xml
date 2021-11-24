@@ -53,17 +53,22 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="49dp">
+            tools:layout_editor_absoluteY="49dp"
+            android:screenReaderFocusable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            tools:ignore="MissingConstraints">
 
 
             <LinearLayout
+                android:id="@+id/marginremove"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="70dp"
                 android:layout_marginBottom="70dp"
+                android:screenReaderFocusable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@+id/scrollView">
                 <androidx.cardview.widget.CardView
@@ -72,7 +77,10 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    android:visibility="invisible"
+                    android:visibility="visible"
+                    android:screenReaderFocusable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="5dp"
@@ -106,26 +114,27 @@
 
                         <TextView
                             android:id="@+id/txtorderNo"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
+                            android:layout_width="158dp"
+                            android:layout_height="30dp"
                             android:text="N/A"
                             android:textSize="18dp"
                             app:layout_constraintBottom_toBottomOf="@+id/textView4"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/txtscanproduct1"
-                            app:layout_constraintTop_toTopOf="@+id/textView4" />
+                            app:layout_constraintStart_toEndOf="@+id/textView4"
+                            app:layout_constraintTop_toTopOf="@+id/textView4"
+                            app:layout_constraintVertical_bias="0.0" />
 
                         <TextView
                             android:id="@+id/txtscanproduct1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="4dp"
                             android:text="Scanned Boxes :"
                             android:textSize="18dp"
                             android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="@+id/txtstoppage1"
-                            app:layout_constraintTop_toBottomOf="@+id/txtstoppage1" />
+                            app:layout_constraintEnd_toEndOf="@+id/txtpackedw"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/txtpackedw"
+                            app:layout_constraintTop_toBottomOf="@+id/txtpackedw" />
 
                         <TextView
                             android:id="@+id/txtscanproduct"
@@ -145,7 +154,7 @@
                             android:id="@+id/txtpackedw"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="4dp"
                             android:text="Packed Boxes :"
                             android:textSize="18dp"
                             android:textStyle="bold"
@@ -161,33 +170,41 @@
                             android:text="0"
                             android:textSize="18dp"
                             app:layout_constraintBottom_toBottomOf="@+id/txtpackedw"
-                            app:layout_constraintEnd_toEndOf="@+id/txtorderNo"
-                            app:layout_constraintStart_toStartOf="@+id/txtorderNo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/txtpackedw"
                             app:layout_constraintTop_toTopOf="@+id/txtpackedw"
                             app:layout_constraintVertical_bias="0.0" />
-
-                        <TextView
-                            android:id="@+id/txtstoppage1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:text="Stop No :"
-                            android:textSize="18dp"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="@+id/txtpackedw"
-                            app:layout_constraintTop_toBottomOf="@+id/txtpackedw" />
 
                         <TextView
                             android:id="@+id/txtstoppage"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:textColor="@color/colorAccent"
+                            android:drawableStart="@drawable/location"
                             android:text="N/A"
                             android:textSize="18dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/txtstoppage1"
-                            app:layout_constraintEnd_toEndOf="@+id/txtpackedb"
-                            app:layout_constraintStart_toStartOf="@+id/txtpackedb"
-                            app:layout_constraintTop_toTopOf="@+id/txtstoppage1" />
+                            app:layout_constraintBottom_toBottomOf="@+id/txtorderNo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/txtorderNo"
+                            app:layout_constraintVertical_bias="1.0" />
 
+
+                        <TextView
+
+                            android:id="@+id/txtallpickbox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="Select Boxes"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:textColor="#06810B"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/txtscanproduct1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/txtscanproduct1"
+                            app:layout_constraintVertical_bias="0.2" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
