@@ -15,6 +15,7 @@ import android.widget.Toast
 import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.myapplication.R
 
 import com.example.myapplication.databinding.FragmentHomeBinding
 
@@ -57,6 +58,14 @@ class HomeFragment : Fragment()  {
     if (Usertype.toString() != "2"){
         btnInvCheck.visibility=   View.GONE
     }
+        if (Usertype.toString() == "9") {
+
+            btnInvCheck.visibility=   View.VISIBLE
+            btnDriLoad.visibility=   View.GONE
+            btnUnLoadList.visibility=   View.GONE
+            btnOrderList.visibility=   View.GONE
+
+        }
 
     btnInvCheck.setOnClickListener {
         this.findNavController().navigate(com.example.myapplication.R.id.nav_product)

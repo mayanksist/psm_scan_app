@@ -61,6 +61,13 @@ class MainActivity2 : AppCompatActivity() {
             nav_Menu.findItem(R.id.nav_product).isVisible = false
 
         }
+        if (usertype == "9") {
+            nav_Menu.findItem(R.id.nav_productlist).isVisible = false
+            nav_Menu.findItem(R.id.nav_orderlist).isVisible = false
+            nav_Menu.findItem(R.id.nav_assignorder).isVisible = false
+            nav_Menu.findItem(R.id.nav_product).isVisible = true
+
+        }
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         val hview = navView.getHeaderView(0)
         val textViewName = hview.findViewById(R.id.emptype) as TextView
