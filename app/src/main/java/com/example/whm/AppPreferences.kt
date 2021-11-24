@@ -12,7 +12,7 @@ import android.text.Editable
 
 
 object AppPreferences {
-    const val AppVersion = "2.0.0.9"
+    const val AppVersion = "2.0.0.10"
     const val BASEURL = "http://api.a1whm.com/AndroidAPI/"
     const val BASEURLSU = "https://api.a1whm.com/AndroidAPI/"
     const val GET_ORDERS = "WDriverOrder.asmx/getOrders"

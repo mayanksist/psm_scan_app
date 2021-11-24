@@ -90,7 +90,7 @@ class ItemFragment : Fragment() {
                     val resobj = (response.toString())
                     val responsemsg = JSONObject(resobj.toString())
                     val resultobj = JSONObject(responsemsg.getString("d"))
-                    val resmsg = resultobj.getString("response")
+                    val resmsg = resultobj.getString("responseMessage")
                     val rescode = resultobj.getString("responseCode")
                     if (rescode == "201") {
                         val jsondata = resultobj.getJSONArray("responseData")
