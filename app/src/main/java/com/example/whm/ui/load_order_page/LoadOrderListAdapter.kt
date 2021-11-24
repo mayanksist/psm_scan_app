@@ -49,7 +49,7 @@ internal class LoadOrderListAdapter(private var loadorderList: List<LoadOrderMod
             sharedLoadOrderPage.putString("PackedBoxes", order.getPackedBoxes().toString())
             sharedLoadOrderPage.putString("Stoppage", order.getStoppage().toString())
             sharedLoadOrderPage.apply()
-            view.findNavController().navigate(R.id.nav_productlist)
+            view.findNavController().navigate(R.id.nav_scanorder)
         })
 
     }

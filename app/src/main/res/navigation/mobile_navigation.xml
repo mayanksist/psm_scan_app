@@ -24,9 +24,9 @@
 
     <fragment
         android:id="@+id/nav_productlist"
-        android:name="com.example.myapplication.ui.product.ProductList"
+        android:name="com.example.whm.ui.manualorder.ManualorderFragment"
         android:label="@string/product_list_fragment"
-        tools:layout="@layout/fragment_product_list" />
+        tools:layout="@layout/fragment_manualorder" />
     <fragment
         android:id="@+id/nav_orderlist"
         android:label="@string/OrderList"
@@ -48,4 +48,10 @@
         android:label="@string/picallboxes"
         android:name="com.example.whm.ui.pickallboxes.picallboxesFragment"
         tools:layout="@layout/fragment_picallboxes_list2" />
+    <fragment
+        android:id="@+id/nav_scanorder"
+        android:name="com.example.myapplication.ui.product.ProductList"
+        android:label="@string/OrderList"
+        tools:layout="@layout/fragment_product_list" />
+
 </navigation>

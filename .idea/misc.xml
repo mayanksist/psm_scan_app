@@ -33,12 +33,15 @@
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/content_main.xml" value="0.13020833333333334" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_assignorders.xml" value="0.21981981981981982" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_blank.xml" value="0.21981981981981982" />
-        <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_gallery.xml" value="0.264" />
+        <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_gallery.xml" value="0.2" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_home.xml" value="0.21981981981981982" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_item.xml" value="0.264" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_item_list.xml" value="0.20765765765765765" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_load_order_list.xml" value="0.14297729184188393" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_loadorderlists.xml" value="0.21981981981981982" />
+        <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_manualorder.xml" value="0.25416666666666665" />
+        <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_manualorder_l.xml" value="0.25416666666666665" />
+        <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_manualorderl.xml" value="0.25416666666666665" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_order_list2.xml" value="0.20765765765765765" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_orderlist.xml" value="0.4142614601018676" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_picallboxes.xml" value="0.40484429065743943" />
@@ -46,6 +49,8 @@
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_product_list.xml" value="0.264" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_productlist.xml" value="0.21981981981981982" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/fragment_slideshow.xml" value="0.21981981981981982" />
+        <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/manual_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/manualorder_fragment.xml" value="0.2" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/nav_header_main.xml" value="0.21981981981981982" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/olist.xml" value="0.21981981981981982" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/orderassign_fragment.xml" value="0.21981981981981982" />

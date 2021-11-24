@@ -115,6 +115,12 @@ class GalleryFragment : Fragment() {
         val unitype: TextView = binding.txtunitype
         val price: TextView = binding.priductprise
         val imagur: ImageView = binding.productimage
+//        val newHeight = 700
+//        val newWidth = 700
+//        imagur.requestLayout()
+//        imagur.getLayoutParams().height = newHeight;
+//        imagur.getLayoutParams().width = newWidth;
+//        imagur.setScaleType(ImageView.ScaleType.FIT_XY)
         val stock: TextView = binding.txtStock2
         val category: TextView = binding.txtCategory
         val sub_category: TextView = binding.txtSubCategory
@@ -183,15 +189,15 @@ class GalleryFragment : Fragment() {
                         stock.text = "${cstock}" + " $punitypa"
                     } else {
                         stock.text =
-                            "${cstock}" + " $punitypa" + " [" + "${DefaultStock}" + " Pieces]"
+                            "${cstock}" + " $punitypa" + " (" + "${DefaultStock}" + " Pieces)"
                     }
                     barcode.text = "" + barcoded
                     Glide.with(this)
                         .load(imagesurl) // image url
 //                        .placeholder(R.drawable.ic_menu_report_image) // any placeholder to load at start
 //                        .error(R.drawable.ic_menu_report_image)  // any image in case of error
-                        .override(230, 230) // resizing
-                        .centerCrop()
+                        .override(1000, 1000) // resizing
+//                        .centerCrop()
                         .into(imagur)
                     pDialog.dismiss()
                 } else {

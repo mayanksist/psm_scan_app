@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/OrderScanList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+        android:background="#ffffff"
     tools:context="com.example.myapplication.ui.product.ProductList">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +30,7 @@
         <EditText
             android:id="@+id/txtorderno"
             android:layout_width="0dp"
-            android:layout_height="38dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
@@ -64,9 +65,10 @@
                     android:id="@+id/cardView2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="0dp"
+                    android:padding="0dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="0dp"
-                    android:layout_marginEnd="0dp"
+                    android:layout_marginEnd="5dp"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:screenReaderFocusable="false"
@@ -90,99 +92,110 @@
                         app:layout_constraintTop_toTopOf="@+id/cardView2">
 
                         <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="6dp"
+                            android:text="Order No. :"
+                            android:textSize="18dp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txtorderNo"
+                            android:layout_width="158dp"
+                            android:layout_height="30dp"
+                            android:text="N/A"
+                            android:textSize="18dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                            app:layout_constraintStart_toEndOf="@+id/textView4"
+                            app:layout_constraintTop_toTopOf="@+id/textView4"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <TextView
                             android:id="@+id/txtscanproduct1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
                             android:text="Scanned Boxes :"
                             android:textSize="18dp"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/txtallpickbox"
+                            app:layout_constraintEnd_toEndOf="@+id/txtpackedw"
+                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="@+id/txtpackedw"
-                            app:layout_constraintTop_toTopOf="@+id/txtallpickbox" />
+                            app:layout_constraintTop_toBottomOf="@+id/txtpackedw" />
 
                         <TextView
                             android:id="@+id/txtscanproduct"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginBottom="80dp"
                             android:text="N/A"
                             android:textColor="#03ED0D"
-                            android:textSize="45dp"
+                            android:textSize="50dp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/txtallpickbox"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/txtscanproduct1"
-                            app:layout_constraintTop_toBottomOf="@+id/txtallpickbox" />
+                            app:layout_constraintTop_toBottomOf="@+id/txtscanproduct1" />
 
                         <TextView
                             android:id="@+id/txtpackedw"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:text="Boxes :"
-                            android:textSize="21dp"
+                            android:layout_marginTop="4dp"
+                            android:text="Packed Boxes :"
+                            android:textSize="18dp"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/txtstoppage"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/txtstoppage" />
+                            app:layout_constraintEnd_toEndOf="@+id/textView4"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/textView4"
+                            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
                         <TextView
                             android:id="@+id/txtpackedb"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="4dp"
                             android:text="0"
-                            android:textSize="20dp"
+                            android:textSize="18dp"
                             app:layout_constraintBottom_toBottomOf="@+id/txtpackedw"
-                            app:layout_constraintEnd_toStartOf="@+id/textView4"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/txtpackedw"
-                            app:layout_constraintTop_toTopOf="@+id/txtpackedw" />
-
+                            app:layout_constraintTop_toTopOf="@+id/txtpackedw"
+                            app:layout_constraintVertical_bias="0.0" />
 
                         <TextView
                             android:id="@+id/txtstoppage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginEnd="6dp"
+                            android:layout_width="63dp"
+                            android:layout_height="27dp"
+                            android:layout_marginEnd="16dp"
                             android:drawableStart="@drawable/location"
-                            android:drawableTint="@color/colorAccent"
                             android:text="N/A"
                             android:textColor="@color/colorAccent"
-                            android:textSize="25dp"
-                            android:textStyle="bold"
+                            android:textSize="18dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/txtorderNo"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="@+id/txtorderNo"
+                            app:layout_constraintVertical_bias="1.0" />
+
 
                         <TextView
 
                             android:id="@+id/txtallpickbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:background="@drawable/oval"
+                            android:layout_marginEnd="8dp"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:padding="4dp"
                             android:text="Select Boxes"
                             android:textColor="#06810B"
-                            android:textSize="19dp"
                             android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@+id/txtstoppage"
-                            app:layout_constraintTop_toBottomOf="@+id/txtpackedb" />
-
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Stop : "
-                            android:textSize="20dp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/txtstoppage"
-                            app:layout_constraintEnd_toStartOf="@+id/txtstoppage"
-                            app:layout_constraintTop_toTopOf="@+id/txtstoppage" />
+                            app:layout_constraintBottom_toBottomOf="@+id/txtscanproduct1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/txtscanproduct1"
+                            app:layout_constraintVertical_bias="0.2" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
