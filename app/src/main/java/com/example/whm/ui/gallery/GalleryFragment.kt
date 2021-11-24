@@ -175,7 +175,7 @@ class GalleryFragment : Fragment() {
                     barcode.text = "" + barcoded
                     Glide.with(this)
                         .load(imagesurl)
-                        .override(500, 500)
+//                        .override(500, 500)
                         .into(imagur)
                     pDialog.dismiss()
                 } else {
