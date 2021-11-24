@@ -11,6 +11,7 @@ import android.net.NetworkInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
+import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -59,7 +60,9 @@ class ProductList : Fragment() {
     var checkr = 0
     var totalBoxes = 0
     var boxno: String = ""
+    var  maxTextSize: String = ""
     var msg: TextView? = null
+    var txtscanproducts: TextView? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -143,6 +146,7 @@ class ProductList : Fragment() {
                             } else {
                                 if (FirstorderNO == result1[0]) {
                                     pDialog.dismiss()
+
                                     if (boxno.toInt() <= totalBoxes) {
                                         count = 0
                                         for (i in list) {
@@ -162,6 +166,14 @@ class ProductList : Fragment() {
                                             }
                                         }
                                         if (count == 0) {
+                                            maxTextSize = list.size.toString()
+                                            txtscanproducts = binding.txtscanproduct
+                                            if (maxTextSize == "2") {
+                                                txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f);
+                                            }
+                                            if (maxTextSize == "45") {
+                                                txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25f);
+                                            }
                                             list.add(list.size, ordernoenter)
                                             boxlist.add(0, boxno)
                                             orderno.setText("")
@@ -172,6 +184,8 @@ class ProductList : Fragment() {
                                             if (list.size.toString() == totalBoxes.toString()) {
                                                 submitorder(FirstorderNO)
                                             }
+
+
                                         }
                                     } else {
                                         msg!!.text = "invalid box number"
@@ -184,6 +198,8 @@ class ProductList : Fragment() {
                                     { dialog, which ->
                                         list.clear()
                                         boxlist.clear()
+                                        maxTextSize=""
+                                        txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 45f);
                                         count = 0
                                         alert.setTitle("")
                                         orderdetailsbind(result1[0], ordernoenter)
@@ -236,6 +252,7 @@ class ProductList : Fragment() {
                 txtallpicbox.setOnClickListener {
                     this.findNavController().navigate(com.example.myapplication.R.id.nav_allpickbox)
                     var SharedOrderNo = sharedLoadOrderPreferences.getString("OrderNo", "")
+                    Toast.makeText(this.context, SharedOrderNo, Toast.LENGTH_LONG).show()
 
                 }
                 val view:ScrollView =binding.scrollView
@@ -246,6 +263,7 @@ class ProductList : Fragment() {
                     v.requestFocusFromTouch()
                     false
                 }
+
 
             })
         } else {
@@ -485,6 +503,8 @@ class ProductList : Fragment() {
         txtpacked.text = "0"
     }
 }
+
+
 fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
 
 }
