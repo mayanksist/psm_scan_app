@@ -168,7 +168,7 @@ class ProductList : Fragment() {
                                         if (count == 0) {
                                             maxTextSize = list.size.toString()
                                             txtscanproducts = binding.txtscanproduct
-                                            if (maxTextSize == "2") {
+                                            if (maxTextSize == "30") {
                                                 txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f);
                                             }
                                             if (maxTextSize == "45") {
