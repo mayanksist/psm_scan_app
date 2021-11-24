@@ -115,12 +115,6 @@ class GalleryFragment : Fragment() {
         val unitype: TextView = binding.txtunitype
         val price: TextView = binding.priductprise
         val imagur: ImageView = binding.productimage
-//        val newHeight = 700
-//        val newWidth = 700
-//        imagur.requestLayout()
-//        imagur.getLayoutParams().height = newHeight;
-//        imagur.getLayoutParams().width = newWidth;
-//        imagur.setScaleType(ImageView.ScaleType.FIT_XY)
         val stock: TextView = binding.txtStock2
         val category: TextView = binding.txtCategory
         val sub_category: TextView = binding.txtSubCategory
@@ -156,12 +150,9 @@ class GalleryFragment : Fragment() {
                     val pCategory = jsonrepd.getString("Cat")
                     val pSubCategory = jsonrepd.getString("SCat")
                     val ProductId = jsonrepd.getString("PId")
-                    val punitypa = jsonrepd.getString("UnitType")
-                    val uAutoId = jsonrepd.getString("UAutoId")
-                    val pqty = jsonrepd.getInt("Qty")
+                    val punitypa = jsonrepd.getString("Unit")
                     val pprice = ("%.2f".format(jsonrepd.getDouble("Price")))
-                    val cstock = jsonrepd.getInt("CurrentStock")
-                    val DefaultStock = jsonrepd.getInt("Stock")
+                    val DefaultStock = jsonrepd.getString("stock")
                     var imagesurl = ""
                     if (jsonrepd.getString("OPath") == null) {
                         imagesurl = jsonrepd.getString("ImageUrl")
@@ -171,33 +162,20 @@ class GalleryFragment : Fragment() {
                     val location = jsonrepd.getString("Location")
                     produname.text = "$pname"
                     productId.text = "$ProductId"
-                    if (uAutoId.toString() == "3") {
-                        unitype.text = "Pieces"
-                    } else {
-                        unitype.text = "$punitypa" + " (" + "${pqty}" + " Pieces)"
-                    }
+                        unitype.text = "$punitypa"
                     price.text = "${pprice}"
                     if ("$location" == "---") {
                         locationval.text = "N/A"
                     } else {
                         locationval.text = "$location"
                     }
-
                     category.text = "$pCategory"
                     sub_category.text = "$pSubCategory"
-                    if (uAutoId.toString() == "3") {
-                        stock.text = "${cstock}" + " $punitypa"
-                    } else {
-                        stock.text =
-                            "${cstock}" + " $punitypa" + " (" + "${DefaultStock}" + " Pieces)"
-                    }
+                        stock.text = "${DefaultStock}"
                     barcode.text = "" + barcoded
                     Glide.with(this)
-                        .load(imagesurl) // image url
-//                        .placeholder(R.drawable.ic_menu_report_image) // any placeholder to load at start
-//                        .error(R.drawable.ic_menu_report_image)  // any image in case of error
-                        .override(1000, 1000) // resizing
-//                        .centerCrop()
+                        .load(imagesurl)
+                        .override(500, 500)
                         .into(imagur)
                     pDialog.dismiss()
                 } else {
