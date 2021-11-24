@@ -1,10 +1,7 @@
 package com.example.whm.ui.assignorder
 
 import android.app.AlertDialog
-import android.content.Context
 import android.graphics.Color
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -13,9 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import android.widget.Toolbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -29,12 +23,8 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.ui.assignorder.OrderModel
-import com.example.myapplication.ui.product.setSupportActionBar
 import org.json.JSONObject
 import java.io.IOException
-
-
-
 
 
 /**
@@ -62,14 +52,15 @@ class ItemFragment : Fragment() {
             }
             true
         })
-        if(AppPreferences.internetConnectionCheck(this.context)) {
+        if (AppPreferences.internetConnectionCheck(this.context)) {
             val recyclerView: RecyclerView = view.findViewById(R.id.list)
-            val sharedUnloadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
+            val sharedUnloadOrderPreferences =
+                PreferenceManager.getDefaultSharedPreferences(this.context)
             var UnloadOrderCount = sharedUnloadOrderPreferences.getString("UnloadOrder", "[0]")
             setHasOptionsMenu(true)
 
 
-            orderAdapter = AssignOrderAdapter(orderList,this.context)
+            orderAdapter = AssignOrderAdapter(orderList, this.context)
             val layoutManager = LinearLayoutManager(this.context)
             recyclerView.layoutManager = layoutManager
             recyclerView.itemAnimator = DefaultItemAnimator()
@@ -92,7 +83,9 @@ class ItemFragment : Fragment() {
             JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
 
             val resorderno = JsonObjectRequest(
-                Request.Method.POST, AppPreferences.BASEURL + AppPreferences.GET_ASSIGN_ORDER, JSONObj,
+                Request.Method.POST,
+                AppPreferences.BASEURL + AppPreferences.GET_ASSIGN_ORDER,
+                JSONObj,
                 { response ->
                     val resobj = (response.toString())
                     val responsemsg = JSONObject(resobj.toString())
@@ -130,7 +123,8 @@ class ItemFragment : Fragment() {
                         dialog.show()
                         pDialog.dismiss()
                     }
-                }, { response ->
+                },
+                { response ->
                     Log.e("onError", error(response.toString()))
                     pDialog.dismiss()
                 })
@@ -146,13 +140,13 @@ class ItemFragment : Fragment() {
                 Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
             }
 
-        }
-        else{
+        } else {
             val alertnet = AlertDialog.Builder(this.context)
             alertnet.setTitle("Connection")
             alertnet.setMessage("Please check your internet connection")
             alertnet.setPositiveButton("ok")
-            { dialog, which -> dialog.dismiss()
+            { dialog, which ->
+                dialog.dismiss()
                 this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
             }
             val dialog: AlertDialog = alertnet.create()
@@ -161,14 +155,15 @@ class ItemFragment : Fragment() {
 
         return view
     }
-   private fun prepareMovieData(
+
+    private fun prepareMovieData(
         CustomerName: String, Ono: String, Od: String, SP: String, PackedBoxes: String,
-        Stoppage: String, PayableAmount: String,ST:String
+        Stoppage: String, PayableAmount: String, ST: String
     ) {
-        var order = OrderModel(CustomerName, Ono, Od, SP, PackedBoxes, Stoppage, PayableAmount,ST)
+        var order = OrderModel(CustomerName, Ono, Od, SP, PackedBoxes, Stoppage, PayableAmount, ST)
         orderList.add(order)
         orderAdapter.notifyDataSetChanged()
     }
 
-    
+
 }

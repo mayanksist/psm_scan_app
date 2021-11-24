@@ -1,13 +1,7 @@
 package com.example.myapplication.com.example.whm.ui.gallery
 
-import android.R
 import android.app.AlertDialog
-import android.content.Context
 import android.graphics.Color
-import android.media.AudioAttributes
-import android.media.MediaPlayer
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -22,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.android.volley.*
-
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
@@ -44,15 +37,15 @@ class GalleryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-            galleryViewModel =
-                ViewModelProvider(this).get(GalleryViewModel::class.java)
-            _binding = FragmentGalleryBinding.inflate(inflater, container, false)
-            val root: View = binding.root
-            val view = inflater.inflate(
-                com.example.myapplication.R.layout.fragment_gallery,
-                container,
-                false
-            )
+        galleryViewModel =
+            ViewModelProvider(this).get(GalleryViewModel::class.java)
+        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        val view = inflater.inflate(
+            com.example.myapplication.R.layout.fragment_gallery,
+            container,
+            false
+        )
         root.requestFocus();
         root.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
@@ -62,7 +55,7 @@ class GalleryFragment : Fragment() {
             }
             true
         })
-        if(AppPreferences.internetConnectionCheck(this.context)) {
+        if (AppPreferences.internetConnectionCheck(this.context)) {
             val barcode: EditText = binding.barcodetype
             galleryViewModel.text.observe(viewLifecycleOwner, Observer {
                 barcode.requestFocus()
@@ -74,10 +67,11 @@ class GalleryFragment : Fragment() {
                                 val alertemail = AlertDialog.Builder(this.context)
                                 alertemail.setMessage("Scan Barcode")
                                 alertemail.setPositiveButton("ok")
-                                { dialog, which -> dialog.dismiss()
+                                { dialog, which ->
+                                    dialog.dismiss()
                                     barcode.text.clear()
                                     barcode.setText("")
-                                    barcodeenter=""
+                                    barcodeenter = ""
                                 }
                                 val dialog: AlertDialog = alertemail.create()
                                 dialog.show()
@@ -94,21 +88,22 @@ class GalleryFragment : Fragment() {
                     false
                 })
             })
-        }
-        else{
-             val alertnet = AlertDialog.Builder(activity)
-             alertnet.setTitle("Connection")
-             alertnet.setMessage("Please check your internet connection")
-             alertnet.setPositiveButton("ok")
-             { dialog, which -> dialog.dismiss()
-                 this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
-             }
-             val dialog: AlertDialog = alertnet.create()
-             dialog.show()
+        } else {
+            val alertnet = AlertDialog.Builder(activity)
+            alertnet.setTitle("Connection")
+            alertnet.setMessage("Please check your internet connection")
+            alertnet.setPositiveButton("ok")
+            { dialog, which ->
+                dialog.dismiss()
+                this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
+            }
+            val dialog: AlertDialog = alertnet.create()
+            dialog.show()
         }
         return root
     }
-    val APIURL: String =apisettings().apiurl+"WPackerProductList.asmx/getProductsList"
+
+    val APIURL: String = apisettings().apiurl + "WPackerProductList.asmx/getProductsList"
     fun bindproductdetails(barcoded: String) {
         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
         pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
@@ -141,8 +136,7 @@ class GalleryFragment : Fragment() {
         JSONObj.put("requestContainer", Jsonarra.put("filterkeyword", details))
         val reqPRODUCTDETAILS = JsonObjectRequest(
             Request.Method.POST, APIURL, JSONObj,
-            Response.Listener {
-                    response ->
+            Response.Listener { response ->
                 val resobj = (response.toString())
                 val responsemsg = JSONObject(resobj.toString())
                 val resultobj = JSONObject(responsemsg.getString("d"))
@@ -177,9 +171,9 @@ class GalleryFragment : Fragment() {
                         unitype.text = "$punitypa" + " (" + "${pqty}" + " Pieces)"
                     }
                     price.text = "${pprice}"
-                    if ("$location" == "---"){
+                    if ("$location" == "---") {
                         locationval.text = "N/A"
-                    }else{
+                    } else {
                         locationval.text = "$location"
                     }
 
@@ -188,19 +182,19 @@ class GalleryFragment : Fragment() {
                     if (uAutoId.toString() == "3") {
                         stock.text = "${cstock}" + " $punitypa"
                     } else {
-                        stock.text = "${cstock}" + " $punitypa" +" ["+"${DefaultStock}" + " Pieces]"
+                        stock.text =
+                            "${cstock}" + " $punitypa" + " [" + "${DefaultStock}" + " Pieces]"
                     }
-                    barcode.text = ""+barcoded
+                    barcode.text = "" + barcoded
                     Glide.with(this)
                         .load(imagesurl) // image url
 //                        .placeholder(R.drawable.ic_menu_report_image) // any placeholder to load at start
 //                        .error(R.drawable.ic_menu_report_image)  // any image in case of error
-                        .override( 200, 200) // resizing
+                        .override(230, 230) // resizing
                         .centerCrop()
                         .into(imagur)
                     pDialog.dismiss()
-                }
-                else{
+                } else {
                     pDialog.dismiss()
                     AppPreferences.playSoundbarcode()
                     layout.visibility = View.GONE
@@ -208,11 +202,12 @@ class GalleryFragment : Fragment() {
                     barcode.text = ""
                     barcodeC.text.clear()
                     barcode.setText("")
-                    val alertemail= AlertDialog.Builder(this.context)
+                    val alertemail = AlertDialog.Builder(this.context)
                     alertemail.setTitle("Barcode")
                     alertemail.setMessage(presponsmsg.toString())
                     alertemail.setPositiveButton("ok")
-                    { dialog, which -> dialog.dismiss()
+                    { dialog, which ->
+                        dialog.dismiss()
                         barcode.text = ""
                         barcodeC.text.clear()
                         barcode.setText("")
