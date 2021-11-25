@@ -42,8 +42,13 @@ class picallboxesFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = picboxesall
-        val Ono = "Ord10211458/2"
-        DataBindAllBoxes(Ono)
+        var Ono = ""
+                for (i in 0..10) {
+                    Ono ="Ord10211458/"+i.toString()
+                    DataBindAllBoxes(Ono)
+                }
+
+
         return view
     }
 

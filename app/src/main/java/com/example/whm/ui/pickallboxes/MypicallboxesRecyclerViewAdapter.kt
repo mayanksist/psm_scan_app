@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.cardview.widget.CardView
@@ -18,8 +19,8 @@ import com.example.myapplication.com.example.whm.ui.pickallboxes.AllpickBoxes
 internal class MypicallboxesRecyclerViewAdapter(private var allpicboxes: List<AllpickBoxes>, var activity: Context?) :
     RecyclerView.Adapter<MypicallboxesRecyclerViewAdapter.MyViewHolder>() {
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var OrderNo: TextView = view.findViewById(R.id.txtallpickbox)
-        var Cardview: CardView = view.findViewById(R.id.picallboxesRecyclerView)
+        var OrderNo: RadioButton = view.findViewById(R.id.txtLeftBox)
+//        var Cardview: CardView = view.findViewById(R.id.picallboxesRecyclerView)
     }
 
     @NonNull
@@ -34,7 +35,7 @@ internal class MypicallboxesRecyclerViewAdapter(private var allpicboxes: List<Al
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val order = allpicboxes[position]
         holder.OrderNo.text = order.getOno()
-        val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+//        val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
 //        holder.CardView.setOnClickListener(View.OnClickListener {view ->
 //            val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
 //            val sharedLoadOrderPage = sharedLoadOrderPreferences.edit()
