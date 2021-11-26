@@ -152,7 +152,7 @@ class ManualorderFragment : Fragment() {
                                         list.clear()
                                         boxlist.clear()
                                         maxTextSize=""
-                                        txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 45f);
+//                                        txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 45f);
                                         count = 0
                                         alert.setTitle("")
                                         orderdetailsbind(result1[0], ordernoenter)
