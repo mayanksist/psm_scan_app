@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -44,6 +45,10 @@ class picallboxesFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.allpickboxeslist)
         var PickAllBtn: Button = view.findViewById(R.id.SelectAllPickBtn)
         setHasOptionsMenu(true)
+        if (activity is AppCompatActivity) {
+            (activity as AppCompatActivity?)?.getSupportActionBar()
+                ?.setDisplayHomeAsUpEnabled(false)
+        }
         picboxesall = MypicallboxesRecyclerViewAdapter(picboxesclass, this.context)
         val layoutManager = LinearLayoutManager(this.context)
         recyclerView.layoutManager = layoutManager

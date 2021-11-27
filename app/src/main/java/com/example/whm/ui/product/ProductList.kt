@@ -26,6 +26,7 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.myapplication.ui.ProductList.ProductListViewModel
 import com.example.myapplication.com.example.whm.AppPreferences
+import com.example.myapplication.com.example.whm.MainActivity
 import com.example.myapplication.databinding.FragmentProductListBinding
 import org.json.JSONObject
 import java.io.IOException
@@ -108,15 +109,21 @@ class ProductList : Fragment() {
                         }
                     }
                 }
-                for (key in listarrayp) {
-                    var test = key.trim();
-                    boxlist.add(test);
+                if(SelectOrderNo!="" && SelectOrderNo!=null) {
+                    for (key in listarrayp) {
+                        var test = key.trim();
+                        boxlist.add(test);
+                    }
                 }
                 setHasOptionsMenu(true)
                 toolbar = view.findViewById(R.id.toolbar)
                 (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
                 (activity as? AppCompatActivity)?.supportActionBar?.show()
                 (activity as AppCompatActivity?)!!.supportActionBar!!.title = SharedOrderNo
+                if (activity is AppCompatActivity) {
+                    (activity as AppCompatActivity?)?.getSupportActionBar()
+                        ?.setDisplayHomeAsUpEnabled(false)
+                }
                 val StopNo: TextView = binding.txtstoppage
                 val cardview: CardView = binding.cardView2
                 StopNo.text = SharedStopNo
@@ -143,9 +150,7 @@ class ProductList : Fragment() {
                         Toast.makeText(this.context, e.toString(), Toast.LENGTH_LONG).show()
                     }
                 }
-                if (listofarray != "" && listofsize != "") {
-
-                } else {
+                if (listofarray == "" && listofsize == "") {
                     noofboxes1.text = "0 out of " + PackedBoxes
                 }
                 orderno.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
@@ -304,9 +309,10 @@ class ProductList : Fragment() {
                     sharedLoadOrderPage.putString("OrderNo", SharedOrderNo)
                     sharedLoadOrderPage.putInt("PackedBoxes", PackedBoxes)
                     sharedLoadOrderPage.putString("Stoppage", SharedStopNo)
-                    Toast.makeText(this.context, boxlist.toString(), Toast.LENGTH_LONG).show()
                     sharedLoadOrderPage.putString("boxlist", boxlist.toString())
                     sharedLoadOrderPage.putString("listsize", boxlist.size.toString())
+//                    sharedLoadOrderPage.remove("boxNo")
+//                    sharedLoadOrderPage.remove("SelectOrderNo")
                     sharedLoadOrderPage.apply()
                 }
                 val view: ScrollView = binding.scrollView
@@ -541,6 +547,8 @@ class ProductList : Fragment() {
         txtpacked.text = "0"
     }
 }
+
+
 
 private fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
 
