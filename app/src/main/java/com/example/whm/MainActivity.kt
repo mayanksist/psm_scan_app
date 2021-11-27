@@ -106,6 +106,7 @@ class MainActivity : AppCompatActivity() {
                     val empname=jsondata.getJSONObject(i).getString("EmpType")
                     val empid=jsondata.getJSONObject(i).getString("AutoId")
                     val LName=jsondata.getJSONObject(i).getString("LName")
+
                     var intent = Intent(this, MainActivity2::class.java)
                     intent.putExtra("Name", Name.toString())
                     intent.putExtra("EmpTypeNo", emptype.toString())
@@ -113,6 +114,7 @@ class MainActivity : AppCompatActivity() {
                     intent.putExtra("empid", empid.toString())
                     editor.putString("LName", LName)
                     editor.putString("accessToken", jsondata.getJSONObject(i).getString("accessToken"))
+                    editor.putBoolean("EnabledPickallBoxes", jsondata.getJSONObject(i).getBoolean("EnabledPickallBoxes"))
                     editor.apply()
                     val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
                     mLayout.visibility = View.GONE

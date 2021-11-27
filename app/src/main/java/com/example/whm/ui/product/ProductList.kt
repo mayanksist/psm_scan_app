@@ -1,13 +1,8 @@
 package com.example.myapplication.ui.product
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
-import android.media.AudioAttributes
-import android.media.MediaPlayer
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -36,14 +31,6 @@ import org.json.JSONObject
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.appcompat.widget.LinearLayoutCompat
-import android.widget.FrameLayout
-
-import android.widget.ScrollView
-import android.view.MotionEvent
-import android.view.View.OnTouchListener
 
 
 class ProductList : Fragment() {
@@ -53,22 +40,19 @@ class ProductList : Fragment() {
 
 
     private val binding get() = _binding!!
-
-
-    var list: MutableList<String> = ArrayList()
     var boxlist: MutableList<String> = ArrayList()
-
-    var listarrayp:MutableList<String> = ArrayList()
+    var listarrayp: MutableList<String> = ArrayList()
     var FirstorderNO: String = ""
     var ordernoenter: String = ""
     var checkr = 0
     var PackedBoxes = 0
     var boxno: String = ""
-    var  maxTextSize: String = ""
+    var maxTextSize: String = ""
     var SharedOrderNo = ""
     var msg: TextView? = null
     var txtscanproducts: TextView? = null
     var txtstop: TextView? = null
+    var toolbar: Toolbar? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -96,7 +80,7 @@ class ProductList : Fragment() {
             true
         })
 
-        if(AppPreferences.internetConnectionCheck(this.context)) {
+        if (AppPreferences.internetConnectionCheck(this.context)) {
             val orderno: EditText = binding.txtorderno
             val noofboxes1: TextView = binding.txtpackedb
             val lastscanprd: TextView = binding.txtscanproduct
@@ -106,14 +90,15 @@ class ProductList : Fragment() {
                 orderno.requestFocus()
                 val sharedLoadOrderPreferences =
                     PreferenceManager.getDefaultSharedPreferences(this.context)
-                val editor = sharedLoadOrderPreferences.edit()
-                 SharedOrderNo = sharedLoadOrderPreferences.getString("OrderNo", "").toString()
-                 PackedBoxes = sharedLoadOrderPreferences.getInt("PackedBoxes", 0)
+                val sharedLoadOrderPage =
+                    sharedLoadOrderPreferences.edit()
+                SharedOrderNo = sharedLoadOrderPreferences.getString("OrderNo", "").toString()
+                PackedBoxes = sharedLoadOrderPreferences.getInt("PackedBoxes", 0)
                 var SharedStopNo = sharedLoadOrderPreferences.getString("Stoppage", "")
                 val listofarray = sharedLoadOrderPreferences.getString("boxlist", "")
                 val listofsize = sharedLoadOrderPreferences.getString("listsize", "")
                 val SelectOrderNo = sharedLoadOrderPreferences.getString("SelectOrderNo", "")
-                  boxno = sharedLoadOrderPreferences.getString("boxNo", "").toString()
+                boxno = sharedLoadOrderPreferences.getString("boxNo", "").toString()
                 if (listofarray != "[]") {
                     if (listofarray != null) {
                         if (listofarray != "") {
@@ -123,54 +108,44 @@ class ProductList : Fragment() {
                         }
                     }
                 }
-                for(key in listarrayp)
-                {
-                    var test=key.trim();
+                for (key in listarrayp) {
+                    var test = key.trim();
                     boxlist.add(test);
                 }
-                    setHasOptionsMenu(true)
-                    val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-                    (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
-                    (activity as? AppCompatActivity)?.supportActionBar?.show()
-                    (activity as AppCompatActivity?)!!.supportActionBar!!.title = SharedOrderNo
-                    val StopNo: TextView = binding.txtstoppage
-                    val cardview: CardView = binding.cardView2
-                     StopNo.text = SharedStopNo
-                    cardview.visibility = View.VISIBLE
-                        if (boxno!="") {
-                         try {
+                setHasOptionsMenu(true)
+                toolbar = view.findViewById(R.id.toolbar)
+                (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
+                (activity as? AppCompatActivity)?.supportActionBar?.show()
+                (activity as AppCompatActivity?)!!.supportActionBar!!.title = SharedOrderNo
+                val StopNo: TextView = binding.txtstoppage
+                val cardview: CardView = binding.cardView2
+                StopNo.text = SharedStopNo
+                cardview.visibility = View.VISIBLE
+                if (boxno != "") {
+                    try {
 
-                        if(boxlist.size!=0) {
-                            var test =boxlist.size.toString()
+                        if (boxlist.size != 0) {
                             boxlist.add(0, boxno.trim())
-                             test =boxlist.size.toString()
-                            var test1 =boxlist.toList()
+                            checkr = 1
+                            FirstorderNO = SharedOrderNo
                             if (boxlist.size.toString() == PackedBoxes.toString()) {
                                 submitorder(SharedOrderNo)
                             }
-                        }
-                        else {
+                        } else {
                             if (SelectOrderNo != null) {
-                                checkr=1
+                                checkr = 1
                                 orderdetailsbind(SharedOrderNo, SelectOrderNo)
-
                             }
                         }
-
-                        lastscanprd.text= boxlist.toString()
+                        lastscanprd.text = boxlist.toString()
                         noofboxes1.text = boxlist.size.toString() + " out of " + "" + PackedBoxes
-
-                    }
-
-                    catch (e:IOException){
+                    } catch (e: IOException) {
                         Toast.makeText(this.context, e.toString(), Toast.LENGTH_LONG).show()
                     }
-
                 }
-                if (listofarray!="" && listofsize!="") {
+                if (listofarray != "" && listofsize != "") {
 
-                }
-                else {
+                } else {
                     noofboxes1.text = "0 out of " + PackedBoxes
                 }
                 orderno.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
@@ -186,28 +161,28 @@ class ProductList : Fragment() {
                         if (ordernoenter.contains("/")) {
                             val result1 = ordernoenter.split("/").toMutableList()
 
-                            if (SelectOrderNo != null && result1[0].length==0) {
-                                if(SelectOrderNo.split("/")[0]!=""){
+                            if (SelectOrderNo != null && result1[0].length == 0) {
+                                if (SelectOrderNo.split("/")[0] != "") {
                                     pDialog.dismiss()
                                     FirstorderNO = result1[0]
                                     try {
                                         if (boxlist.size > 0) {
                                             checkr = 1
                                         }
-                                    }catch (e:IOException){
+                                    } catch (e: IOException) {
 
                                     }
                                 }
                             }
-                            boxno=result1[1]
-                            if (FirstorderNO == "") {
-                                pDialog.dismiss()
-                                FirstorderNO = result1[0]
-                            }
-                            else {
-                                count=0
-                                if (FirstorderNO == result1[0]) {
+                            boxno = result1[1]
+                            if (boxno.toInt() <= PackedBoxes.toInt()) {
+                                if (FirstorderNO == "") {
                                     pDialog.dismiss()
+                                    FirstorderNO = result1[0]
+                                } else {
+                                    count = 0
+                                    if (FirstorderNO == result1[0]) {
+                                        pDialog.dismiss()
                                         for (i in boxlist) {
                                             if (i == result1[1]) {
                                                 val layout = binding.txtmsg
@@ -221,70 +196,81 @@ class ProductList : Fragment() {
                                         if (count == 0) {
                                             maxTextSize = boxlist.size.toString()
                                             txtscanproducts = binding.txtscanproduct
-                                            if (maxTextSize == "5") {
-                                                Toast.makeText(this.context, "test size", Toast.LENGTH_SHORT).show()
-                                                txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f);
+                                            if (maxTextSize == "30") {
+                                                Toast.makeText(
+                                                    this.context,
+                                                    "test size",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                txtscanproducts!!.setTextSize(
+                                                    TypedValue.COMPLEX_UNIT_SP,
+                                                    30f
+                                                );
                                             }
                                             if (maxTextSize == "45") {
-                                                txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25f);
+                                                txtscanproducts!!.setTextSize(
+                                                    TypedValue.COMPLEX_UNIT_SP,
+                                                    25f
+                                                );
                                             }
-                                            var text=boxno
-//                                            list.add(boxlist.size, ordernoenter)
+                                            var text = boxno
                                             boxlist.add(0, boxno)
-
                                             orderno.setText("")
-
                                             noofboxes1.text =
                                                 boxlist.size.toString() + " out of " + "" + PackedBoxes
-                                            lastscanprd.text = boxlist.toString().replace("  "," ")
+                                            lastscanprd.text = boxlist.toString().replace("  ", " ")
                                             msg!!.text = ""
                                             if (boxlist.size.toString() == PackedBoxes.toString()) {
                                                 submitorder(FirstorderNO)
                                             }
                                         }
+                                    } else {
+                                        pDialog.dismiss()
+                                        alert.setTitle(result1[0])
+                                        alert.setMessage("Are you sure you want  to skip current order " + FirstorderNO + "?")
+                                        alert.setNegativeButton("YES")
+                                        { dialog, which ->
+                                            boxlist.clear()
+                                            maxTextSize = ""
+                                            count = 0
+                                            alert.setTitle("")
+                                            sharedLoadOrderPage.remove("OrderNo")
+                                            sharedLoadOrderPage.remove("PackedBoxes")
+                                            sharedLoadOrderPage.remove("SelectOrderNo")
+                                            sharedLoadOrderPage.apply()
+                                            orderdetailsbind(result1[0], ordernoenter)
+//                                            FirstorderNO = result1[0]
+                                            SharedOrderNo = result1[0]
+                                            dialog.dismiss()
+                                        }
+                                        alert.setPositiveButton("NO")
+                                        { dialog, which ->
+                                            dialog.dismiss()
+                                            alert.setTitle("")
+                                        }
+                                        alert.show()
+                                        orderno.setText("")
+                                    }
                                 }
-                                else {
-                                    pDialog.dismiss()
-                                    alert.setTitle(result1[0])
-                                    alert.setMessage("Are you sure you want  to skip current order " + FirstorderNO + "?")
-                                    alert.setNegativeButton("YES")
-                                    { dialog, which ->
-                                        list.clear()
-                                        boxlist.clear()
-                                        maxTextSize=""
-                                        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-                                        (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
-                                        (activity as? AppCompatActivity)?.supportActionBar?.show()
-                                        (activity as AppCompatActivity?)!!.supportActionBar!!.title = result1[0]
-                                        txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 45f)
-                                        count = 0
-                                        alert.setTitle("")
-                                        val sharedLoadOrderPage = sharedLoadOrderPreferences.edit()
-                                        sharedLoadOrderPage.remove("OrderNo")
-                                        sharedLoadOrderPage.remove("PackedBoxes")
-                                        sharedLoadOrderPage.remove("SelectOrderNo")
-                                        sharedLoadOrderPage.apply()
-                                        orderdetailsbind(result1[0], ordernoenter)
-//                                        FirstorderNO = result1[0]
-                                         SharedOrderNo=result1[0]
-
-                                        dialog.dismiss()
-                                    }
-                                    alert.setPositiveButton("NO")
-                                    { dialog, which ->
-                                        dialog.dismiss()
-                                        alert.setTitle("")
-                                    }
-
-                                    alert.show()
+                            } else {
+                                pDialog.dismiss()
+                                AppPreferences.playSoundinvalid()
+                                alert.setMessage("Invalid box No")
+                                alert.setPositiveButton("ok")
+                                { dialog, which ->
+                                    alert.setCancelable(true)
                                     orderno.setText("")
                                 }
-
+                                alert.setNegativeButton("", null)
+                                val adialog: AlertDialog = alert.create()
+                                adialog.show()
+                                val ordernok: EditText = binding.txtorderno
+                                ordernok.setText("")
+                                msg!!.text = ""
                             }
                             if (checkr == 0) {
                                 try {
                                     pDialog.dismiss()
-
                                     orderdetailsbind(FirstorderNO, ordernoenter)
                                     orderno.setText("")
                                 } catch (e: IOException) {
@@ -300,7 +286,6 @@ class ProductList : Fragment() {
                                 alert.setCancelable(true)
                                 orderno.setText("")
                             }
-
                             alert.setNegativeButton("", null)
                             val adialog: AlertDialog = alert.create()
                             adialog.show()
@@ -313,21 +298,18 @@ class ProductList : Fragment() {
                     }
                     false
                 })
-                  orderno.requestFocus()
+                orderno.requestFocus()
                 txtallpicbox.setOnClickListener {
                     this.findNavController().navigate(com.example.myapplication.R.id.nav_allpickbox)
-                    val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-                    val sharedLoadOrderPage = sharedLoadOrderPreferences.edit()
                     sharedLoadOrderPage.putString("OrderNo", SharedOrderNo)
-                    sharedLoadOrderPage.putInt("PackedBoxes",PackedBoxes)
+                    sharedLoadOrderPage.putInt("PackedBoxes", PackedBoxes)
                     sharedLoadOrderPage.putString("Stoppage", SharedStopNo)
+                    Toast.makeText(this.context, boxlist.toString(), Toast.LENGTH_LONG).show()
                     sharedLoadOrderPage.putString("boxlist", boxlist.toString())
                     sharedLoadOrderPage.putString("listsize", boxlist.size.toString())
                     sharedLoadOrderPage.apply()
-
-
                 }
-                val view:ScrollView =binding.scrollView
+                val view: ScrollView = binding.scrollView
                 view.descendantFocusability = ViewGroup.FOCUS_BEFORE_DESCENDANTS
                 view.isFocusable = false
                 view.isFocusableInTouchMode = false
@@ -335,8 +317,6 @@ class ProductList : Fragment() {
                     v.requestFocusFromTouch()
                     false
                 }
-
-
             })
         } else {
             val alertnet = AlertDialog.Builder(activity)
@@ -359,8 +339,6 @@ class ProductList : Fragment() {
     }
 
 
-
-
     fun orderdetailsbind(orderno: String, barcode: String) {
         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
         pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
@@ -368,8 +346,8 @@ class ProductList : Fragment() {
         pDialog.setCancelable(false)
         pDialog.show()
         val cardview: CardView = binding.cardView2
-         txtstop = binding.txtstoppage
-         txtscanproducts = binding.txtscanproduct
+        txtstop = binding.txtstoppage
+        txtscanproducts = binding.txtscanproduct
         val txtpacked: TextView = binding.txtpackedb
         val Jsonarra = JSONObject()
         val details = JSONObject()
@@ -377,20 +355,64 @@ class ProductList : Fragment() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var empautoid = preferences.getString("EmpAutoId", "")
         var accessToken = preferences.getString("accessToken", "")
+        var EnabledPickallBoxes = preferences.getBoolean("EnabledPickallBoxes", false)
+        val alertscanord = AlertDialog.Builder(this.context)
         val queues = Volley.newRequestQueue(this.context)
         details.put("OrderNO", orderno)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
         JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
         JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
         JSONObj.put("requestContainer", Jsonarra.put("filterkeyword", details))
-        val resorderno = JsonObjectRequest(Request.Method.POST, AppPreferences.BASEURL+AppPreferences.GET_ORDERS, JSONObj,
+        val resorderno = JsonObjectRequest(Request.Method.POST,
+            AppPreferences.BASEURL + AppPreferences.GET_ORDERS,
+            JSONObj,
             { response ->
                 val resobj = (response.toString())
                 val responsemsg = JSONObject(resobj.toString())
                 val resultobj = JSONObject(responsemsg.getString("d"))
                 val resmsg = resultobj.getString("response")
                 val presponsmsg = resultobj.getString("responseMessage")
-                if (resmsg == "failed") {
+                if (presponsmsg == "Orders Found") {
+                    cardview.visibility = View.GONE
+                    cardview.visibility = View.VISIBLE
+                    pDialog.dismiss()
+                    val jsondata = resultobj.getJSONArray("responseData")
+                    val preferences =
+                        PreferenceManager.getDefaultSharedPreferences(this.context)
+                    val editor1 = preferences.edit()
+                    for (i in 0 until jsondata.length()) {
+                        SharedOrderNo = jsondata.getJSONObject(i).getString("OrderNo")
+                        val noofboxes = jsondata.getJSONObject(i).getInt("PackedBoxes")
+                        val stoppage = jsondata.getJSONObject(i).getInt("Stoppage")
+                        if (boxno.toInt() <= noofboxes) {
+                            txtstop!!.text = "${stoppage}"
+                            FirstorderNO = SharedOrderNo
+                            var test = FirstorderNO
+                            editor1.putString("OrderNO", SharedOrderNo)
+                            editor1.putInt("NoofBox", noofboxes)
+                            editor1.apply()
+                            boxlist.add(0, boxno)
+                            PackedBoxes = noofboxes.toInt()
+                            txtpacked.text = boxlist.size.toString() + " out of " + "${noofboxes}"
+                            txtscanproducts!!.text = boxlist.toString()
+                            if (boxlist.size.toString() == PackedBoxes.toString()) {
+                                submitorder(SharedOrderNo)
+                            }
+                            (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
+                            (activity as AppCompatActivity?)!!.supportActionBar!!.title = SharedOrderNo
+                        } else {
+                            pDialog.dismiss()
+                            alertscanord.setTitle(orderno.toString().uppercase(Locale.getDefault()))
+                            alertscanord.setMessage("Invalid Box No")
+                            alertscanord.setPositiveButton("ok", null)
+                            val dialog: AlertDialog = alertscanord.create()
+                            dialog.show()
+                            val orderno1: EditText = binding.txtorderno
+                            orderno1.text.clear()
+                        }
+                    }
+                    checkr = 1
+                } else {
                     pDialog.dismiss()
                     val alertorfailed = AlertDialog.Builder(this.context)
                     alertorfailed.setTitle(orderno)
@@ -407,51 +429,10 @@ class ProductList : Fragment() {
                     checkr = 0
                     val dialog: AlertDialog = alertorfailed.create()
                     dialog.show()
-                    cardview.visibility = View.GONE
-
-                } else {
-                    if (presponsmsg == "Orders Found") {
-                        cardview.visibility = View.GONE
-                        cardview.visibility = View.VISIBLE
-                        pDialog.dismiss()
-                        val jsondata = resultobj.getJSONArray("responseData")
-                        val preferences =
-                            PreferenceManager.getDefaultSharedPreferences(this.context)
-                        val editor1 = preferences.edit()
-                        for (i in 0 until jsondata.length()) {
-                            val dorderno = jsondata.getJSONObject(i).getString("OrderNo")
-                            val noofboxes = jsondata.getJSONObject(i).getInt("PackedBoxes")
-                            val stoppage = jsondata.getJSONObject(i).getInt("Stoppage")
-                            txtstop!!.text = "${stoppage}"
-                            FirstorderNO=dorderno
-                            editor1.putString("OrderNO", dorderno)
-                            editor1.putInt("NoofBox", noofboxes)
-                            editor1.apply()
-//                            list.add(0, barcode)
-                            boxlist.add(0, boxno)
-                            PackedBoxes = noofboxes.toInt()
-                            Toast.makeText(this.context, PackedBoxes.toString(), Toast.LENGTH_LONG).show()
-                            txtpacked.text = boxlist.size.toString() + " out of " + "${noofboxes}"
-                            txtscanproducts!!.text = boxlist.toString()
-                            if (boxlist.size.toString() == PackedBoxes.toString()) {
-                                submitorder(dorderno)
-                            }
-                        }
-                        checkr = 1
-                    } else {
-                        pDialog.dismiss()
-                        val alertscanord = AlertDialog.Builder(this.context)
-                        alertscanord.setTitle(orderno.toString().uppercase(Locale.getDefault()))
-                        alertscanord.setMessage("Order No does not exist")
-                        alertscanord.setPositiveButton("ok", null)
-                        val dialog: AlertDialog = alertscanord.create()
-                        dialog.show()
-                        val orderno1: EditText = binding.txtorderno
-                        orderno1.text.clear()
-                        checkr = 0
-                    }
                 }
-            }, { response ->
+
+            },
+            { response ->
                 Log.e("onError", error(response.toString()))
             })
         resorderno.retryPolicy = DefaultRetryPolicy(
@@ -485,34 +466,17 @@ class ProductList : Fragment() {
         JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
         JSONObj.put("OrderNo", sorderno)
         val alertsuborder = AlertDialog.Builder(this.context)
-        val resordernos = JsonObjectRequest(Request.Method.POST, AppPreferences.BASEURLSU+AppPreferences.SUBMIT_LOAD_ORDER, JSONObj,
+        val resordernos = JsonObjectRequest(Request.Method.POST,
+            AppPreferences.BASEURLSU + AppPreferences.SUBMIT_LOAD_ORDER,
+            JSONObj,
             { response ->
                 val resobj = (response.toString())
                 val responsemsg = JSONObject(resobj.toString())
                 val resultobj = JSONObject(responsemsg.getString("d"))
                 val rspCode = resultobj.getString("responseCode")
                 val rspMsg = resultobj.getString("responseMessage")
-                if (rspCode == "202") {
-                    pDialog.dismiss()
-
-                    alertsuborder.setTitle(sorderno.uppercase(Locale.getDefault()))
-                    alertsuborder.setMessage(rspMsg.toString())
-                    alertsuborder.setPositiveButton(
-                        "ok"
-                    ) { dialog, which ->
-                        clear()
-                        val orderno2: EditText = binding.txtorderno
-                        orderno2.text.clear()
-
-                    }
-                    FirstorderNO = ""
-                    checkr = 0
-                    val dialog: AlertDialog = alertsuborder.create()
-                    dialog.show()
-                    cardview1.visibility = View.GONE
-                } else {
-                    if (rspCode.toString() == "200") {
-                       AppPreferences.playSound()
+                if (rspCode.toString() == "200") {
+                        AppPreferences.playSound()
                         pDialog.dismiss()
                         alertsuborder.setTitle(sorderno.toString().uppercase(Locale.getDefault()))
                         alertsuborder.setMessage(rspMsg.toString())
@@ -528,23 +492,30 @@ class ProductList : Fragment() {
                         checkr = 0
                         val dialog: AlertDialog = alertsuborder.create()
                         dialog.show()
-                        list.clear()
                         boxlist.clear()
                         clear()
                         msg!!.text = ""
                         clear()
                         cardview1.visibility = View.GONE
-                    }
-                    else {
+                    } else {
                         pDialog.dismiss()
-                        alertsuborder.setTitle(sorderno.toString())
-                        alertsuborder.setMessage("Order  does not submit!!!")
-                        alertsuborder.setPositiveButton("ok", null)
+                        alertsuborder.setTitle(sorderno.uppercase(Locale.getDefault()))
+                        alertsuborder.setMessage(rspMsg.toString())
+                        alertsuborder.setPositiveButton(
+                            "ok"
+                        ) { dialog, which ->
+                            clear()
+                            val orderno2: EditText = binding.txtorderno
+                            orderno2.text.clear()
+                        }
+                        FirstorderNO = ""
+                        checkr = 0
                         val dialog: AlertDialog = alertsuborder.create()
                         dialog.show()
+                        cardview1.visibility = View.GONE
                     }
-                }
-            }, { response ->
+            },
+            { response ->
                 Log.e("onError", error(response.toString()))
             })
         resordernos.retryPolicy = DefaultRetryPolicy(
@@ -571,8 +542,8 @@ class ProductList : Fragment() {
     }
 }
 
-
-
-fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
+private fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
 
 }
+
+

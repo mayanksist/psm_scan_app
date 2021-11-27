@@ -12,7 +12,7 @@ import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.ui.assignorder.OrderModel
-import com.example.myapplication.ui.product.setSupportActionBar
+
 
 
 internal class AssignOrderAdapter(private var orderList: List<OrderModel>,var activity: Context?) :
@@ -53,4 +53,8 @@ internal class AssignOrderAdapter(private var orderList: List<OrderModel>,var ac
     override fun getItemCount(): Int {
         return orderList.size
     }
+}
+
+private fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
+
 }

@@ -25,7 +25,6 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.databinding.FragmentManualorderBinding
-import com.example.myapplication.ui.product.setSupportActionBar
 import org.json.JSONObject
 import java.io.IOException
 import java.util.*
@@ -137,7 +136,6 @@ class ManualorderFragment : Fragment() {
                                             if (list.size.toString() == totalBoxes.toString()) {
                                                 submitorder(FirstorderNO)
                                             }
-
 
                                         }
                                     } else {

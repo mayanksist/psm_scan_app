@@ -16,7 +16,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.ui.product.ProductList
-import com.example.myapplication.ui.product.setSupportActionBar
+
 
 
 internal class LoadOrderListAdapter(private var loadorderList: List<LoadOrderModel>,var activity: Context?) :
@@ -65,4 +65,8 @@ internal class LoadOrderListAdapter(private var loadorderList: List<LoadOrderMod
     override fun getItemCount(): Int {
         return loadorderList.size
     }
+}
+
+private fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
+
 }

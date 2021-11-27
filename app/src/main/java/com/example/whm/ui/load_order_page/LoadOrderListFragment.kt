@@ -30,7 +30,7 @@ import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.ui.load_order_page.LoadOrderListAdapter
 import com.example.myapplication.com.example.whm.ui.load_order_page.LoadOrderModel
-import com.example.myapplication.ui.product.setSupportActionBar
+
 import org.json.JSONObject
 import java.io.IOException
 import android.app.Activity
