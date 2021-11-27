@@ -145,11 +145,13 @@ class ProductList : Fragment() {
                             boxlist.add(0, boxno.trim())
                              test =boxlist.size.toString()
                             var test1 =boxlist.toList()
+                            if (boxlist.size.toString() == PackedBoxes.toString()) {
+                                submitorder(SharedOrderNo)
+                            }
                         }
                         else {
                             if (SelectOrderNo != null) {
                                 checkr=1
-
                                 orderdetailsbind(SharedOrderNo, SelectOrderNo)
 
                             }
