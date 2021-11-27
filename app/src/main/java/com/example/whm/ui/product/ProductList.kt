@@ -62,7 +62,7 @@ class ProductList : Fragment() {
     var FirstorderNO: String = ""
     var ordernoenter: String = ""
     var checkr = 0
-    var totalBoxes = 0
+    var PackedBoxes = 0
     var boxno: String = ""
     var  maxTextSize: String = ""
     var SharedOrderNo = ""
@@ -108,7 +108,7 @@ class ProductList : Fragment() {
                     PreferenceManager.getDefaultSharedPreferences(this.context)
                 val editor = sharedLoadOrderPreferences.edit()
                  SharedOrderNo = sharedLoadOrderPreferences.getString("OrderNo", "").toString()
-                var PackedBoxes = sharedLoadOrderPreferences.getInt("PackedBoxes", 0)
+                 PackedBoxes = sharedLoadOrderPreferences.getInt("PackedBoxes", 0)
                 var SharedStopNo = sharedLoadOrderPreferences.getString("Stoppage", "")
                 val listofarray = sharedLoadOrderPreferences.getString("boxlist", "")
                 val listofsize = sharedLoadOrderPreferences.getString("listsize", "")
@@ -149,6 +149,7 @@ class ProductList : Fragment() {
                         else {
                             if (SelectOrderNo != null) {
                                 checkr=1
+
                                 orderdetailsbind(SharedOrderNo, SelectOrderNo)
 
                             }
@@ -183,7 +184,7 @@ class ProductList : Fragment() {
                         if (ordernoenter.contains("/")) {
                             val result1 = ordernoenter.split("/").toMutableList()
 
-                            if (SelectOrderNo != null) {
+                            if (SelectOrderNo != null && result1[0].length==0) {
                                 if(SelectOrderNo.split("/")[0]!=""){
                                     pDialog.dismiss()
                                     FirstorderNO = result1[0]
@@ -256,8 +257,15 @@ class ProductList : Fragment() {
                                         txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 45f)
                                         count = 0
                                         alert.setTitle("")
+                                        val sharedLoadOrderPage = sharedLoadOrderPreferences.edit()
+                                        sharedLoadOrderPage.remove("OrderNo")
+                                        sharedLoadOrderPage.remove("PackedBoxes")
+                                        sharedLoadOrderPage.remove("SelectOrderNo")
+                                        sharedLoadOrderPage.apply()
                                         orderdetailsbind(result1[0], ordernoenter)
-                                        FirstorderNO = result1[0]
+//                                        FirstorderNO = result1[0]
+                                         SharedOrderNo=result1[0]
+
                                         dialog.dismiss()
                                     }
                                     alert.setPositiveButton("NO")
@@ -413,16 +421,17 @@ class ProductList : Fragment() {
                             val noofboxes = jsondata.getJSONObject(i).getInt("PackedBoxes")
                             val stoppage = jsondata.getJSONObject(i).getInt("Stoppage")
                             txtstop!!.text = "${stoppage}"
-
+                            FirstorderNO=dorderno
                             editor1.putString("OrderNO", dorderno)
                             editor1.putInt("NoofBox", noofboxes)
                             editor1.apply()
 //                            list.add(0, barcode)
                             boxlist.add(0, boxno)
-                            totalBoxes = noofboxes.toInt()
+                            PackedBoxes = noofboxes.toInt()
+                            Toast.makeText(this.context, PackedBoxes.toString(), Toast.LENGTH_LONG).show()
                             txtpacked.text = boxlist.size.toString() + " out of " + "${noofboxes}"
                             txtscanproducts!!.text = boxlist.toString()
-                            if (boxlist.size.toString() == totalBoxes.toString()) {
+                            if (boxlist.size.toString() == PackedBoxes.toString()) {
                                 submitorder(dorderno)
                             }
                         }
