@@ -108,7 +108,7 @@ class ProductList : Fragment() {
                     PreferenceManager.getDefaultSharedPreferences(this.context)
                 val editor = sharedLoadOrderPreferences.edit()
                  SharedOrderNo = sharedLoadOrderPreferences.getString("OrderNo", "").toString()
-                var PackedBoxes = sharedLoadOrderPreferences.getString("PackedBoxes", "")
+                var PackedBoxes = sharedLoadOrderPreferences.getInt("PackedBoxes", 0)
                 var SharedStopNo = sharedLoadOrderPreferences.getString("Stoppage", "")
                 val listofarray = sharedLoadOrderPreferences.getString("boxlist", "")
                 val listofsize = sharedLoadOrderPreferences.getString("listsize", "")
@@ -137,10 +137,9 @@ class ProductList : Fragment() {
                     val cardview: CardView = binding.cardView2
                      StopNo.text = SharedStopNo
                     cardview.visibility = View.VISIBLE
-                if (boxno!="") {
-                    try {
-                        var testbox = boxno.trim()
-                        var test = boxlist.size
+                        if (boxno!="") {
+                         try {
+
                         if(boxlist.size!=0) {
                             var test =boxlist.size.toString()
                             boxlist.add(0, boxno.trim())
@@ -154,6 +153,7 @@ class ProductList : Fragment() {
 
                             }
                         }
+
                         lastscanprd.text= boxlist.toString()
                         noofboxes1.text = boxlist.size.toString() + " out of " + "" + PackedBoxes
 
@@ -182,24 +182,31 @@ class ProductList : Fragment() {
                         layout.visibility = View.GONE
                         if (ordernoenter.contains("/")) {
                             val result1 = ordernoenter.split("/").toMutableList()
-                            boxno = result1[1]
 
-                            for (i in boxlist) {
+                            if (SelectOrderNo != null) {
+                                if(SelectOrderNo.split("/")[0]!=""){
+                                    pDialog.dismiss()
+                                    FirstorderNO = result1[0]
+                                    try {
+                                        if (boxlist.size > 0) {
+                                            checkr = 1
+                                        }
+                                    }catch (e:IOException){
 
+                                    }
+                                }
                             }
+                            boxno=result1[1]
                             if (FirstorderNO == "") {
                                 pDialog.dismiss()
                                 FirstorderNO = result1[0]
-                            } else {
+                            }
+                            else {
+                                count=0
                                 if (FirstorderNO == result1[0]) {
                                     pDialog.dismiss()
-
-                                    if (boxno.toInt() <= totalBoxes) {
-                                        count = 0
-
                                         for (i in boxlist) {
-                                            var test = ordernoenter
-                                            if (result1[0]+'/'+i == ordernoenter) {
+                                            if (i == result1[1]) {
                                                 val layout = binding.txtmsg
                                                 layout.visibility = View.VISIBLE
                                                 orderno.setText("")
@@ -209,7 +216,7 @@ class ProductList : Fragment() {
                                             }
                                         }
                                         if (count == 0) {
-                                            maxTextSize = list.size.toString()
+                                            maxTextSize = boxlist.size.toString()
                                             txtscanproducts = binding.txtscanproduct
                                             if (maxTextSize == "5") {
                                                 Toast.makeText(this.context, "test size", Toast.LENGTH_SHORT).show()
@@ -218,22 +225,22 @@ class ProductList : Fragment() {
                                             if (maxTextSize == "45") {
                                                 txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25f);
                                             }
-                                            list.add(list.size, ordernoenter)
+                                            var text=boxno
+//                                            list.add(boxlist.size, ordernoenter)
                                             boxlist.add(0, boxno)
 
                                             orderno.setText("")
+
                                             noofboxes1.text =
-                                                list.size.toString() + " out of " + "" + totalBoxes
+                                                boxlist.size.toString() + " out of " + "" + PackedBoxes
                                             lastscanprd.text = boxlist.toString().replace("  "," ")
                                             msg!!.text = ""
-                                            if (list.size.toString() == totalBoxes.toString()) {
+                                            if (boxlist.size.toString() == totalBoxes.toString()) {
                                                 submitorder(FirstorderNO)
                                             }
                                         }
-                                    } else {
-                                        msg!!.text = "invalid box number"
-                                    }
-                                } else {
+                                }
+                                else {
                                     pDialog.dismiss()
                                     alert.setTitle(result1[0])
                                     alert.setMessage("Are you sure you want  to skip current order " + FirstorderNO + "?")
@@ -302,7 +309,7 @@ class ProductList : Fragment() {
                     val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
                     val sharedLoadOrderPage = sharedLoadOrderPreferences.edit()
                     sharedLoadOrderPage.putString("OrderNo", SharedOrderNo)
-                    sharedLoadOrderPage.putString("PackedBoxes",PackedBoxes)
+                    sharedLoadOrderPage.putInt("PackedBoxes",PackedBoxes)
                     sharedLoadOrderPage.putString("Stoppage", SharedStopNo)
                     sharedLoadOrderPage.putString("boxlist", boxlist.toString())
                     sharedLoadOrderPage.putString("listsize", boxlist.size.toString())
@@ -410,12 +417,12 @@ class ProductList : Fragment() {
                             editor1.putString("OrderNO", dorderno)
                             editor1.putInt("NoofBox", noofboxes)
                             editor1.apply()
-                            list.add(0, barcode)
+//                            list.add(0, barcode)
                             boxlist.add(0, boxno)
                             totalBoxes = noofboxes.toInt()
-                            txtpacked.text = list.size.toString() + " out of " + "${noofboxes}"
+                            txtpacked.text = boxlist.size.toString() + " out of " + "${noofboxes}"
                             txtscanproducts!!.text = boxlist.toString()
-                            if (list.size.toString() == totalBoxes.toString()) {
+                            if (boxlist.size.toString() == totalBoxes.toString()) {
                                 submitorder(dorderno)
                             }
                         }

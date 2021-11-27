@@ -56,13 +56,13 @@ class picallboxesFragment : Fragment() {
         val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
         var OrderNO = sharedLoadOrderPreferences.getString("OrderNo", "").toString()
         var Stoppage = sharedLoadOrderPreferences.getString("Stoppage", "").toString()
-        var PackedBoxes = sharedLoadOrderPreferences.getString("PackedBoxes", "")?.toInt()
+        var PackedBoxes = sharedLoadOrderPreferences.getInt("PackedBoxes", 0)
         var ArraysL = sharedLoadOrderPreferences.getString("boxlist", "").toString()
          listarray = ArraysL.replace("[","").replace("]","").split(",") as MutableList<String>
 
            var Ono = ""
             try {
-                for (i in 1..PackedBoxes!!) {
+                for (i in 1..PackedBoxes) {
                     var flage=0
                     for(j in listarray) {
                         if(j!="") {

@@ -46,7 +46,7 @@ internal class LoadOrderListAdapter(private var loadorderList: List<LoadOrderMod
             val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
             val sharedLoadOrderPage = sharedLoadOrderPreferences.edit()
             sharedLoadOrderPage.putString("OrderNo", order.getOno())
-            sharedLoadOrderPage.putString("PackedBoxes", order.getPackedBoxes().toString())
+            sharedLoadOrderPage.putInt("PackedBoxes", order.getPackedBoxes().toInt())
             sharedLoadOrderPage.putString("Stoppage", order.getStoppage().toString())
             sharedLoadOrderPage.remove("boxNo")
             sharedLoadOrderPage.remove("boxlist")
