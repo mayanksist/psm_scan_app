@@ -235,7 +235,7 @@ class ProductList : Fragment() {
                                                 boxlist.size.toString() + " out of " + "" + PackedBoxes
                                             lastscanprd.text = boxlist.toString().replace("  "," ")
                                             msg!!.text = ""
-                                            if (boxlist.size.toString() == totalBoxes.toString()) {
+                                            if (boxlist.size.toString() == PackedBoxes.toString()) {
                                                 submitorder(FirstorderNO)
                                             }
                                         }

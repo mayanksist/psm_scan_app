@@ -55,9 +55,10 @@ internal class LoadOrderListAdapter(private var loadorderList: List<LoadOrderMod
             sharedLoadOrderPage.remove("SelectOrderNo")
 
             sharedLoadOrderPage.apply()
-            val activity = view!!.context as AppCompatActivity
-            val MyFragment  = ProductList()
-            activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_loadorder,MyFragment).addToBackStack(null).commit()
+            view.findNavController().navigate(R.id.nav_scanorder)
+//            val activity = view!!.context as AppCompatActivity
+//            val MyFragment  = ProductList()
+//            activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_loadorder,MyFragment).addToBackStack(null).commit()
         })
 
     }
