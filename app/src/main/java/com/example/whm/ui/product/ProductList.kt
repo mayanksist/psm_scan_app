@@ -425,8 +425,8 @@ class ProductList : Fragment() {
                             if (boxlist.size.toString() == PackedBoxes.toString()) {
                                 submitorder(SharedOrderNo)
                             }
-//                            (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
-//                            (activity as AppCompatActivity?)!!.supportActionBar!!.title = SharedOrderNo
+                            (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
+                            (activity as AppCompatActivity?)!!.supportActionBar!!.title = SharedOrderNo
                         } else {
                             pDialog.dismiss()
                             alertscanord.setTitle(orderno.toString().uppercase(Locale.getDefault()))
