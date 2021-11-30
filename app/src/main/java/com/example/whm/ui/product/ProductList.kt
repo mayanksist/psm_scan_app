@@ -69,7 +69,7 @@ class ProductList : Fragment() {
             container,
             false
         )
-        view.requestFocus();
+        view.requestFocus()
         view.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -111,8 +111,8 @@ class ProductList : Fragment() {
                 }
                 if(SelectOrderNo!="" && SelectOrderNo!=null) {
                     for (key in listarrayp) {
-                        var test = key.trim();
-                        boxlist.add(test);
+                        var test = key.trim()
+                        boxlist.add(test)
                     }
                 }
                 setHasOptionsMenu(true)
@@ -123,7 +123,7 @@ class ProductList : Fragment() {
                 (activity as AppCompatActivity?)
                     ?.closeOptionsMenu()
                 if (activity is AppCompatActivity) {
-                    (activity as AppCompatActivity?)?.getSupportActionBar()
+                    (activity as AppCompatActivity?)?.supportActionBar
                         ?.setDisplayHomeAsUpEnabled(true)
                 }
                 val StopNo: TextView = binding.txtstoppage
@@ -212,13 +212,13 @@ class ProductList : Fragment() {
                                                 txtscanproducts!!.setTextSize(
                                                     TypedValue.COMPLEX_UNIT_SP,
                                                     30f
-                                                );
+                                                )
                                             }
                                             if (maxTextSize == "45") {
                                                 txtscanproducts!!.setTextSize(
                                                     TypedValue.COMPLEX_UNIT_SP,
                                                     25f
-                                                );
+                                                )
                                             }
                                             var text = boxno
                                             boxlist.add(0, boxno)

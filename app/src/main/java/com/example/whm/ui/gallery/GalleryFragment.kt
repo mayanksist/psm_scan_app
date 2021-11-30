@@ -46,7 +46,7 @@ class GalleryFragment : Fragment() {
             container,
             false
         )
-        root.requestFocus();
+        root.requestFocus()
         root.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -146,13 +146,15 @@ class GalleryFragment : Fragment() {
                     layout.visibility = View.VISIBLE
                     val jsondata = resultobj.getString("responseData")
                     val jsonrepd = JSONObject(jsondata.toString())
+                    val ProductId = jsonrepd.getString("PId")
+                    val AutoId = jsonrepd.getString("AutoId")
                     val pname = jsonrepd.getString("PName")
                     val pCategory = jsonrepd.getString("Cat")
                     val pSubCategory = jsonrepd.getString("SCat")
-                    val ProductId = jsonrepd.getString("PId")
-//                    val punitypa = jsonrepd.getString("Unit")
+                    val punitypa = jsonrepd.getString("Unit")
+                    val bc = jsonrepd.getString("bc")
                     val pprice = ("%.2f".format(jsonrepd.getDouble("Price")))
-//                    val DefaultStock = jsonrepd.getString("stock")
+                    val DefaultStock = jsonrepd.getString("stock")
                     var imagesurl = ""
                     if (jsonrepd.getString("OPath") == null) {
                         imagesurl = jsonrepd.getString("ImageUrl")
@@ -162,7 +164,7 @@ class GalleryFragment : Fragment() {
                     val location = jsonrepd.getString("Location")
                     produname.text = "$pname"
                     productId.text = "$ProductId"
-//                        unitype.text = "$punitypa"
+                       unitype.text = "$punitypa"
                     price.text = "${pprice}"
                     if ("$location" == "---") {
                         locationval.text = "N/A"
@@ -171,11 +173,11 @@ class GalleryFragment : Fragment() {
                     }
                     category.text = "$pCategory"
                     sub_category.text = "$pSubCategory"
-//                        stock.text = "${DefaultStock}"
-                    barcode.text = "" + barcoded
+                       stock.text = "${DefaultStock}"
+                    barcode.text = "" + bc
                     Glide.with(this)
                         .load(imagesurl)
-//                        .override(400, 400)
+//                       .override(400, 400)
                         .into(imagur)
                     pDialog.dismiss()
                 } else {
@@ -185,7 +187,7 @@ class GalleryFragment : Fragment() {
                     val barcodeC: EditText = binding.barcodetype
                     barcode.text = ""
                     barcodeC.text.clear()
-                    barcode.setText("")
+                    barcode.text = ""
                     val alertemail = AlertDialog.Builder(this.context)
                     alertemail.setTitle("Barcode")
                     alertemail.setMessage(presponsmsg.toString())
@@ -194,7 +196,7 @@ class GalleryFragment : Fragment() {
                         dialog.dismiss()
                         barcode.text = ""
                         barcodeC.text.clear()
-                        barcode.setText("")
+                        barcode.text = ""
                     }
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()

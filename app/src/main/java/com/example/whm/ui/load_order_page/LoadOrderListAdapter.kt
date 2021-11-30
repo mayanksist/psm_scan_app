@@ -39,7 +39,7 @@ internal class LoadOrderListAdapter(private var loadorderList: List<LoadOrderMod
         holder.StopNo.text = order.getStoppage()
         (activity as? AppCompatActivity)?.setSupportActionBar(holder.toolbar)
         (activity as? AppCompatActivity)?.supportActionBar?.show()
-        (activity as AppCompatActivity?)!!.supportActionBar!!.setTitle("Load Orders ["+loadorderList.size+"]")
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Load Orders ["+loadorderList.size+"]"
         holder.CardView.setOnClickListener(View.OnClickListener {view ->
             val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
             val sharedLoadOrderPage = sharedLoadOrderPreferences.edit()

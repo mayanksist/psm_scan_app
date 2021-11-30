@@ -44,7 +44,7 @@ class ItemFragment : Fragment() {
             container,
             false
         )
-        view.requestFocus();
+        view.requestFocus()
         view.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {

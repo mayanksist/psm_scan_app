@@ -1,10 +1,9 @@
 package com.example.myapplication.com.example.whm
 
-import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.KeyEvent
 import android.view.Menu
-import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -13,19 +12,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMain2Binding
 import com.google.android.material.navigation.NavigationView
-import android.app.Activity
-import android.app.PendingIntent.getActivity
-import android.content.Context
-import android.view.KeyEvent
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
-import cn.pedant.SweetAlert.SweetAlertDialog
-import kotlin.system.exitProcess
-import android.app.ActivityManager
-import android.os.Process.myPid
+import android.R
+import android.view.MenuItem
+import android.view.View
 
 
 class MainActivity2 : AppCompatActivity() {
@@ -56,27 +47,38 @@ class MainActivity2 : AppCompatActivity() {
         val navView: NavigationView = binding.navView
         usertype = EmpTypeNo.toString()
         val nav_Menu: Menu = navView.menu
-        nav_Menu.findItem(R.id.nav_loadorder).isVisible = false
+        nav_Menu.findItem(com.example.myapplication.R.id.nav_loadorder).isVisible = false
         if (usertype != "2") {
-            nav_Menu.findItem(R.id.nav_product).isVisible = false
+            nav_Menu.findItem(com.example.myapplication.R.id.nav_product).isVisible = false
 
         }
+
+        val navigationView = findViewById<View>(com.example.myapplication.R.id.nav_view) as NavigationView
+
+        val menu = navigationView.menu
+
+        val tools: MenuItem = menu.findItem(com.example.myapplication.R.id.version)
+        tools.title = "Version : "+AppPreferences.AppVersion
+
         if (usertype == "9") {
-            nav_Menu.findItem(R.id.nav_productlist).isVisible = false
-            nav_Menu.findItem(R.id.nav_orderlist).isVisible = false
-            nav_Menu.findItem(R.id.nav_assignorder).isVisible = false
-            nav_Menu.findItem(R.id.nav_product).isVisible = true
+            nav_Menu.findItem(com.example.myapplication.R.id.nav_productlist).isVisible = false
+            nav_Menu.findItem(com.example.myapplication.R.id.nav_orderlist).isVisible = false
+            nav_Menu.findItem(com.example.myapplication.R.id.nav_assignorder).isVisible = false
+            nav_Menu.findItem(com.example.myapplication.R.id.nav_product).isVisible = true
 
         }
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        val navController = findNavController(com.example.myapplication.R.id.nav_host_fragment_content_main)
         val hview = navView.getHeaderView(0)
-        val textViewName = hview.findViewById(R.id.emptype) as TextView
-        val usename = hview.findViewById(R.id.username) as TextView
+        val textViewName = hview.findViewById(com.example.myapplication.R.id.emptype) as TextView
+        val usename = hview.findViewById(com.example.myapplication.R.id.username) as TextView
         textViewName.text = preferences.getString("Empname","") +" ["+ preferences.getString("LName","")+"]"
         usename.text =  preferences.getString("Username","")
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_slideshow, R.id.nav_product, R.id.nav_productlist,R.id.nav_assignorder,R.id.nav_orderlist
+                com.example.myapplication.R.id.nav_home, com.example.myapplication.R.id.nav_slideshow, com.example.myapplication.R.id.nav_product,
+                com.example.myapplication.R.id.nav_productlist,
+                com.example.myapplication.R.id.nav_assignorder,
+                com.example.myapplication.R.id.nav_orderlist
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -85,11 +87,11 @@ class MainActivity2 : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main_activity2, menu)
+        menuInflater.inflate(com.example.myapplication.R.menu.main_activity2, menu)
         return true
     }
     override fun onSupportNavigateUp(): Boolean {
-            val navController = findNavController(R.id.nav_host_fragment_content_main)
+            val navController = findNavController(com.example.myapplication.R.id.nav_host_fragment_content_main)
             return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
     override fun onKeyDown(key_code: Int, key_event: KeyEvent?): Boolean {

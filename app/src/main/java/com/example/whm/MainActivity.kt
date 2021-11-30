@@ -2,7 +2,6 @@ package com.example.myapplication.com.example.whm
 
 import android.app.AlertDialog
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
@@ -19,7 +18,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.android.volley.Request
-import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -91,7 +89,7 @@ class MainActivity : AppCompatActivity() {
             alertemail.setMessage(resmsg.toString())
             alertemail.setPositiveButton("ok")
             { dialog, which -> dialog.dismiss()
-                scancode.setText("")
+                scancode.text = ""
             }
             val dialog: AlertDialog = alertemail.create()
             dialog.show()
@@ -134,7 +132,7 @@ class MainActivity : AppCompatActivity() {
                 alertemail.setMessage(msg.toString())
                 alertemail.setPositiveButton("ok")
                 { dialog, which -> dialog.dismiss()
-                    scancode.setText("")
+                    scancode.text = ""
                 }
                 val dialog:AlertDialog=alertemail.create()
                 dialog.show()
@@ -181,7 +179,7 @@ class MainActivity : AppCompatActivity() {
                     alertemail.setMessage("Invalid credentials")
                     alertemail.setPositiveButton("ok")
                     { dialog, which -> dialog.dismiss()
-                        scancode.setText("")
+                        scancode.text = ""
                     }
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
@@ -192,7 +190,7 @@ class MainActivity : AppCompatActivity() {
                 alertnet.setMessage("Check your internet connection")
                 alertnet.setPositiveButton("ok")
                 { dialog, which -> dialog.dismiss()
-                    scancode.setText("")
+                    scancode.text = ""
                 }
                 val dialog: AlertDialog = alertnet.create()
                 dialog.show()
@@ -311,8 +309,8 @@ class MainActivity : AppCompatActivity() {
                 .setContentText("You want to close app ?")
                 .setConfirmText("Yes")
                 .setConfirmClickListener {
-                    moveTaskToBack(true);
-                    finish();
+                    moveTaskToBack(true)
+                    finish()
 
                 }
                 .setCancelButton(

@@ -1,14 +1,11 @@
 package com.example.myapplication.com.example.whm
 
 import android.app.AlertDialog
-import android.app.Service
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import android.preference.PreferenceManager
-import android.text.Editable
 
 
 object AppPreferences {

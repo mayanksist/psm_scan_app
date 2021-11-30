@@ -1,9 +1,5 @@
 package com.example.myapplication.com.example.whm.ui.home
 
-import android.app.AlertDialog
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.KeyEvent
@@ -11,14 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
-import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.myapplication.R
-
 import com.example.myapplication.databinding.FragmentHomeBinding
-
 
 
 class HomeFragment : Fragment()  {
@@ -38,7 +29,7 @@ class HomeFragment : Fragment()  {
     ): View? {
 
     mView = inflater.inflate(com.example.myapplication.R.layout.fragment_home, container, false)
-        mView.requestFocus();
+        mView.requestFocus()
         mView.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {

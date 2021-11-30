@@ -36,9 +36,6 @@ class picallboxesFragment : Fragment() {
     private lateinit var picboxesall: MypicallboxesRecyclerViewAdapter
     var listarray: MutableList<String> = ArrayList()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,7 +56,7 @@ class picallboxesFragment : Fragment() {
         })
         setHasOptionsMenu(true)
         if (activity is AppCompatActivity) {
-            (activity as AppCompatActivity?)?.getSupportActionBar()
+            (activity as AppCompatActivity?)?.supportActionBar
                 ?.setDisplayHomeAsUpEnabled(false)
         }
         picboxesall = MypicallboxesRecyclerViewAdapter(picboxesclass, this.context)

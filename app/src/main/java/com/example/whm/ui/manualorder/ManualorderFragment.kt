@@ -8,13 +8,12 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.util.TypedValue
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import cn.pedant.SweetAlert.SweetAlertDialog
@@ -58,7 +57,7 @@ class ManualorderFragment : Fragment() {
             container,
             false
         )
-        view.requestFocus();
+        view.requestFocus()
         view.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -121,10 +120,10 @@ class ManualorderFragment : Fragment() {
                                             maxTextSize = list.size.toString()
                                             txtscanproducts = binding.txtscanproduct
                                             if (maxTextSize == "30") {
-                                                txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f);
+                                                txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f)
                                             }
                                             if (maxTextSize == "45") {
-                                                txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25f);
+                                                txtscanproducts!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25f)
                                             }
                                             list.add(list.size, ordernoenter)
                                             boxlist.add(0, boxno)
