@@ -10,6 +10,7 @@ import android.widget.Toolbar
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.ui.product.ProductList
@@ -50,9 +51,10 @@ internal class LoadOrderListAdapter(private var loadorderList: List<LoadOrderMod
             sharedLoadOrderPage.remove("listsize")
             sharedLoadOrderPage.remove("SelectOrderNo")
             sharedLoadOrderPage.apply()
-            val activity = view!!.context as AppCompatActivity
-            val MyFragment  = ProductList()
-            activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_loadorder,MyFragment).addToBackStack(null).commit()
+            view.findNavController().navigate(R.id.nav_scanorder)
+//            val activity = view!!.context as AppCompatActivity
+//            val MyFragment  = ProductList()
+//            activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_loadorder,MyFragment).addToBackStack(null).commit()
         })
 
     }
