@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             false
         }
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        if(preferences.getString("email","") != "" && preferences.getString("password","") != "" ){
+        if(preferences.getString("email","") != "" ){
             val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
             mLayout.visibility = View.GONE
             val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
@@ -79,18 +79,7 @@ class MainActivity : AppCompatActivity() {
         val responmsg = JSONObject(responsemsg.getString("d"))
         val msg = responmsg.getString("response")
         val resmsg = responmsg.getString("responseMessage")
-        if (msg == "failed") {
-            val alertemail = AlertDialog.Builder(this)
-            alertemail.setTitle("User")
-            alertemail.setMessage(resmsg.toString())
-            alertemail.setPositiveButton("ok")
-            { dialog, which -> dialog.dismiss()
-                scancode.text = ""
-            }
-            val dialog: AlertDialog = alertemail.create()
-            dialog.show()
-        }
-        else {
+
             if (msg == "success") {
                 val jsondata = responmsg.getJSONArray("responseData")
                 for (i in 0 until jsondata.length()) {
@@ -124,7 +113,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 val alertemail=AlertDialog.Builder(this)
                 alertemail.setTitle("User")
-                alertemail.setMessage(msg.toString())
+                alertemail.setMessage(resmsg.toString())
                 alertemail.setPositiveButton("ok")
                 { dialog, which -> dialog.dismiss()
                     scancode.text = ""
@@ -136,7 +125,7 @@ class MainActivity : AppCompatActivity() {
                 editor.clear()
                 editor.apply()
             }
-        }
+
             },Response.ErrorListener {
                     response ->
                 Log.e("onError", error(response.toString()))
@@ -195,6 +184,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     fun Autologin(email: String) {
         val Jsonarra=JSONObject()
         val JSONObj = JSONObject()

@@ -234,7 +234,7 @@ class ProductList : Fragment() {
                                     } else {
                                         pDialog.dismiss()
                                         alert.setTitle(result1[0])
-                                        alert.setMessage("Are you sure you want  to skip current order " + FirstorderNO + "?")
+                                        alert.setMessage("Are you sure you want to skip current order " + FirstorderNO + "?")
                                         alert.setNegativeButton("YES")
                                         { dialog, which ->
                                             boxlist.clear()
