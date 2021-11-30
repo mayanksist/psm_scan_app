@@ -54,28 +54,24 @@ class MainActivity : AppCompatActivity() {
             mLayout.visibility = View.GONE
             val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
             mhiddenLayout.visibility = View.VISIBLE
-            preferences.getString("email","")?.let { Autologin(it,
-                preferences.getString("password","")!!
+            preferences.getString("email","")?.let { Autologin(it
             ) }
         }
     }
     val APIURL: String = apisettings().apiurl + "wpackerlogin.asmx/login"
-    fun login(email: String, password: String) {
+    fun login(email: Editable) {
         val Jsonarra=JSONObject()
         val JSONObj = JSONObject()
         val appversion = AppPreferences.AppVersion
         val queues = Volley.newRequestQueue(this@MainActivity)
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val editor = preferences.edit()
-        editor.putString("email", email.trim())
-        editor.putString("password", password.trim())
+        editor.putString("email", email.trim().toString())
         editor.apply()
         JSONObj.put("userName",email)
-        JSONObj.put("password",password)
         JSONObj.put("requestContainer",Jsonarra.put("appVersion",appversion))
         // Toast.makeText(this@MainActivity, JSONObj.toString(), Toast.LENGTH_LONG).show()
         val req=JsonObjectRequest(Request.Method.POST,APIURL,JSONObj,
-
     Response.Listener {
             response ->
         val resobj = JSONObj.put("response", response.toString())
@@ -104,7 +100,6 @@ class MainActivity : AppCompatActivity() {
                     val empname=jsondata.getJSONObject(i).getString("EmpType")
                     val empid=jsondata.getJSONObject(i).getString("AutoId")
                     val LName=jsondata.getJSONObject(i).getString("LName")
-
                     var intent = Intent(this, MainActivity2::class.java)
                     intent.putExtra("Name", Name.toString())
                     intent.putExtra("EmpTypeNo", emptype.toString())
@@ -163,27 +158,26 @@ class MainActivity : AppCompatActivity() {
         {
             if (info != null && info.isConnected == true) {
                 var scansecuritykey=scansecurity
-                if(scansecuritykey.contains("_") ){
-                    val getkey = scansecuritykey.split("_")
-                    val userid = getkey[0]
-                    val  upasswords = getkey[1]
-                    var useremail = userid
-                    var password = upasswords
-                    useremail=userid
-                    password=upasswords
-                            login(useremail, password)
+//                if(scansecuritykey.contains("_") ){
+//                    val getkey = scansecuritykey.split("_")
+//                    val userid = getkey[0]
+//                    val  upasswords = getkey[1]
+//                    var useremail = userid
+//                    var password = upasswords
+//                    useremail=userid
+                            login(scansecuritykey)
 
-                }
-                else{
-                    val alertemail = AlertDialog.Builder(this)
-                    alertemail.setMessage("Invalid credentials")
-                    alertemail.setPositiveButton("ok")
-                    { dialog, which -> dialog.dismiss()
-                        scancode.text = ""
-                    }
-                    val dialog: AlertDialog = alertemail.create()
-                    dialog.show()
-                }
+//                }
+//                else{
+//                    val alertemail = AlertDialog.Builder(this)
+//                    alertemail.setMessage("Invalid credentials")
+//                    alertemail.setPositiveButton("ok")
+//                    { dialog, which -> dialog.dismiss()
+//                        scancode.text = ""
+//                    }
+//                    val dialog: AlertDialog = alertemail.create()
+//                    dialog.show()
+//                }
             } else {
                 val alertnet = AlertDialog.Builder(this)
                 alertnet.setTitle("Connection")
@@ -201,7 +195,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    fun Autologin(email: String, password: String) {
+    fun Autologin(email: String) {
         val Jsonarra=JSONObject()
         val JSONObj = JSONObject()
         val appversion = AppPreferences.AppVersion
@@ -210,10 +204,8 @@ class MainActivity : AppCompatActivity() {
             val preferences = PreferenceManager.getDefaultSharedPreferences(this)
             val editor = preferences.edit()
             editor.putString("email", email)
-            editor.putString("password", password)
             editor.apply()
             JSONObj.put("userName", email)
-            JSONObj.put("password", password)
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", appversion))
             // Toast.makeText(this@MainActivity, JSONObj.toString(), Toast.LENGTH_LONG).show()
             val req = JsonObjectRequest(Request.Method.POST, APIURL, JSONObj,
