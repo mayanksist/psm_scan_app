@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -25,6 +26,7 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.ui.pickallboxes.AllpickBoxes
+import com.example.myapplication.ui.product.ProductList
 import org.json.JSONObject
 import java.io.IOException
 
@@ -33,10 +35,10 @@ class picallboxesFragment : Fragment() {
     private val picboxesclass = ArrayList<AllpickBoxes>()
     private lateinit var picboxesall: MypicallboxesRecyclerViewAdapter
     var listarray: MutableList<String> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +46,13 @@ class picallboxesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_picallboxes_list2, container, false)
         val recyclerView: RecyclerView = view.findViewById(R.id.allpickboxeslist)
         var PickAllBtn: Button = view.findViewById(R.id.SelectAllPickBtn)
+        var  BtnBack :Button =  view.findViewById(R.id.BtnBack)
+        BtnBack.setOnClickListener(View.OnClickListener {view->
+//            this.findNavController()
+//                .navigate(R.id.nav_scanorder)
+            val activity = requireView().context as AppCompatActivity
+            activity.supportFragmentManager.beginTransaction().replace(R.id.Fragment_pickAllboxes,ProductList()).addToBackStack(null).commit()
+        })
         setHasOptionsMenu(true)
         if (activity is AppCompatActivity) {
             (activity as AppCompatActivity?)?.getSupportActionBar()
@@ -57,11 +66,12 @@ class picallboxesFragment : Fragment() {
         val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
         var OrderNO = sharedLoadOrderPreferences.getString("OrderNo", "").toString()
         var Stoppage = sharedLoadOrderPreferences.getString("Stoppage", "").toString()
-        var EnabledPickallBoxes =
-            sharedLoadOrderPreferences.getBoolean("EnabledPickallBoxes", false)
+        var EnabledPickallBoxes = sharedLoadOrderPreferences.getBoolean("EnabledPickallBoxes", false)
         var PackedBoxes = sharedLoadOrderPreferences.getInt("PackedBoxes", 0)
         var ArraysL = sharedLoadOrderPreferences.getString("boxlist", "").toString()
         listarray = ArraysL.replace("[", "").replace("]", "").split(",") as MutableList<String>
+        val constraintLayoutManager: ConstraintLayout = view.findViewById(R.id.button)
+        constraintLayoutManager.visibility = View.VISIBLE
         if (EnabledPickallBoxes == false) {
             PickAllBtn.visibility = View.GONE
         }
@@ -152,16 +162,15 @@ class picallboxesFragment : Fragment() {
             } catch (e: IOException) {
                 Toast.makeText(activity, "Server Error", Toast.LENGTH_LONG).show()
             }
-
-
         })
+
         return view
     }
-
     private fun DataBindAllBoxes(Ono: String) {
         var boxes = AllpickBoxes(Ono)
         picboxesclass.add(boxes)
         picboxesall.notifyDataSetChanged()
     }
+
 }
 

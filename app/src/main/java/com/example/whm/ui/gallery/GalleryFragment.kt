@@ -150,9 +150,9 @@ class GalleryFragment : Fragment() {
                     val pCategory = jsonrepd.getString("Cat")
                     val pSubCategory = jsonrepd.getString("SCat")
                     val ProductId = jsonrepd.getString("PId")
-                    val punitypa = jsonrepd.getString("Unit")
+//                    val punitypa = jsonrepd.getString("Unit")
                     val pprice = ("%.2f".format(jsonrepd.getDouble("Price")))
-                    val DefaultStock = jsonrepd.getString("stock")
+//                    val DefaultStock = jsonrepd.getString("stock")
                     var imagesurl = ""
                     if (jsonrepd.getString("OPath") == null) {
                         imagesurl = jsonrepd.getString("ImageUrl")
@@ -162,7 +162,7 @@ class GalleryFragment : Fragment() {
                     val location = jsonrepd.getString("Location")
                     produname.text = "$pname"
                     productId.text = "$ProductId"
-                        unitype.text = "$punitypa"
+//                        unitype.text = "$punitypa"
                     price.text = "${pprice}"
                     if ("$location" == "---") {
                         locationval.text = "N/A"
@@ -171,11 +171,11 @@ class GalleryFragment : Fragment() {
                     }
                     category.text = "$pCategory"
                     sub_category.text = "$pSubCategory"
-                        stock.text = "${DefaultStock}"
+//                        stock.text = "${DefaultStock}"
                     barcode.text = "" + barcoded
                     Glide.with(this)
                         .load(imagesurl)
-//                        .override(500, 500)
+//                        .override(400, 400)
                         .into(imagur)
                     pDialog.dismiss()
                 } else {

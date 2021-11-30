@@ -96,7 +96,6 @@ class MainActivity2 : AppCompatActivity() {
         if (key_code == KeyEvent.KEYCODE_BACK) {
             super.onKeyDown(key_code, key_event)
             return false
-
         }
         return true
     }

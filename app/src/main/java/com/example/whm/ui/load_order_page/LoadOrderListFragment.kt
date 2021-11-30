@@ -1,23 +1,17 @@
 package com.example.whm.ui.load_order_page
 
 import android.app.AlertDialog
-import android.app.Service
-import android.content.Context
 import android.graphics.Color
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.text.Editable
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import android.widget.Toolbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,18 +24,12 @@ import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.ui.load_order_page.LoadOrderListAdapter
 import com.example.myapplication.com.example.whm.ui.load_order_page.LoadOrderModel
-
 import org.json.JSONObject
 import java.io.IOException
-import android.app.Activity
-import android.view.KeyEvent
-import androidx.navigation.fragment.findNavController
-import com.example.myapplication.com.example.whm.MainActivity
 
 class LoadOrderListFragment : Fragment() {
     private val LoadorderList = ArrayList<LoadOrderModel>()
     private lateinit var LoadorderAdapter: LoadOrderListAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -140,11 +128,9 @@ class LoadOrderListFragment : Fragment() {
             }
             val dialog: AlertDialog = alertnet.create()
             dialog.show()
-
         }
         return view
     }
-
     private fun DataBindLoadorder(Ono: String, PackedBoxes: Int, Stoppage: String) {
         var Loadorder = LoadOrderModel(Ono, PackedBoxes, Stoppage)
         LoadorderList.add(Loadorder)

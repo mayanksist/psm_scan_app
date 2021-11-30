@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.NonNull
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -24,6 +25,7 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.ui.pickallboxes.AllpickBoxes
+import com.example.myapplication.ui.product.ProductList
 import org.json.JSONObject
 import java.io.IOException
 import java.util.*
@@ -51,15 +53,16 @@ internal class MypicallboxesRecyclerViewAdapter(private var allpicboxes: List<Al
         val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         val sharedLoadOrderPage = sharedLoadOrderPreferences.edit()
         holder.OrderNo.setOnClickListener(View.OnClickListener {view ->
-
             val getorder = order.getOno()?.split("/")?.toMutableList()
             var boxNo = getorder?.get(1)
             sharedLoadOrderPage.putString("boxNo", boxNo.toString().trim())
             sharedLoadOrderPage.putString("SelectOrderNo", order.getOno())
             sharedLoadOrderPage.apply()
-            view.findNavController().navigate(R.id.nav_scanorder)
+            val activity = view!!.context as AppCompatActivity
+            activity.supportFragmentManager.beginTransaction().replace(R.id.Fragment_pickAllboxes,
+                ProductList()
+            ).addToBackStack(null).commit()
         })
-
     }
 
     override fun getItemCount(): Int {

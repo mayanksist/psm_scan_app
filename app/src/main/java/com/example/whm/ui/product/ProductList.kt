@@ -26,7 +26,6 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.myapplication.ui.ProductList.ProductListViewModel
 import com.example.myapplication.com.example.whm.AppPreferences
-import com.example.myapplication.com.example.whm.MainActivity
 import com.example.myapplication.databinding.FragmentProductListBinding
 import org.json.JSONObject
 import java.io.IOException
@@ -66,7 +65,7 @@ class ProductList : Fragment() {
         var count = 0
         val txtallpicbox: TextView = binding.txtallpickbox
         val view = inflater.inflate(
-            com.example.myapplication.R.layout.fragment_product_list,
+            R.layout.fragment_product_list,
             container,
             false
         )
@@ -120,9 +119,11 @@ class ProductList : Fragment() {
                 (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
                 (activity as? AppCompatActivity)?.supportActionBar?.show()
                 (activity as AppCompatActivity?)!!.supportActionBar!!.title = SharedOrderNo
+                (activity as AppCompatActivity?)
+                    ?.closeOptionsMenu()
                 if (activity is AppCompatActivity) {
                     (activity as AppCompatActivity?)?.getSupportActionBar()
-                        ?.setDisplayHomeAsUpEnabled(false)
+                        ?.setDisplayHomeAsUpEnabled(true)
                 }
                 val StopNo: TextView = binding.txtstoppage
                 val cardview: CardView = binding.cardView2
@@ -311,8 +312,6 @@ class ProductList : Fragment() {
                     sharedLoadOrderPage.putString("Stoppage", SharedStopNo)
                     sharedLoadOrderPage.putString("boxlist", boxlist.toString())
                     sharedLoadOrderPage.putString("listsize", boxlist.size.toString())
-//                    sharedLoadOrderPage.remove("boxNo")
-//                    sharedLoadOrderPage.remove("SelectOrderNo")
                     sharedLoadOrderPage.apply()
                 }
                 val view: ScrollView = binding.scrollView
@@ -361,7 +360,6 @@ class ProductList : Fragment() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var empautoid = preferences.getString("EmpAutoId", "")
         var accessToken = preferences.getString("accessToken", "")
-        var EnabledPickallBoxes = preferences.getBoolean("EnabledPickallBoxes", false)
         val alertscanord = AlertDialog.Builder(this.context)
         val queues = Volley.newRequestQueue(this.context)
         details.put("OrderNO", orderno)
@@ -376,7 +374,6 @@ class ProductList : Fragment() {
                 val resobj = (response.toString())
                 val responsemsg = JSONObject(resobj.toString())
                 val resultobj = JSONObject(responsemsg.getString("d"))
-                val resmsg = resultobj.getString("response")
                 val presponsmsg = resultobj.getString("responseMessage")
                 if (presponsmsg == "Orders Found") {
                     cardview.visibility = View.GONE
@@ -429,14 +426,12 @@ class ProductList : Fragment() {
                             clear()
                             val orderno4: EditText = binding.txtorderno
                             orderno4.text.clear()
-
                         })
                     FirstorderNO = ""
                     checkr = 0
                     val dialog: AlertDialog = alertorfailed.create()
                     dialog.show()
                 }
-
             },
             { response ->
                 Log.e("onError", error(response.toString()))
@@ -452,7 +447,6 @@ class ProductList : Fragment() {
             Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
         }
     }
-
     fun submitorder(sorderno: String) {
         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
         pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
@@ -535,21 +529,15 @@ class ProductList : Fragment() {
             Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
         }
     }
-
     fun clear() {
-
         val txtstop: TextView = binding.txtstoppage
         val txtscanproduct: TextView = binding.txtscanproduct
         val txtpacked: TextView = binding.txtpackedb
-
         txtstop.text = "N/A"
         txtscanproduct.text = "N/A"
         txtpacked.text = "0"
     }
 }
-
-
-
 private fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
 
 }
