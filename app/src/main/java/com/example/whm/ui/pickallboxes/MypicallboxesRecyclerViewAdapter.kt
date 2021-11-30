@@ -57,12 +57,13 @@ internal class MypicallboxesRecyclerViewAdapter(private var allpicboxes: List<Al
             var boxNo = getorder?.get(1)
             sharedLoadOrderPage.putString("boxNo", boxNo.toString().trim())
             sharedLoadOrderPage.putString("SelectOrderNo", order.getOno())
+//            sharedLoadOrderPage.putInt("ClickNo",2)
             sharedLoadOrderPage.apply()
             val activity = view!!.context as AppCompatActivity
-            activity.supportFragmentManager.beginTransaction().replace(R.id.Fragment_pickAllboxes,
-                ProductList()
-            ).addToBackStack(null).commit()
+            val MyFragment  = ProductList()
+            activity.supportFragmentManager.beginTransaction().replace(R.id.Fragment_pickAllboxes,MyFragment).addToBackStack(null).commit()
         })
+
     }
 
     override fun getItemCount(): Int {

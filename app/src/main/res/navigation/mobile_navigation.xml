@@ -31,14 +31,7 @@
         android:id="@+id/nav_orderlist"
         android:label="@string/OrderList"
         android:name="com.example.whm.ui.load_order_page.LoadOrderListFragment"
-        tools:layout="@layout/fragment_loadorderlists" >
-        <action
-            android:id="@+id/action_nav_orderlist_self"
-            app:destination="@id/nav_orderlist" />
-        <action
-            android:id="@+id/action_nav_orderlist_to_nav_scanorder"
-            app:destination="@id/nav_scanorder" />
-    </fragment>
+        tools:layout="@layout/fragment_loadorderlists" />
     <fragment
         android:id="@+id/nav_assignorder"
         android:label="@string/menuassignorder"
@@ -59,10 +52,6 @@
         android:id="@+id/nav_scanorder"
         android:name="com.example.myapplication.ui.product.ProductList"
         android:label="@string/OrderList"
-        tools:layout="@layout/fragment_product_list" >
-        <action
-            android:id="@+id/action_nav_scanorder_to_nav_orderlist"
-            app:destination="@id/nav_orderlist" />
-    </fragment>
+        tools:layout="@layout/fragment_product_list" />
 
 </navigation>

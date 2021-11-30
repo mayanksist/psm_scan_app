@@ -9,23 +9,13 @@
         android:id="@+id/LoadOrderListFragment"
         android:name="com.example.whm.ui.load_order_page.LoadOrderListFragment"
         android:label="fragment_item_list"
-        tools:layout="@layout/fragment_item_list" >
-        <action
-            android:id="@+id/action_LoadOrderListFragment_to_productList2"
-            app:destination="@id/productList2" />
-    </fragment>
+        tools:layout="@layout/fragment_item_list" />
     <fragment
         android:id="@+id/productList2"
         android:name="com.example.myapplication.ui.product.ProductList"
         android:label="fragment_product_list"
         tools:layout="@layout/fragment_product_list"
-        >
-
-        <action
-            android:id="@+id/action_productList2_to_LoadOrderListFragment"
-            app:destination="@id/LoadOrderListFragment"
-            app:popUpToInclusive="true"/>
-    </fragment>
+        />
     <fragment
         android:id="@+id/picallboxesFragment"
         android:name="com.example.whm.ui.pickallboxes.picallboxesFragment"

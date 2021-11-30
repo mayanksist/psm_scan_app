@@ -47,7 +47,11 @@ class picallboxesFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.allpickboxeslist)
         var PickAllBtn: Button = view.findViewById(R.id.SelectAllPickBtn)
         var  BtnBack :Button =  view.findViewById(R.id.BtnBack)
+        val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
         BtnBack.setOnClickListener(View.OnClickListener {view->
+            val sharedLoadOrderPage = sharedLoadOrderPreferences.edit()
+            sharedLoadOrderPage.putInt("ClickNo",1)
+            sharedLoadOrderPage.apply()
 //            this.findNavController()
 //                .navigate(R.id.nav_scanorder)
             val activity = requireView().context as AppCompatActivity
@@ -63,7 +67,7 @@ class picallboxesFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = picboxesall
-        val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
+
         var OrderNO = sharedLoadOrderPreferences.getString("OrderNo", "").toString()
         var Stoppage = sharedLoadOrderPreferences.getString("Stoppage", "").toString()
         var EnabledPickallBoxes = sharedLoadOrderPreferences.getBoolean("EnabledPickallBoxes", false)

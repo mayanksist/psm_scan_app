@@ -57,8 +57,6 @@ class ProductList : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
         productListViewModel = ViewModelProvider(this).get(ProductListViewModel::class.java)
         _binding = FragmentProductListBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -98,7 +96,9 @@ class ProductList : Fragment() {
                 val listofarray = sharedLoadOrderPreferences.getString("boxlist", "")
                 val listofsize = sharedLoadOrderPreferences.getString("listsize", "")
                 val SelectOrderNo = sharedLoadOrderPreferences.getString("SelectOrderNo", "")
+                val ClickNo = sharedLoadOrderPreferences.getInt("ClickNo", 0)
                 boxno = sharedLoadOrderPreferences.getString("boxNo", "").toString()
+                var test=boxno
                 if (listofarray != "[]") {
                     if (listofarray != null) {
                         if (listofarray != "") {
@@ -111,24 +111,25 @@ class ProductList : Fragment() {
                 if(SelectOrderNo!="" && SelectOrderNo!=null) {
                     for (key in listarrayp) {
                         var test = key.trim();
+
                         boxlist.add(test);
                     }
                 }
+
+
                 setHasOptionsMenu(true)
                 toolbar = view.findViewById(R.id.toolbar)
                 (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
                 (activity as? AppCompatActivity)?.supportActionBar?.show()
                 (activity as AppCompatActivity?)!!.supportActionBar!!.title = SharedOrderNo
-                (activity as AppCompatActivity?)
-                    ?.closeOptionsMenu()
-                if (activity is AppCompatActivity) {
-                    (activity as AppCompatActivity?)?.getSupportActionBar()
-                        ?.setDisplayHomeAsUpEnabled(true)
-                }
+                (activity as AppCompatActivity?)?.getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+
+
                 val StopNo: TextView = binding.txtstoppage
                 val cardview: CardView = binding.cardView2
                 StopNo.text = SharedStopNo
                 cardview.visibility = View.VISIBLE
+
                 if (boxno != "") {
                     try {
 
@@ -154,6 +155,12 @@ class ProductList : Fragment() {
                 if (listofarray == "" && listofsize == "") {
                     noofboxes1.text = "0 out of " + PackedBoxes
                 }
+                if(ClickNo==1){
+             var box=boxlist
+                    noofboxes1.text = listarrayp.size.toString() + " out of " + "" + PackedBoxes
+                    lastscanprd.text = listarrayp.toString()
+                }
+
                 orderno.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
                     if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
                         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
@@ -311,7 +318,10 @@ class ProductList : Fragment() {
                     sharedLoadOrderPage.putInt("PackedBoxes", PackedBoxes)
                     sharedLoadOrderPage.putString("Stoppage", SharedStopNo)
                     sharedLoadOrderPage.putString("boxlist", boxlist.toString())
-                    sharedLoadOrderPage.putString("listsize", boxlist.size.toString())
+                    sharedLoadOrderPage.putString("listsze", boxlist.size.toString())
+                    sharedLoadOrderPage.remove("boxNo")
+                    sharedLoadOrderPage.remove("SelectOrderNo")
+                    sharedLoadOrderPage.remove("ClickNo")
                     sharedLoadOrderPage.apply()
                 }
                 val view: ScrollView = binding.scrollView
