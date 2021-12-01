@@ -61,44 +61,40 @@ class GalleryFragment : Fragment() {
                 barcode.requestFocus()
                 barcode.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
                     if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
-                        var barcodeenter = barcode.text.toString()
-                        try {
-                            if (barcodeenter.trim().isEmpty()) {
-                                val alertemail = AlertDialog.Builder(this.context)
-                                alertemail.setMessage("Scan Barcode")
-                                alertemail.setPositiveButton("ok")
-                                { dialog, which ->
-                                    dialog.dismiss()
+                        if (AppPreferences.internetConnectionCheck(this.context)) {
+                            var barcodeenter = barcode.text.toString()
+                            try {
+                                if (barcodeenter.trim().isEmpty()) {
+                                    val alertemail = AlertDialog.Builder(this.context)
+                                    alertemail.setMessage("Scan Barcode")
+                                    alertemail.setPositiveButton("ok")
+                                    { dialog, which ->
+                                        dialog.dismiss()
+                                        barcode.text.clear()
+                                        barcode.setText("")
+                                        barcodeenter = ""
+                                    }
+                                    val dialog: AlertDialog = alertemail.create()
+                                    dialog.show()
+                                } else {
+                                    bindproductdetails(barcodeenter)
                                     barcode.text.clear()
-                                    barcode.setText("")
-                                    barcodeenter = ""
                                 }
-                                val dialog: AlertDialog = alertemail.create()
-                                dialog.show()
-                            } else {
-                                bindproductdetails(barcodeenter)
-                                barcode.text.clear()
-                            }
 
-                        } catch (e: IOException) {
-                            Toast.makeText(this.context, "Error", Toast.LENGTH_SHORT).show()
+                            } catch (e: IOException) {
+                                Toast.makeText(this.context, "Error", Toast.LENGTH_SHORT).show()
+                            }
+                            return@OnKeyListener true
                         }
-                        return@OnKeyListener true
+                        else{
+                            CheckInterNetDailog()
+                        }
                     }
                     false
                 })
             })
         } else {
-            val alertnet = AlertDialog.Builder(activity)
-            alertnet.setTitle("Connection")
-            alertnet.setMessage("Please check your internet connection")
-            alertnet.setPositiveButton("ok")
-            { dialog, which ->
-                dialog.dismiss()
-                this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
-            }
-            val dialog: AlertDialog = alertnet.create()
-            dialog.show()
+            CheckInterNetDailog()
         }
         return root
     }
@@ -217,6 +213,19 @@ class GalleryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun CheckInterNetDailog(){
+        val alertnet = AlertDialog.Builder(activity)
+        alertnet.setTitle("Connection")
+        alertnet.setMessage("Please check your internet connection")
+        alertnet.setPositiveButton("ok")
+        { dialog, which ->
+            dialog.dismiss()
+            this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
+        }
+        val dialog: AlertDialog = alertnet.create()
+        dialog.show()
     }
 
 }

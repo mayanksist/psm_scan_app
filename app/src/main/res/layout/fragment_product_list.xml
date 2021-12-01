@@ -92,11 +92,11 @@
                         android:id="@+id/txtscanproduct1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
                         android:text="Scanned Boxes :"
                         android:textSize="18dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/txtallpickbox"
                         app:layout_constraintStart_toStartOf="@+id/imageView7"
-                        app:layout_constraintTop_toTopOf="@+id/txtallpickbox" />
+                        app:layout_constraintTop_toBottomOf="@+id/txtstoppage" />
 
                     <TextView
                         android:id="@+id/txtscanproduct"
@@ -110,9 +110,9 @@
                         android:textSize="45dp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/txtallpickbox"
+                        app:layout_constraintEnd_toEndOf="@+id/txtstoppage"
                         app:layout_constraintStart_toStartOf="@+id/txtscanproduct1"
-                        app:layout_constraintTop_toBottomOf="@+id/txtallpickbox" />
+                        app:layout_constraintTop_toBottomOf="@+id/txtscanproduct1" />
 
                     <TextView
                         android:id="@+id/txtpackedb"
@@ -156,6 +156,7 @@
                         android:paddingEnd="8dp"
                         android:text="Pick All Boxes"
                         android:textColor="#ffffff"
+                        app:layout_constraintBottom_toBottomOf="@+id/txtscanproduct1"
                         app:layout_constraintEnd_toEndOf="@+id/txtstoppage"
                         app:layout_constraintTop_toBottomOf="@+id/txtpackedb" />
 
