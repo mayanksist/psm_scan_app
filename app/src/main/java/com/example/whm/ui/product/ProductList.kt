@@ -218,11 +218,13 @@ class ProductList : Fragment() {
                                             }
                                         } else {
                                             pDialog.dismiss()
-                                            AreYousureDailog(
-                                                "Are you sure you want to skip current order $FirstorderNO?",
-                                                result1[0]
-                                            )
-                                        }
+                                            val layout = binding.txtmsg
+                                            layout.visibility = View.VISIBLE
+                                            orderno.setText("")
+                                            msg!!.text = "Invalid box scanned."
+                                            AppPreferences.playSoundinvalid()
+
+                                                                                   }
                                     }
 
                                     if (checkr == 0) {
@@ -240,13 +242,22 @@ class ProductList : Fragment() {
                                     }
                                 } else {
                                     pDialog.dismiss()
-                                    Dailogue("Invalid box scanned")
+                                    val layout = binding.txtmsg
+                                    layout.visibility = View.VISIBLE
+                                    orderno.setText("")
+                                    msg!!.text = "Invalid box scanned."
+                                    AppPreferences.playSoundinvalid()
+
 
                                 }
 
                             } else {
                                 pDialog.dismiss()
-                                Dailogue("Invalid box scanned")
+                                val layout = binding.txtmsg
+                                layout.visibility = View.VISIBLE
+                                orderno.setText("")
+                                msg!!.text= "Invalid box scanned."
+                                AppPreferences.playSoundinvalid()
                             }
                             return@OnKeyListener true
                         }
@@ -333,6 +344,7 @@ class ProductList : Fragment() {
                 val responsemsg = JSONObject(resobj.toString())
                 val resultobj = JSONObject(responsemsg.getString("d"))
                 val presponsmsg = resultobj.getString("responseMessage")
+                val orderno1: EditText = binding.txtorderno
                 if (presponsmsg == "Orders Found") {
                     cardview.visibility = View.GONE
                     cardview.visibility = View.VISIBLE
@@ -364,14 +376,10 @@ class ProductList : Fragment() {
 
                             else {
                                 pDialog.dismiss()
-                                alertscanord.setTitle(
-                                    orderno.toString().uppercase(Locale.getDefault())
-                                )
-                                alertscanord.setMessage("Invalid box scanned")
-                                alertscanord.setPositiveButton("ok", null)
-                                val dialog: AlertDialog = alertscanord.create()
-                                dialog.show()
-                                val orderno1: EditText = binding.txtorderno
+                                val layout = binding.txtmsg
+                                layout.visibility = View.VISIBLE
+                                msg!!.text= "Invalid box scanned."
+                                AppPreferences.playSoundinvalid()
                                 orderno1.text.clear()
                             }
                             checkr = 1
@@ -380,8 +388,12 @@ class ProductList : Fragment() {
                         }
                         else{
                             pDialog.dismiss()
-                            AreYousureDailog("Are you sure you want to skip current order $SharedOrderNo??", OrderNo )
+                            val layout = binding.txtmsg
+                            layout.visibility = View.VISIBLE
+                            msg!!.text= "Invalid box scanned."
+                            AppPreferences.playSoundinvalid()
                             checkr = 0
+                            orderno1.text.clear()
                             FirstorderNO=""
                         }
                     }
@@ -481,6 +493,8 @@ class ProductList : Fragment() {
                         clear()
                         val orderno2: EditText = binding.txtorderno
                         orderno2.text.clear()
+                        this.findNavController()
+                            .navigate(com.example.myapplication.R.id.nav_orderlist)
                     }
                     FirstorderNO = ""
                     checkr = 0
