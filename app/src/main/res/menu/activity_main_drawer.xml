@@ -36,7 +36,8 @@
 
     </group>
     <item android:title= "Version"
-        android:id="@+id/version">
+        android:id="@+id/version"
+        android:visible="false">
         <menu>
 
 
