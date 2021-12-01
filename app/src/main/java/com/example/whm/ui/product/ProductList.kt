@@ -53,17 +53,14 @@ class ProductList : Fragment() {
     var txtscanproducts: TextView? = null
     var txtstop: TextView? = null
     var toolbar: Toolbar? = null
+    var count = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
         productListViewModel = ViewModelProvider(this).get(ProductListViewModel::class.java)
         _binding = FragmentProductListBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        var count = 0
-        val txtallpicbox: TextView = binding.txtallpickbox
         val view = inflater.inflate(
             R.layout.fragment_product_list,
             container,
@@ -79,20 +76,18 @@ class ProductList : Fragment() {
             }
             true
         })
-
+        val txtallpicbox: TextView = binding.txtallpickbox
         if (AppPreferences.internetConnectionCheck(this.context)) {
             val orderno: EditText = binding.txtorderno
             val noofboxes1: TextView = binding.txtpackedb
             val lastscanprd: TextView = binding.txtscanproduct
-            val alert = AlertDialog.Builder(this.context)
+
             msg = binding.txtmsg
             val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
             productListViewModel.text.observe(viewLifecycleOwner, Observer {
                 orderno.requestFocus()
                 val sharedLoadOrderPreferences =
                     PreferenceManager.getDefaultSharedPreferences(this.context)
-                val sharedLoadOrderPage =
-                    sharedLoadOrderPreferences.edit()
                 SharedOrderNo = sharedLoadOrderPreferences.getString("OrderNo", "").toString()
                 PackedBoxes = sharedLoadOrderPreferences.getInt("PackedBoxes", 0)
                 var SharedStopNo = sharedLoadOrderPreferences.getString("Stoppage", "")
@@ -116,7 +111,7 @@ class ProductList : Fragment() {
                     }
                 }
                 setHasOptionsMenu(true)
-                toolbar = view.findViewById(R.id.toolbar)
+                toolbar = view?.findViewById(R.id.toolbar)
                 (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
                 (activity as? AppCompatActivity)?.supportActionBar?.show()
                 (activity as AppCompatActivity?)!!.supportActionBar!!.title = SharedOrderNo
@@ -157,7 +152,6 @@ class ProductList : Fragment() {
                 }
                 orderno.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
                     if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
-
                         pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
                         pDialog.titleText = "Fetching ..."
                         pDialog.setCancelable(false)
@@ -167,7 +161,6 @@ class ProductList : Fragment() {
                         layout.visibility = View.GONE
                         if (ordernoenter.contains("/")) {
                             val result1 = ordernoenter.split("/").toMutableList()
-
                             if (SelectOrderNo != null && result1[0].length == 0) {
                                 if (SelectOrderNo.split("/")[0] != "") {
                                     pDialog.dismiss()
@@ -177,7 +170,6 @@ class ProductList : Fragment() {
                                             checkr = 1
                                         }
                                     } catch (e: IOException) {
-
                                     }
                                 }
                             }
@@ -233,47 +225,13 @@ class ProductList : Fragment() {
                                         }
                                     } else {
                                         pDialog.dismiss()
-                                        alert.setTitle(result1[0])
-                                        alert.setMessage("Are you sure you want to skip current order " + FirstorderNO + "?")
-                                        alert.setNegativeButton("YES")
-                                        { dialog, which ->
-                                            boxlist.clear()
-                                            maxTextSize = ""
-                                            count = 0
-                                            alert.setTitle("")
-                                            sharedLoadOrderPage.remove("OrderNo")
-                                            sharedLoadOrderPage.remove("PackedBoxes")
-                                            sharedLoadOrderPage.remove("SelectOrderNo")
-                                            sharedLoadOrderPage.apply()
-                                            orderdetailsbind(result1[0], ordernoenter)
-//                                            FirstorderNO = result1[0]
-                                            SharedOrderNo = result1[0]
-                                            dialog.dismiss()
-                                        }
-                                        alert.setPositiveButton("NO")
-                                        { dialog, which ->
-                                            dialog.dismiss()
-                                            alert.setTitle("")
-                                        }
-                                        alert.show()
-                                        orderno.setText("")
+                                        AreYousureDailog("Are you sure you want to skip current order $FirstorderNO?", result1[0])
                                     }
                                 }
                             } else {
                                 pDialog.dismiss()
-                                AppPreferences.playSoundinvalid()
-                                alert.setMessage("Invalid box No")
-                                alert.setPositiveButton("ok")
-                                { dialog, which ->
-                                    alert.setCancelable(true)
-                                    orderno.setText("")
-                                }
-                                alert.setNegativeButton("", null)
-                                val adialog: AlertDialog = alert.create()
-                                adialog.show()
-                                val ordernok: EditText = binding.txtorderno
-                                ordernok.setText("")
-                                msg!!.text = ""
+                                Dailogue ("Invalid box scanned")
+
                             }
                             if (checkr == 0) {
                                 try {
@@ -286,20 +244,7 @@ class ProductList : Fragment() {
                             }
                         } else {
                             pDialog.dismiss()
-                            AppPreferences.playSoundinvalid()
-                            alert.setMessage("Invalid box scanned")
-                            alert.setPositiveButton("ok")
-                            { dialog, which ->
-                                alert.setCancelable(true)
-                                orderno.setText("")
-                            }
-                            alert.setNegativeButton("", null)
-                            val adialog: AlertDialog = alert.create()
-                            adialog.show()
-                            val orderno1: EditText = binding.txtorderno
-                            orderno1.setText("")
-                            msg!!.text = ""
-
+                            Dailogue ("Invalid box scanned")
                         }
                         return@OnKeyListener true
                     }
@@ -308,27 +253,7 @@ class ProductList : Fragment() {
                 orderno.requestFocus()
                 txtallpicbox.setOnClickListener {
                     pDialog.dismiss()
-                    alert.setTitle(SharedOrderNo)
-                    alert.setMessage("Are you sure you want to pick all boxes?")
-                    alert.setNegativeButton("YES")
-                    { dialog, which ->
-                        boxlist.clear()
-                        maxTextSize = ""
-                        count = 0
-                        alert.setTitle("")
-                        sharedLoadOrderPage.remove("OrderNo")
-                        sharedLoadOrderPage.remove("PackedBoxes")
-                        sharedLoadOrderPage.remove("SelectOrderNo")
-                        sharedLoadOrderPage.apply()
-                        submitorder(SharedOrderNo)
-                        dialog.dismiss()
-                    }
-                    alert.setPositiveButton("NO")
-                    { dialog, which ->
-                        dialog.dismiss()
-                        alert.setTitle("")
-                    }
-                    alert.show()
+                    PickAllBoxesDailog("Are you sure you want to pick all boxes?",SharedOrderNo)
 //                    this.findNavController().navigate(com.example.myapplication.R.id.nav_allpickbox)
 //                    sharedLoadOrderPage.putString("OrderNo", SharedOrderNo)
 //                    sharedLoadOrderPage.putInt("PackedBoxes", PackedBoxes)
@@ -347,7 +272,8 @@ class ProductList : Fragment() {
                 }
 
             })
-        } else {
+        }
+        else {
             val alertnet = AlertDialog.Builder(activity)
             alertnet.setTitle("Connection")
             alertnet.setMessage("Please check your internet connection")
@@ -359,6 +285,8 @@ class ProductList : Fragment() {
             val dialog: AlertDialog = alertnet.create()
             dialog.show()
         }
+
+
         return binding.root
     }
 
@@ -408,48 +336,60 @@ class ProductList : Fragment() {
                         PreferenceManager.getDefaultSharedPreferences(this.context)
                     val editor1 = preferences.edit()
                     for (i in 0 until jsondata.length()) {
-                        SharedOrderNo = jsondata.getJSONObject(i).getString("OrderNo")
+                        var OrderNo= jsondata.getJSONObject(i).getString("OrderNo")
                         val noofboxes = jsondata.getJSONObject(i).getInt("PackedBoxes")
                         val stoppage = jsondata.getJSONObject(i).getInt("Stoppage")
-                        if (boxno.toInt() <= noofboxes) {
-                            txtstop!!.text = "${stoppage}"
-                            FirstorderNO = SharedOrderNo
-                            var test = FirstorderNO
-                            editor1.putString("OrderNO", SharedOrderNo)
-                            editor1.putInt("NoofBox", noofboxes)
-                            editor1.apply()
-                            boxlist.add(0, boxno)
-                            PackedBoxes = noofboxes.toInt()
-                            txtpacked.text = boxlist.size.toString() + " out of " + "${noofboxes}"
-                            txtscanproducts!!.text = boxlist.toString()
-                            if (boxlist.size.toString() == PackedBoxes.toString()) {
-                                submitorder(SharedOrderNo)
+                        if(SharedOrderNo==OrderNo) {
+                            if (boxno.toInt() <= noofboxes) {
+                                txtstop!!.text = "${stoppage}"
+                                FirstorderNO = SharedOrderNo
+                                editor1.putString("OrderNO", SharedOrderNo)
+                                editor1.putInt("NoofBox", noofboxes)
+                                editor1.apply()
+                                boxlist.add(0, boxno)
+                                PackedBoxes = noofboxes
+                                txtpacked.text =
+                                    boxlist.size.toString() + " out of " + "${noofboxes}"
+                                txtscanproducts!!.text = boxlist.toString()
+                                if (boxlist.size.toString() == PackedBoxes.toString()) {
+                                    submitorder(SharedOrderNo)
+                                }
                             }
-                            (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
-                            (activity as AppCompatActivity?)!!.supportActionBar!!.title = SharedOrderNo
-                        } else {
+                            else {
+                                pDialog.dismiss()
+                                alertscanord.setTitle(
+                                    orderno.toString().uppercase(Locale.getDefault())
+                                )
+                                alertscanord.setMessage("Invalid box scanned !!!!")
+                                alertscanord.setPositiveButton("ok", null)
+                                val dialog: AlertDialog = alertscanord.create()
+                                dialog.show()
+                                val orderno1: EditText = binding.txtorderno
+                                orderno1.text.clear()
+                            }
+                        }
+                        else{
                             pDialog.dismiss()
-                            alertscanord.setTitle(orderno.toString().uppercase(Locale.getDefault()))
-                            alertscanord.setMessage("Invalid Box No")
-                            alertscanord.setPositiveButton("ok", null)
-                            val dialog: AlertDialog = alertscanord.create()
-                            dialog.show()
-                            val orderno1: EditText = binding.txtorderno
-                            orderno1.text.clear()
+                            AreYousureDailog("Are you sure you want to skip current order $SharedOrderNo?", OrderNo )
                         }
                     }
                     checkr = 1
-                } else {
+                    (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
+                    (activity as AppCompatActivity?)!!.supportActionBar!!.title = SharedOrderNo
+                }
+                else {
                     pDialog.dismiss()
                     val alertorfailed = AlertDialog.Builder(this.context)
                     alertorfailed.setTitle(orderno)
-                    alertorfailed.setMessage(presponsmsg.toString())
+                    alertorfailed.setMessage(presponsmsg.toString() +"hghjfhjf")
                     alertorfailed.setPositiveButton(
                         "ok",
                         DialogInterface.OnClickListener { dialog, which ->
                             clear()
                             val orderno4: EditText = binding.txtorderno
                             orderno4.text.clear()
+                            this.findNavController()
+                                .navigate(com.example.myapplication.R.id.nav_orderlist)
                         })
                     FirstorderNO = ""
                     checkr = 0
@@ -560,6 +500,92 @@ class ProductList : Fragment() {
         txtstop.text = "N/A"
         txtscanproduct.text = "N/A"
         txtpacked.text = "0"
+    }
+    fun Dailogue (MSG:String){
+        val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
+        val alert = AlertDialog.Builder(this.context)
+        pDialog.dismiss()
+        AppPreferences.playSoundinvalid()
+        alert.setMessage(""+MSG)
+        alert.setPositiveButton("ok")
+        { dialog, which ->
+            alert.setCancelable(true)
+           // orderno.setText("")
+        }
+        alert.setNegativeButton("", null)
+        val adialog: AlertDialog = alert.create()
+        adialog.show()
+        val orderno1: EditText = binding.txtorderno
+        orderno1.setText("")
+        msg!!.text = ""
+    }
+    fun AreYousureDailog(MSG: String,title:String){
+        val sharedLoadOrderPreferences =
+            PreferenceManager.getDefaultSharedPreferences(this.context)
+        val sharedLoadOrderPage =
+            sharedLoadOrderPreferences.edit()
+        val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
+        val alert = AlertDialog.Builder(this.context)
+        pDialog.dismiss()
+        alert.setTitle(title)
+        alert.setMessage(MSG)
+        alert.setNegativeButton("YES")
+        { dialog, which ->
+            boxlist.clear()
+            maxTextSize = ""
+            count = 0
+            alert.setTitle("")
+            sharedLoadOrderPage.remove("OrderNo")
+            sharedLoadOrderPage.remove("PackedBoxes")
+            sharedLoadOrderPage.remove("SelectOrderNo")
+            sharedLoadOrderPage.apply()
+            orderdetailsbind(title, ordernoenter)
+            SharedOrderNo = title
+            dialog.dismiss()
+
+        }
+        alert.setPositiveButton("NO")
+        { dialog, which ->
+            dialog.dismiss()
+            alert.setTitle("")
+        }
+        val orderno1: EditText = binding.txtorderno
+        orderno1.setText("")
+        alert.show()
+
+    }
+    //pick all boxes dailog function
+    fun PickAllBoxesDailog(MSG: String,title: String){
+        val sharedLoadOrderPreferences =
+            PreferenceManager.getDefaultSharedPreferences(this.context)
+        val sharedLoadOrderPage =
+            sharedLoadOrderPreferences.edit()
+        val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
+        val alert = AlertDialog.Builder(this.context)
+        pDialog.dismiss()
+        alert.setTitle(title)
+        alert.setMessage(MSG)
+        alert.setNegativeButton("YES")
+        { dialog, which ->
+            boxlist.clear()
+            maxTextSize = ""
+            count = 0
+            alert.setTitle("")
+            sharedLoadOrderPage.remove("OrderNo")
+            sharedLoadOrderPage.remove("PackedBoxes")
+            sharedLoadOrderPage.remove("SelectOrderNo")
+            sharedLoadOrderPage.apply()
+            submitorder(title)
+            dialog.dismiss()
+        }
+        alert.setPositiveButton("NO")
+        { dialog, which ->
+            dialog.dismiss()
+            alert.setTitle("")
+        }
+        val orderno1: EditText = binding.txtorderno
+        orderno1.setText("")
+        alert.show()
     }
 }
 private fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
