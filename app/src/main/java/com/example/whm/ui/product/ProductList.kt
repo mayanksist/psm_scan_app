@@ -144,10 +144,10 @@ class ProductList : Fragment() {
                 orderno.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
                     if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
                         if (AppPreferences.internetConnectionCheck(this.context)) {
-                            pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
-                            pDialog.titleText = "Fetching ..."
-                            pDialog.setCancelable(false)
-                            pDialog.show()
+//                            pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
+//                            pDialog.titleText = "Fetching ..."
+//                            pDialog.setCancelable(false)
+//                            pDialog.show()
                             ordernoenter = orderno.text.toString().uppercase(Locale.getDefault())
                             val layout = binding.txtmsg
                             layout.visibility = View.GONE
@@ -155,7 +155,7 @@ class ProductList : Fragment() {
                                 val result1 = ordernoenter.split("/").toMutableList()
                                 if (SelectOrderNo != null && result1[0].length == 0) {
                                     if (SelectOrderNo.split("/")[0] != "") {
-                                        pDialog.dismiss()
+//                                        pDialog.dismiss()
                                         FirstorderNO = result1[0]
                                         try {
                                             if (boxlist.size > 0) {
@@ -168,7 +168,7 @@ class ProductList : Fragment() {
                                 boxno = result1[1]
                                 if (boxno.toInt() <= PackedBoxes) {
                                     if (FirstorderNO == "") {
-                                        pDialog.dismiss()
+//                                        pDialog.dismiss()
                                         FirstorderNO = result1[0]
                                     } else {
                                         count = 0
@@ -217,7 +217,7 @@ class ProductList : Fragment() {
                                                 }
                                             }
                                         } else {
-                                            pDialog.dismiss()
+//                                            pDialog.dismiss()
                                             val layout = binding.txtmsg
                                             layout.visibility = View.VISIBLE
                                             orderno.setText("")
@@ -229,7 +229,7 @@ class ProductList : Fragment() {
 
                                     if (checkr == 0) {
                                         try {
-                                            pDialog.dismiss()
+//                                            pDialog.dismiss()
                                             orderdetailsbind(FirstorderNO, ordernoenter)
                                             orderno.setText("")
                                         } catch (e: IOException) {
@@ -241,18 +241,16 @@ class ProductList : Fragment() {
                                         }
                                     }
                                 } else {
-                                    pDialog.dismiss()
+//                                    pDialog.dismiss()
                                     val layout = binding.txtmsg
                                     layout.visibility = View.VISIBLE
                                     orderno.setText("")
                                     msg!!.text = "Invalid box scanned."
                                     AppPreferences.playSoundinvalid()
-
-
                                 }
 
                             } else {
-                                pDialog.dismiss()
+//                                pDialog.dismiss()
                                 val layout = binding.txtmsg
                                 layout.visibility = View.VISIBLE
                                 orderno.setText("")
@@ -296,23 +294,17 @@ class ProductList : Fragment() {
                     v.requestFocusFromTouch()
                     false
                 }
-
             })
         }
         else {
             CheckInterNetDailog()
         }
-
-
         return binding.root
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-
     fun orderdetailsbind(orderno: String, barcode: String) {
         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
         pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
@@ -329,7 +321,6 @@ class ProductList : Fragment() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var empautoid = preferences.getString("EmpAutoId", "")
         var accessToken = preferences.getString("accessToken", "")
-        val alertscanord = AlertDialog.Builder(this.context)
         val queues = Volley.newRequestQueue(this.context)
         details.put("OrderNO", orderno)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
@@ -525,60 +516,6 @@ class ProductList : Fragment() {
         txtscanproduct.text = "N/A"
         txtpacked.text = "0"
     }
-    fun Dailogue (MSG:String){
-        val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
-        val alert = AlertDialog.Builder(this.context)
-        pDialog.dismiss()
-        AppPreferences.playSoundinvalid()
-        alert.setMessage(""+MSG)
-        alert.setPositiveButton("ok")
-        { dialog, which ->
-            alert.setCancelable(true)
-           // orderno.setText("")
-        }
-        alert.setNegativeButton("", null)
-        val adialog: AlertDialog = alert.create()
-        adialog.show()
-        val orderno1: EditText = binding.txtorderno
-        orderno1.setText("")
-        msg!!.text = ""
-    }
-    fun AreYousureDailog(MSG: String,title:String){
-        val sharedLoadOrderPreferences =
-            PreferenceManager.getDefaultSharedPreferences(this.context)
-        val sharedLoadOrderPage =
-            sharedLoadOrderPreferences.edit()
-        val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
-        val alert = AlertDialog.Builder(this.context)
-        pDialog.dismiss()
-        alert.setTitle(title)
-        alert.setMessage(MSG)
-        alert.setNegativeButton("YES")
-        { dialog, which ->
-            boxlist.clear()
-            maxTextSize = ""
-            count = 0
-            alert.setTitle("")
-            orderdetailsbind(title, ordernoenter)
-            SharedOrderNo = title
-            dialog.dismiss()
-
-        }
-
-        alert.setPositiveButton("NO")
-        { dialog, which ->
-            dialog.dismiss()
-            alert.setTitle("")
-        }
-        sharedLoadOrderPage.remove("OrderNo")
-        sharedLoadOrderPage.remove("PackedBoxes")
-        sharedLoadOrderPage.remove("SelectOrderNo")
-        sharedLoadOrderPage.apply()
-        val orderno1: EditText = binding.txtorderno
-        orderno1.setText("")
-        alert.show()
-
-    }
     //pick all boxes dailog function
     fun PickAllBoxesDailog(MSG: String,title: String){
         val sharedLoadOrderPreferences =
@@ -613,7 +550,6 @@ class ProductList : Fragment() {
         orderno1.setText("")
         alert.show()
     }
-
     //check internet connection
     fun CheckInterNetDailog(){
         val alertnet = AlertDialog.Builder(activity)

@@ -148,9 +148,11 @@ class ManualorderFragment : Fragment() {
                                         }
                                     } else {
                                         pDialog.dismiss()
-                                        AreYousureDailog(
-                                            "Are you sure you want to skip current order $FirstorderNO?",
-                                            result1[0])
+                                        val layout = binding.txtmsg
+                                        layout.visibility = View.VISIBLE
+                                        orderno.setText("")
+                                        msg!!.text= "Invalid box scanned."
+                                        AppPreferences.playSoundinvalid()
                                     }
 
                                 }
@@ -166,7 +168,11 @@ class ManualorderFragment : Fragment() {
                                 }
                             } else {
                                 pDialog.dismiss()
-                                Dailogue("Invalid Box Scanned.")
+                                val layout = binding.txtmsg
+                                layout.visibility = View.VISIBLE
+                                orderno.setText("")
+                                msg!!.text= "Invalid box scanned."
+                                AppPreferences.playSoundinvalid()
 
                             }
                             return@OnKeyListener true
@@ -390,57 +396,7 @@ class ManualorderFragment : Fragment() {
         txtpacked.text = "0"
     }
 
-    fun Dailogue (MSG:String){
-        val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
-        val alert = AlertDialog.Builder(this.context)
-        pDialog.dismiss()
-        AppPreferences.playSoundinvalid()
-        alert.setMessage(""+MSG)
-        alert.setPositiveButton("ok")
-        { dialog, which ->
-            alert.setCancelable(true)
-            // orderno.setText("")
-        }
-        alert.setNegativeButton("", null)
-        val adialog: AlertDialog = alert.create()
-        adialog.show()
-        val orderno1: EditText = binding.txtorderno
-        orderno1.setText("")
-        msg!!.text = ""
-    }
-    fun AreYousureDailog(MSG: String,title:String){
-        val sharedLoadOrderPreferences =
-            PreferenceManager.getDefaultSharedPreferences(this.context)
-        val sharedLoadOrderPage =
-            sharedLoadOrderPreferences.edit()
-        val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
-        val alert = AlertDialog.Builder(this.context)
-        pDialog.dismiss()
-        alert.setTitle(title)
-        alert.setMessage(MSG)
-        alert.setNegativeButton("YES")
-        { dialog, which ->
-            boxlist.clear()
-            maxTextSize = ""
-            count = 0
-            alert.setTitle("")
-            orderdetailsbind(title, ordernoenter)
-            FirstorderNO = title
-            dialog.dismiss()
-        }
-        alert.setPositiveButton("NO")
-        { dialog, which ->
-            dialog.dismiss()
-            alert.setTitle("")
-        }
-        sharedLoadOrderPage.remove("OrderNo")
-        sharedLoadOrderPage.remove("PackedBoxes")
-        sharedLoadOrderPage.remove("SelectOrderNo")
-        sharedLoadOrderPage.apply()
-        val orderno1: EditText = binding.txtorderno
-        orderno1.setText("")
-        alert.show()
-    }
+
     fun CheckInterNetDailog(){
         val alertnet = AlertDialog.Builder(activity)
         alertnet.setTitle("Connection")
