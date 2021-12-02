@@ -37,8 +37,6 @@ class ProductList : Fragment() {
 
     private lateinit var productListViewModel: ProductListViewModel
     private var _binding: FragmentProductListBinding? = null
-
-
     private val binding get() = _binding!!
     var boxlist: MutableList<String> = ArrayList()
     var listarrayp: MutableList<String> = ArrayList()
@@ -223,8 +221,7 @@ class ProductList : Fragment() {
                                             orderno.setText("")
                                             msg!!.text = "Invalid box scanned."
                                             AppPreferences.playSoundinvalid()
-
-                                                                                   }
+                                        }
                                     }
 
                                     if (checkr == 0) {
@@ -273,13 +270,6 @@ class ProductList : Fragment() {
                             "Are you sure you want to pick all boxes?",
                             SharedOrderNo
                         )
-//                    this.findNavController().navigate(com.example.myapplication.R.id.nav_allpickbox)
-//                    sharedLoadOrderPage.putString("OrderNo", SharedOrderNo)
-//                    sharedLoadOrderPage.putInt("PackedBoxes", PackedBoxes)
-//                    sharedLoadOrderPage.putString("Stoppage", SharedStopNo)
-//                    sharedLoadOrderPage.putString("boxlist", boxlist.toString())
-//                    sharedLoadOrderPage.putString("listsize", boxlist.size.toString())
-//                    sharedLoadOrderPage.apply()
                     }
 
                 else {
@@ -364,7 +354,6 @@ class ProductList : Fragment() {
                                     submitorder(SharedOrderNo)
                                 }
                             }
-
                             else {
                                 pDialog.dismiss()
                                 val layout = binding.txtmsg
@@ -388,7 +377,6 @@ class ProductList : Fragment() {
                             FirstorderNO=""
                         }
                     }
-
                 }
                 else {
                     pDialog.dismiss()
@@ -565,7 +553,4 @@ class ProductList : Fragment() {
     }
 }
 private fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
-
 }
-
-
