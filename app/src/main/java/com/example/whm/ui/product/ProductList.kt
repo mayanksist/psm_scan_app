@@ -151,6 +151,7 @@ class ProductList : Fragment() {
                             layout.visibility = View.GONE
                             if (ordernoenter.contains("/")) {
                                 val result1 = ordernoenter.split("/").toMutableList()
+
                                 if (SelectOrderNo != null && result1[0].length == 0) {
                                     if (SelectOrderNo.split("/")[0] != "") {
 //                                        pDialog.dismiss()
@@ -164,89 +165,101 @@ class ProductList : Fragment() {
                                     }
                                 }
                                 boxno = result1[1]
-                                if (boxno.toInt() <= PackedBoxes) {
-                                    if (FirstorderNO == "") {
-//                                        pDialog.dismiss()
-                                        FirstorderNO = result1[0]
-                                    } else {
-                                        count = 0
-                                        if (FirstorderNO == result1[0]) {
-                                            pDialog.dismiss()
-                                            for (i in boxlist) {
-                                                if (i == result1[1]) {
-                                                    val layout = binding.txtmsg
-                                                    layout.visibility = View.VISIBLE
-                                                    orderno.setText("")
-                                                    msg!!.text = "Box Already Scanned."
-                                                    count = 1
-                                                    orderno.requestFocus()
-                                                }
-                                            }
-                                            if (count == 0) {
-                                                maxTextSize = boxlist.size.toString()
-                                                txtscanproducts = binding.txtscanproduct
-                                                if (maxTextSize == "30") {
-                                                    Toast.makeText(
-                                                        this.context,
-                                                        "test size",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-                                                    txtscanproducts!!.setTextSize(
-                                                        TypedValue.COMPLEX_UNIT_SP,
-                                                        30f
-                                                    )
-                                                }
-                                                if (maxTextSize == "45") {
-                                                    txtscanproducts!!.setTextSize(
-                                                        TypedValue.COMPLEX_UNIT_SP,
-                                                        25f
-                                                    )
-                                                }
-                                                var text = boxno
-                                                boxlist.add(0, boxno)
-                                                orderno.setText("")
-                                                noofboxes1.text =
-                                                    boxlist.size.toString() + " out of " + "" + PackedBoxes
-                                                lastscanprd.text =
-                                                    boxlist.toString().replace("  ", " ")
-                                                msg!!.text = ""
-                                                if (boxlist.size.toString() == PackedBoxes.toString()) {
-                                                    submitorder(FirstorderNO)
-                                                }
-                                            }
+                                val parsedInt = boxno.toIntOrNull()
+                                if (parsedInt != null) {
+                                    if (parsedInt <= PackedBoxes) {
+                                        if (FirstorderNO == "") {
+                                  //  pDialog.dismiss()
+                                            FirstorderNO = result1[0]
                                         } else {
-//                                            pDialog.dismiss()
-                                            val layout = binding.txtmsg
-                                            layout.visibility = View.VISIBLE
-                                            orderno.setText("")
-                                            msg!!.text = "Invalid box scanned."
-                                            AppPreferences.playSoundinvalid()
+                                            count = 0
+                                            if (FirstorderNO == result1[0]) {
+                                                pDialog.dismiss()
+                                                for (i in boxlist) {
+                                                    if (i == result1[1]) {
+                                                        val layout = binding.txtmsg
+                                                        layout.visibility = View.VISIBLE
+                                                        orderno.setText("")
+                                                        msg!!.text = "Box Already Scanned."
+                                                        count = 1
+                                                        orderno.requestFocus()
+                                                    }
+                                                }
+                                                if (count == 0) {
+                                                    maxTextSize = boxlist.size.toString()
+                                                    txtscanproducts = binding.txtscanproduct
+                                                    if (maxTextSize == "30") {
+                                                        Toast.makeText(
+                                                            this.context,
+                                                            "test size",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                        txtscanproducts!!.setTextSize(
+                                                            TypedValue.COMPLEX_UNIT_SP,
+                                                            30f
+                                                        )
+                                                    }
+                                                    if (maxTextSize == "45") {
+                                                        txtscanproducts!!.setTextSize(
+                                                            TypedValue.COMPLEX_UNIT_SP,
+                                                            25f
+                                                        )
+                                                    }
+                                                    var text = boxno
+                                                    boxlist.add(0, boxno)
+                                                    orderno.setText("")
+                                                    noofboxes1.text =
+                                                        boxlist.size.toString() + " out of " + "" + PackedBoxes
+                                                    lastscanprd.text =
+                                                        boxlist.toString().replace("  ", " ")
+                                                    msg!!.text = ""
+                                                    if (boxlist.size.toString() == PackedBoxes.toString()) {
+                                                        submitorder(FirstorderNO)
+                                                    }
+                                                }
+                                            } else {
+                            //                                            pDialog.dismiss()
+                                                val layout = binding.txtmsg
+                                                layout.visibility = View.VISIBLE
+                                                orderno.setText("")
+                                                msg!!.text = "Invalid box scanned."
+                                                AppPreferences.playSoundinvalid()
+                                            }
                                         }
-                                    }
 
-                                    if (checkr == 0) {
-                                        try {
-//                                            pDialog.dismiss()
-                                            orderdetailsbind(FirstorderNO, ordernoenter)
-                                            orderno.setText("")
-                                        } catch (e: IOException) {
-                                            Toast.makeText(
-                                                this.context,
-                                                "Error",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                        if (checkr == 0) {
+                                            try {
+                            //                                            pDialog.dismiss()
+                                                orderdetailsbind(FirstorderNO, ordernoenter)
+                                                orderno.setText("")
+                                            } catch (e: IOException) {
+                                                Toast.makeText(
+                                                    this.context,
+                                                    "Error",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
                                         }
+                                    } else {
+                                        //msg for box no not equal to packedbox
+                                     //   pDialog.dismiss()
+                                        val layout = binding.txtmsg
+                                        layout.visibility = View.VISIBLE
+                                        orderno.setText("")
+                                        msg!!.text = "Invalid box scanned."
+                                        AppPreferences.playSoundinvalid()
                                     }
-                                } else {
-//                                    pDialog.dismiss()
+                                }
+                                else {
+                                    //msg for enter int value and some text
                                     val layout = binding.txtmsg
                                     layout.visibility = View.VISIBLE
                                     orderno.setText("")
-                                    msg!!.text = "Invalid box scanned."
+                                    msg!!.text= "Invalid box scanned."
                                     AppPreferences.playSoundinvalid()
                                 }
-
                             } else {
+                                //msg for split
 //                                pDialog.dismiss()
                                 val layout = binding.txtmsg
                                 layout.visibility = View.VISIBLE
