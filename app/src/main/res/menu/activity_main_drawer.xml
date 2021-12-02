@@ -33,17 +33,6 @@
             android:icon="@drawable/ic_menu_logout"
             android:title="Load Order" />
     </group>
-    <item android:title= "Version"
-        android:id="@+id/version"
-        android:visible="false">
-        <menu>
-
-
-            <item
-
-                android:title= "" />
-        </menu>
-    </item>
 
 
 </menu>

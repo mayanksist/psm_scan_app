@@ -52,13 +52,8 @@ class MainActivity2 : AppCompatActivity() {
             nav_Menu.findItem(com.example.myapplication.R.id.nav_product).isVisible = false
 
         }
-
-        val navigationView = findViewById<View>(com.example.myapplication.R.id.nav_view) as NavigationView
-
-        val menu = navigationView.menu
-
-        val tools: MenuItem = menu.findItem(com.example.myapplication.R.id.version)
-        tools.title = "Version : "+AppPreferences.AppVersion
+        val version: TextView = findViewById(com.example.myapplication.R.id.version)
+        version.setText("version : "+AppPreferences.AppVersion)
 
         if (usertype == "9") {
             nav_Menu.findItem(com.example.myapplication.R.id.nav_productlist).isVisible = false
