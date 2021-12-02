@@ -66,7 +66,7 @@ class MainActivity2 : AppCompatActivity() {
         val hview = navView.getHeaderView(0)
         val textViewName = hview.findViewById(com.example.myapplication.R.id.emptype) as TextView
         val usename = hview.findViewById(com.example.myapplication.R.id.username) as TextView
-        textViewName.text = preferences.getString("Empname","") +" ["+ preferences.getString("LName","")+"]"
+        textViewName.text = preferences.getString("Empname","") +" ("+ preferences.getString("LName","")+")"
         usename.text =  preferences.getString("Username","")
         appBarConfiguration = AppBarConfiguration(
             setOf(
