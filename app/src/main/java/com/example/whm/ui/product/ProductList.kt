@@ -171,7 +171,8 @@ class ProductList : Fragment() {
                                         if (FirstorderNO == "") {
                                   //  pDialog.dismiss()
                                             FirstorderNO = result1[0]
-                                        } else {
+                                        }
+                                        else {
                                             count = 0
                                             if (FirstorderNO == result1[0]) {
                                                 pDialog.dismiss()

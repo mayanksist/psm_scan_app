@@ -104,8 +104,8 @@
 
                     <TextView
                         android:id="@+id/txtorderNo"
-                        android:layout_width="158dp"
-                        android:layout_height="30dp"
+                        android:layout_width="160dp"
+                        android:layout_height="24dp"
                         android:layout_marginStart="4dp"
                         android:text="N/A"
                         android:textSize="18dp"
@@ -168,18 +168,30 @@
                         app:layout_constraintVertical_bias="0.0" />
 
                     <TextView
+                        android:id="@+id/textView422"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Stop : "
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/txtstoppage"
+                        app:layout_constraintEnd_toStartOf="@+id/txtstoppage"
+                        app:layout_constraintTop_toTopOf="@+id/txtstoppage"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
                         android:id="@+id/txtstoppage"
-                        android:layout_width="63dp"
-                        android:layout_height="27dp"
-                        android:layout_marginEnd="16dp"
-                        android:drawableStart="@drawable/location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:drawableTint="@color/colorAccent"
                         android:text="N/A"
                         android:textColor="@color/colorAccent"
-                        android:textSize="18dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/txtorderNo"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/txtorderNo"
-                        app:layout_constraintVertical_bias="1.0" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
