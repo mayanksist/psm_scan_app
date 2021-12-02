@@ -60,7 +60,6 @@ class MainActivity2 : AppCompatActivity() {
             nav_Menu.findItem(com.example.myapplication.R.id.nav_orderlist).isVisible = false
             nav_Menu.findItem(com.example.myapplication.R.id.nav_assignorder).isVisible = false
             nav_Menu.findItem(com.example.myapplication.R.id.nav_product).isVisible = true
-
         }
         val navController = findNavController(com.example.myapplication.R.id.nav_host_fragment_content_main)
         val hview = navView.getHeaderView(0)
