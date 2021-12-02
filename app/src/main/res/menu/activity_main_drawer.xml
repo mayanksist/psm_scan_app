@@ -18,11 +18,11 @@
             android:title="@string/product_list_fragment" />
         <item
             android:id="@+id/nav_orderlist"
-            android:icon="@drawable/assignorder"
+            android:icon="@drawable/loadorders"
             android:title="@string/OrderList" />
         <item
             android:id="@+id/nav_assignorder"
-            android:icon="@drawable/unload"
+            android:icon="@drawable/unloadorders"
             android:title="@string/menuassignorder" />
         <item
             android:id="@+id/nav_slideshow"
