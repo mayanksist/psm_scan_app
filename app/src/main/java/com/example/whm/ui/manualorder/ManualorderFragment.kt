@@ -44,6 +44,7 @@ class ManualorderFragment : Fragment() {
     var msg: TextView? = null
     var count = 0
     var txtscanproducts: TextView? = null
+    var orderno: EditText?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,7 +52,6 @@ class ManualorderFragment : Fragment() {
         viewModelManualorder = ViewModelProvider(this).get(ManualViewModel::class.java)
         _binding = FragmentManualorderBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
         val view = inflater.inflate(
             com.example.myapplication.R.layout.fragment_manualorder,
             container,
@@ -68,27 +68,24 @@ class ManualorderFragment : Fragment() {
             true
         })
         if(AppPreferences.internetConnectionCheck(this.context)) {
-            val orderno: EditText = binding.txtorderno
+             orderno = binding.txtorderno
             val noofboxes1: TextView = binding.txtpackedb
             val lastscanprd: TextView = binding.txtscanproduct
             val layout = binding.txtmsg
             msg = binding.txtmsg
-
             viewModelManualorder.text.observe(viewLifecycleOwner,{
-                orderno.requestFocus()
-                orderno.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
+                orderno!!.requestFocus()
+                orderno!!.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
                     if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
                         if(AppPreferences.internetConnectionCheck(this.context)) {
-                            ordernoenter = orderno.text.toString().uppercase(Locale.getDefault())
+                            ordernoenter = orderno!!.text.toString().uppercase(Locale.getDefault())
                             layout.visibility = View.GONE
                             if (ordernoenter.contains("/")) {
                                 val result1 = ordernoenter.trim().split("/")
                                 if (result1[0].trim() != "") {
-
                                     if (result1[1].toIntOrNull() != null) {
                                         boxno = result1[1].toIntOrNull()!!
                                         if (FirstorderNO.trim() == "") {
-                                            //  pDialog.dismiss()
                                             FirstorderNO = result1[0].trim()
                                         } else {
                                             if (FirstorderNO == result1[0].trim()) {
@@ -99,10 +96,10 @@ class ManualorderFragment : Fragment() {
                                                         if (i == ordernoenter) {
 
                                                             layout.visibility = View.VISIBLE
-                                                            orderno.setText("")
+                                                            orderno!!.setText("")
                                                             msg!!.text = "Box Already Scanned."
                                                             count = 1
-                                                            orderno.requestFocus()
+                                                            orderno!!.requestFocus()
                                                             val params = LinearLayout.LayoutParams(
                                                                 LinearLayout.LayoutParams.WRAP_CONTENT,
                                                                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -128,7 +125,7 @@ class ManualorderFragment : Fragment() {
                                                         }
                                                         list.add(list.size, ordernoenter)
                                                         boxlist.add(0, boxno.toString())
-                                                        orderno.setText("")
+                                                        orderno!!.setText("")
                                                         noofboxes1.text =
                                                             list.size.toString() + " out of " + "" + totalBoxes
                                                         lastscanprd.text = boxlist.toString()
@@ -136,32 +133,28 @@ class ManualorderFragment : Fragment() {
                                                         if (list.size.toString() == totalBoxes.toString()) {
                                                             submitorder(FirstorderNO)
                                                         }
-
                                                     }
-                                                } else {
-
+                                                }
+                                                else
+                                                {
                                                     layout.visibility = View.VISIBLE
-                                                    orderno.setText("")
+                                                    orderno!!.setText("")
                                                     msg!!.text = "Invalid Box Scanned."
                                                     AppPreferences.playSoundinvalid()
                                                 }
-
-
                                             } else {
                                                 // pDialog.dismiss()
 
                                                 layout.visibility = View.VISIBLE
-                                                orderno.setText("")
+                                                orderno!!.setText("")
                                                 msg!!.text = "Invalid box scanned."
                                                 AppPreferences.playSoundinvalid()
                                             }
-
                                         }
                                         if (checkr == 0) {
                                             try {
-                                                // pDialog.dismiss()
                                                 orderdetailsbind(FirstorderNO, ordernoenter)
-                                                orderno.setText("")
+                                                orderno!!.setText("")
                                             } catch (e: IOException) {
                                                 Toast.makeText(
                                                     this.context,
@@ -171,13 +164,9 @@ class ManualorderFragment : Fragment() {
                                                     .show()
                                             }
                                         }
-
-
                                     } else {
-                                        //    pDialog.dismiss()
-
                                         layout.visibility = View.VISIBLE
-                                        orderno.setText("")
+                                        orderno!!.setText("")
                                         msg!!.text = "Invalid box scanned."
                                         AppPreferences.playSoundinvalid()
 
@@ -185,14 +174,14 @@ class ManualorderFragment : Fragment() {
                                 }
                                 else{
                                     layout.visibility = View.VISIBLE
-                                    orderno.setText("")
+                                    orderno!!.setText("")
                                     msg!!.text = "Invalid Box Scanned."
                                     AppPreferences.playSoundinvalid()
                                 }
                             }
                             else{
                                 layout.visibility = View.VISIBLE
-                                orderno.setText("")
+                                orderno!!.setText("")
                                 msg!!.text = "Invalid Box Scanned."
                                 AppPreferences.playSoundinvalid()
                             }
@@ -204,7 +193,7 @@ class ManualorderFragment : Fragment() {
                     }
                     false
                 })
-                orderno.requestFocus()
+                orderno!!.requestFocus()
                 val view: ScrollView =binding.scrollView
                 view.descendantFocusability = ViewGroup.FOCUS_BEFORE_DESCENDANTS
                 view.isFocusable = false
@@ -223,7 +212,7 @@ class ManualorderFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-    fun orderdetailsbind(orderno: String, barcode: String) {
+    fun orderdetailsbind(orderno1: String, barcode: String) {
         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
         pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
         pDialog.titleText = "Fetching ..."
@@ -231,7 +220,6 @@ class ManualorderFragment : Fragment() {
         pDialog.show()
         val cardview: CardView = binding.cardView2
         val layout = binding.txtmsg
-        //Toast.makeText(this.context, barcoded, Toast.LENGTH_SHORT).show()
         val txtorderno: TextView = binding.txtorderNo
         val txtstop: TextView = binding.txtstoppage
         val txtscanproduct: TextView = binding.txtscanproduct
@@ -243,7 +231,7 @@ class ManualorderFragment : Fragment() {
         var empautoid = preferences.getString("EmpAutoId", "")
         var accessToken = preferences.getString("accessToken", "")
         val queues = Volley.newRequestQueue(this.context)
-        details.put("OrderNO", orderno)
+        details.put("OrderNO", orderno1)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
         JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
         JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
@@ -254,10 +242,8 @@ class ManualorderFragment : Fragment() {
                 val resobj = (response.toString())
                 val responsemsg = JSONObject(resobj.toString())
                 val resultobj = JSONObject(responsemsg.getString("d"))
-                val resmsg = resultobj.getString("response")
                 val presponsmsg = resultobj.getString("responseMessage")
                     if (presponsmsg == "Orders Found") {
-
                         pDialog.dismiss()
                         val jsondata = resultobj.getJSONArray("responseData")
                         val preferences =
@@ -287,25 +273,23 @@ class ManualorderFragment : Fragment() {
                                     checkr = 1
                                 }
                                 else {
-
                                     layout.visibility = View.VISIBLE
                                     msg!!.text = "Invalid box scanned."
                                     FirstorderNO = ""
                                     AppPreferences.playSoundinvalid()
                                 }
                         }
-
                     } else {
                         pDialog.dismiss()
                         val alertorfailed = AlertDialog.Builder(this.context)
-                        alertorfailed.setTitle(orderno)
+                        alertorfailed.setTitle(orderno1)
                         alertorfailed.setMessage(presponsmsg.toString())
                         alertorfailed.setPositiveButton(
                             "ok",
                             DialogInterface.OnClickListener { dialog, which ->
                                 clear()
-                                val orderno4: EditText = binding.txtorderno
-                                orderno4.text.clear()
+//                                val orderno4: EditText = binding.txtorderno
+                                orderno!!.text.clear()
                                 this.findNavController()
                                     .navigate(com.example.myapplication.R.id.nav_orderlist)
                             })
@@ -357,7 +341,6 @@ class ManualorderFragment : Fragment() {
                 val resultobj = JSONObject(responsemsg.getString("d"))
                 val rspCode = resultobj.getString("responseCode")
                 val rspMsg = resultobj.getString("responseMessage")
-
                     if (rspCode.toString() == "200") {
                         AppPreferences.playSound()
                         pDialog.dismiss()
@@ -392,7 +375,6 @@ class ManualorderFragment : Fragment() {
                             clear()
                             val orderno2: EditText = binding.txtorderno
                             orderno2.text.clear()
-
                         }
                         FirstorderNO = ""
                         checkr = 0
@@ -404,7 +386,7 @@ class ManualorderFragment : Fragment() {
             }, { response ->
                 Log.e("onError", error(response.toString()))
             })
-        resordernos.retryPolicy = DefaultRetryPolicy(
+              resordernos.retryPolicy = DefaultRetryPolicy(
             1000000,
             DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT

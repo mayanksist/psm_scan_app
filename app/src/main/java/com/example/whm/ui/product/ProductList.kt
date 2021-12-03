@@ -52,6 +52,7 @@ class ProductList : Fragment() {
     var txtstop: TextView? = null
     var toolbar: Toolbar? = null
     var count = 0
+    var orderno: EditText?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,14 +68,14 @@ class ProductList : Fragment() {
 
         val txtallpicbox: TextView = binding.txtallpickbox
         if (AppPreferences.internetConnectionCheck(this.context)) {
-            val orderno: EditText = binding.txtorderno
+             orderno = binding.txtorderno
             val noofboxes1: TextView = binding.txtpackedb
             val lastscanprd: TextView = binding.txtscanproduct
 
             msg = binding.txtmsg
             val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
             productListViewModel.text.observe(viewLifecycleOwner, Observer {
-                orderno.requestFocus()
+                orderno!!.requestFocus()
                 val sharedLoadOrderPreferences =
                     PreferenceManager.getDefaultSharedPreferences(this.context)
                 SharedOrderNo = sharedLoadOrderPreferences.getString("OrderNo", "").toString()
@@ -116,7 +117,6 @@ class ProductList : Fragment() {
                 cardview.visibility = View.VISIBLE
                 if (boxno != "") {
                     try {
-
                         if (boxlist.size != 0) {
                             boxlist.add(0, boxno.trim())
                             checkr = 1
@@ -139,10 +139,10 @@ class ProductList : Fragment() {
                 if (listofarray == "" && listofsize == "") {
                     noofboxes1.text = "0 out of " + PackedBoxes
                 }
-                orderno.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
+                orderno!!.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
                     if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
                         if (AppPreferences.internetConnectionCheck(this.context)) {
-                            ordernoenter = orderno.text.toString().uppercase(Locale.getDefault())
+                            ordernoenter = orderno!!.text.toString().uppercase(Locale.getDefault())
                             val layout = binding.txtmsg
                             layout.visibility = View.GONE
                             if (ordernoenter.contains("/")) {
@@ -166,20 +166,18 @@ class ProductList : Fragment() {
                                 if (convertboxno != null) {
                                     if (convertboxno <= PackedBoxes) {
                                         if (FirstorderNO == "") {
-                                            //  pDialog.dismiss()
                                             FirstorderNO = result1[0]
                                         } else {
                                             count = 0
                                             if (FirstorderNO == result1[0]) {
-                                                pDialog.dismiss()
                                                 for (i in boxlist) {
                                                     if (i == result1[1]) {
                                                         val layout = binding.txtmsg
                                                         layout.visibility = View.VISIBLE
-                                                        orderno.setText("")
+                                                        orderno!!.setText("")
                                                         msg!!.text = "Box Already Scanned."
                                                         count = 1
-                                                        orderno.requestFocus()
+                                                        orderno!!.requestFocus()
                                                     }
                                                 }
                                                 if (count == 0) {
@@ -204,7 +202,7 @@ class ProductList : Fragment() {
                                                     }
                                                     var text = boxno
                                                     boxlist.add(0, boxno)
-                                                    orderno.setText("")
+                                                    orderno!!.setText("")
                                                     noofboxes1.text =
                                                         boxlist.size.toString() + " out of " + "" + PackedBoxes
                                                     lastscanprd.text =
@@ -215,10 +213,9 @@ class ProductList : Fragment() {
                                                     }
                                                 }
                                             } else {
-                                                //                                            pDialog.dismiss()
                                                 val layout = binding.txtmsg
                                                 layout.visibility = View.VISIBLE
-                                                orderno.setText("")
+                                                orderno!!.setText("")
                                                 msg!!.text = "Invalid box scanned."
                                                 AppPreferences.playSoundinvalid()
                                             }
@@ -226,9 +223,8 @@ class ProductList : Fragment() {
 
                                         if (checkr == 0) {
                                             try {
-                                                //                                            pDialog.dismiss()
                                                 orderdetailsbind(FirstorderNO, ordernoenter)
-                                                orderno.setText("")
+                                                orderno!!.setText("")
                                             } catch (e: IOException) {
                                                 Toast.makeText(
                                                     this.context,
@@ -242,7 +238,7 @@ class ProductList : Fragment() {
                                         //   pDialog.dismiss()
                                         val layout = binding.txtmsg
                                         layout.visibility = View.VISIBLE
-                                        orderno.setText("")
+                                        orderno!!.setText("")
                                         msg!!.text = "Invalid box scanned."
                                         AppPreferences.playSoundinvalid()
                                     }
@@ -250,7 +246,7 @@ class ProductList : Fragment() {
                                     //msg for enter int value and some text
                                     val layout = binding.txtmsg
                                     layout.visibility = View.VISIBLE
-                                    orderno.setText("")
+                                    orderno!!.setText("")
                                     msg!!.text = "Invalid box scanned."
                                     AppPreferences.playSoundinvalid()
                                 }
@@ -258,7 +254,7 @@ class ProductList : Fragment() {
                                 else{
                                     val layout = binding.txtmsg
                                     layout.visibility = View.VISIBLE
-                                    orderno.setText("")
+                                    orderno!!.setText("")
                                     msg!!.text = "Invalid box scanned."
                                     AppPreferences.playSoundinvalid()
                                 }
@@ -269,7 +265,7 @@ class ProductList : Fragment() {
 //                                pDialog.dismiss()
                                 val layout = binding.txtmsg
                                 layout.visibility = View.VISIBLE
-                                orderno.setText("")
+                                orderno!!.setText("")
                                 msg!!.text = "Invalid box scanned."
                                 AppPreferences.playSoundinvalid()
                             }
@@ -283,7 +279,7 @@ class ProductList : Fragment() {
                     }
                     false
                 })
-                orderno.requestFocus()
+                orderno!!.requestFocus()
                 txtallpicbox.setOnClickListener {
                     if (AppPreferences.internetConnectionCheck(this.context)) {
                         pDialog.dismiss()
@@ -316,7 +312,7 @@ class ProductList : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-    fun orderdetailsbind(orderno: String, barcode: String) {
+    fun orderdetailsbind(orderno1: String, barcode: String) {
         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
         pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
         pDialog.titleText = "Fetching ..."
@@ -333,7 +329,7 @@ class ProductList : Fragment() {
         var empautoid = preferences.getString("EmpAutoId", "")
         var accessToken = preferences.getString("accessToken", "")
         val queues = Volley.newRequestQueue(this.context)
-        details.put("OrderNO", orderno)
+        details.put("OrderNO", orderno1)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
         JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
         JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
@@ -346,7 +342,6 @@ class ProductList : Fragment() {
                 val responsemsg = JSONObject(resobj.toString())
                 val resultobj = JSONObject(responsemsg.getString("d"))
                 val presponsmsg = resultobj.getString("responseMessage")
-                val orderno1: EditText = binding.txtorderno
                 if (presponsmsg == "Orders Found") {
                     cardview.visibility = View.GONE
                     cardview.visibility = View.VISIBLE
@@ -381,7 +376,7 @@ class ProductList : Fragment() {
                                 layout.visibility = View.VISIBLE
                                 msg!!.text= "Invalid box scanned."
                                 AppPreferences.playSoundinvalid()
-                                orderno1.text.clear()
+                                orderno!!.text.clear()
                             }
                             checkr = 1
                             (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
@@ -394,7 +389,7 @@ class ProductList : Fragment() {
                             msg!!.text= "Invalid box scanned."
                             AppPreferences.playSoundinvalid()
                             checkr = 0
-                            orderno1.text.clear()
+                            orderno!!.text.clear()
                             FirstorderNO=""
                         }
                     }
@@ -402,7 +397,7 @@ class ProductList : Fragment() {
                 else {
                     pDialog.dismiss()
                     val alertorfailed = AlertDialog.Builder(this.context)
-                    alertorfailed.setTitle(orderno)
+                    alertorfailed.setTitle(orderno1)
                     alertorfailed.setMessage(presponsmsg.toString())
                     alertorfailed.setPositiveButton(
                         "ok",
@@ -481,7 +476,6 @@ class ProductList : Fragment() {
                     boxlist.clear()
                     clear()
                     msg!!.text = ""
-                    clear()
                     cardview1.visibility = View.GONE
                 } else {
                     pDialog.dismiss()
@@ -491,8 +485,7 @@ class ProductList : Fragment() {
                         "ok"
                     ) { dialog, which ->
                         clear()
-                        val orderno2: EditText = binding.txtorderno
-                        orderno2.text.clear()
+                        orderno!!.text.clear()
                         this.findNavController()
                             .navigate(com.example.myapplication.R.id.nav_orderlist)
                     }
