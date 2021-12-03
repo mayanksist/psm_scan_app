@@ -93,19 +93,31 @@ class LoadOrderListFragment : Fragment() {
                                 Stoppage
                             )
                         }
-                        pDialog.dismiss()
+                        if(pDialog!=null){
+                            if(pDialog.isShowing()){
+                                pDialog.dismiss()
+                            }
+                        }
                     } else {
                         val alerts = AlertDialog.Builder(this.context)
                         alerts.setMessage(resmsg.toString())
                         alerts.setPositiveButton("ok", null)
                         val dialog: AlertDialog = alerts.create()
                         dialog.show()
-                        pDialog.dismiss()
+                        if(pDialog!=null){
+                            if(pDialog.isShowing()){
+                                pDialog.dismiss()
+                            }
+                        }
                     }
                 },
                 { response ->
                     Log.e("onError", error(response.toString()))
-                    pDialog.dismiss()
+                    if(pDialog!=null){
+                        if(pDialog.isShowing()){
+                            pDialog.dismiss()
+                        }
+                    }
                 })
             resorderno.retryPolicy = DefaultRetryPolicy(
                 10000000,
