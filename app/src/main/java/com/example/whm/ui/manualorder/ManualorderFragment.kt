@@ -39,7 +39,7 @@ class ManualorderFragment : Fragment() {
     var ordernoenter: String = ""
     var checkr = 0
     var totalBoxes = 0
-    var boxno: String = ""
+    var boxno=0
     var  maxTextSize: String = ""
     var msg: TextView? = null
     var count = 0
@@ -79,116 +79,122 @@ class ManualorderFragment : Fragment() {
                 orderno.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
                     if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
                         if(AppPreferences.internetConnectionCheck(this.context)) {
-//                            val pDialog =
-//                                SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
-//                            pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
-//                            pDialog.titleText = "Fetching ..."
-//                            pDialog.setCancelable(false)
-//                            pDialog.show()
                             ordernoenter = orderno.text.toString().uppercase(Locale.getDefault())
-
                             layout.visibility = View.GONE
                             if (ordernoenter.contains("/")) {
-                                val result1 = ordernoenter.split("/")
-                                boxno = result1[1]
-                                val parsedInt = boxno.toIntOrNull()
+                                val result1 = ordernoenter.trim().split("/")
+                                if (result1[0].trim() != "") {
 
-                                if (FirstorderNO == "") {
-                                  //  pDialog.dismiss()
-                                    FirstorderNO = result1[0]
-                                } else {
-                                    if (FirstorderNO == result1[0]) {
-                                        if (parsedInt != null)
-                                        {
-                                            if (parsedInt<= totalBoxes) {
-                                                count = 0
-                                                for (i in list) {
-                                                    if (i == ordernoenter) {
+                                    if (result1[1].toIntOrNull() != null) {
+                                        boxno = result1[1].toIntOrNull()!!
+                                        if (FirstorderNO.trim() == "") {
+                                            //  pDialog.dismiss()
+                                            FirstorderNO = result1[0].trim()
+                                        } else {
+                                            if (FirstorderNO == result1[0].trim()) {
 
-                                                        layout.visibility = View.VISIBLE
-                                                        orderno.setText("")
-                                                        msg!!.text = "Box Already Scanned."
-                                                        count = 1
-                                                        orderno.requestFocus()
-                                                        val params = LinearLayout.LayoutParams(
-                                                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                            LinearLayout.LayoutParams.WRAP_CONTENT
-                                                        ).apply {
-                                                            setMargins(0, 70, 0, 70)
+                                                if (boxno.toInt() <= totalBoxes) {
+                                                    count = 0
+                                                    for (i in list) {
+                                                        if (i == ordernoenter) {
+
+                                                            layout.visibility = View.VISIBLE
+                                                            orderno.setText("")
+                                                            msg!!.text = "Box Already Scanned."
+                                                            count = 1
+                                                            orderno.requestFocus()
+                                                            val params = LinearLayout.LayoutParams(
+                                                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                                LinearLayout.LayoutParams.WRAP_CONTENT
+                                                            ).apply {
+                                                                setMargins(0, 70, 0, 70)
+                                                            }
                                                         }
                                                     }
-                                                }
-                                                if (count == 0) {
-                                                    maxTextSize = list.size.toString()
-                                                    txtscanproducts = binding.txtscanproduct
-                                                    if (maxTextSize == "30") {
-                                                        txtscanproducts!!.setTextSize(
-                                                            TypedValue.COMPLEX_UNIT_SP,
-                                                            30f
-                                                        )
-                                                    }
-                                                    if (maxTextSize == "45") {
-                                                        txtscanproducts!!.setTextSize(
-                                                            TypedValue.COMPLEX_UNIT_SP,
-                                                            25f
-                                                        )
-                                                    }
-                                                    list.add(list.size, ordernoenter)
-                                                    boxlist.add(0, boxno)
-                                                    orderno.setText("")
-                                                    noofboxes1.text =
-                                                        list.size.toString() + " out of " + "" + totalBoxes
-                                                    lastscanprd.text = boxlist.toString()
-                                                    msg!!.text = ""
-                                                    if (list.size.toString() == totalBoxes.toString()) {
-                                                        submitorder(FirstorderNO)
-                                                    }
+                                                    if (count == 0) {
+                                                        maxTextSize = list.size.toString()
+                                                        txtscanproducts = binding.txtscanproduct
+                                                        if (maxTextSize == "30") {
+                                                            txtscanproducts!!.setTextSize(
+                                                                TypedValue.COMPLEX_UNIT_SP,
+                                                                30f
+                                                            )
+                                                        }
+                                                        if (maxTextSize == "45") {
+                                                            txtscanproducts!!.setTextSize(
+                                                                TypedValue.COMPLEX_UNIT_SP,
+                                                                25f
+                                                            )
+                                                        }
+                                                        list.add(list.size, ordernoenter)
+                                                        boxlist.add(0, boxno.toString())
+                                                        orderno.setText("")
+                                                        noofboxes1.text =
+                                                            list.size.toString() + " out of " + "" + totalBoxes
+                                                        lastscanprd.text = boxlist.toString()
+                                                        msg!!.text = ""
+                                                        if (list.size.toString() == totalBoxes.toString()) {
+                                                            submitorder(FirstorderNO)
+                                                        }
 
+                                                    }
+                                                } else {
+
+                                                    layout.visibility = View.VISIBLE
+                                                    orderno.setText("")
+                                                    msg!!.text = "Invalid Box Scanned."
+                                                    AppPreferences.playSoundinvalid()
                                                 }
+
+
                                             } else {
+                                                // pDialog.dismiss()
 
                                                 layout.visibility = View.VISIBLE
                                                 orderno.setText("")
-                                                msg!!.text = "Invalid Box Scanned."
+                                                msg!!.text = "Invalid box scanned."
                                                 AppPreferences.playSoundinvalid()
                                             }
+
                                         }
-                                        else{
-                                            layout.visibility = View.VISIBLE
-                                            orderno.setText("")
-                                            msg!!.text= "Invalid box scanned."
-                                            AppPreferences.playSoundinvalid()
+                                        if (checkr == 0) {
+                                            try {
+                                                // pDialog.dismiss()
+                                                orderdetailsbind(FirstorderNO, ordernoenter)
+                                                orderno.setText("")
+                                            } catch (e: IOException) {
+                                                Toast.makeText(
+                                                    this.context,
+                                                    "Error",
+                                                    Toast.LENGTH_SHORT
+                                                )
+                                                    .show()
+                                            }
                                         }
+
+
                                     } else {
-                                       // pDialog.dismiss()
+                                        //    pDialog.dismiss()
 
                                         layout.visibility = View.VISIBLE
                                         orderno.setText("")
-                                        msg!!.text= "Invalid box scanned."
+                                        msg!!.text = "Invalid box scanned."
                                         AppPreferences.playSoundinvalid()
-                                    }
 
-                                }
-                                if (checkr == 0) {
-                                    try {
-                                       // pDialog.dismiss()
-                                        orderdetailsbind(FirstorderNO, ordernoenter)
-                                        orderno.setText("")
-                                    } catch (e: IOException) {
-                                        Toast.makeText(this.context, "Error", Toast.LENGTH_SHORT)
-                                            .show()
                                     }
                                 }
-
-
-                            } else {
-                            //    pDialog.dismiss()
-
+                                else{
+                                    layout.visibility = View.VISIBLE
+                                    orderno.setText("")
+                                    msg!!.text = "Invalid Box Scanned."
+                                    AppPreferences.playSoundinvalid()
+                                }
+                            }
+                            else{
                                 layout.visibility = View.VISIBLE
                                 orderno.setText("")
-                                msg!!.text= "Invalid box scanned."
+                                msg!!.text = "Invalid Box Scanned."
                                 AppPreferences.playSoundinvalid()
-
                             }
                             return@OnKeyListener true
                         }
@@ -261,9 +267,7 @@ class ManualorderFragment : Fragment() {
                             val dorderno = jsondata.getJSONObject(i).getString("OrderNo")
                             val noofboxes = jsondata.getJSONObject(i).getInt("PackedBoxes")
                             val stoppage = jsondata.getJSONObject(i).getInt("Stoppage")
-                            val parsedInt = boxno.toIntOrNull()
-                            if (parsedInt != null) {
-                                if (parsedInt <= noofboxes) {
+                                if (boxno <= noofboxes) {
                                     cardview.visibility = View.GONE
                                     cardview.visibility = View.VISIBLE
                                     txtstop.text = "${stoppage}"
@@ -273,7 +277,7 @@ class ManualorderFragment : Fragment() {
                                     editor1.apply()
                                     totalBoxes=noofboxes
                                     list.add(0, barcode)
-                                    boxlist.add(0, boxno)
+                                    boxlist.add(0, boxno.toString())
                                     txtpacked.text =
                                         list.size.toString() + " out of " + "${noofboxes}"
                                     txtscanproduct.text = boxlist.toString()
@@ -289,14 +293,6 @@ class ManualorderFragment : Fragment() {
                                     FirstorderNO = ""
                                     AppPreferences.playSoundinvalid()
                                 }
-                            }
-                            else{
-
-                                layout.visibility = View.VISIBLE
-                                msg!!.text= "Invalid box scanned."
-                                FirstorderNO=""
-                                AppPreferences.playSoundinvalid()
-                            }
                         }
 
                     } else {

@@ -9,7 +9,7 @@ import android.net.NetworkInfo
 
 
 object AppPreferences {
-    const val AppVersion = "2.0.0.14"
+    const val AppVersion = "2.0.0.15"
     const val BASEURL = "http://api.a1whm.com/AndroidAPI/"
     const val BASEURLSU = "https://api.a1whm.com/AndroidAPI/"
     const val GET_ORDERS = "WDriverOrder.asmx/getOrders"

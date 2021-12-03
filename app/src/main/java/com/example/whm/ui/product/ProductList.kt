@@ -142,16 +142,13 @@ class ProductList : Fragment() {
                 orderno.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
                     if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
                         if (AppPreferences.internetConnectionCheck(this.context)) {
-//                            pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
-//                            pDialog.titleText = "Fetching ..."
-//                            pDialog.setCancelable(false)
-//                            pDialog.show()
                             ordernoenter = orderno.text.toString().uppercase(Locale.getDefault())
                             val layout = binding.txtmsg
                             layout.visibility = View.GONE
                             if (ordernoenter.contains("/")) {
-                                val result1 = ordernoenter.split("/").toMutableList()
-
+                                val result1 = ordernoenter.trim().split("/").toMutableList()
+                                var test=SharedOrderNo
+                                if (result1[0].trim()==SharedOrderNo) {
                                 if (SelectOrderNo != null && result1[0].length == 0) {
                                     if (SelectOrderNo.split("/")[0] != "") {
 //                                        pDialog.dismiss()
@@ -165,14 +162,13 @@ class ProductList : Fragment() {
                                     }
                                 }
                                 boxno = result1[1]
-                                val parsedInt = boxno.toIntOrNull()
-                                if (parsedInt != null) {
-                                    if (parsedInt <= PackedBoxes) {
+                                val convertboxno = boxno.toIntOrNull()
+                                if (convertboxno != null) {
+                                    if (convertboxno <= PackedBoxes) {
                                         if (FirstorderNO == "") {
-                                  //  pDialog.dismiss()
+                                            //  pDialog.dismiss()
                                             FirstorderNO = result1[0]
-                                        }
-                                        else {
+                                        } else {
                                             count = 0
                                             if (FirstorderNO == result1[0]) {
                                                 pDialog.dismiss()
@@ -219,7 +215,7 @@ class ProductList : Fragment() {
                                                     }
                                                 }
                                             } else {
-                            //                                            pDialog.dismiss()
+                                                //                                            pDialog.dismiss()
                                                 val layout = binding.txtmsg
                                                 layout.visibility = View.VISIBLE
                                                 orderno.setText("")
@@ -230,7 +226,7 @@ class ProductList : Fragment() {
 
                                         if (checkr == 0) {
                                             try {
-                            //                                            pDialog.dismiss()
+                                                //                                            pDialog.dismiss()
                                                 orderdetailsbind(FirstorderNO, ordernoenter)
                                                 orderno.setText("")
                                             } catch (e: IOException) {
@@ -243,31 +239,42 @@ class ProductList : Fragment() {
                                         }
                                     } else {
                                         //msg for box no not equal to packedbox
-                                     //   pDialog.dismiss()
+                                        //   pDialog.dismiss()
                                         val layout = binding.txtmsg
                                         layout.visibility = View.VISIBLE
                                         orderno.setText("")
                                         msg!!.text = "Invalid box scanned."
                                         AppPreferences.playSoundinvalid()
                                     }
-                                }
-                                else {
+                                } else {
                                     //msg for enter int value and some text
                                     val layout = binding.txtmsg
                                     layout.visibility = View.VISIBLE
                                     orderno.setText("")
-                                    msg!!.text= "Invalid box scanned."
+                                    msg!!.text = "Invalid box scanned."
                                     AppPreferences.playSoundinvalid()
                                 }
-                            } else {
+                            }
+                                else{
+                                    val layout = binding.txtmsg
+                                    layout.visibility = View.VISIBLE
+                                    orderno.setText("")
+                                    msg!!.text = "Invalid box scanned."
+                                    AppPreferences.playSoundinvalid()
+                                }
+                        }
+
+                            else {
                                 //msg for split
 //                                pDialog.dismiss()
                                 val layout = binding.txtmsg
                                 layout.visibility = View.VISIBLE
                                 orderno.setText("")
-                                msg!!.text= "Invalid box scanned."
+                                msg!!.text = "Invalid box scanned."
                                 AppPreferences.playSoundinvalid()
                             }
+
+
                             return@OnKeyListener true
                         }
                         else{
