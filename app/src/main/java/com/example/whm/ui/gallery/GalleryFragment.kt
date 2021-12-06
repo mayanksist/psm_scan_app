@@ -1,14 +1,12 @@
 package com.example.myapplication.com.example.whm.ui.gallery
 
+import android.R
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -19,11 +17,29 @@ import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
-import com.example.myapplication.apisettings
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.databinding.FragmentGalleryBinding
 import org.json.JSONObject
 import java.io.IOException
+import android.view.MenuInflater
+import android.widget.GridLayout.Spec
+import org.json.JSONArray
+import android.widget.Toast
+
+import org.json.JSONException
+
+import android.widget.ArrayAdapter
+
+import android.widget.GridView
+
+
+
+
+
+
+
+
+
 
 
 class GalleryFragment : Fragment() {
@@ -31,6 +47,8 @@ class GalleryFragment : Fragment() {
     private lateinit var galleryViewModel: GalleryViewModel
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding!!
+    var productId:TextView?=null
+    var Gridlauyoutstock:GridLayout? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,8 +73,21 @@ class GalleryFragment : Fragment() {
             }
             true
         })
+        setHasOptionsMenu(true)
+
         if (AppPreferences.internetConnectionCheck(this.context)) {
             val barcode: EditText = binding.barcodetype
+            val editicon:ImageView=binding.txtedit
+
+
+           editicon.setOnClickListener(View.OnClickListener {
+               val productdetils = binding.producdetails
+               val editlayout = binding.editlayout
+               productdetils.visibility = View.GONE
+               editlayout.visibility = View.VISIBLE
+
+           })
+
             galleryViewModel.text.observe(viewLifecycleOwner, Observer {
                 barcode.requestFocus()
                 barcode.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
@@ -99,7 +130,8 @@ class GalleryFragment : Fragment() {
         return root
     }
 
-    val APIURL: String = apisettings().apiurl + "WPackerProductList.asmx/getProductsList"
+
+    val APIURL: String = AppPreferences.apiurl + "WPackerProductList.asmx/getProductsList"
     fun bindproductdetails(barcoded: String) {
         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
         pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
@@ -107,7 +139,7 @@ class GalleryFragment : Fragment() {
         pDialog.setCancelable(true)
         pDialog.show()
         val produname: TextView = binding.productname
-        val productId: TextView = binding.txtProductId
+         productId = binding.txtProductId
         val unitype: TextView = binding.txtunitype
         val price: TextView = binding.priductprise
         val imagur: ImageView = binding.productimage
@@ -116,6 +148,8 @@ class GalleryFragment : Fragment() {
         val sub_category: TextView = binding.txtSubCategory
         val locationval: TextView = binding.txtLocation
         val barcode: TextView = binding.txtBarScanned
+
+        val reordermark: TextView = binding.txtreordmark
         val Jsonarra = JSONObject()
         val details = JSONObject()
         val JSONObj = JSONObject()
@@ -134,7 +168,7 @@ class GalleryFragment : Fragment() {
             Request.Method.POST, APIURL, JSONObj,
             Response.Listener { response ->
                 val resobj = (response.toString())
-                val responsemsg = JSONObject(resobj.toString())
+                val responsemsg = JSONObject(resobj)
                 val resultobj = JSONObject(responsemsg.getString("d"))
                 val presponsmsg = resultobj.getString("responseMessage")
                 if (presponsmsg == "Products Found") {
@@ -143,11 +177,11 @@ class GalleryFragment : Fragment() {
                     val jsondata = resultobj.getString("responseData")
                     val jsonrepd = JSONObject(jsondata.toString())
                     val ProductId = jsonrepd.getString("PId")
-                    val AutoId = jsonrepd.getString("AutoId")
                     val pname = jsonrepd.getString("PName")
                     val pCategory = jsonrepd.getString("Cat")
                     val pSubCategory = jsonrepd.getString("SCat")
                     val punitypa = jsonrepd.getString("Unit")
+                    val Reordermark = jsonrepd.getString("ROM")
                     val bc = jsonrepd.getString("bc")
                     val pprice = ("%.2f".format(jsonrepd.getDouble("Price")))
                     val DefaultStock = jsonrepd.getString("stock")
@@ -159,8 +193,9 @@ class GalleryFragment : Fragment() {
                     }
                     val location = jsonrepd.getString("Location")
                     produname.text = "$pname"
-                    productId.text = "$ProductId"
-                       unitype.text = "$punitypa"
+                    productId!!.text = "$ProductId"
+                    unitype.text = "$punitypa"
+                    reordermark.text="$Reordermark"
                     price.text = "${pprice}"
                     if ("$location" == "---") {
                         locationval.text = "N/A"
@@ -173,7 +208,6 @@ class GalleryFragment : Fragment() {
                     barcode.text = "" + bc
                     Glide.with(this)
                         .load(imagesurl)
-//                       .override(400, 400)
                         .into(imagur)
                     pDialog.dismiss()
                 } else {
@@ -228,6 +262,96 @@ class GalleryFragment : Fragment() {
         dialog.show()
     }
 
-}
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(com.example.myapplication.R.menu.main_activity2, menu);
+        super.onCreateOptionsMenu(menu, inflater)
+        var editicone = menu.findItem(com.example.myapplication.R.id.editproduct)
+
+        if(editicone!=null) {
+            editicone.setVisible(true)
+        }
+
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when (item.itemId) {
+            com.example.myapplication.R.id.editproduct -> {
+                if(productId!=null) {
+                val productdetils = binding.producdetails
+                val editlayout = binding.editlayout
+                productdetils.visibility = View.GONE
+                editlayout.visibility = View.VISIBLE
+                    Gridlauyoutstock=binding.stockupdate
+
+
+                var txtunittype:TextView=binding.txtunitbox
+                var txtunitqrty:TextView=binding.txtunitqty
+                val Jsonarra = JSONObject()
+                val detailstock = JSONObject()
+                val JSONObjs = JSONObject()
+                val layout = binding.showproductdetails
+                    val queues = Volley.newRequestQueue(this.context)
+                    detailstock.put("productId", productId!!.text)
+                    JSONObjs.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+                    val preferencesaccess = PreferenceManager.getDefaultSharedPreferences(context)
+                    var accessTokenS = preferencesaccess.getString("accessToken", "")
+                    JSONObjs.put(
+                        "requestContainer",
+                        Jsonarra.put("accessToken", accessTokenS)
+                    )
+                    JSONObjs.put("requestContainer", Jsonarra.put("filterkeyword", detailstock))
+                    val requpdatestock = JsonObjectRequest(
+                        Request.Method.POST, AppPreferences.apiurl + AppPreferences.GET_Packing_details, JSONObjs,
+                        Response.Listener { responsesmsg ->
+                            val resobjs = (responsesmsg.toString())
+                            val responsemsgs = JSONObject(resobjs)
+
+                            Gridlauyoutstock!!.visibility = View.GONE
+                            Gridlauyoutstock!!.visibility = View.VISIBLE
+                            val resultobjs = JSONObject(responsemsgs.getString("d"))
+                            val presponsmsgs = resultobjs.getString("responseCode")
+                            if (presponsmsgs == "201") {
+                                val jsondatas = resultobjs.getString("responseData")
+                                val jsonrepdu = JSONObject(jsondatas.toString())
+                                val ProductId = jsonrepdu.getString("PId")
+
+                                val unitlist = jsonrepdu.getJSONArray("UList")
+                                for (i in 0 until unitlist.length()) {
+
+                                    var unittype= unitlist.getJSONObject(i).getString("UName")
+                                    var Qty= unitlist.getJSONObject(i).getInt("Qty")
+                                    txtunittype.text = "$unittype"
+                                    txtunitqrty.text= Qty.toString()
+
+                                }
+                            }
+                            else{
+                                Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
+                            }
+                        }, Response.ErrorListener { response ->
+
+                            Log.e("onError", error(response.toString()))
+                        })
+
+
+                    queues.add(requpdatestock)
+                }
+                else{
+                    Toast.makeText(this.context, "Scan Barcode", Toast.LENGTH_LONG).show()
+                }
+
+
+
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+
+    }
+
+    }
+
+
 
 

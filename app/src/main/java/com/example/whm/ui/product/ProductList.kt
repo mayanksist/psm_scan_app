@@ -566,5 +566,5 @@ class ProductList : Fragment() {
         dialog.show()
     }
 }
-private fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
+fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
 }

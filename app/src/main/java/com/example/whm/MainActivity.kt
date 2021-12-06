@@ -22,6 +22,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.myapplication.apisettings
+import com.google.firebase.crashlytics.internal.settings.model.AppRequestData
 import org.json.JSONObject
 import java.io.IOException
 
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             ) }
         }
     }
-    val APIURL: String = apisettings().apiurl + "wpackerlogin.asmx/login"
+    val APIURL: String = AppPreferences.apiurl+"wpackerlogin.asmx/login"
     fun login(email: Editable) {
         val Jsonarra=JSONObject()
         val JSONObj = JSONObject()

@@ -9,13 +9,15 @@ import android.net.NetworkInfo
 
 
 object AppPreferences {
-    const val AppVersion = "2.0.0.15"
+    const val AppVersion = "2.0.0.17"
     const val BASEURL = "http://api.a1whm.com/AndroidAPI/"
     const val BASEURLSU = "https://api.a1whm.com/AndroidAPI/"
+    const val apiurl = "http://api.a1whm.com/Packerapi/"
     const val GET_ORDERS = "WDriverOrder.asmx/getOrders"
     const val SUBMIT_LOAD_ORDER = "WDriverOrder.asmx/SubmitLoadOrder"
     const val GET_ASSIGN_ORDER = "WDriverOrder.asmx/getDriverOrderList"
     const val GET_ASSIGN_ORDER_LIST = "WDriverOrder.asmx/AssignedOrderList"
+    const val GET_Packing_details = "WPackerProductList.asmx/getPackingDetails"
     fun internetConnectionCheck(context: Context?): Boolean {
         var Connected = false
         val connectivity = context?.applicationContext

@@ -16,11 +16,11 @@ import com.example.myapplication.databinding.ActivityMain2Binding
 import com.google.android.material.navigation.NavigationView
 import android.R
 import android.view.MenuItem
-import android.view.View
+import android.view.View.VISIBLE
+import android.widget.ImageButton
 
 
 class MainActivity2 : AppCompatActivity() {
-
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
     var usertype: String = ""
@@ -40,16 +40,19 @@ class MainActivity2 : AppCompatActivity() {
         editor.apply()
          binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.appBarMain.toolbar)
+
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         usertype = EmpTypeNo.toString()
         val nav_Menu: Menu = navView.menu
+
         nav_Menu.findItem(com.example.myapplication.R.id.nav_loadorder).isVisible = false
+
         if (usertype != "2") {
             nav_Menu.findItem(com.example.myapplication.R.id.nav_product).isVisible = false
+
 
         }
         val version: TextView = findViewById(com.example.myapplication.R.id.version)
@@ -60,6 +63,7 @@ class MainActivity2 : AppCompatActivity() {
             nav_Menu.findItem(com.example.myapplication.R.id.nav_orderlist).isVisible = false
             nav_Menu.findItem(com.example.myapplication.R.id.nav_assignorder).isVisible = false
             nav_Menu.findItem(com.example.myapplication.R.id.nav_product).isVisible = true
+
         }
         val navController = findNavController(com.example.myapplication.R.id.nav_host_fragment_content_main)
         val hview = navView.getHeaderView(0)
@@ -79,11 +83,20 @@ class MainActivity2 : AppCompatActivity() {
             navView.setupWithNavController(navController)
     }
 
+
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        super.onCreateOptionsMenu(menu)
         menuInflater.inflate(com.example.myapplication.R.menu.main_activity2, menu)
+        var editicone = menu.findItem(com.example.myapplication.R.id.editproduct)
+//        if(editicone!=null) {
+//            editicone.setVisible(true)
+//        }
         return true
     }
+
+
+
     override fun onSupportNavigateUp(): Boolean {
             val navController = findNavController(com.example.myapplication.R.id.nav_host_fragment_content_main)
             return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()

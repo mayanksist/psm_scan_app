@@ -65,7 +65,6 @@ class LoadOrderListFragment : Fragment() {
             var empautoid = preferences.getString("EmpAutoId", "")
             var accessToken = preferences.getString("accessToken", "")
             val queues = Volley.newRequestQueue(this.context)
-
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
             JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
             JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))

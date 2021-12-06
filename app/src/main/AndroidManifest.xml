@@ -14,10 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name="com.example.whm.ui.packer.MainActivity"
-            android:exported="false"
-            android:label="@string/title_activity_main" />
+
         <activity
             android:name=".com.example.whm.MainActivity"
             android:exported="true"
