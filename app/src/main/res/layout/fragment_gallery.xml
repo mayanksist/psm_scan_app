@@ -11,7 +11,7 @@
         android:id="@+id/producdetails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/barcodetype"
@@ -333,9 +333,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/editlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#fff"
-        android:visibility="gone">
+        android:layout_marginTop="100dp"
+        android:visibility="visible">
 
 
         <TextView
@@ -347,6 +348,9 @@
             android:textAlignment="center"
             android:textSize="20dp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
 
         <View
@@ -362,7 +366,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
 
-        <GridLayout
+        <RelativeLayout
             android:id="@+id/stockupdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -375,35 +379,96 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints">
 
-            <TextView
-                android:id="@+id/txtunitbox"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/LayoutPieace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtPunitbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:padding="5dp"
+                    android:text="txtunitbox"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/txtPunitqty"
+                    android:layout_width="245dp"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:layout_column="2"
+                    android:text="Answer1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LayoutCase"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:textSize="20dp"
-                android:text="txtunitbox" />
+                android:layout_below="@+id/LayoutPieace">
 
-            <EditText
-                android:id="@+id/txtunitqty"
-                android:layout_width="245dp"
+                <TextView
+                    android:id="@+id/txtCunitbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:padding="5dp"
+                    android:text="txtunitbox"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/txtCunitqty"
+                    android:layout_width="245dp"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:layout_column="2"
+                    android:text="Answer1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_column="2"
-                android:text="Answer1" />
+                android:layout_below="@+id/LayoutCase">
+
+                <TextView
+                    android:id="@+id/txtunitbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:padding="5dp"
+                    android:text="txtunitbox"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/txtunitqty"
+                    android:layout_width="245dp"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:layout_column="2"
+                    android:text="Answer1" />
+
+            </LinearLayout>
 
 
-        </GridLayout>
+        </RelativeLayout>
 
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_column="2"
-            android:background="@color/colorAccent"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/oval3"
             android:text="Update"
             android:textColor="#fff"
             android:textStyle="bold"

@@ -77,16 +77,6 @@ class GalleryFragment : Fragment() {
 
         if (AppPreferences.internetConnectionCheck(this.context)) {
             val barcode: EditText = binding.barcodetype
-            val editicon:ImageView=binding.txtedit
-
-
-           editicon.setOnClickListener(View.OnClickListener {
-               val productdetils = binding.producdetails
-               val editlayout = binding.editlayout
-               productdetils.visibility = View.GONE
-               editlayout.visibility = View.VISIBLE
-
-           })
 
             galleryViewModel.text.observe(viewLifecycleOwner, Observer {
                 barcode.requestFocus()
