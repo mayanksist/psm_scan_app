@@ -43,6 +43,8 @@ class GalleryFragment : Fragment() {
     var editlayout:ConstraintLayout?= null
     var showproductdetails:ConstraintLayout?=null
     var producdetails:ConstraintLayout?=null
+    var menu: MenuItem? = null
+    var   backinvetory: MenuItem? = null
     var txtunitpu: EditText? = null
     var txtunitbu: EditText? = null
     var txtunitCu: EditText? = null
@@ -331,14 +333,14 @@ class GalleryFragment : Fragment() {
         dialog.show()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(com.example.myapplication.R.menu.main_activity2, menu);
-        super.onCreateOptionsMenu(menu, inflater)
-        var editicone = menu.findItem(com.example.myapplication.R.id.editproduct)
-        var  backinvetory = menu.findItem(com.example.myapplication.R.id.backinvetory)
+    override fun onCreateOptionsMenu(x: Menu, inflater: MenuInflater) {
+        inflater.inflate(com.example.myapplication.R.menu.main_activity2, x);
+        super.onCreateOptionsMenu(x, inflater)
+        menu= x.findItem(com.example.myapplication.R.id.editproduct)
+        backinvetory = x.findItem(com.example.myapplication.R.id.backinvetory)
 
-        if(editicone!=null) {
-            editicone.setVisible(true)
+        if(menu!=null) {
+            menu?.setVisible(true)
 
         }
 
@@ -357,6 +359,8 @@ class GalleryFragment : Fragment() {
         return when (item.itemId) {
 
             com.example.myapplication.R.id.editproduct -> {
+                menu?.setVisible(false)
+                backinvetory?.setVisible(true)
                 if(productId!=null) {
                 val productdetils = binding.producdetails
                 val editlayout = binding.editlayout
