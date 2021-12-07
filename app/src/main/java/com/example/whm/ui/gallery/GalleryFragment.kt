@@ -151,7 +151,7 @@ class GalleryFragment : Fragment() {
 
                     View.OnClickListener {
 
-                        if(TxtRemark!!.text.length.toString()!="0") {
+                        if(TxtRemark!!.text.trim().length.toString()!="0") {
                             updatestock(ProductID_S, TotalStockQTY!!, TxtRemark!!)
                         }
                         else{
@@ -199,27 +199,7 @@ class GalleryFragment : Fragment() {
                         calculationtotalunitqty()
                     }
                 })
-
-                backinvetory?.setOnMenuItemClickListener {
-                    when(it.itemId) {
-                        com.example.myapplication.R.id.editproduct -> {
-
-                        }
-                        com.example.myapplication.R.id.backinvetory  -> {
-                            showproductdetails?.visibility=View.VISIBLE
-                            producdetails?.visibility=View.VISIBLE
-                            editlayout?.visibility=View.GONE
-
-                        }
-
-                    }
-                    true
-                }
-
-
             })
-
-
 
         } else {
             CheckInterNetDailog()
