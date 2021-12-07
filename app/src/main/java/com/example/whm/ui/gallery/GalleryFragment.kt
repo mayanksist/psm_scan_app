@@ -26,7 +26,9 @@ import android.widget.Toast
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.myapplication.ui.product.setSupportActionBar
 
 
 class GalleryFragment : Fragment() {
@@ -142,8 +144,15 @@ class GalleryFragment : Fragment() {
                 })
 
                 btnupdatestock.setOnClickListener(
+
                     View.OnClickListener {
-                        updatestock(ProductID_S, TotalStockQTY!!, TxtRemark!!)
+
+                        if(TxtRemark!!.text.length.toString()!="0") {
+                            updatestock(ProductID_S, TotalStockQTY!!, TxtRemark!!)
+                        }
+                        else{
+                            RemarkMessage();
+                        }
                     }
                 )
                 UnitChengeBox.addTextChangedListener(object : TextWatcher {
@@ -244,6 +253,7 @@ class GalleryFragment : Fragment() {
                 if (presponsmsg == "Products Found") {
                     producdetails?.visibility = View.VISIBLE
                     showproductdetails?.visibility = View.VISIBLE
+                    menu?.setVisible(true)
 //                    Toast.makeText(this.context,barcodeenter.toString(),Toast.LENGTH_LONG).show()
                     val jsondata = resultobj.getString("responseData")
                     val jsonrepd = JSONObject(jsondata.toString())
@@ -340,28 +350,21 @@ class GalleryFragment : Fragment() {
         backinvetory = x.findItem(com.example.myapplication.R.id.backinvetory)
 
         if(menu!=null) {
-            menu?.setVisible(true)
+            menu?.setVisible(false)
 
         }
-
-//        if(backinvetory!=null) {
-//            Toast.makeText(this.context,"backinvetory.toString()",Toast.LENGTH_LONG).show()
-//            backinvetory.setVisible(true)
-//
-//
-//        }
-
     }
-
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         return when (item.itemId) {
-
             com.example.myapplication.R.id.editproduct -> {
-                menu?.setVisible(false)
-                backinvetory?.setVisible(true)
+
                 if(productId!=null) {
+                    var toolbar: Toolbar? = null
+                    toolbar = view?.findViewById(com.example.myapplication.R.id.toolbar)
+                    (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
+                    (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Stock Update"
+                    menu?.setVisible(false)
+                    backinvetory?.setVisible(true)
                 val productdetils = binding.producdetails
                 val editlayout = binding.editlayout
                 productdetils.visibility = View.GONE
@@ -375,11 +378,9 @@ class GalleryFragment : Fragment() {
                 var ProductName:TextView=binding.txtproductname
                 var  ProductID=binding.StxtProductid
                  txtunitqtyP=binding.txtPunitqty
-
                 val Jsonarra = JSONObject()
                 val detailstock = JSONObject()
                 val JSONObjs = JSONObject()
-                val layout = binding.showproductdetails
                     val queues = Volley.newRequestQueue(this.context)
                     detailstock.put("productId", productId!!.text)
                     JSONObjs.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
@@ -401,8 +402,10 @@ class GalleryFragment : Fragment() {
                             showproductdetails?.visibility = View.GONE
                             editlayout?.visibility = View.VISIBLE
                             producdetails?.visibility = View.GONE
+
                             val resultobjs = JSONObject(responsemsgs.getString("d"))
                             val presponsmsgs = resultobjs.getString("responseCode")
+                            val resmsg = resultobjs.getString("responseMessage")
                             if (presponsmsgs == "201") {
                                 val jsondatas = resultobjs.getString("responseData")
                                 val jsonrepdu = JSONObject(jsondatas.toString())
@@ -411,7 +414,6 @@ class GalleryFragment : Fragment() {
 
                                 val unitlist = jsonrepdu.getJSONArray("UList")
                                 for (i in 0 until unitlist.length()) {
-
                                     var unittype= unitlist.getJSONObject(i).getString("UName")
                                     var Qty= unitlist.getJSONObject(i).getInt("Qty")
                                     var UnitType= unitlist.getJSONObject(i).getInt("UnitType")
@@ -421,9 +423,7 @@ class GalleryFragment : Fragment() {
                                     txtunitC.text = "$unittype"
                                     txtunitqtyC!!.setText(Qty.toString())
                                         Layoutbindunit=binding.layoutbox
-                                        Layoutbindunit!!.visibility = View.VISIBLE
-
-                                    }
+                                        Layoutbindunit!!.visibility = View.VISIBLE                                    }
                                     if(UnitType==2){
                                         txtunitB.text = "$unittype"
 
@@ -442,7 +442,7 @@ class GalleryFragment : Fragment() {
                                 Layoutbindunit!!.visibility = View.VISIBLE
                             }
                             else{
-                                Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this.context, resmsg, Toast.LENGTH_LONG).show()
                             }
                         }, Response.ErrorListener { response ->
 
@@ -517,8 +517,12 @@ class GalleryFragment : Fragment() {
         }
         JSONObj.put("requestContainer",Jsonarra.put("accessToken", accessToken))
         JSONObj.put("pObj",Jsonarrastock.put("productId", _ProductID!!.text))
-        JSONObj.put("pObj",Jsonarrastock.put("StockQty", StrockQty!!.text))
-        JSONObj.put("pObj",Jsonarrastock.put("Remark", Remark!!.text))
+        if (StrockQty!!.text.toString() != "") {
+            JSONObj.put("pObj", Jsonarrastock.put("StockQty", StrockQty!!.text))
+        }
+        if (Remark!!.text.toString() != "") {
+            JSONObj.put("pObj", Jsonarrastock.put("Remark", Remark!!.text))
+        }
         val reqStockUpdate = JsonObjectRequest(
             Request.Method.POST, AppPreferences.UPDATE_STOCK , JSONObj,
             Response.Listener { response ->
@@ -533,17 +537,21 @@ class GalleryFragment : Fragment() {
                     alertemail.setPositiveButton("ok")
                     { dialog, which ->
                         dialog.dismiss()
+
+                        backinvetory?.setVisible(false)
                         barcodeenter= binding.txtBarScanned.text as String?
                         bindproductdetails(barcodeenter as String)
                         showproductdetails?.visibility = View.VISIBLE
                         editlayout?.visibility = View.GONE
                         producdetails?.visibility = View.GONE
+
                     }
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
                 }
                 else{
-                    Toast.makeText(this.context,resmsg.toString(),Toast.LENGTH_LONG).show()
+                     SweetAlertDialog(this.context,SweetAlertDialog.ERROR_TYPE).setContentText(resmsg.toString()).show();
+
                 }
             }, Response.ErrorListener { response ->
 
@@ -555,6 +563,9 @@ class GalleryFragment : Fragment() {
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         )
         queues.add(reqStockUpdate)
+    }
+    fun RemarkMessage() {
+        SweetAlertDialog(this.context,SweetAlertDialog.ERROR_TYPE).setContentText("Remark lenght Should be 10 charecter").show()
     }
 }
 

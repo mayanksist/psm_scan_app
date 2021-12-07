@@ -320,37 +320,9 @@
         android:layout_height="match_parent"
         android:layout_marginTop="0dp"
         android:background="#fff"
-        android:visibility="gone">
-        <TextView
-            android:id="@+id/txtmsg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Stock Update"
-            android:textAlignment="center"
-            android:textSize="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
-        <View
-            android:id="@+id/divider5"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtmsg"
-            app:layout_constraintVertical_bias="0.0" />
-
+        android:visibility="visible">
 
         <RelativeLayout
-            android:layout_below="@+id/divider5"
             android:id="@+id/stockupdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -456,7 +428,7 @@
                     android:elevation="4dp"
                     android:background="@drawable/bg_lightedittext"
                     android:maxLength="6"
-                    android:text="0" />
+                    android:hint="0" />
             </LinearLayout>
 
             <LinearLayout
@@ -500,6 +472,7 @@
                     android:layout_row="0"
                     android:layout_column="1"
                     android:textSize="18dp"
+                    android:maxLength="6"
                     android:inputType="number"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
@@ -508,7 +481,7 @@
                     android:textAlignment="center"
                     android:elevation="4dp"
                     android:background="@drawable/bg_lightedittext"
-                    android:text="0"/>
+                    android:hint="0"/>
 
             </LinearLayout>
 
@@ -559,8 +532,9 @@
                     android:textAlignment="center"
                     android:elevation="4dp"
                     android:textSize="18dp"
+                    android:maxLength="6"
                     android:background="@drawable/bg_lightedittext"
-                    android:text="0" />
+                    android:hint="0" />
 
             </LinearLayout>
 
@@ -593,13 +567,14 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
                     android:inputType="number"
-android:textSize="18dp"
+                    android:textSize="18dp"
                     android:layout_marginEnd="5dp"
                     android:textAlignment="center"
                     android:elevation="4dp"
                     android:background="@drawable/bg_lightedittext"
                     android:editable="false"
-                    android:text="0" />
+                    android:text="0"
+                    />
 
             </LinearLayout>
 
@@ -628,6 +603,7 @@ android:textSize="18dp"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="2"
+                    android:padding="5dp"
                     android:gravity="top"
                     android:inputType="textMultiLine"
                     android:lines="4"
@@ -645,20 +621,6 @@ android:textSize="18dp"
                     android:scrollHorizontally="false" />
 
 
-                <!--                <com.google.android.material.textfield.TextInputLayout-->
-                <!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:hint="Enter text"-->
-                <!--                    app:endIconMode="clear_text"-->
-                <!--                    app:endIconTint="@color/colorPrimaryDark"-->
-                <!--                    app:shapeAppearance="@style/Rounded">-->
-
-                <!--                    <com.google.android.material.textfield.TextInputEditText-->
-                <!--                        android:layout_width="match_parent"-->
-                <!--                        android:layout_height="wrap_content" />-->
-
-                <!--                </com.google.android.material.textfield.TextInputLayout>-->
             </LinearLayout>
         </RelativeLayout>
 
