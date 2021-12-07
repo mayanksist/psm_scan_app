@@ -541,7 +541,8 @@ class GalleryFragment : Fragment() {
         if (empautoid != null) {
             details.put("UserAutoId", empautoid.toInt())
         }
-        JSONObj.put("requestContainer",Jsonarra.put("accessToken", accessToken))
+        JSONObj.put("requestContainer",Jsonarra.put("accessTok" +
+                "en", accessToken))
         JSONObj.put("pObj",Jsonarrastock.put("productId", _ProductID!!.text))
         if (StrockQty!!.text.toString() != "") {
             JSONObj.put("pObj", Jsonarrastock.put("StockQty", StrockQty!!.text))
