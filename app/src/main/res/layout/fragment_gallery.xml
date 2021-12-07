@@ -317,16 +317,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/editlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="0dp"
-        android:background="#fff"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/cardview"
+        android:elevation="4dp"
         android:visibility="gone">
 
         <RelativeLayout
             android:id="@+id/stockupdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:columnWidth="300dp"
             android:columnCount="4"
             android:orientation="horizontal"
@@ -369,20 +372,20 @@
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
-                    android:textColor="@color/black"
                     android:paddingStart="5dp"
                     android:paddingTop="3dp"
                     android:paddingEnd="5dp"
+                    android:textColor="@color/black"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="5dp"
                 android:id="@+id/LayoutPieace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/Uproductname"
+                android:layout_marginTop="5dp"
                 android:visibility="visible">
 
                 <TextView
@@ -397,18 +400,18 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:textAlignment="center"
                     android:id="@+id/txtPunitqty"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:layout_row="0"
                     android:layout_column="1"
-
                     android:layout_marginTop="2dp"
-                    android:layout_marginBottom="2dp"
+
                     android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="2dp"
                     android:background="@drawable/bg_edittext"
-                    android:editable="false" />
+                    android:editable="false"
+                    android:textAlignment="center" />
 
                 <EditText
                     android:id="@+id/txtunitP"
@@ -416,19 +419,19 @@
                     android:layout_height="match_parent"
                     android:layout_row="0"
                     android:layout_column="1"
-                    android:textSize="18dp"
-                    android:inputType="number"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="2dp"
                     android:layout_marginStart="5dp"
+                    android:layout_marginTop="2dp"
                     android:layout_marginEnd="5dp"
-                    android:textAlignment="center"
-                    android:elevation="4dp"
+                    android:layout_marginBottom="2dp"
                     android:background="@drawable/bg_lightedittext"
+                    android:elevation="4dp"
+                    android:hint="0"
+                    android:inputType="number"
                     android:maxLength="6"
-                    android:hint="0" />
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -450,38 +453,38 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:textAlignment="center"
                     android:id="@+id/txtBunitqty"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:layout_row="0"
                     android:layout_column="1"
-
                     android:layout_marginTop="2dp"
+
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="2dp"
                     android:background="@drawable/bg_edittext"
-                    android:editable="false" />
+                    android:editable="false"
+                    android:textAlignment="center" />
 
                 <EditText
                     android:id="@+id/txtunitB"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
                     android:layout_row="0"
                     android:layout_column="1"
-                    android:textSize="18dp"
-                    android:maxLength="6"
-                    android:inputType="number"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="2dp"
                     android:layout_marginStart="5dp"
+                    android:layout_marginTop="2dp"
                     android:layout_marginEnd="5dp"
-                    android:textAlignment="center"
-                    android:elevation="4dp"
+                    android:layout_marginBottom="2dp"
                     android:background="@drawable/bg_lightedittext"
-                    android:hint="0"/>
+                    android:elevation="4dp"
+                    android:hint="0"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -509,12 +512,12 @@
                     android:layout_height="match_parent"
                     android:layout_row="0"
                     android:layout_column="1"
-                    android:textAlignment="center"
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="2dp"
                     android:background="@drawable/bg_edittext"
-                    android:editable="false" />
+                    android:editable="false"
+                    android:textAlignment="center" />
 
                 <EditText
                     android:id="@+id/txtunitC"
@@ -522,19 +525,19 @@
                     android:layout_height="match_parent"
                     android:layout_row="0"
                     android:layout_column="1"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:inputType="number"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="2dp"
                     android:layout_marginStart="5dp"
+                    android:layout_marginTop="2dp"
                     android:layout_marginEnd="5dp"
-                    android:textAlignment="center"
-                    android:elevation="4dp"
-                    android:textSize="18dp"
-                    android:maxLength="6"
+                    android:layout_marginBottom="2dp"
                     android:background="@drawable/bg_lightedittext"
-                    android:hint="0" />
+                    android:elevation="4dp"
+                    android:hint="0"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -552,7 +555,7 @@
                     android:layout_row="0"
                     android:layout_column="1"
                     android:padding="5dp"
-                    android:text="Total stock in Pcs."
+                    android:text="Total stock in Piece"
                     android:textSize="17dp"
                     android:textStyle="bold" />
 
@@ -562,19 +565,21 @@
                     android:layout_height="match_parent"
                     android:layout_row="0"
                     android:layout_column="2"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
                     android:layout_marginTop="2dp"
-                    android:layout_marginBottom="2dp"
-                    android:inputType="number"
-                    android:textSize="18dp"
                     android:layout_marginEnd="5dp"
-                    android:textAlignment="center"
-                    android:elevation="4dp"
-                    android:background="@drawable/bg_lightedittext"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/bg_edittext"
                     android:editable="false"
+                    android:elevation="4dp"
                     android:hint="0"
-                    />
+                    android:longClickable="false"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -590,8 +595,8 @@
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
-                    android:padding="5dp"
                     android:layout_marginTop="10dp"
+                    android:padding="5dp"
                     android:text="Remark"
                     android:textSize="17dp"
                     android:textStyle="bold" />
@@ -603,22 +608,22 @@
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="2"
-                    android:padding="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_lightedittext"
+                    android:elevation="4dp"
                     android:gravity="top"
+                    android:hint="write remark here..."
                     android:inputType="textMultiLine"
                     android:lines="4"
-                    android:hint="write remark here..."
+                    android:overScrollMode="always"
+                    android:padding="5dp"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:textSize="18dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:elevation="4dp"
-                    android:background="@drawable/bg_lightedittext"
-                    android:overScrollMode="always"
                     android:scrollbarStyle="insideInset"
                     android:scrollbars="vertical"
-                    android:scrollHorizontally="false" />
+                    android:scrollHorizontally="false"
+                    android:textSize="18dp" />
 
 
             </LinearLayout>
