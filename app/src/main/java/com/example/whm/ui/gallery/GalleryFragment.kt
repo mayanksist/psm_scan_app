@@ -68,6 +68,9 @@ class GalleryFragment : Fragment() {
     var barcode: EditText?=null
     var TotalStockQTY: EditText?=null
     var ProductID_S: TextView?=null
+    var UnitChengeBox: EditText?=null
+    var UnitChengeP: EditText?=null
+    var UnitChengease: EditText?=null
     var  barcodeenter:String?=""
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -98,9 +101,9 @@ class GalleryFragment : Fragment() {
         if (AppPreferences.internetConnectionCheck(this.context)) {
              barcode = binding.barcodetype
             val btnupdatestock: Button = binding.btnupdatestock
-            val UnitChengeBox: TextView = binding.txtunitB
-            val UnitChengeP: TextView = binding.txtunitP
-            val UnitChengease: TextView = binding.txtunitC
+             UnitChengeBox = binding.txtunitB
+             UnitChengeP = binding.txtunitP
+             UnitChengease = binding.txtunitC
             showproductdetails = binding.showproductdetails
             editlayout = binding.editlayout
             producdetails = binding.producdetails
@@ -155,7 +158,7 @@ class GalleryFragment : Fragment() {
                         }
                     }
                 )
-                UnitChengeBox.addTextChangedListener(object : TextWatcher {
+                UnitChengeBox!!.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable) {}
 
                     override fun beforeTextChanged(s: CharSequence, start: Int,
@@ -168,7 +171,7 @@ class GalleryFragment : Fragment() {
                         calculationtotalunitqty()
                     }
                 })
-                UnitChengeP.addTextChangedListener(object : TextWatcher {
+                UnitChengeP!!.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable) {}
                     override fun beforeTextChanged(s: CharSequence, start: Int,
                                                    count: Int, after: Int) {
@@ -180,7 +183,7 @@ class GalleryFragment : Fragment() {
                         calculationtotalunitqty()
                     }
                 })
-                UnitChengease.addTextChangedListener(object : TextWatcher {
+                UnitChengease!!.addTextChangedListener(object : TextWatcher {
 
                     override fun afterTextChanged(s: Editable) {}
 
@@ -195,6 +198,23 @@ class GalleryFragment : Fragment() {
                         calculationtotalunitqty()
                     }
                 })
+
+                backinvetory?.setOnMenuItemClickListener {
+                    when(it.itemId) {
+                        com.example.myapplication.R.id.editproduct -> {
+
+                        }
+                        com.example.myapplication.R.id.backinvetory  -> {
+                            showproductdetails?.visibility=View.VISIBLE
+                            producdetails?.visibility=View.VISIBLE
+                            editlayout?.visibility=View.GONE
+
+                        }
+
+                    }
+                    true
+                }
+
 
             })
 
@@ -455,14 +475,20 @@ class GalleryFragment : Fragment() {
                 else{
                     Toast.makeText(this.context, "Scan Barcode", Toast.LENGTH_LONG).show()
                 }
-
-
-
+                true
+            }
+            com.example.myapplication.R.id.backinvetory  -> {
+                showproductdetails?.visibility=View.VISIBLE
+                producdetails?.visibility=View.VISIBLE
+                editlayout?.visibility=View.GONE
+                backinvetory?.setVisible(false)
+                menu?.setVisible(true)
                 true
             }
 
             else -> super.onOptionsItemSelected(item)
         }
+
 
     }
 
@@ -544,6 +570,7 @@ class GalleryFragment : Fragment() {
                         showproductdetails?.visibility = View.VISIBLE
                         editlayout?.visibility = View.GONE
                         producdetails?.visibility = View.GONE
+                        clear()
 
                     }
                     val dialog: AlertDialog = alertemail.create()
@@ -565,9 +592,21 @@ class GalleryFragment : Fragment() {
         queues.add(reqStockUpdate)
     }
     fun RemarkMessage() {
-        SweetAlertDialog(this.context,SweetAlertDialog.ERROR_TYPE).setContentText("Remark lenght Should be 10 charecter").show()
+        SweetAlertDialog(this.context,SweetAlertDialog.ERROR_TYPE).setContentText("Remark length should be 10 character").show()
+    }
+    fun clear(){
+        TotalStockQTY!!.text=null
+        TxtRemark!!.text=null
+        UnitChengeBox!!.text=null
+        UnitChengeP!!.text=null
+        UnitChengease!!.text=null
+        txttotalqty!!.text=null
+
+
     }
 }
+
+
 
 
 
