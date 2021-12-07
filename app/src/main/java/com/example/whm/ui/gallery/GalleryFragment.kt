@@ -147,18 +147,18 @@ class GalleryFragment : Fragment() {
                     false
                 })
 
-                btnupdatestock.setOnClickListener(
+                    btnupdatestock.setOnClickListener(
 
-                    View.OnClickListener {
+                        View.OnClickListener {
 
-                        if(TxtRemark!!.text.trim().length.toString()!="0") {
-                            updatestock(ProductID_S, TotalStockQTY!!, TxtRemark!!)
+                            if (TxtRemark!!.text.trim().length.toString() != "0") {
+                                updatestock(ProductID_S, TotalStockQTY!!, TxtRemark!!)
+                            } else {
+                                RemarkMessage();
+                            }
                         }
-                        else{
-                            RemarkMessage();
-                        }
-                    }
-                )
+                    )
+
                 UnitChengeBox!!.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable) {}
 
@@ -331,18 +331,7 @@ class GalleryFragment : Fragment() {
         _binding = null
     }
 
-    fun CheckInterNetDailog(){
-        val alertnet = AlertDialog.Builder(activity)
-        alertnet.setTitle("Connection")
-        alertnet.setMessage("Please check your internet connection")
-        alertnet.setPositiveButton("ok")
-        { dialog, which ->
-            dialog.dismiss()
-            this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
-        }
-        val dialog: AlertDialog = alertnet.create()
-        dialog.show()
-    }
+
 
     override fun onCreateOptionsMenu(x: Menu, inflater: MenuInflater) {
         inflater.inflate(com.example.myapplication.R.menu.main_activity2, x);
@@ -352,226 +341,246 @@ class GalleryFragment : Fragment() {
 
         if(menu!=null) {
             menu?.setVisible(false)
-
         }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             com.example.myapplication.R.id.editproduct -> {
+                if (AppPreferences.internetConnectionCheck(this.context)) {
+                    if (productId != null) {
+                        var toolbar: Toolbar? = null
+                        toolbar = view?.findViewById(com.example.myapplication.R.id.toolbar)
+                        (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
+                        (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Stock Update"
+                        menu?.setVisible(false)
+                        backinvetory?.setVisible(true)
+                        val productdetils = binding.producdetails
+                        val editlayout = binding.editlayout
+                        productdetils.visibility = View.GONE
+                        editlayout.visibility = View.VISIBLE
+                        Gridlauyoutstock = binding.stockupdate
+                        var txtunitB: TextView = binding.txtBunit
+                        txtunitqtyB = binding.txtBunitqty
+                        var txtunitC: TextView = binding.txtCunit
+                        txtunitqtyC = binding.txtCunitqty
+                        var txtunitP: TextView = binding.txtPunit
+                        var ProductName: TextView = binding.txtproductname
+                        var ProductID = binding.StxtProductid
+                        txtunitqtyP = binding.txtPunitqty
+                        val Jsonarra = JSONObject()
+                        val detailstock = JSONObject()
+                        val JSONObjs = JSONObject()
+                        val queues = Volley.newRequestQueue(this.context)
+                        detailstock.put("productId", productId!!.text)
+                        JSONObjs.put(
+                            "requestContainer",
+                            Jsonarra.put("appVersion", AppPreferences.AppVersion)
+                        )
+                        val preferencesaccess =
+                            PreferenceManager.getDefaultSharedPreferences(context)
+                        var accessTokenS = preferencesaccess.getString("accessToken", "")
+                        JSONObjs.put(
+                            "requestContainer",
+                            Jsonarra.put("accessToken", accessTokenS)
+                        )
+                        JSONObjs.put("requestContainer", Jsonarra.put("filterkeyword", detailstock))
+                        val requpdatestock = JsonObjectRequest(
+                            Request.Method.POST,
+                            AppPreferences.apiurl + AppPreferences.GET_Packing_details,
+                            JSONObjs,
+                            Response.Listener { responsesmsg ->
+                                val resobjs = (responsesmsg.toString())
+                                val responsemsgs = JSONObject(resobjs)
 
-                if(productId!=null) {
-                    var toolbar: Toolbar? = null
-                    toolbar = view?.findViewById(com.example.myapplication.R.id.toolbar)
-                    (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
-                    (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Stock Update"
-                    menu?.setVisible(false)
-                    backinvetory?.setVisible(true)
-                val productdetils = binding.producdetails
-                val editlayout = binding.editlayout
-                productdetils.visibility = View.GONE
-                editlayout.visibility = View.VISIBLE
-                    Gridlauyoutstock=binding.stockupdate
-                    var txtunitB:TextView=binding.txtBunit
-                    txtunitqtyB=binding.txtBunitqty
-                var txtunitC:TextView=binding.txtCunit
-                 txtunitqtyC=binding.txtCunitqty
-                var txtunitP:TextView=binding.txtPunit
-                var ProductName:TextView=binding.txtproductname
-                var  ProductID=binding.StxtProductid
-                 txtunitqtyP=binding.txtPunitqty
-                val Jsonarra = JSONObject()
-                val detailstock = JSONObject()
-                val JSONObjs = JSONObject()
-                    val queues = Volley.newRequestQueue(this.context)
-                    detailstock.put("productId", productId!!.text)
-                    JSONObjs.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-                    val preferencesaccess = PreferenceManager.getDefaultSharedPreferences(context)
-                    var accessTokenS = preferencesaccess.getString("accessToken", "")
-                    JSONObjs.put(
-                        "requestContainer",
-                        Jsonarra.put("accessToken", accessTokenS)
-                    )
-                    JSONObjs.put("requestContainer", Jsonarra.put("filterkeyword", detailstock))
-                    val requpdatestock = JsonObjectRequest(
-                        Request.Method.POST, AppPreferences.apiurl + AppPreferences.GET_Packing_details, JSONObjs,
-                        Response.Listener { responsesmsg ->
-                            val resobjs = (responsesmsg.toString())
-                            val responsemsgs = JSONObject(resobjs)
+                                Gridlauyoutstock!!.visibility = View.GONE
+                                Gridlauyoutstock!!.visibility = View.VISIBLE
+                                showproductdetails?.visibility = View.GONE
+                                editlayout?.visibility = View.VISIBLE
+                                producdetails?.visibility = View.GONE
 
-                            Gridlauyoutstock!!.visibility = View.GONE
-                            Gridlauyoutstock!!.visibility = View.VISIBLE
-                            showproductdetails?.visibility = View.GONE
-                            editlayout?.visibility = View.VISIBLE
-                            producdetails?.visibility = View.GONE
+                                val resultobjs = JSONObject(responsemsgs.getString("d"))
+                                val presponsmsgs = resultobjs.getString("responseCode")
+                                val resmsg = resultobjs.getString("responseMessage")
+                                if (presponsmsgs == "201") {
+                                    val jsondatas = resultobjs.getString("responseData")
+                                    val jsonrepdu = JSONObject(jsondatas.toString())
+                                    val ProductId = jsonrepdu.getString("PId")
+                                    var Productname = jsonrepdu.getString("PName")
 
-                            val resultobjs = JSONObject(responsemsgs.getString("d"))
-                            val presponsmsgs = resultobjs.getString("responseCode")
-                            val resmsg = resultobjs.getString("responseMessage")
-                            if (presponsmsgs == "201") {
-                                val jsondatas = resultobjs.getString("responseData")
-                                val jsonrepdu = JSONObject(jsondatas.toString())
-                                val ProductId = jsonrepdu.getString("PId")
-                                var Productname= jsonrepdu.getString("PName")
+                                    val unitlist = jsonrepdu.getJSONArray("UList")
+                                    for (i in 0 until unitlist.length()) {
+                                        var unittype = unitlist.getJSONObject(i).getString("UName")
+                                        var Qty = unitlist.getJSONObject(i).getInt("Qty")
+                                        var UnitType = unitlist.getJSONObject(i).getInt("UnitType")
+                                        ProductID.text = ProductId.toString()
+                                        ProductName.text = Productname
+                                        if (UnitType == 1) {
+                                            txtunitC.text = "$unittype"
+                                            txtunitqtyC!!.setText(Qty.toString())
+                                            Layoutbindunit = binding.layoutbox
+                                            Layoutbindunit!!.visibility = View.VISIBLE
+                                        }
+                                        if (UnitType == 2) {
+                                            txtunitB.text = "$unittype"
 
-                                val unitlist = jsonrepdu.getJSONArray("UList")
-                                for (i in 0 until unitlist.length()) {
-                                    var unittype= unitlist.getJSONObject(i).getString("UName")
-                                    var Qty= unitlist.getJSONObject(i).getInt("Qty")
-                                    var UnitType= unitlist.getJSONObject(i).getInt("UnitType")
-                                    ProductID.text=ProductId.toString()
-                                    ProductName.text=Productname
-                                    if(UnitType==1){
-                                    txtunitC.text = "$unittype"
-                                    txtunitqtyC!!.setText(Qty.toString())
-                                        Layoutbindunit=binding.layoutbox
-                                        Layoutbindunit!!.visibility = View.VISIBLE                                    }
-                                    if(UnitType==2){
-                                        txtunitB.text = "$unittype"
-
-                                        txtunitqtyB!!.setText(Qty.toString())
-                                        Layoutbindunit=binding.LayoutCase
-                                        Layoutbindunit!!.visibility = View.VISIBLE
+                                            txtunitqtyB!!.setText(Qty.toString())
+                                            Layoutbindunit = binding.LayoutCase
+                                            Layoutbindunit!!.visibility = View.VISIBLE
+                                        }
+                                        if (UnitType == 3) {
+                                            txtunitP.text = "$unittype"
+                                            txtunitqtyP!!.setText(Qty.toString())
+                                            Layoutbindunit = binding.LayoutPieace
+                                            Layoutbindunit!!.visibility = View.VISIBLE
+                                        }
                                     }
-                                    if(UnitType==3){
-                                        txtunitP.text = "$unittype"
-                                        txtunitqtyP!!.setText(Qty.toString())
-                                        Layoutbindunit=binding.LayoutPieace
-                                        Layoutbindunit!!.visibility = View.VISIBLE
-                                    }
+                                    Layoutbindunit = binding.Layoutqty
+                                    Layoutbindunit!!.visibility = View.VISIBLE
+                                } else {
+                                    Toast.makeText(this.context, resmsg, Toast.LENGTH_LONG).show()
                                 }
-                                Layoutbindunit=binding.Layoutqty
-                                Layoutbindunit!!.visibility = View.VISIBLE
-                            }
-                            else{
-                                Toast.makeText(this.context, resmsg, Toast.LENGTH_LONG).show()
-                            }
-                        }, Response.ErrorListener { response ->
+                            },
+                            Response.ErrorListener { response ->
 
-                            Log.e("onError", error(response.toString()))
-                        })
-
-
-                    queues.add(requpdatestock)
+                                Log.e("onError", error(response.toString()))
+                            })
+                        queues.add(requpdatestock)
+                    } else {
+                        Toast.makeText(this.context, "Scan Barcode", Toast.LENGTH_LONG).show()
+                    }
                 }
                 else{
-                    Toast.makeText(this.context, "Scan Barcode", Toast.LENGTH_LONG).show()
+                    CheckInterNetDailog()
                 }
                 true
             }
+
             com.example.myapplication.R.id.backinvetory  -> {
-                showproductdetails?.visibility=View.VISIBLE
-                producdetails?.visibility=View.VISIBLE
-                editlayout?.visibility=View.GONE
-                backinvetory?.setVisible(false)
-                menu?.setVisible(true)
+                if (AppPreferences.internetConnectionCheck(this.context)) {
+                    showproductdetails?.visibility = View.VISIBLE
+                    producdetails?.visibility = View.VISIBLE
+                    editlayout?.visibility = View.GONE
+                    backinvetory?.setVisible(false)
+                    menu?.setVisible(true)
+
+                }
+                else{
+                    CheckInterNetDailog()
+                }
                 true
             }
 
             else -> super.onOptionsItemSelected(item)
         }
-
-
     }
 
      fun calculationtotalunitqty() {
-          txttotalqty= binding.txttotalqrty
-         txtunitbu=binding.txtunitB
-          txtunitpu=binding.txtunitP
-          txtunitCu=binding.txtunitC
-         if(txtunitbu!!.text.toString()!=""){
-             unitB= txtunitbu!!.getText().toString().toInt()
+         if (AppPreferences.internetConnectionCheck(this.context)) {
+             txttotalqty = binding.txttotalqrty
+             txtunitbu = binding.txtunitB
+             txtunitpu = binding.txtunitP
+             txtunitCu = binding.txtunitC
+             if (txtunitbu!!.text.toString() != "") {
+                 unitB = txtunitbu!!.getText().toString().toInt()
+             }
+             if (txtunitpu!!.text.toString() != "") {
+                 unitP = txtunitpu!!.getText().toString().toInt()
+             }
+             if (txtunitCu!!.text.toString() != "") {
+                 unitC = txtunitCu!!.getText().toString().toInt()
+             }
+             if (txtunitqtyP!!.text.toString() != "") {
+                 txtunitqtyPi = txtunitqtyP!!.getText().toString().toInt()
+             }
+             if (txtunitqtyB!!.text.toString() != "") {
+                 txtunitqtyBox = txtunitqtyB!!.getText().toString().toInt()
+             }
+             if (txtunitqtyC!!.text.toString() != "") {
+                 txtunitqtyCase = txtunitqtyC!!.getText().toString().toInt()
+             }
+             totalunitPqty = unitP!! * txtunitqtyPi!!
+             totalunitBqty = unitB!! * txtunitqtyBox!!
+             totalunitCqty = unitC!! * txtunitqtyCase!!
+             totalunitqty = totalunitPqty!! + totalunitBqty!! + totalunitCqty!!
+             txttotalqty!!.setText(totalunitqty.toString())
          }
-        if(txtunitpu!!.text.toString()!=""){
-          unitP = txtunitpu!!.getText().toString().toInt()
-        }
-         if(txtunitCu!!.text.toString()!=""){
-             unitC = txtunitCu!!.getText().toString().toInt()
+         else{
+             CheckInterNetDailog()
          }
-        if(txtunitqtyP!!.text.toString()!=""){
-           txtunitqtyPi = txtunitqtyP!!.getText().toString().toInt()
-        }
-         if(txtunitqtyB!!.text.toString()!="") {
-             txtunitqtyBox = txtunitqtyB!!.getText().toString().toInt()
-         }
-         if(txtunitqtyC!!.text.toString()!="") {
-             txtunitqtyCase = txtunitqtyC!!.getText().toString().toInt()
-         }
-          totalunitPqty= unitP!! * txtunitqtyPi!!
-          totalunitBqty= unitB!! * txtunitqtyBox!!
-          totalunitCqty= unitC!! * txtunitqtyCase!!
-          totalunitqty = totalunitPqty!! + totalunitBqty!! + totalunitCqty!!
-         txttotalqty!!.setText(totalunitqty.toString())
-
-
     }
-
-
     fun updatestock(_ProductID: TextView?, StrockQty: EditText, Remark: EditText){
+        if (AppPreferences.internetConnectionCheck(this.context)) {
+            val Jsonarra = JSONObject()
+            val Jsonarrastock = JSONObject()
+            val details = JSONObject()
+            val JSONObj = JSONObject()
+            val queues = Volley.newRequestQueue(this.context)
+            JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+            val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
+            var accessToken = preferences.getString("accessToken", "")
+            var empautoid = preferences.getString("EmpAutoId", "")
+            if (empautoid != null) {
+                details.put("UserAutoId", empautoid.toInt())
+            }
+            JSONObj.put(
+                "requestContainer", Jsonarra.put(
+                    "accessTok" +
+                            "en", accessToken
+                )
+            )
+            JSONObj.put("pObj", Jsonarrastock.put("productId", _ProductID!!.text))
+            if (StrockQty!!.text.toString() != "") {
+                JSONObj.put("pObj", Jsonarrastock.put("StockQty", StrockQty!!.text))
+            }
+            if (Remark!!.text.toString() != "") {
+                JSONObj.put("pObj", Jsonarrastock.put("Remark", Remark!!.text))
+            }
+            val reqStockUpdate = JsonObjectRequest(
+                Request.Method.POST, AppPreferences.UPDATE_STOCK, JSONObj,
+                Response.Listener { response ->
+                    val resobj = (response.toString())
+                    val responsemsg = JSONObject(resobj)
+                    val resultobj = JSONObject(responsemsg.getString("d"))
+                    val presponscode = resultobj.getString("responseCode")
+                    val resmsg = resultobj.getString("responseMessage")
+                    if (presponscode == "200") {
+                        val alertemail = AlertDialog.Builder(this.context)
+                        alertemail.setMessage(resmsg.toString())
+                        alertemail.setPositiveButton("ok")
+                        { dialog, which ->
+                            dialog.dismiss()
 
+                            backinvetory?.setVisible(false)
+                            barcodeenter = binding.txtBarScanned.text as String?
+                            bindproductdetails(barcodeenter as String)
+                            showproductdetails?.visibility = View.VISIBLE
+                            editlayout?.visibility = View.GONE
+                            producdetails?.visibility = View.GONE
+                            clear()
 
-        val Jsonarra = JSONObject()
-        val Jsonarrastock = JSONObject()
-        val details = JSONObject()
-        val JSONObj = JSONObject()
-        val queues = Volley.newRequestQueue(this.context)
-        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
-        var accessToken = preferences.getString("accessToken", "")
-        var empautoid = preferences.getString("EmpAutoId", "")
-        if (empautoid != null) {
-            details.put("UserAutoId", empautoid.toInt())
-        }
-        JSONObj.put("requestContainer",Jsonarra.put("accessTok" +
-                "en", accessToken))
-        JSONObj.put("pObj",Jsonarrastock.put("productId", _ProductID!!.text))
-        if (StrockQty!!.text.toString() != "") {
-            JSONObj.put("pObj", Jsonarrastock.put("StockQty", StrockQty!!.text))
-        }
-        if (Remark!!.text.toString() != "") {
-            JSONObj.put("pObj", Jsonarrastock.put("Remark", Remark!!.text))
-        }
-        val reqStockUpdate = JsonObjectRequest(
-            Request.Method.POST, AppPreferences.UPDATE_STOCK , JSONObj,
-            Response.Listener { response ->
-                val resobj = (response.toString())
-                val responsemsg = JSONObject(resobj)
-                val resultobj = JSONObject(responsemsg.getString("d"))
-                val presponscode = resultobj.getString("responseCode")
-                val resmsg = resultobj.getString("responseMessage")
-                if (presponscode == "200") {
-                    val alertemail = AlertDialog.Builder(this.context)
-                    alertemail.setMessage(resmsg.toString())
-                    alertemail.setPositiveButton("ok")
-                    { dialog, which ->
-                        dialog.dismiss()
-
-                        backinvetory?.setVisible(false)
-                        barcodeenter= binding.txtBarScanned.text as String?
-                        bindproductdetails(barcodeenter as String)
-                        showproductdetails?.visibility = View.VISIBLE
-                        editlayout?.visibility = View.GONE
-                        producdetails?.visibility = View.GONE
-                        clear()
+                        }
+                        val dialog: AlertDialog = alertemail.create()
+                        dialog.show()
+                    } else {
+                        SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText(
+                            resmsg.toString()
+                        ).show();
 
                     }
-                    val dialog: AlertDialog = alertemail.create()
-                    dialog.show()
-                }
-                else{
-                     SweetAlertDialog(this.context,SweetAlertDialog.ERROR_TYPE).setContentText(resmsg.toString()).show();
+                }, Response.ErrorListener { response ->
 
-                }
-            }, Response.ErrorListener { response ->
-
-                Log.e("onError", error(response.toString()))
-            })
-        reqStockUpdate.retryPolicy = DefaultRetryPolicy(
-            1000000,
-            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        )
-        queues.add(reqStockUpdate)
+                    Log.e("onError", error(response.toString()))
+                })
+            reqStockUpdate.retryPolicy = DefaultRetryPolicy(
+                1000000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            )
+            queues.add(reqStockUpdate)
+        }
+        else{
+            CheckInterNetDailog()
+        }
     }
     fun RemarkMessage() {
         SweetAlertDialog(this.context,SweetAlertDialog.ERROR_TYPE).setContentText("Remark length should be 10 character").show()
@@ -585,6 +594,18 @@ class GalleryFragment : Fragment() {
         txttotalqty!!.text=null
 
 
+    }
+    fun CheckInterNetDailog(){
+        val alertnet = AlertDialog.Builder(activity)
+        alertnet.setTitle("Connection")
+        alertnet.setMessage("Please check your internet connection")
+        alertnet.setPositiveButton("ok")
+        { dialog, which ->
+            dialog.dismiss()
+            this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
+        }
+        val dialog: AlertDialog = alertnet.create()
+        dialog.show()
     }
 }
 
