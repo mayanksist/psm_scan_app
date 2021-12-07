@@ -13,11 +13,22 @@
         android:orderInCategory="100"
         android:theme="@style/NavigationTheme"
         android:title="Edit"
-
         android:visible="false"
         app:itemIconPadding="0dp"
         app:itemIconSize="20dp"
         app:showAsAction="ifRoom" />
 
-
+    <item
+        android:id="@+id/backinvetory"
+        android:backgroundTint="#fff"
+        android:checkable="true"
+        android:icon="@drawable/ic_baseline_arrow_back_24"
+        android:iconTint="#fff"
+        android:orderInCategory="100"
+        android:theme="@style/NavigationTheme"
+        android:title="Edit"
+        android:visible="false"
+        app:itemIconPadding="0dp"
+        app:itemIconSize="20dp"
+        app:showAsAction="ifRoom" />
 </menu>

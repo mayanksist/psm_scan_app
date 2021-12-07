@@ -22,33 +22,49 @@ import com.example.myapplication.databinding.FragmentGalleryBinding
 import org.json.JSONObject
 import java.io.IOException
 import android.view.MenuInflater
-import android.widget.GridLayout.Spec
-import org.json.JSONArray
 import android.widget.Toast
-
-import org.json.JSONException
-
-import android.widget.ArrayAdapter
-
-import android.widget.GridView
-
-
-
-
-
-
-
-
-
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
+import androidx.constraintlayout.widget.ConstraintLayout
 
 
 class GalleryFragment : Fragment() {
 
     private lateinit var galleryViewModel: GalleryViewModel
     private var _binding: FragmentGalleryBinding? = null
+
+
+
     private val binding get() = _binding!!
     var productId:TextView?=null
-    var Gridlauyoutstock:GridLayout? = null
+    var Gridlauyoutstock:RelativeLayout? = null
+    var Layoutbindunit:LinearLayout? = null
+    var editlayout:ConstraintLayout?= null
+    var showproductdetails:ConstraintLayout?=null
+    var producdetails:ConstraintLayout?=null
+    var txtunitpu: EditText? = null
+    var txtunitbu: EditText? = null
+    var txtunitCu: EditText? = null
+    var  txtunitqtyC: EditText? = null
+    var  txtunitqtyB: EditText? = null
+    var  txtunitqtyP: EditText? = null
+    var  txttotalqty: EditText? = null
+    var  txtunitqtyPi: Int? = 0
+    var  txtunitqtyBox: Int? = 0
+    var  txtunitqtyCase: Int? =0
+    var  totalunitPqty: Int? =0
+    var  totalunitBqty: Int? =0
+    var  totalunitCqty: Int? =0
+    var  totalunitqty: Int? =0
+    var  unitB: Int? =0
+    var  unitC: Int? =0
+    var  unitP: Int? =0
+    var TxtRemark: EditText?=null
+    var barcode: EditText?=null
+    var TotalStockQTY: EditText?=null
+    var ProductID_S: TextView?=null
+    var  barcodeenter:String?=""
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -76,30 +92,39 @@ class GalleryFragment : Fragment() {
         setHasOptionsMenu(true)
 
         if (AppPreferences.internetConnectionCheck(this.context)) {
-            val barcode: EditText = binding.barcodetype
-
+             barcode = binding.barcodetype
+            val btnupdatestock: Button = binding.btnupdatestock
+            val UnitChengeBox: TextView = binding.txtunitB
+            val UnitChengeP: TextView = binding.txtunitP
+            val UnitChengease: TextView = binding.txtunitC
+            showproductdetails = binding.showproductdetails
+            editlayout = binding.editlayout
+            producdetails = binding.producdetails
+             TxtRemark = binding.txtreamrk
+             TotalStockQTY = binding.txttotalqrty
+             ProductID_S = binding.StxtProductid
             galleryViewModel.text.observe(viewLifecycleOwner, Observer {
-                barcode.requestFocus()
-                barcode.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
+                barcode!!.requestFocus()
+                barcode!!.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
                     if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
                         if (AppPreferences.internetConnectionCheck(this.context)) {
-                            var barcodeenter = barcode.text.toString()
+                             barcodeenter = barcode!!.text.toString()
                             try {
-                                if (barcodeenter.trim().isEmpty()) {
+                                if (barcodeenter!!.trim().isEmpty()) {
                                     val alertemail = AlertDialog.Builder(this.context)
                                     alertemail.setMessage("Scan Barcode")
                                     alertemail.setPositiveButton("ok")
                                     { dialog, which ->
                                         dialog.dismiss()
-                                        barcode.text.clear()
-                                        barcode.setText("")
+                                        barcode!!.text.clear()
+                                        barcode!!.setText("")
                                         barcodeenter = ""
                                     }
                                     val dialog: AlertDialog = alertemail.create()
                                     dialog.show()
                                 } else {
-                                    bindproductdetails(barcodeenter)
-                                    barcode.text.clear()
+                                    bindproductdetails(barcodeenter!!)
+                                    barcode!!.text.clear()
                                 }
 
                             } catch (e: IOException) {
@@ -113,7 +138,57 @@ class GalleryFragment : Fragment() {
                     }
                     false
                 })
+
+                btnupdatestock.setOnClickListener(
+                    View.OnClickListener {
+                        updatestock(ProductID_S, TotalStockQTY!!, TxtRemark!!)
+                    }
+                )
+                UnitChengeBox.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable) {}
+
+                    override fun beforeTextChanged(s: CharSequence, start: Int,
+                                                   count: Int, after: Int) {
+
+                    }
+                    override fun onTextChanged(s: CharSequence, start: Int,
+                                               before: Int, count: Int) {
+
+                        calculationtotalunitqty()
+                    }
+                })
+                UnitChengeP.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable) {}
+                    override fun beforeTextChanged(s: CharSequence, start: Int,
+                                                   count: Int, after: Int) {
+
+                    }
+                    override fun onTextChanged(s: CharSequence, start: Int,
+                                               before: Int, count: Int) {
+
+                        calculationtotalunitqty()
+                    }
+                })
+                UnitChengease.addTextChangedListener(object : TextWatcher {
+
+                    override fun afterTextChanged(s: Editable) {}
+
+                    override fun beforeTextChanged(s: CharSequence, start: Int,
+                                                   count: Int, after: Int) {
+
+                    }
+
+                    override fun onTextChanged(s: CharSequence, start: Int,
+                                               before: Int, count: Int) {
+
+                        calculationtotalunitqty()
+                    }
+                })
+
             })
+
+
+
         } else {
             CheckInterNetDailog()
         }
@@ -137,14 +212,17 @@ class GalleryFragment : Fragment() {
         val category: TextView = binding.txtCategory
         val sub_category: TextView = binding.txtSubCategory
         val locationval: TextView = binding.txtLocation
-        val barcode: TextView = binding.txtBarScanned
-
+        val barcode = binding.txtBarScanned
         val reordermark: TextView = binding.txtreordmark
         val Jsonarra = JSONObject()
         val details = JSONObject()
         val JSONObj = JSONObject()
-        val layout = binding.showproductdetails
         val queues = Volley.newRequestQueue(this.context)
+//        showproductdetails?.visibility = View.VISIBLE
+        editlayout?.visibility = View.GONE
+
+
+
         details.put("barcode", barcoded)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -162,8 +240,9 @@ class GalleryFragment : Fragment() {
                 val resultobj = JSONObject(responsemsg.getString("d"))
                 val presponsmsg = resultobj.getString("responseMessage")
                 if (presponsmsg == "Products Found") {
-                    layout.visibility = View.GONE
-                    layout.visibility = View.VISIBLE
+                    producdetails?.visibility = View.VISIBLE
+                    showproductdetails?.visibility = View.VISIBLE
+//                    Toast.makeText(this.context,barcodeenter.toString(),Toast.LENGTH_LONG).show()
                     val jsondata = resultobj.getString("responseData")
                     val jsonrepd = JSONObject(jsondata.toString())
                     val ProductId = jsonrepd.getString("PId")
@@ -195,7 +274,7 @@ class GalleryFragment : Fragment() {
                     category.text = "$pCategory"
                     sub_category.text = "$pSubCategory"
                        stock.text = "${DefaultStock}"
-                    barcode.text = "" + bc
+                    barcode!!.text = "" + bc
                     Glide.with(this)
                         .load(imagesurl)
                         .into(imagur)
@@ -203,20 +282,20 @@ class GalleryFragment : Fragment() {
                 } else {
                     pDialog.dismiss()
                     AppPreferences.playSoundbarcode()
-                    layout.visibility = View.GONE
+                    showproductdetails?.visibility = View.GONE
                     val barcodeC: EditText = binding.barcodetype
-                    barcode.text = ""
+                    barcode!!.text = ""
                     barcodeC.text.clear()
-                    barcode.text = ""
+                    barcode!!.text = ""
                     val alertemail = AlertDialog.Builder(this.context)
                     alertemail.setTitle("Barcode")
                     alertemail.setMessage(presponsmsg.toString())
                     alertemail.setPositiveButton("ok")
                     { dialog, which ->
                         dialog.dismiss()
-                        barcode.text = ""
+                        barcode!!.text = ""
                         barcodeC.text.clear()
-                        barcode.text = ""
+                        barcode!!.text = ""
                     }
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
@@ -256,15 +335,27 @@ class GalleryFragment : Fragment() {
         inflater.inflate(com.example.myapplication.R.menu.main_activity2, menu);
         super.onCreateOptionsMenu(menu, inflater)
         var editicone = menu.findItem(com.example.myapplication.R.id.editproduct)
+        var  backinvetory = menu.findItem(com.example.myapplication.R.id.backinvetory)
 
         if(editicone!=null) {
             editicone.setVisible(true)
+
         }
 
+//        if(backinvetory!=null) {
+//            Toast.makeText(this.context,"backinvetory.toString()",Toast.LENGTH_LONG).show()
+//            backinvetory.setVisible(true)
+//
+//
+//        }
+
     }
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
+
             com.example.myapplication.R.id.editproduct -> {
                 if(productId!=null) {
                 val productdetils = binding.producdetails
@@ -272,10 +363,15 @@ class GalleryFragment : Fragment() {
                 productdetils.visibility = View.GONE
                 editlayout.visibility = View.VISIBLE
                     Gridlauyoutstock=binding.stockupdate
+                    var txtunitB:TextView=binding.txtBunit
+                    txtunitqtyB=binding.txtBunitqty
+                var txtunitC:TextView=binding.txtCunit
+                 txtunitqtyC=binding.txtCunitqty
+                var txtunitP:TextView=binding.txtPunit
+                var ProductName:TextView=binding.txtproductname
+                var  ProductID=binding.StxtProductid
+                 txtunitqtyP=binding.txtPunitqty
 
-
-                var txtunittype:TextView=binding.txtunitbox
-                var txtunitqrty:TextView=binding.txtunitqty
                 val Jsonarra = JSONObject()
                 val detailstock = JSONObject()
                 val JSONObjs = JSONObject()
@@ -298,22 +394,48 @@ class GalleryFragment : Fragment() {
 
                             Gridlauyoutstock!!.visibility = View.GONE
                             Gridlauyoutstock!!.visibility = View.VISIBLE
+                            showproductdetails?.visibility = View.GONE
+                            editlayout?.visibility = View.VISIBLE
+                            producdetails?.visibility = View.GONE
                             val resultobjs = JSONObject(responsemsgs.getString("d"))
                             val presponsmsgs = resultobjs.getString("responseCode")
                             if (presponsmsgs == "201") {
                                 val jsondatas = resultobjs.getString("responseData")
                                 val jsonrepdu = JSONObject(jsondatas.toString())
                                 val ProductId = jsonrepdu.getString("PId")
+                                var Productname= jsonrepdu.getString("PName")
 
                                 val unitlist = jsonrepdu.getJSONArray("UList")
                                 for (i in 0 until unitlist.length()) {
 
                                     var unittype= unitlist.getJSONObject(i).getString("UName")
                                     var Qty= unitlist.getJSONObject(i).getInt("Qty")
-                                    txtunittype.text = "$unittype"
-                                    txtunitqrty.text= Qty.toString()
+                                    var UnitType= unitlist.getJSONObject(i).getInt("UnitType")
+                                    ProductID.text=ProductId.toString()
+                                    ProductName.text=Productname
+                                    if(UnitType==1){
+                                    txtunitC.text = "$unittype"
+                                    txtunitqtyC!!.setText(Qty.toString())
+                                        Layoutbindunit=binding.layoutbox
+                                        Layoutbindunit!!.visibility = View.VISIBLE
 
+                                    }
+                                    if(UnitType==2){
+                                        txtunitB.text = "$unittype"
+
+                                        txtunitqtyB!!.setText(Qty.toString())
+                                        Layoutbindunit=binding.LayoutCase
+                                        Layoutbindunit!!.visibility = View.VISIBLE
+                                    }
+                                    if(UnitType==3){
+                                        txtunitP.text = "$unittype"
+                                        txtunitqtyP!!.setText(Qty.toString())
+                                        Layoutbindunit=binding.LayoutPieace
+                                        Layoutbindunit!!.visibility = View.VISIBLE
+                                    }
                                 }
+                                Layoutbindunit=binding.Layoutqty
+                                Layoutbindunit!!.visibility = View.VISIBLE
                             }
                             else{
                                 Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
@@ -340,7 +462,101 @@ class GalleryFragment : Fragment() {
 
     }
 
+     fun calculationtotalunitqty() {
+          txttotalqty= binding.txttotalqrty
+         txtunitbu=binding.txtunitB
+          txtunitpu=binding.txtunitP
+          txtunitCu=binding.txtunitC
+         if(txtunitbu!!.text.toString()!=""){
+             unitB= txtunitbu!!.getText().toString().toInt()
+         }
+        if(txtunitpu!!.text.toString()!=""){
+          unitP = txtunitpu!!.getText().toString().toInt()
+        }
+         if(txtunitCu!!.text.toString()!=""){
+             unitC = txtunitCu!!.getText().toString().toInt()
+         }
+        if(txtunitqtyP!!.text.toString()!=""){
+           txtunitqtyPi = txtunitqtyP!!.getText().toString().toInt()
+        }
+         if(txtunitqtyB!!.text.toString()!="") {
+             txtunitqtyBox = txtunitqtyB!!.getText().toString().toInt()
+         }
+         if(txtunitqtyC!!.text.toString()!="") {
+             txtunitqtyCase = txtunitqtyC!!.getText().toString().toInt()
+         }
+          totalunitPqty= unitP!! * txtunitqtyPi!!
+          totalunitBqty= unitB!! * txtunitqtyBox!!
+          totalunitCqty= unitC!! * txtunitqtyCase!!
+          totalunitqty = totalunitPqty!! + totalunitBqty!! + totalunitCqty!!
+         txttotalqty!!.setText(totalunitqty.toString())
+
+
     }
+
+
+    fun updatestock(_ProductID: TextView?, StrockQty: EditText, Remark: EditText){
+
+
+        val Jsonarra = JSONObject()
+        val Jsonarrastock = JSONObject()
+        val details = JSONObject()
+        val JSONObj = JSONObject()
+        val queues = Volley.newRequestQueue(this.context)
+        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
+        var accessToken = preferences.getString("accessToken", "")
+        var empautoid = preferences.getString("EmpAutoId", "")
+        if (empautoid != null) {
+            details.put("UserAutoId", empautoid.toInt())
+        }
+        JSONObj.put("requestContainer",Jsonarra.put("accessToken", accessToken))
+        JSONObj.put("pObj",Jsonarrastock.put("productId", _ProductID!!.text))
+        JSONObj.put("pObj",Jsonarrastock.put("StockQty", StrockQty!!.text))
+        JSONObj.put("pObj",Jsonarrastock.put("Remark", Remark!!.text))
+        val reqStockUpdate = JsonObjectRequest(
+            Request.Method.POST, AppPreferences.UPDATE_STOCK , JSONObj,
+            Response.Listener { response ->
+                val resobj = (response.toString())
+                val responsemsg = JSONObject(resobj)
+                val resultobj = JSONObject(responsemsg.getString("d"))
+                val presponscode = resultobj.getString("responseCode")
+                val resmsg = resultobj.getString("responseMessage")
+                if (presponscode == "200") {
+                    val alertemail = AlertDialog.Builder(this.context)
+                    alertemail.setMessage(resmsg.toString())
+                    alertemail.setPositiveButton("ok")
+                    { dialog, which ->
+                        dialog.dismiss()
+                        barcodeenter= binding.txtBarScanned.text as String?
+                        bindproductdetails(barcodeenter as String)
+                        showproductdetails?.visibility = View.VISIBLE
+                        editlayout?.visibility = View.GONE
+                        producdetails?.visibility = View.GONE
+                    }
+                    val dialog: AlertDialog = alertemail.create()
+                    dialog.show()
+                }
+                else{
+                    Toast.makeText(this.context,resmsg.toString(),Toast.LENGTH_LONG).show()
+                }
+            }, Response.ErrorListener { response ->
+
+                Log.e("onError", error(response.toString()))
+            })
+        reqStockUpdate.retryPolicy = DefaultRetryPolicy(
+            1000000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queues.add(reqStockUpdate)
+    }
+}
+
+
+
+
 
 
 
