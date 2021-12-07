@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="2dp"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -307,7 +307,6 @@
                         app:layout_constraintTop_toTopOf="@+id/txtreorder" />
 
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
@@ -318,32 +317,31 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/editlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="0dp"
         android:background="#fff"
         android:visibility="gone">
-
-
         <TextView
             android:id="@+id/txtmsg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="0dp"
             android:text="Stock Update"
             android:textAlignment="center"
             android:textSize="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
+            />
 
         <View
             android:id="@+id/divider5"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -352,10 +350,11 @@
 
 
         <RelativeLayout
+            android:layout_below="@+id/divider5"
             android:id="@+id/stockupdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:columnWidth="300dp"
             android:columnCount="4"
             android:orientation="horizontal"
@@ -363,71 +362,101 @@
             android:stretchMode="columnWidth"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints">
+
             <LinearLayout
+
                 android:id="@+id/Uproductid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible">
+
                 <TextView
                     android:id="@+id/StxtProductid"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
+                    android:paddingStart="5dp"
+                    android:paddingTop="3dp"
+                    android:paddingEnd="5dp"
                     android:textColor="@color/colorAccent"
-                    android:textSize="15dp"
-                    android:padding="5dp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/Uproductname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/Uproductid"
                 android:visibility="visible">
+
                 <TextView
                     android:id="@+id/txtproductname"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
-                    android:padding="5dp"
-                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:paddingStart="5dp"
+                    android:paddingTop="3dp"
+                    android:paddingEnd="5dp"
+                    android:textSize="17dp"
                     android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
+                android:layout_marginTop="5dp"
                 android:id="@+id/LayoutPieace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/Uproductname"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/txtPunit"
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
                     android:padding="5dp"
                     android:text="Piece"
-                    android:textSize="20dp"
+                    android:textSize="17dp"
                     android:textStyle="bold" />
 
                 <EditText
+                    android:textAlignment="center"
                     android:id="@+id/txtPunitqty"
                     android:layout_width="80dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_row="0"
-                    android:editable="false"
-                    android:layout_column="1" />
+                    android:layout_column="1"
+
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/bg_edittext"
+                    android:editable="false" />
 
                 <EditText
                     android:id="@+id/txtunitP"
-                    android:layout_width="164dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_row="0"
-                    android:hint="0"
-                    android:layout_column="1" />
+                    android:layout_column="1"
+                    android:textSize="18dp"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:textAlignment="center"
+                    android:elevation="4dp"
+                    android:background="@drawable/bg_lightedittext"
+                    android:maxLength="6"
+                    android:text="0" />
             </LinearLayout>
 
             <LinearLayout
@@ -435,99 +464,142 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/LayoutPieace"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/txtBunit"
-                    android:layout_width="69dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
                     android:padding="5dp"
                     android:text="Box"
-                    android:textSize="20dp"
+                    android:textSize="17dp"
                     android:textStyle="bold" />
 
                 <EditText
+                    android:textAlignment="center"
                     android:id="@+id/txtBunitqty"
-                    android:layout_width="83dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
                     android:layout_row="0"
                     android:layout_column="1"
 
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/bg_edittext"
                     android:editable="false" />
 
                 <EditText
                     android:id="@+id/txtunitB"
-                    android:layout_width="165dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_row="0"
-                    android:hint="0"
-                    android:layout_column="1" />
+                    android:layout_column="1"
+                    android:textSize="18dp"
+                    android:inputType="number"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:textAlignment="center"
+                    android:elevation="4dp"
+                    android:background="@drawable/bg_lightedittext"
+                    android:text="0"/>
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/LayoutCase"
-                android:layout_width="310dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layoutbox"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/txtCunit"
-                    android:layout_width="69dp"
-                    android:layout_height="45dp"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
                     android:padding="5dp"
                     android:text="Case"
-                    android:textSize="20dp"
+                    android:textSize="17dp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/txtCunitqty"
                     android:layout_width="80dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_row="0"
-                    android:editable="false"
-
-                    android:layout_column="1" />
+                    android:layout_column="1"
+                    android:textAlignment="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/bg_edittext"
+                    android:editable="false" />
 
                 <EditText
                     android:id="@+id/txtunitC"
-                    android:layout_width="164dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_row="0"
-                    android:hint="0"
-                    android:layout_column="1" />
+                    android:layout_column="1"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:inputType="number"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:textAlignment="center"
+                    android:elevation="4dp"
+                    android:textSize="18dp"
+                    android:background="@drawable/bg_lightedittext"
+                    android:text="0" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/Layoutqty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/LayoutCase"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/txttotal"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
                     android:layout_row="0"
-                    android:layout_column="0"
+                    android:layout_column="1"
                     android:padding="5dp"
-                    android:text="Total"
-                    android:textSize="20dp"
+                    android:text="Total stock in Pcs."
+                    android:textSize="17dp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/txttotalqrty"
-                    android:layout_width="243dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_row="0"
                     android:layout_column="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:inputType="number"
+android:textSize="18dp"
+                    android:layout_marginEnd="5dp"
+                    android:textAlignment="center"
+                    android:elevation="4dp"
+                    android:background="@drawable/bg_lightedittext"
                     android:editable="false"
-                    android:hint="0" />
+                    android:text="0" />
 
             </LinearLayout>
 
@@ -539,48 +611,54 @@
 
                 <TextView
                     android:id="@+id/txtremark"
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
                     android:padding="5dp"
+                    android:layout_marginTop="10dp"
                     android:text="Remark"
-                    android:textSize="20dp"
+                    android:textSize="17dp"
                     android:textStyle="bold" />
 
 
+                <EditText
+                    android:id="@+id/txtreamrk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:layout_column="2"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:lines="4"
+                    android:hint="write remark here..."
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:textSize="18dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:elevation="4dp"
+                    android:background="@drawable/bg_lightedittext"
+                    android:overScrollMode="always"
+                    android:scrollbarStyle="insideInset"
+                    android:scrollbars="vertical"
+                    android:scrollHorizontally="false" />
 
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/txtreamrk"
-                        android:inputType="textMultiLine"
-                        android:layout_row="0"
-                        android:lines="5"
-                        android:gravity="top"
-                        android:overScrollMode="always"
-                        android:scrollbarStyle="insideInset"
-                        android:scrollbars="vertical"
-                        android:scrollHorizontally="false"
-                        android:layout_column="2"
-                        />
 
+                <!--                <com.google.android.material.textfield.TextInputLayout-->
+                <!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:hint="Enter text"-->
+                <!--                    app:endIconMode="clear_text"-->
+                <!--                    app:endIconTint="@color/colorPrimaryDark"-->
+                <!--                    app:shapeAppearance="@style/Rounded">-->
 
+                <!--                    <com.google.android.material.textfield.TextInputEditText-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content" />-->
 
-<!--                <com.google.android.material.textfield.TextInputLayout-->
-<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="Enter text"-->
-<!--                    app:endIconMode="clear_text"-->
-<!--                    app:endIconTint="@color/colorPrimaryDark"-->
-<!--                    app:shapeAppearance="@style/Rounded">-->
-
-<!--                    <com.google.android.material.textfield.TextInputEditText-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content" />-->
-
-<!--                </com.google.android.material.textfield.TextInputLayout>-->
+                <!--                </com.google.android.material.textfield.TextInputLayout>-->
             </LinearLayout>
         </RelativeLayout>
 
@@ -590,8 +668,8 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_column="2"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/oval3"
             android:text="Update"
             android:textColor="#fff"
@@ -599,8 +677,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stockupdate"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/stockupdate" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
