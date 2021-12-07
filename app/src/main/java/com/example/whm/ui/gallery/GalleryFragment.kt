@@ -42,6 +42,7 @@ class GalleryFragment : Fragment() {
     var productId:TextView?=null
     var Gridlauyoutstock:RelativeLayout? = null
     var Layoutbindunit:LinearLayout? = null
+
     var editlayout:ConstraintLayout?= null
     var showproductdetails:ConstraintLayout?=null
     var producdetails:ConstraintLayout?=null
