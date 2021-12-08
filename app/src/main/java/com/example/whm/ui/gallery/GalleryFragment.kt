@@ -35,14 +35,10 @@ class GalleryFragment : Fragment() {
 
     private lateinit var galleryViewModel: GalleryViewModel
     private var _binding: FragmentGalleryBinding? = null
-
-
-
     private val binding get() = _binding!!
     var productId:TextView?=null
     var Gridlauyoutstock:RelativeLayout? = null
     var Layoutbindunit:LinearLayout? = null
-
     var editlayout:ConstraintLayout?= null
     var showproductdetails:ConstraintLayout?=null
     var producdetails:ConstraintLayout?=null
@@ -92,7 +88,6 @@ class GalleryFragment : Fragment() {
         root.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-
                 }
             }
             true
@@ -162,11 +157,13 @@ class GalleryFragment : Fragment() {
                 UnitChengeBox!!.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable) {
                         calculationtotalunitqty()
+
                     }
 
                     override fun beforeTextChanged(s: CharSequence, start: Int,
                                                    count: Int, after: Int) {
                         calculationtotalunitqty()
+
 
                     }
                     override fun onTextChanged(s: CharSequence, start: Int,
@@ -189,7 +186,9 @@ class GalleryFragment : Fragment() {
                 })
                 UnitChengease!!.addTextChangedListener(object : TextWatcher {
 
-                    override fun afterTextChanged(s: Editable) {calculationtotalunitqty()}
+                    override fun afterTextChanged(s: Editable) {
+                        calculationtotalunitqty()
+                    }
 
                     override fun beforeTextChanged(s: CharSequence, start: Int,
                                                    count: Int, after: Int) {
@@ -209,8 +208,6 @@ class GalleryFragment : Fragment() {
         }
         return root
     }
-
-
     val APIURL: String = AppPreferences.apiurl + "WPackerProductList.asmx/getProductsList"
     fun bindproductdetails(barcoded: String) {
         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
@@ -233,11 +230,7 @@ class GalleryFragment : Fragment() {
         val details = JSONObject()
         val JSONObj = JSONObject()
         val queues = Volley.newRequestQueue(this.context)
-//        showproductdetails?.visibility = View.VISIBLE
         editlayout?.visibility = View.GONE
-
-
-
         details.put("barcode", barcoded)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -484,22 +477,26 @@ class GalleryFragment : Fragment() {
              txtunitpu = binding.txtunitP
              txtunitCu = binding.txtunitC
              if (txtunitbu!!.text.toString() != "") {
-                 unitB = txtunitbu!!.getText().toString().toInt()
+                 unitB = txtunitbu!!.text.toString().toInt()
              }
              if (txtunitpu!!.text.toString() != "") {
-                 unitP = txtunitpu!!.getText().toString().toInt()
+
+
+
+
+                 unitP = txtunitpu!!.text.toString().toInt()
              }
              if (txtunitCu!!.text.toString() != "") {
-                 unitC = txtunitCu!!.getText().toString().toInt()
+                 unitC = txtunitCu!!.text.toString().toInt()
              }
              if (txtunitqtyP!!.text.toString() != "") {
-                 txtunitqtyPi = txtunitqtyP!!.getText().toString().toInt()
+                 txtunitqtyPi = txtunitqtyP!!.text.toString().toInt()
              }
              if (txtunitqtyB!!.text.toString() != "") {
-                 txtunitqtyBox = txtunitqtyB!!.getText().toString().toInt()
+                 txtunitqtyBox = txtunitqtyB!!.text.toString().toInt()
              }
              if (txtunitqtyC!!.text.toString() != "") {
-                 txtunitqtyCase = txtunitqtyC!!.getText().toString().toInt()
+                 txtunitqtyCase = txtunitqtyC!!.text.toString().toInt()
              }
              totalunitPqty = unitP!! * txtunitqtyPi!!
              totalunitBqty = unitB!! * txtunitqtyBox!!
