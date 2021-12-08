@@ -302,9 +302,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:text="N/A"
+                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@+id/txtreorder"
                         app:layout_constraintEnd_toEndOf="@+id/txtSubCategory"
-                        app:layout_constraintTop_toTopOf="@+id/txtreorder" />
+                        app:layout_constraintTop_toTopOf="@+id/txtreorder"
+                        app:layout_constraintVertical_bias="1.0"/>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

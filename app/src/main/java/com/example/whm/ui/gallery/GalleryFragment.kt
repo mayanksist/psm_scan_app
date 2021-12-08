@@ -160,10 +160,13 @@ class GalleryFragment : Fragment() {
                     )
 
                 UnitChengeBox!!.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable) {}
+                    override fun afterTextChanged(s: Editable) {
+                        calculationtotalunitqty()
+                    }
 
                     override fun beforeTextChanged(s: CharSequence, start: Int,
                                                    count: Int, after: Int) {
+                        calculationtotalunitqty()
 
                     }
                     override fun onTextChanged(s: CharSequence, start: Int,
@@ -173,10 +176,10 @@ class GalleryFragment : Fragment() {
                     }
                 })
                 UnitChengeP!!.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable) {}
+                    override fun afterTextChanged(s: Editable) {calculationtotalunitqty()}
                     override fun beforeTextChanged(s: CharSequence, start: Int,
                                                    count: Int, after: Int) {
-
+                        calculationtotalunitqty()
                     }
                     override fun onTextChanged(s: CharSequence, start: Int,
                                                before: Int, count: Int) {
@@ -186,11 +189,11 @@ class GalleryFragment : Fragment() {
                 })
                 UnitChengease!!.addTextChangedListener(object : TextWatcher {
 
-                    override fun afterTextChanged(s: Editable) {}
+                    override fun afterTextChanged(s: Editable) {calculationtotalunitqty()}
 
                     override fun beforeTextChanged(s: CharSequence, start: Int,
                                                    count: Int, after: Int) {
-
+                        calculationtotalunitqty()
                     }
 
                     override fun onTextChanged(s: CharSequence, start: Int,
@@ -417,14 +420,14 @@ class GalleryFragment : Fragment() {
                                         if (UnitType == 1) {
                                             txtunitC.text = "$unittype"
                                             txtunitqtyC!!.setText(Qty.toString())
-                                            Layoutbindunit = binding.layoutbox
+                                            Layoutbindunit = binding.LayoutCase
                                             Layoutbindunit!!.visibility = View.VISIBLE
                                         }
                                         if (UnitType == 2) {
                                             txtunitB.text = "$unittype"
 
                                             txtunitqtyB!!.setText(Qty.toString())
-                                            Layoutbindunit = binding.LayoutCase
+                                            Layoutbindunit = binding.layoutbox
                                             Layoutbindunit!!.visibility = View.VISIBLE
                                         }
                                         if (UnitType == 3) {
