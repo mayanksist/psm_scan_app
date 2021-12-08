@@ -89,9 +89,7 @@ class MainActivity2 : AppCompatActivity() {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(com.example.myapplication.R.menu.main_activity2, menu)
         var editicone = menu.findItem(com.example.myapplication.R.id.editproduct)
-//        if(editicone!=null) {
-//            editicone.setVisible(true)
-//        }
+
         return true
     }
 

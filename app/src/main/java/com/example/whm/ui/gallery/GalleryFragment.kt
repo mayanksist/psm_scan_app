@@ -31,12 +31,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.myapplication.ui.product.setSupportActionBar
 import android.view.ViewGroup
 import android.view.LayoutInflater
-
-
-
-
-
-
+import android.app.Activity
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 
 
 class GalleryFragment : Fragment() {
@@ -91,6 +88,7 @@ class GalleryFragment : Fragment() {
             container,
             false
         )
+
         root.requestFocus()
         root.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
@@ -103,6 +101,8 @@ class GalleryFragment : Fragment() {
 
         if (AppPreferences.internetConnectionCheck(this.context)) {
              barcode = binding.barcodetype
+            val imm =
+                (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(view?.windowToken,0)
             val btnupdatestock: Button = binding.btnupdatestock
              UnitChengeBox = binding.txtunitB
              UnitChengeP = binding.txtunitP
@@ -213,7 +213,8 @@ class GalleryFragment : Fragment() {
         val unitype: TextView = binding.txtunitype
         val price: TextView = binding.priductprise
         val imagur: ImageView = binding.productimage
-        val stock: TextView = binding.txtStock2
+        val stock: TextView = binding.txtStockfeild1
+        val stockfeild2: TextView = binding.txtStockfeild2
         val category: TextView = binding.txtCategory
         val sub_category: TextView = binding.txtSubCategory
         val locationval: TextView = binding.txtLocation
@@ -256,6 +257,8 @@ class GalleryFragment : Fragment() {
                     val bc = jsonrepd.getString("bc")
                     val pprice = ("%.2f".format(jsonrepd.getDouble("Price")))
                     val DefaultStock = jsonrepd.getString("stock")
+                    val DefaultStock2 = jsonrepd.getString("SPiece")
+                    val Dunit = jsonrepd.getInt("Dunit")
                     var imagesurl = ""
                     if (jsonrepd.getString("OPath") == null) {
                         imagesurl = jsonrepd.getString("ImageUrl")
@@ -276,6 +279,10 @@ class GalleryFragment : Fragment() {
                     category.text = "$pCategory"
                     sub_category.text = "$pSubCategory"
                        stock.text = "${DefaultStock}"
+                    if(Dunit !=2){
+                        stockfeild2.text = "(${DefaultStock2})"
+                    }
+
                     barcode!!.text = "" + bc
                     Glide.with(this)
                         .load(imagesurl)

@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="2dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -102,8 +102,9 @@
                         android:layout_marginStart="4dp"
                         android:text="N/A"
                         android:textSize="16sp"
+
                         app:layout_constraintBottom_toBottomOf="@+id/textView2"
-                        app:layout_constraintEnd_toStartOf="@+id/txtreorder"
+                        app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
                         app:layout_constraintStart_toEndOf="@+id/textView2"
                         app:layout_constraintTop_toTopOf="@+id/textView2"></TextView>
 
@@ -168,15 +169,15 @@
                         app:layout_constraintTop_toBottomOf="@+id/txtunitype" />
 
                     <TextView
-                        android:id="@+id/txtStock2"
-                        android:layout_width="0dp"
+                        android:id="@+id/txtStockfeild1"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="N/A"
                         android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#000"
                         app:layout_constraintBottom_toBottomOf="@+id/txtStock"
-                        app:layout_constraintEnd_toEndOf="@+id/txtreordmark"
-                        app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toEndOf="@+id/txtStock"
                         app:layout_constraintTop_toTopOf="@+id/txtStock" />
 
@@ -189,17 +190,17 @@
                         android:paddingStart="3dp"
                         android:paddingEnd="3dp"
                         android:text="N/A"
+
                         android:textSize="18dp"
                         app:layout_constraintEnd_toEndOf="@+id/productname"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/productimage"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="1dp"
-                        android:layout_marginTop="1dp"
                         android:layout_marginEnd="1dp"
                         android:layout_marginBottom="1dp"
                         android:adjustViewBounds="true"
@@ -208,21 +209,21 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-                        app:layout_constraintVertical_bias="0.0"
+                        app:layout_constraintTop_toBottomOf="@+id/txtreordmark"
                         app:layout_scrollFlags="scroll|enterAlways" />
 
                     <TextView
                         android:id="@+id/txtBarScanned"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:text="N/A"
                         android:textAlignment="center"
                         android:textColor="#C60A0A"
-                        android:textSize="18dp"
+                        android:textSize="15dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+                        app:layout_constraintTop_toTopOf="@+id/imageView6"
                         tools:text="N/A" />
 
                     <ImageView
@@ -240,13 +241,15 @@
                         android:id="@+id/constraintLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
                         android:background="@drawable/oval"
                         android:orientation="vertical"
                         android:padding="2dp"
                         android:paddingEnd="7dp"
-                        app:layout_constraintStart_toStartOf="@+id/txtStock"
-                        app:layout_constraintTop_toBottomOf="@+id/txtStock2">
+                        app:layout_constraintBottom_toBottomOf="@+id/txtunitype"
+                        app:layout_constraintEnd_toEndOf="@+id/txtSubCategory"
+                        app:layout_constraintTop_toTopOf="@+id/txtunitype">
 
                         <ImageView
                             android:id="@+id/imageView5"
@@ -264,7 +267,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="N/A"
-                            android:textSize="18dp"
+                            android:textSize="16dp"
                             android:textStyle="bold"
 
                             app:layout_constraintBottom_toBottomOf="@+id/imageView5"
@@ -276,37 +279,47 @@
                     <ImageView
                         android:id="@+id/imageView6"
                         android:layout_width="wrap_content"
-                        android:layout_height="25dp"
-                        android:layout_marginEnd="1dp"
+                        android:layout_height="20dp"
                         android:src="@drawable/barcode"
-                        app:layout_constraintBottom_toBottomOf="@+id/txtBarScanned"
+                        app:layout_constraintBottom_toBottomOf="@+id/txtreorder"
                         app:layout_constraintEnd_toStartOf="@+id/txtBarScanned"
-                        app:layout_constraintTop_toTopOf="@+id/txtBarScanned"
+                        app:layout_constraintTop_toTopOf="@+id/txtreorder"
                         app:tint="#C60A0A" />
 
                     <TextView
                         android:id="@+id/txtreorder"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_marginEnd="3dp"
+                        android:layout_marginTop="4dp"
                         android:text="Reorder Mark :"
                         android:textSize="16dp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/txtunitype"
-                        app:layout_constraintEnd_toStartOf="@+id/txtreordmark"
-                        app:layout_constraintTop_toTopOf="@+id/txtunitype"
-                        app:layout_constraintVertical_bias="1.0" />
+                        app:layout_constraintStart_toStartOf="@+id/txtStock"
+                        app:layout_constraintTop_toBottomOf="@+id/txtStockfeild1" />
 
                     <TextView
                         android:id="@+id/txtreordmark"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
+                        android:layout_marginStart="2dp"
                         android:text="N/A"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@+id/txtreorder"
-                        app:layout_constraintEnd_toEndOf="@+id/txtSubCategory"
-                        app:layout_constraintTop_toTopOf="@+id/txtreorder"
-                        app:layout_constraintVertical_bias="1.0"/>
+                        app:layout_constraintStart_toEndOf="@+id/txtreorder"
+                        app:layout_constraintTop_toTopOf="@+id/txtreorder" />
+
+                    <TextView
+                        android:id="@+id/txtStockfeild2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:text=""
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/txtStockfeild1"
+                        app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/txtStockfeild1"
+                        app:layout_constraintTop_toTopOf="@+id/txtStockfeild1" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

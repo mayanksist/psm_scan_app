@@ -17,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
@@ -71,7 +72,6 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
         JSONObj.put("userName",email)
         JSONObj.put("requestContainer",Jsonarra.put("appVersion",appversion))
-        // Toast.makeText(this@MainActivity, JSONObj.toString(), Toast.LENGTH_LONG).show()
         val req=JsonObjectRequest(Request.Method.POST,APIURL,JSONObj,
     Response.Listener {
             response ->
@@ -80,15 +80,14 @@ class MainActivity : AppCompatActivity() {
         val responmsg = JSONObject(responsemsg.getString("d"))
         val msg = responmsg.getString("response")
         val resmsg = responmsg.getString("responseMessage")
-
             if (msg == "success") {
                 val jsondata = responmsg.getJSONArray("responseData")
                 for (i in 0 until jsondata.length()) {
 
-                    val Name = jsondata.getJSONObject(i).getString("Name")
+                    val empid=jsondata.getJSONObject(i).getString("AutoId")
                     val emptype = jsondata.getJSONObject(i).getString("EmpTypeNo")
                     val empname=jsondata.getJSONObject(i).getString("EmpType")
-                    val empid=jsondata.getJSONObject(i).getString("AutoId")
+                    val Name = jsondata.getJSONObject(i).getString("Name")
                     val LName=jsondata.getJSONObject(i).getString("LName")
                     var intent = Intent(this, MainActivity2::class.java)
                     intent.putExtra("Name", Name.toString())
@@ -98,6 +97,8 @@ class MainActivity : AppCompatActivity() {
                     editor.putString("LName", LName)
                     editor.putString("accessToken", jsondata.getJSONObject(i).getString("accessToken"))
                     editor.putBoolean("EnabledPickallBoxes", jsondata.getJSONObject(i).getBoolean("EnabledPickallBoxes"))
+                    editor.putString("StockRemark",jsondata.getJSONObject(i).getString("StockRemark") )
+                    editor.putString("StockNote", jsondata.getJSONObject(i).getString("StockNote"))
                     editor.apply()
                     val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
                     mLayout.visibility = View.GONE
@@ -132,6 +133,11 @@ class MainActivity : AppCompatActivity() {
                 Log.e("onError", error(response.toString()))
             })
         try {
+            req.retryPolicy = DefaultRetryPolicy(
+                1000000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            )
             queues.add(req)
         }
         catch (e:IOException){
@@ -148,26 +154,7 @@ class MainActivity : AppCompatActivity() {
         {
             if (info != null && info.isConnected == true) {
                 var scansecuritykey=scansecurity
-//                if(scansecuritykey.contains("_") ){
-//                    val getkey = scansecuritykey.split("_")
-//                    val userid = getkey[0]
-//                    val  upasswords = getkey[1]
-//                    var useremail = userid
-//                    var password = upasswords
-//                    useremail=userid
-                            login(scansecuritykey)
-
-//                }
-//                else{
-//                    val alertemail = AlertDialog.Builder(this)
-//                    alertemail.setMessage("Invalid credentials")
-//                    alertemail.setPositiveButton("ok")
-//                    { dialog, which -> dialog.dismiss()
-//                        scancode.text = ""
-//                    }
-//                    val dialog: AlertDialog = alertemail.create()
-//                    dialog.show()
-//                }
+                   login(scansecuritykey)
             } else {
                 val alertnet = AlertDialog.Builder(this)
                 alertnet.setTitle("Connection")
@@ -198,9 +185,7 @@ class MainActivity : AppCompatActivity() {
             editor.apply()
             JSONObj.put("userName", email)
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", appversion))
-            // Toast.makeText(this@MainActivity, JSONObj.toString(), Toast.LENGTH_LONG).show()
             val req = JsonObjectRequest(Request.Method.POST, APIURL, JSONObj,
-
                 Response.Listener { response ->
                     val resobj = JSONObj.put("response", response.toString())
                     val responsemsg = JSONObject(resobj.getString("response"))
@@ -264,6 +249,11 @@ class MainActivity : AppCompatActivity() {
                     Log.e("onError", error(response.toString()))
                 })
             try {
+                req.retryPolicy = DefaultRetryPolicy(
+                    1000000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                )
                 queues.add(req)
             } catch (e: IOException) {
                 Toast.makeText(this.applicationContext, "Server Error", Toast.LENGTH_LONG).show()
@@ -294,7 +284,6 @@ class MainActivity : AppCompatActivity() {
                 .setConfirmClickListener {
                     moveTaskToBack(true)
                     finish()
-
                 }
                 .setCancelButton(
                     "No"
