@@ -29,10 +29,17 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.myapplication.ui.product.setSupportActionBar
+import android.view.ViewGroup
+import android.view.LayoutInflater
+
+
+
+
+
+
 
 
 class GalleryFragment : Fragment() {
-
     private lateinit var galleryViewModel: GalleryViewModel
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding!!
@@ -117,7 +124,7 @@ class GalleryFragment : Fragment() {
                                     val alertemail = AlertDialog.Builder(this.context)
                                     alertemail.setMessage("Scan Barcode")
                                     alertemail.setPositiveButton("ok")
-                                    { dialog, which ->
+                                    { dialog, _ ->
                                         dialog.dismiss()
                                         barcode!!.text.clear()
                                         barcode!!.setText("")
@@ -155,17 +162,10 @@ class GalleryFragment : Fragment() {
                     )
 
                 UnitChengeBox!!.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable) {
-                        calculationtotalunitqty()
-
-                    }
+                    override fun afterTextChanged(s: Editable) {}
 
                     override fun beforeTextChanged(s: CharSequence, start: Int,
-                                                   count: Int, after: Int) {
-                        calculationtotalunitqty()
-
-
-                    }
+                                                   count: Int, after: Int) {}
                     override fun onTextChanged(s: CharSequence, start: Int,
                                                before: Int, count: Int) {
 
@@ -173,11 +173,9 @@ class GalleryFragment : Fragment() {
                     }
                 })
                 UnitChengeP!!.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable) {calculationtotalunitqty()}
+                    override fun afterTextChanged(s: Editable) {}
                     override fun beforeTextChanged(s: CharSequence, start: Int,
-                                                   count: Int, after: Int) {
-                        calculationtotalunitqty()
-                    }
+                                                   count: Int, after: Int) {}
                     override fun onTextChanged(s: CharSequence, start: Int,
                                                before: Int, count: Int) {
 
@@ -186,18 +184,13 @@ class GalleryFragment : Fragment() {
                 })
                 UnitChengease!!.addTextChangedListener(object : TextWatcher {
 
-                    override fun afterTextChanged(s: Editable) {
-                        calculationtotalunitqty()
-                    }
+                    override fun afterTextChanged(s: Editable) {}
 
                     override fun beforeTextChanged(s: CharSequence, start: Int,
-                                                   count: Int, after: Int) {
-                        calculationtotalunitqty()
-                    }
+                                                   count: Int, after: Int) {}
 
                     override fun onTextChanged(s: CharSequence, start: Int,
                                                before: Int, count: Int) {
-
                         calculationtotalunitqty()
                     }
                 })
@@ -290,7 +283,6 @@ class GalleryFragment : Fragment() {
                     pDialog.dismiss()
                 } else {
                     pDialog.dismiss()
-                    AppPreferences.playSoundbarcode()
                     showproductdetails?.visibility = View.GONE
                     val barcodeC: EditText = binding.barcodetype
                     barcode!!.text = ""
@@ -306,8 +298,10 @@ class GalleryFragment : Fragment() {
                         barcodeC.text.clear()
                         barcode!!.text = ""
                     }
+                    AppPreferences.playSoundbarcode()
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
+
                 }
             }, Response.ErrorListener { response ->
                 pDialog.dismiss()
@@ -327,8 +321,6 @@ class GalleryFragment : Fragment() {
         _binding = null
     }
 
-
-
     override fun onCreateOptionsMenu(x: Menu, inflater: MenuInflater) {
         inflater.inflate(com.example.myapplication.R.menu.main_activity2, x);
         super.onCreateOptionsMenu(x, inflater)
@@ -336,7 +328,8 @@ class GalleryFragment : Fragment() {
         backinvetory = x.findItem(com.example.myapplication.R.id.backinvetory)
 
         if(menu!=null) {
-            menu?.setVisible(false)
+            menu?.isVisible = false
+
         }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -476,18 +469,20 @@ class GalleryFragment : Fragment() {
              txtunitbu = binding.txtunitB
              txtunitpu = binding.txtunitP
              txtunitCu = binding.txtunitC
-             if (txtunitbu!!.text.toString() != "") {
-                 unitB = txtunitbu!!.text.toString().toInt()
+             unitB = if (txtunitbu!!.text.toString() != "") {
+                 txtunitbu!!.text.toString().toInt()
+             } else{
+                 0
              }
-             if (txtunitpu!!.text.toString() != "") {
-
-
-
-
-                 unitP = txtunitpu!!.text.toString().toInt()
+             unitP = if (txtunitpu!!.text.toString() != "") {
+                 txtunitpu!!.text.toString().toInt()
+             } else{
+                 0
              }
-             if (txtunitCu!!.text.toString() != "") {
-                 unitC = txtunitCu!!.text.toString().toInt()
+             unitC = if (txtunitCu!!.text.toString() != "") {
+                 txtunitCu!!.text.toString().toInt()
+             } else{
+                 0
              }
              if (txtunitqtyP!!.text.toString() != "") {
                  txtunitqtyPi = txtunitqtyP!!.text.toString().toInt()
@@ -508,7 +503,7 @@ class GalleryFragment : Fragment() {
              CheckInterNetDailog()
          }
     }
-    fun updatestock(_ProductID: TextView?, StrockQty: EditText, Remark: EditText){
+    private fun updatestock(_ProductID: TextView?, StrockQty: EditText, Remark: EditText){
         if (AppPreferences.internetConnectionCheck(this.context)) {
             val Jsonarra = JSONObject()
             val Jsonarrastock = JSONObject()
@@ -607,7 +602,8 @@ class GalleryFragment : Fragment() {
         val dialog: AlertDialog = alertnet.create()
         dialog.show()
     }
-}
+
+    }
 
 
 
