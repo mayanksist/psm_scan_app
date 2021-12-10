@@ -44,6 +44,7 @@ class HomeFragment : Fragment()  {
     val btnDriLoad = mView.findViewById<Button>(com.example.myapplication.R.id.btnDriLoad)
     val btnUnLoadList = mView.findViewById<Button>(com.example.myapplication.R.id.btnunloadOrderlist)
     val btnOrderList = mView.findViewById<Button>(com.example.myapplication.R.id.btnOrderList)
+    val btninventoryreceiv = mView.findViewById<Button>(com.example.myapplication.R.id.btninventoryreceiv)
 
     var Usertype = preferences.getString("EmpTypeNo", "")
     if (Usertype.toString() != "2"){
@@ -55,6 +56,15 @@ class HomeFragment : Fragment()  {
             btnDriLoad.visibility=   View.GONE
             btnUnLoadList.visibility=   View.GONE
             btnOrderList.visibility=   View.GONE
+
+        }
+        if (Usertype.toString() == "11") {
+
+            btnInvCheck.visibility=   View.GONE
+            btnDriLoad.visibility=   View.GONE
+            btnUnLoadList.visibility=   View.GONE
+            btnOrderList.visibility=   View.GONE
+            btninventoryreceiv.visibility=   View.VISIBLE
 
         }
 
@@ -71,7 +81,9 @@ class HomeFragment : Fragment()  {
     btnOrderList.setOnClickListener {
         this.findNavController().navigate(com.example.myapplication.R.id.nav_orderlist)
     }
-
+        btninventoryreceiv.setOnClickListener {
+            this.findNavController().navigate(com.example.myapplication.R.id.nav_inventory)
+        }
 
         return mView
     }

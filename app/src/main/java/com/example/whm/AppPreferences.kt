@@ -1,19 +1,12 @@
 package com.example.myapplication.com.example.whm
-
-import android.app.AlertDialog
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import android.view.LayoutInflater
-import android.view.View
 import android.widget.Button
 import android.app.Dialog
 import android.view.Window
-import android.widget.Toast
-import androidx.navigation.fragment.findNavController
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 
 
 object AppPreferences {

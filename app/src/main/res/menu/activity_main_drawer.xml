@@ -10,18 +10,27 @@
             android:title="Home" />
         <item
             android:id="@+id/nav_product"
+            android:visible="false"
             android:icon="@drawable/ic_product_adf_scanner_24"
             android:title="Inventory Check" />
         <item
+            android:id="@+id/nav_inventory"
+            android:icon="@drawable/unloadorders"
+            android:visible="false"
+            android:title="@string/Inventoryreceiv" />
+        <item
             android:id="@+id/nav_productlist"
             android:icon="@drawable/order"
+            android:visible="false"
             android:title="@string/product_list_fragment" />
         <item
             android:id="@+id/nav_orderlist"
+            android:visible="false"
             android:icon="@drawable/loadorders"
             android:title="@string/OrderList" />
         <item
             android:id="@+id/nav_assignorder"
+            android:visible="false"
             android:icon="@drawable/unloadorders"
             android:title="@string/menuassignorder" />
         <item
@@ -30,6 +39,7 @@
             android:title="@string/menu_slideshow" />
         <item
             android:id="@+id/nav_loadorder"
+            android:visible="false"
             android:icon="@drawable/ic_menu_logout"
             android:title="Load Order" />
     </group>

@@ -27,6 +27,7 @@
     <string name="product_fragment_label">Product Fragment</string>
     <string name="product_list_fragment">Manual Load Order</string>
     <string name="second_fragment_label">Second Fragment</string>
+    <string name="Inventoryreceiv">PO Receive</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="scancode">Scan security</string>

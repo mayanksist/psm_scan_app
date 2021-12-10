@@ -616,15 +616,19 @@ class GalleryFragment : Fragment() {
             val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
             var accessToken = preferences.getString("accessToken", "")
             var empautoid = preferences.getString("EmpAutoId", "")
-            if (empautoid != null) {
-                details.put("UserAutoId", empautoid.toInt())
-            }
+
             JSONObj.put(
                 "requestContainer", Jsonarra.put(
-                    "accessTok" +
-                            "en", accessToken
+                    "accessTok"+"en", accessToken
                 )
             )
+            if (empautoid != null) {
+                JSONObj.put(
+                    "requestContainer", Jsonarra.put(
+                        "UserAutoId" , empautoid.toInt()
+                    )
+                )
+            }
             JSONObj.put("pObj", Jsonarrastock.put("productId", _ProductID!!.text))
             if (StrockQty!!.text.toString() != "") {
                 JSONObj.put("pObj", Jsonarrastock.put("StockQty", StrockQty!!.text))
