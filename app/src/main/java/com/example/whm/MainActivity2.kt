@@ -88,12 +88,9 @@ class MainActivity2 : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(com.example.myapplication.R.menu.main_activity2, menu)
-        var editicone = menu.findItem(com.example.myapplication.R.id.editproduct)
 
         return true
     }
-
-
 
     override fun onSupportNavigateUp(): Boolean {
             val navController = findNavController(com.example.myapplication.R.id.nav_host_fragment_content_main)

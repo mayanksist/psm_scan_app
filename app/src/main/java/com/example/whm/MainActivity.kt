@@ -11,10 +11,7 @@ import android.text.Editable
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import android.widget.EditText
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.android.volley.DefaultRetryPolicy
@@ -22,8 +19,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.myapplication.apisettings
-import com.google.firebase.crashlytics.internal.settings.model.AppRequestData
+import com.example.myapplication.R
 import org.json.JSONObject
 import java.io.IOException
 
@@ -97,8 +93,6 @@ class MainActivity : AppCompatActivity() {
                     editor.putString("LName", LName)
                     editor.putString("accessToken", jsondata.getJSONObject(i).getString("accessToken"))
                     editor.putBoolean("EnabledPickallBoxes", jsondata.getJSONObject(i).getBoolean("EnabledPickallBoxes"))
-                    editor.putString("StockRemark",jsondata.getJSONObject(i).getString("StockRemark") )
-                    editor.putString("StockNote", jsondata.getJSONObject(i).getString("StockNote"))
                     editor.apply()
                     val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
                     mLayout.visibility = View.GONE
@@ -156,15 +150,9 @@ class MainActivity : AppCompatActivity() {
                 var scansecuritykey=scansecurity
                    login(scansecuritykey)
             } else {
-                val alertnet = AlertDialog.Builder(this)
-                alertnet.setTitle("Connection")
-                alertnet.setMessage("Check your internet connection")
-                alertnet.setPositiveButton("ok")
-                { dialog, which -> dialog.dismiss()
-                    scancode.text = ""
-                }
-                val dialog: AlertDialog = alertnet.create()
-                dialog.show()
+
+                showCustomAlert()
+                scancode.text = ""
                 val preferences = PreferenceManager.getDefaultSharedPreferences(this)
                 val editor = preferences.edit()
                 editor.clear()
@@ -172,7 +160,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
+    private fun showCustomAlert() {
+        val dialogView = layoutInflater.inflate(R.layout.dailog_log, null)
+        val customDialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .show()
+        val btDismiss = dialogView.findViewById<Button>(R.id.btDismissCustomDialog)
+        btDismiss.setOnClickListener {
+            customDialog.dismiss()
+            Toast.makeText(getApplicationContext(), "No Connection",Toast.LENGTH_SHORT).show();
+        }
+        customDialog.show()
+    }
     fun Autologin(email: String) {
         val Jsonarra=JSONObject()
         val JSONObj = JSONObject()
@@ -260,16 +259,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         else{
-            val alertnet = AlertDialog.Builder(this)
-            alertnet.setTitle("Connection")
-            alertnet.setMessage("Please check your internet connection")
-            alertnet.setPositiveButton("ok")
-            { dialog, which -> dialog.dismiss()
-                var intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }
-            val dialog: AlertDialog = alertnet.create()
-            dialog.show()
+           AppPreferences.showAlertinternetconnection(this)
 
         }
     }

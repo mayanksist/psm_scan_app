@@ -6,6 +6,14 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.Button
+import android.app.Dialog
+import android.view.Window
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
 
 
 object AppPreferences {
@@ -18,27 +26,37 @@ object AppPreferences {
     const val GET_ASSIGN_ORDER = "WDriverOrder.asmx/getDriverOrderList"
     const val GET_ASSIGN_ORDER_LIST = "WDriverOrder.asmx/AssignedOrderList"
     const val GET_Packing_details = "WPackerProductList.asmx/getPackingDetails"
-    const val UPDATE_STOCK = apiurl+"WPackerProductList.asmx/UpdateStock"
+    const val UPDATE_STOCK = apiurl + "WPackerProductList.asmx/UpdateStock"
     fun internetConnectionCheck(context: Context?): Boolean {
         var Connected = false
         val connectivity = context?.applicationContext
             ?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (connectivity != null) {
             val info = connectivity.allNetworkInfo
-            if (info != null) for (i in info.indices) if (info[i].state == NetworkInfo.State.CONNECTED) { Connected = true }
-            else { }
+            if (info != null) for (i in info.indices) if (info[i].state == NetworkInfo.State.CONNECTED) {
+                Connected = true
+            } else {
+            }
         } else {
-            val alertnet = AlertDialog.Builder(context)
-            alertnet.setTitle("Connection")
-            alertnet.setMessage("Please check your internet connection")
-            alertnet.setPositiveButton("ok")
-            { dialog, which -> dialog.dismiss()}
-            val dialog: AlertDialog = alertnet.create()
-            dialog.show()
+            showAlertinternetconnection(context)
             Connected = false
         }
         return Connected
     }
+
+
+    fun showAlertinternetconnection(context: Context?) {
+        val dialog = context?.let { Dialog(it) }
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog?.setContentView(com.example.myapplication.R.layout.dailog_log)
+        val btDismiss = dialog?.findViewById<Button>(com.example.myapplication.R.id.btDismissCustomDialog)
+        btDismiss?.setOnClickListener {
+            dialog?.dismiss()
+//            Toast.makeText(getApplicationContext(), "No Connection",Toast.LENGTH_SHORT).show();
+        }
+        dialog?.show()
+    }
+
     fun playSoundbarcode() {
         var url:String="https://psmnj.a1whm.com/Audio/NOExists.mp3"
         val mediaPlayer = MediaPlayer().apply {
@@ -50,7 +68,7 @@ object AppPreferences {
             )
             setDataSource(url)
             prepare()
-            start()
+
         }
     }
     fun playSound() {
@@ -83,5 +101,6 @@ object AppPreferences {
         }
     }
 }
+
 
 

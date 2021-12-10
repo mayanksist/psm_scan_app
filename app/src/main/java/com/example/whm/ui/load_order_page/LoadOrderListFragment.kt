@@ -1,14 +1,13 @@
 package com.example.whm.ui.load_order_page
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -130,15 +129,15 @@ class LoadOrderListFragment : Fragment() {
             }
         }
         else{
-            val alertnet = AlertDialog.Builder(this.context)
-            alertnet.setTitle("Connection")
-            alertnet.setMessage("Please check your internet connection")
-            alertnet.setPositiveButton("ok")
-            { dialog, which -> dialog.dismiss()
+            val dialog = context?.let { Dialog(it) }
+            dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog?.setContentView(com.example.myapplication.R.layout.dailog_log)
+            val btDismiss = dialog?.findViewById<Button>(com.example.myapplication.R.id.btDismissCustomDialog)
+            btDismiss?.setOnClickListener {
+                dialog?.dismiss()
                 this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
             }
-            val dialog: AlertDialog = alertnet.create()
-            dialog.show()
+            dialog?.show()
         }
         return view
     }

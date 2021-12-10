@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="2dp"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +102,6 @@
                         android:layout_marginStart="4dp"
                         android:text="N/A"
                         android:textSize="16sp"
-
                         app:layout_constraintBottom_toBottomOf="@+id/textView2"
                         app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
                         app:layout_constraintStart_toEndOf="@+id/textView2"
@@ -174,9 +173,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="N/A"
+                        android:textColor="#000"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="#000"
                         app:layout_constraintBottom_toBottomOf="@+id/txtStock"
                         app:layout_constraintStart_toEndOf="@+id/txtStock"
                         app:layout_constraintTop_toTopOf="@+id/txtStock" />
@@ -327,6 +326,7 @@
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -370,7 +370,7 @@
                     android:paddingTop="3dp"
                     android:paddingEnd="5dp"
                     android:textColor="@color/colorAccent"
-                    android:textSize="20dp"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -391,7 +391,7 @@
                     android:paddingTop="3dp"
                     android:paddingEnd="5dp"
                     android:textColor="@color/black"
-                    android:textSize="17dp"
+                    android:textSize="22dp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -410,8 +410,8 @@
                     android:layout_row="0"
                     android:layout_column="0"
                     android:padding="5dp"
-                    android:text="Piece"
-                    android:textSize="17dp"
+                    android:text=""
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -420,8 +420,8 @@
                     android:layout_height="match_parent"
                     android:layout_row="0"
                     android:layout_column="1"
+                    android:textSize="22dp"
                     android:layout_marginTop="2dp"
-
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="2dp"
                     android:background="@drawable/bg_edittext"
@@ -431,7 +431,7 @@
                 <EditText
                     android:id="@+id/txtunitP"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="1"
                     android:layout_marginStart="5dp"
@@ -445,8 +445,8 @@
                     android:maxLength="6"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
+                    android:textSize="25dp"
+                    android:textStyle="normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -463,8 +463,8 @@
                     android:layout_row="0"
                     android:layout_column="0"
                     android:padding="5dp"
-                    android:text="Box"
-                    android:textSize="17dp"
+                    android:text=""
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -473,8 +473,8 @@
                     android:layout_height="match_parent"
                     android:layout_row="0"
                     android:layout_column="1"
+                    android:textSize="22dp"
                     android:layout_marginTop="2dp"
-
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="2dp"
                     android:background="@drawable/bg_edittext"
@@ -498,8 +498,8 @@
                     android:maxLength="6"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
+                    android:textSize="25dp"
+                    android:textStyle="normal" />
 
             </LinearLayout>
 
@@ -517,8 +517,8 @@
                     android:layout_row="0"
                     android:layout_column="0"
                     android:padding="5dp"
-                    android:text="Case"
-                    android:textSize="17dp"
+                    android:text=""
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -527,6 +527,7 @@
                     android:layout_height="match_parent"
                     android:layout_row="0"
                     android:layout_column="1"
+                    android:textSize="22dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="2dp"
@@ -551,8 +552,8 @@
                     android:maxLength="6"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
+                    android:textSize="25dp"
+                    android:textStyle="normal" />
 
             </LinearLayout>
 
@@ -570,8 +571,8 @@
                     android:layout_row="0"
                     android:layout_column="1"
                     android:padding="5dp"
-                    android:text="Total stock in Piece"
-                    android:textSize="17dp"
+                    android:text="Stock in Piece"
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -580,37 +581,83 @@
                     android:layout_height="match_parent"
                     android:layout_row="0"
                     android:layout_column="2"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusedByDefault="false"
-                    android:defaultFocusHighlightEnabled="false"
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="2dp"
                     android:background="@drawable/bg_edittext"
-                    android:editable="false"
-                    android:elevation="4dp"
-                    android:hint="0"
-                    android:longClickable="false"
                     android:clickable="false"
                     android:cursorVisible="false"
+                    android:defaultFocusHighlightEnabled="false"
+                    android:editable="false"
+                    android:elevation="4dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:focusedByDefault="false"
+                    android:hint="0"
                     android:inputType="number"
+                    android:longClickable="false"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
+                    android:textSize="25dp"
+                    android:textStyle="normal" />
 
             </LinearLayout>
-
             <LinearLayout
+                android:id="@+id/Layoutdefault"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/Layoutqty"
                 android:visibility="visible">
 
                 <TextView
+                    android:id="@+id/defaultstock"
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:padding="5dp"
+                    android:text=""
+                    android:textSize="22dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/txtdefaultqty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_row="0"
+                    android:layout_column="2"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/bg_edittext"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:defaultFocusHighlightEnabled="false"
+                    android:editable="false"
+                    android:elevation="4dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:focusedByDefault="false"
+                    android:hint="0"
+                    android:inputType="number"
+                    android:longClickable="false"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/Layoutremark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Layoutdefault"
+                android:visibility="visible">
+
+                <TextView
                     android:id="@+id/txtremark"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
@@ -618,7 +665,7 @@
                     android:maxLength="500"
                     android:padding="5dp"
                     android:text="Remark"
-                    android:textSize="17dp"
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
 
@@ -634,23 +681,36 @@
                     android:background="@drawable/bg_lightedittext"
                     android:elevation="4dp"
                     android:gravity="top"
-                    android:hint="write remark here..."
+                    android:hint="Write remark here..."
                     android:inputType="textMultiLine"
-                    android:lines="4"
+                    android:lines="3"
                     android:overScrollMode="always"
-                    android:padding="5dp"
+                    android:padding="8dp"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:scrollbarStyle="insideInset"
                     android:scrollbars="vertical"
                     android:scrollHorizontally="false"
-                    android:textSize="18dp" />
+                    android:textSize="15dp" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Layoutremark"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/txtremarnote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:textStyle="bold"
+                    android:textColor="#D80B0B"
+                    android:textAlignment="center"
+                    android:textSize="15dp" />
             </LinearLayout>
         </RelativeLayout>
-
-
         <Button
             android:id="@+id/btnupdatestock"
             android:layout_width="wrap_content"

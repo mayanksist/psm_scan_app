@@ -1,6 +1,7 @@
 package com.example.myapplication.com.example.whm.ui.gallery
 
 import android.R
+import android.R.id
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
@@ -34,6 +35,21 @@ import android.view.LayoutInflater
 import android.app.Activity
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
+import android.text.Spanned
+
+import android.text.style.BackgroundColorSpan
+
+import android.text.style.ForegroundColorSpan
+
+import android.R.id.text2
+import android.app.Dialog
+
+import android.text.SpannableStringBuilder
+
+import android.text.SpannableString
+
+
+
 
 
 class GalleryFragment : Fragment() {
@@ -62,6 +78,7 @@ class GalleryFragment : Fragment() {
     var  totalunitBqty: Int? =0
     var  totalunitCqty: Int? =0
     var  totalunitqty: Int? =0
+    var  txtdefaultqty: EditText? = null
     var  unitB: Int? =0
     var  unitC: Int? =0
     var  unitP: Int? =0
@@ -73,6 +90,7 @@ class GalleryFragment : Fragment() {
     var UnitChengeP: EditText?=null
     var UnitChengease: EditText?=null
     var  barcodeenter:String?=""
+    var DUnit:Int=0
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -150,7 +168,6 @@ class GalleryFragment : Fragment() {
                 })
 
                     btnupdatestock.setOnClickListener(
-
                         View.OnClickListener {
 
                             if (TxtRemark!!.text.trim().length.toString() != "0") {
@@ -258,7 +275,7 @@ class GalleryFragment : Fragment() {
                     val pprice = ("%.2f".format(jsonrepd.getDouble("Price")))
                     val DefaultStock = jsonrepd.getString("stock")
                     val DefaultStock2 = jsonrepd.getString("SPiece")
-                    val Dunit = jsonrepd.getInt("Dunit")
+                     DUnit = jsonrepd.getInt("Dunit")
                     var imagesurl = ""
                     if (jsonrepd.getString("OPath") == null) {
                         imagesurl = jsonrepd.getString("ImageUrl")
@@ -279,7 +296,7 @@ class GalleryFragment : Fragment() {
                     category.text = "$pCategory"
                     sub_category.text = "$pSubCategory"
                        stock.text = "${DefaultStock}"
-                    if(Dunit !=2){
+                    if(DUnit !=3){
                         stockfeild2.text = "(${DefaultStock2})"
                     }
 
@@ -314,7 +331,6 @@ class GalleryFragment : Fragment() {
                 pDialog.dismiss()
                 Log.e("onError", error(response.toString()))
             })
-
         reqPRODUCTDETAILS.retryPolicy = DefaultRetryPolicy(
             1000000,
             DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -333,7 +349,6 @@ class GalleryFragment : Fragment() {
         super.onCreateOptionsMenu(x, inflater)
         menu= x.findItem(com.example.myapplication.R.id.editproduct)
         backinvetory = x.findItem(com.example.myapplication.R.id.backinvetory)
-
         if(menu!=null) {
             menu?.isVisible = false
 
@@ -361,7 +376,12 @@ class GalleryFragment : Fragment() {
                         txtunitqtyC = binding.txtCunitqty
                         var txtunitP: TextView = binding.txtPunit
                         var ProductName: TextView = binding.txtproductname
+
                         var ProductID = binding.StxtProductid
+                        var defaultstock = binding.defaultstock
+                         TxtRemark=binding.txtreamrk
+                        var TxtRemarkNotw:TextView=binding.txtremarnote
+
                         txtunitqtyP = binding.txtPunitqty
                         val Jsonarra = JSONObject()
                         val detailstock = JSONObject()
@@ -375,19 +395,20 @@ class GalleryFragment : Fragment() {
                         val preferencesaccess =
                             PreferenceManager.getDefaultSharedPreferences(context)
                         var accessTokenS = preferencesaccess.getString("accessToken", "")
+
                         JSONObjs.put(
                             "requestContainer",
                             Jsonarra.put("accessToken", accessTokenS)
                         )
+
                         JSONObjs.put("requestContainer", Jsonarra.put("filterkeyword", detailstock))
                         val requpdatestock = JsonObjectRequest(
                             Request.Method.POST,
                             AppPreferences.apiurl + AppPreferences.GET_Packing_details,
                             JSONObjs,
-                            Response.Listener { responsesmsg ->
+                            { responsesmsg ->
                                 val resobjs = (responsesmsg.toString())
                                 val responsemsgs = JSONObject(resobjs)
-
                                 Gridlauyoutstock!!.visibility = View.GONE
                                 Gridlauyoutstock!!.visibility = View.VISIBLE
                                 showproductdetails?.visibility = View.GONE
@@ -402,7 +423,11 @@ class GalleryFragment : Fragment() {
                                     val jsonrepdu = JSONObject(jsondatas.toString())
                                     val ProductId = jsonrepdu.getString("PId")
                                     var Productname = jsonrepdu.getString("PName")
-
+                                    var StockRemark = jsonrepdu.getString("StockRemark")
+                                    var StockNote = jsonrepdu.getString("StockNote")
+                                     DUnit = jsonrepdu.getInt("DUnit")
+                                    TxtRemark!!.setText(StockRemark)
+                                    TxtRemarkNotw.text=StockNote
                                     val unitlist = jsonrepdu.getJSONArray("UList")
                                     for (i in 0 until unitlist.length()) {
                                         var unittype = unitlist.getJSONObject(i).getString("UName")
@@ -410,25 +435,80 @@ class GalleryFragment : Fragment() {
                                         var UnitType = unitlist.getJSONObject(i).getInt("UnitType")
                                         ProductID.text = ProductId.toString()
                                         ProductName.text = Productname
-                                        if (UnitType == 1) {
-                                            txtunitC.text = "$unittype"
-                                            txtunitqtyC!!.setText(Qty.toString())
-                                            Layoutbindunit = binding.LayoutCase
-                                            Layoutbindunit!!.visibility = View.VISIBLE
-                                        }
-                                        if (UnitType == 2) {
-                                            txtunitB.text = "$unittype"
 
-                                            txtunitqtyB!!.setText(Qty.toString())
-                                            Layoutbindunit = binding.layoutbox
-                                            Layoutbindunit!!.visibility = View.VISIBLE
+
+                                            if (UnitType == 1) {
+                                                txtunitC.text = if(DUnit!=1){
+                                                    "$unittype"
+                                                }else {
+                                                    "$unittype " + "*"
+                                                }
+                                                txtunitqtyC!!.setText(Qty.toString())
+                                                Layoutbindunit = binding.LayoutCase
+                                                Layoutbindunit!!.visibility = View.VISIBLE
+                                                val spannableString = SpannableString(txtunitC.text)
+                                                val red = ForegroundColorSpan(Color.RED)
+                                                if(txtunitC.text.length==6) {
+                                                    spannableString.setSpan(
+                                                        red,
+                                                        4, 6, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                                                    )
+                                                    txtunitC.setText(spannableString)
+                                                }
+
+                                            }
+                                            if (UnitType == 2) {
+                                                txtunitB.text =  if(DUnit!=2){
+                                                    "$unittype"
+                                                }else {
+                                                    "$unittype " + "*"
+
+
+                                                }
+                                                txtunitqtyB!!.setText(Qty.toString())
+                                                Layoutbindunit = binding.layoutbox
+                                                Layoutbindunit!!.visibility = View.VISIBLE
+                                                val spannableString = SpannableString(txtunitB.text)
+                                                val green = ForegroundColorSpan(Color.RED)
+                                                if(txtunitB.text.length==5) {
+                                                    spannableString.setSpan(
+                                                        green,
+                                                        3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                                                    )
+                                                    txtunitB.setText(spannableString)
+                                                }
+                                            }
+                                            if (UnitType == 3) {
+                                                txtunitP.text =  if(DUnit!=3){
+                                                    "$unittype"
+                                                }else{
+                                                    "$unittype " + "*"
+
+                                                }
+                                                txtunitqtyP!!.setText(Qty.toString())
+                                                Layoutbindunit = binding.LayoutPieace
+                                                Layoutbindunit!!.visibility = View.VISIBLE
+                                                val spannableString = SpannableString(txtunitP.text)
+                                                val red = ForegroundColorSpan(Color.RED)
+                                                if(txtunitP.text.length==7) {
+                                                    spannableString.setSpan(
+                                                        red,
+                                                        5, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                                                    )
+                                                    txtunitP.setText(spannableString)
+                                                }
+
+                                            }
+                                        if(DUnit==1){
+                                            defaultstock.setText("Stock in Case")
                                         }
-                                        if (UnitType == 3) {
-                                            txtunitP.text = "$unittype"
-                                            txtunitqtyP!!.setText(Qty.toString())
-                                            Layoutbindunit = binding.LayoutPieace
-                                            Layoutbindunit!!.visibility = View.VISIBLE
+                                        if(DUnit==2){
+                                            defaultstock.setText("Stock in Box" )
                                         }
+                                        if(DUnit==3){
+                                            defaultstock.setText("Stock in Piece" )
+                                        }
+
                                     }
                                     Layoutbindunit = binding.Layoutqty
                                     Layoutbindunit!!.visibility = View.VISIBLE
@@ -436,7 +516,7 @@ class GalleryFragment : Fragment() {
                                     Toast.makeText(this.context, resmsg, Toast.LENGTH_LONG).show()
                                 }
                             },
-                            Response.ErrorListener { response ->
+                            { response ->
 
                                 Log.e("onError", error(response.toString()))
                             })
@@ -458,6 +538,7 @@ class GalleryFragment : Fragment() {
                     editlayout?.visibility = View.GONE
                     backinvetory?.setVisible(false)
                     menu?.setVisible(true)
+                    clear()
 
                 }
                 else{
@@ -476,6 +557,8 @@ class GalleryFragment : Fragment() {
              txtunitbu = binding.txtunitB
              txtunitpu = binding.txtunitP
              txtunitCu = binding.txtunitC
+             txtdefaultqty = binding.txtdefaultqty
+             var DefaultStock:Int=0
              unitB = if (txtunitbu!!.text.toString() != "") {
                  txtunitbu!!.text.toString().toInt()
              } else{
@@ -505,6 +588,18 @@ class GalleryFragment : Fragment() {
              totalunitCqty = unitC!! * txtunitqtyCase!!
              totalunitqty = totalunitPqty!! + totalunitBqty!! + totalunitCqty!!
              txttotalqty!!.setText(totalunitqty.toString())
+             if (DUnit==1){
+                 DefaultStock= totalunitqty!! / txtunitqtyCase!!
+                 txtdefaultqty!!.setText(DefaultStock.toString())
+             }
+             if (DUnit==2){
+                 DefaultStock= totalunitqty!! / txtunitqtyBox!!
+                 txtdefaultqty!!.setText(DefaultStock.toString())
+             }
+             if (DUnit==3){
+                 DefaultStock= totalunitqty!! / txtunitqtyPi!!
+                 txtdefaultqty!!.setText(DefaultStock.toString())
+             }
          }
          else{
              CheckInterNetDailog()
@@ -594,20 +689,17 @@ class GalleryFragment : Fragment() {
         UnitChengeP!!.text=null
         UnitChengease!!.text=null
         txttotalqty!!.text=null
-
-
     }
     fun CheckInterNetDailog(){
-        val alertnet = AlertDialog.Builder(activity)
-        alertnet.setTitle("Connection")
-        alertnet.setMessage("Please check your internet connection")
-        alertnet.setPositiveButton("ok")
-        { dialog, which ->
-            dialog.dismiss()
+        val dialog = context?.let { Dialog(it) }
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog?.setContentView(com.example.myapplication.R.layout.dailog_log)
+        val btDismiss = dialog?.findViewById<Button>(com.example.myapplication.R.id.btDismissCustomDialog)
+        btDismiss?.setOnClickListener {
+            dialog?.dismiss()
             this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
         }
-        val dialog: AlertDialog = alertnet.create()
-        dialog.show()
+        dialog?.show()
     }
 
     }

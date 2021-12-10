@@ -1,16 +1,14 @@
 package com.example.myapplication.ui.product
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.util.TypedValue
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -459,20 +457,20 @@ class ProductList : Fragment() {
                 if (rspCode.toString() == "200") {
                     AppPreferences.playSound()
                     pDialog.dismiss()
-                    alertsuborder.setTitle(sorderno.toString().uppercase(Locale.getDefault()))
-                    alertsuborder.setMessage(rspMsg.toString())
-                    alertsuborder.setPositiveButton(
-                        "ok",
-                        DialogInterface.OnClickListener { dialog, which ->
                             val orderno3: EditText = binding.txtorderno
                             orderno3.text.clear()
                             this.findNavController()
                                 .navigate(com.example.myapplication.R.id.nav_orderlist)
-                        })
-                    FirstorderNO = ""
+                                     FirstorderNO = ""
                     checkr = 0
-                    val dialog: AlertDialog = alertsuborder.create()
-                    dialog.show()
+                    val timerout = Timer()
+                        timerout.schedule(object : TimerTask() {
+                        override fun run() {
+                            //dialog.dismiss()
+                            timerout.cancel()
+                        }
+                    }, 1000)
+
                     boxlist.clear()
                     clear()
                     msg!!.text = ""
@@ -554,16 +552,25 @@ class ProductList : Fragment() {
     }
     //check internet connection
     fun CheckInterNetDailog(){
-        val alertnet = AlertDialog.Builder(activity)
-        alertnet.setTitle("Connection")
-        alertnet.setMessage("Please check your internet connection")
-        alertnet.setPositiveButton("ok")
-        { dialog, which ->
-            dialog.dismiss()
+        val dialog = context?.let { Dialog(it) }
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog?.setContentView(com.example.myapplication.R.layout.dailog_log)
+        val btDismiss = dialog?.findViewById<Button>(com.example.myapplication.R.id.btDismissCustomDialog)
+        btDismiss?.setOnClickListener {
+            dialog?.dismiss()
             this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
         }
-        val dialog: AlertDialog = alertnet.create()
-        dialog.show()
+        dialog?.show()
+//        val alertnet = AlertDialog.Builder(activity)
+//        alertnet.setTitle("Connection")
+//        alertnet.setMessage("Please check your internet connection")
+//        alertnet.setPositiveButton("ok")
+//        { dialog, which ->
+//            dialog.dismiss()
+//
+//        }
+//        val dialog: AlertDialog = alertnet.create()
+//        dialog.show()
     }
 }
 fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
