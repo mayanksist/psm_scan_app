@@ -99,7 +99,7 @@
             android:background="@drawable/round_btn"
             android:text="@string/Inventoryreceiv"
             android:textAllCaps="false"
-            android:visibility="gone"
+            android:visibility="visible"
             android:textColor="@color/white"
             android:textSize="17sp" />
     </RelativeLayout>

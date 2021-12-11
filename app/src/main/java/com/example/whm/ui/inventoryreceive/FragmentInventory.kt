@@ -9,53 +9,53 @@ import android.widget.TextView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentInventoryFragmentBinding
 import android.widget.Button
-import android.widget.Toast
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import java.util.*
 
-class FragmentInventory : Fragment(){
-    private var _binding: FragmentInventoryFragmentBinding?=null
+import android.widget.EditText
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
+import android.text.Editable
+
+import java.sql.Time
+import android.widget.DatePicker
+import com.example.myapplication.com.example.whm.ui.inventoryreceive.DatePickerFragment
+import java.text.SimpleDateFormat
+
+
+class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
+    private var _binding: FragmentInventoryFragmentBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var mView: View
-    private lateinit var viewModel: FragmentInventoryViewModel
-    lateinit var textView: TextView
-    lateinit var button: Button
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentInventoryFragmentBinding.bind(view)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        mView= inflater.inflate(R.layout.fragment_inventory_fragment, container, false)
-        _binding = FragmentInventoryFragmentBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-        val view = inflater.inflate(
-            R.layout.fragment_inventory_fragment,
-            container,
-            false
-        )
+        binding.apply {
+            txtbildate.setOnClickListener {
+                // create new instance of DatePickerFragment
+                val datePickerFragment = DatePickerFragment()
+                val supportFragmentManager = requireActivity().supportFragmentManager
 
-//        val Buttonpicker = view.findViewById<Button>(R.id.btndatepick)
-//
-//        Buttonpicker.setOnClickListener {
-//            val now=Calendar.getInstance()
-//            val pickerdate=DatePickerDialog(this@FragmentInventory,DatePickerDialog.OnDateSetListener{
-//                view, year, monthOfYear, dayOfMonth ->
-//            },now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH))
-//            pickerdate.show()
-//
-//        }
+                // we have to implement setFragmentResultListener
+                supportFragmentManager.setFragmentResultListener(
+                    "REQUEST_KEY",
+                    viewLifecycleOwner
+                ) { resultKey, bundle ->
+                    if (resultKey == "REQUEST_KEY") {
+                        val date = bundle.getString("SELECTED_DATE")
+                        txtbildate.text =  date
+                    }
+                }
 
-
-        return mView
+                // show
+                datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
+            }
+        }
     }
 
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FragmentInventoryViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
