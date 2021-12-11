@@ -3,7 +3,5 @@ package com.example.myapplication
 
 
 
-class apisettings {
-
-}
+class apisettings
 

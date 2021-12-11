@@ -174,7 +174,7 @@ class GalleryFragment : Fragment() {
                             if (TxtRemark!!.text.trim().length.toString() != "0") {
                                 updatestock(ProductID_S, TotalStockQTY!!, TxtRemark!!)
                             } else {
-                                RemarkMessage();
+                                RemarkMessage()
                             }
                         }
                     )
@@ -262,7 +262,7 @@ class GalleryFragment : Fragment() {
                 if (presponsmsg == "Products Found") {
                     producdetails?.visibility = View.VISIBLE
                     showproductdetails?.visibility = View.VISIBLE
-                    menu?.setVisible(true)
+                    menu?.isVisible = true
 //                    Toast.makeText(this.context,barcodeenter.toString(),Toast.LENGTH_LONG).show()
                     val jsondata = resultobj.getString("responseData")
                     val jsonrepd = JSONObject(jsondata.toString())
@@ -301,7 +301,7 @@ class GalleryFragment : Fragment() {
                         stockfeild2.text = "(${DefaultStock2})"
                     }
 
-                    barcode!!.text = "" + bc
+                    barcode.text = "" + bc
                     Glide.with(this)
                         .load(imagesurl)
                         .into(imagur)
@@ -310,18 +310,18 @@ class GalleryFragment : Fragment() {
                     pDialog.dismiss()
                     showproductdetails?.visibility = View.GONE
                     val barcodeC: EditText = binding.barcodetype
-                    barcode!!.text = ""
+                    barcode.text = ""
                     barcodeC.text.clear()
-                    barcode!!.text = ""
+                    barcode.text = ""
                     val alertemail = AlertDialog.Builder(this.context)
                     alertemail.setTitle("Barcode")
                     alertemail.setMessage(presponsmsg.toString())
                     alertemail.setPositiveButton("ok")
                     { dialog, which ->
                         dialog.dismiss()
-                        barcode!!.text = ""
+                        barcode.text = ""
                         barcodeC.text.clear()
-                        barcode!!.text = ""
+                        barcode.text = ""
                     }
                     AppPreferences.playSoundbarcode()
                     val dialog: AlertDialog = alertemail.create()
@@ -346,7 +346,7 @@ class GalleryFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(x: Menu, inflater: MenuInflater) {
-        inflater.inflate(com.example.myapplication.R.menu.main_activity2, x);
+        inflater.inflate(com.example.myapplication.R.menu.main_activity2, x)
         super.onCreateOptionsMenu(x, inflater)
         menu= x.findItem(com.example.myapplication.R.id.editproduct)
         backinvetory = x.findItem(com.example.myapplication.R.id.backinvetory)
@@ -364,8 +364,8 @@ class GalleryFragment : Fragment() {
                         toolbar = view?.findViewById(com.example.myapplication.R.id.toolbar)
                         (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
                         (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Stock Update"
-                        menu?.setVisible(false)
-                        backinvetory?.setVisible(true)
+                        menu?.isVisible = false
+                        backinvetory?.isVisible = true
                         val productdetils = binding.producdetails
                         val editlayout = binding.editlayout
                         productdetils.visibility = View.GONE
@@ -413,7 +413,7 @@ class GalleryFragment : Fragment() {
                                 Gridlauyoutstock!!.visibility = View.GONE
                                 Gridlauyoutstock!!.visibility = View.VISIBLE
                                 showproductdetails?.visibility = View.GONE
-                                editlayout?.visibility = View.VISIBLE
+                                editlayout.visibility = View.VISIBLE
                                 producdetails?.visibility = View.GONE
 
                                 val resultobjs = JSONObject(responsemsgs.getString("d"))
@@ -454,7 +454,7 @@ class GalleryFragment : Fragment() {
                                                         red,
                                                         4, 6, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                                                     )
-                                                    txtunitC.setText(spannableString)
+                                                    txtunitC.text = spannableString
                                                 }
 
                                             }
@@ -476,7 +476,7 @@ class GalleryFragment : Fragment() {
                                                         green,
                                                         3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                                                     )
-                                                    txtunitB.setText(spannableString)
+                                                    txtunitB.text = spannableString
                                                 }
                                             }
                                             if (UnitType == 3) {
@@ -496,18 +496,18 @@ class GalleryFragment : Fragment() {
                                                         red,
                                                         5, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                                                     )
-                                                    txtunitP.setText(spannableString)
+                                                    txtunitP.text = spannableString
                                                 }
 
                                             }
                                         if(DUnit==1){
-                                            defaultstock.setText("Stock in Case")
+                                            defaultstock.text = "Stock in Case"
                                         }
                                         if(DUnit==2){
-                                            defaultstock.setText("Stock in Box" )
+                                            defaultstock.text = "Stock in Box"
                                         }
                                         if(DUnit==3){
-                                            defaultstock.setText("Stock in Piece" )
+                                            defaultstock.text = "Stock in Piece"
                                         }
 
                                     }
@@ -537,8 +537,8 @@ class GalleryFragment : Fragment() {
                     showproductdetails?.visibility = View.VISIBLE
                     producdetails?.visibility = View.VISIBLE
                     editlayout?.visibility = View.GONE
-                    backinvetory?.setVisible(false)
-                    menu?.setVisible(true)
+                    backinvetory?.isVisible = false
+                    menu?.isVisible = true
                     clear()
 
                 }
@@ -631,11 +631,11 @@ class GalleryFragment : Fragment() {
                 )
             }
             JSONObj.put("pObj", Jsonarrastock.put("productId", _ProductID!!.text))
-            if (StrockQty!!.text.toString() != "") {
-                JSONObj.put("pObj", Jsonarrastock.put("StockQty", StrockQty!!.text))
+            if (StrockQty.text.toString() != "") {
+                JSONObj.put("pObj", Jsonarrastock.put("StockQty", StrockQty.text))
             }
-            if (Remark!!.text.toString() != "") {
-                JSONObj.put("pObj", Jsonarrastock.put("Remark", Remark!!.text))
+            if (Remark.text.toString() != "") {
+                JSONObj.put("pObj", Jsonarrastock.put("Remark", Remark.text))
             }
             val reqStockUpdate = JsonObjectRequest(
                 Request.Method.POST, AppPreferences.UPDATE_STOCK, JSONObj,
@@ -652,7 +652,7 @@ class GalleryFragment : Fragment() {
                         { dialog, which ->
                             dialog.dismiss()
 
-                            backinvetory?.setVisible(false)
+                            backinvetory?.isVisible = false
                             barcodeenter = binding.txtBarScanned.text as String?
                             bindproductdetails(barcodeenter as String)
                             showproductdetails?.visibility = View.VISIBLE
@@ -666,7 +666,7 @@ class GalleryFragment : Fragment() {
                     } else {
                         SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText(
                             resmsg.toString()
-                        ).show();
+                        ).show()
 
                     }
                 }, Response.ErrorListener { response ->
@@ -701,7 +701,7 @@ class GalleryFragment : Fragment() {
         dialog?.setContentView(com.example.myapplication.R.layout.dailog_log)
         val btDismiss = dialog?.findViewById<Button>(com.example.myapplication.R.id.btDismissCustomDialog)
         btDismiss?.setOnClickListener {
-            dialog?.dismiss()
+            dialog.dismiss()
             this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
         }
         dialog?.show()

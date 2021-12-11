@@ -1,28 +1,19 @@
 package com.example.whm.ui.inventoryreceive
-import androidx.lifecycle.ViewModelProvider
+
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.*
+import androidx.fragment.app.Fragment
 import com.example.myapplication.R
+import com.example.myapplication.com.example.whm.ui.inventoryreceive.DatePickerFragment
 import com.example.myapplication.databinding.FragmentInventoryFragmentBinding
 import java.util.*
-
-import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
-import android.text.Editable
-import android.widget.*
-
-import java.sql.Time
-import com.example.myapplication.com.example.whm.ui.inventoryreceive.DatePickerFragment
-import java.text.SimpleDateFormat
 
 
 class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
     private var _binding: FragmentInventoryFragmentBinding? = null
     private val binding get() = _binding!!
-
+    val types = arrayOf("simple User", "Admin")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentInventoryFragmentBinding.bind(view)
@@ -47,8 +38,19 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                 // show
                 datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
             }
+            autoCompleteTextView.adapter = context?.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, types) } as SpinnerAdapter
+            autoCompleteTextView.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    println("erreur")
+                }
 
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val type = parent?.getItemAtPosition(position).toString()
+                    Toast.makeText(activity,type, Toast.LENGTH_LONG).show()
+                    println(type)
+                }
 
+            }
         }
 
     }

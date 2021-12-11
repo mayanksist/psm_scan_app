@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity() {
         val btDismiss = dialogView.findViewById<Button>(R.id.btDismissCustomDialog)
         btDismiss.setOnClickListener {
             customDialog.dismiss()
-            Toast.makeText(getApplicationContext(), "No Connection",Toast.LENGTH_SHORT).show();
+            Toast.makeText(applicationContext, "No Connection",Toast.LENGTH_SHORT).show()
         }
         customDialog.show()
     }

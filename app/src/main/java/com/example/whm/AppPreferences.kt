@@ -44,7 +44,7 @@ object AppPreferences {
         dialog?.setContentView(com.example.myapplication.R.layout.dailog_log)
         val btDismiss = dialog?.findViewById<Button>(com.example.myapplication.R.id.btDismissCustomDialog)
         btDismiss?.setOnClickListener {
-            dialog?.dismiss()
+            dialog.dismiss()
 //            Toast.makeText(getApplicationContext(), "No Connection",Toast.LENGTH_SHORT).show();
         }
         dialog?.show()

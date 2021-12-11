@@ -557,7 +557,7 @@ class ProductList : Fragment() {
         dialog?.setContentView(com.example.myapplication.R.layout.dailog_log)
         val btDismiss = dialog?.findViewById<Button>(com.example.myapplication.R.id.btDismissCustomDialog)
         btDismiss?.setOnClickListener {
-            dialog?.dismiss()
+            dialog.dismiss()
             this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
         }
         dialog?.show()

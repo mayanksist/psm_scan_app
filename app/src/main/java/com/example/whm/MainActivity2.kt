@@ -63,7 +63,7 @@ class MainActivity2 : AppCompatActivity() {
 
         }
         val version: TextView = findViewById(com.example.myapplication.R.id.version)
-        version.setText("version : "+AppPreferences.AppVersion)
+        version.text = "version : "+AppPreferences.AppVersion
 
         if (usertype == "9") {
             nav_Menu.findItem(com.example.myapplication.R.id.nav_product).isVisible = true
