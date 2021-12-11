@@ -91,6 +91,7 @@ class GalleryFragment : Fragment() {
     var UnitChengease: EditText?=null
     var  barcodeenter:String?=""
     var DUnit:Int=0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

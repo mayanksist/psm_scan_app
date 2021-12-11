@@ -55,7 +55,7 @@
         tools:layout="@layout/fragment_product_list" />
     <fragment
         android:id="@+id/nav_inventory"
-        android:name="com.example.whm.ui.inventoryreceive.InventoryreceiverFragment"
+        android:name="com.example.whm.ui.inventoryreceive.FragmentInventory"
         android:label="@string/Inventoryreceiv"
-        tools:layout="@layout/inventoryreceiver_fragment" />
+        tools:layout="@layout/fragment_inventory_fragment" />
 </navigation>
