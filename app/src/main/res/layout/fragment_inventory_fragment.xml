@@ -3,6 +3,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
+    android:id="@+id/layoutpo"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context="com.example.whm.ui.inventoryreceive.FragmentInventory">
@@ -115,7 +116,7 @@
                 <TextView
                     android:id="@+id/txtvender"
                     style="@style/RegularMono"
-                    android:layout_width="105dp"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
@@ -134,23 +135,22 @@
                         android:background="@drawable/bg_lightedittext"
                         android:inputType="none"
                         android:padding="5dp"
-
                         android:text="Select Vendor" />
                         </LinearLayout>
                  </RelativeLayout>
 
-        <Button
-            android:id="@+id/btnnext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Next"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"
-            android:textAllCaps="false"
-            android:background="@color/colorAccent"
-            android:textColor="#fff"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <Button
+        android:id="@+id/btnnext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:text="Next"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

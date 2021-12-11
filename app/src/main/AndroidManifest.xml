@@ -30,6 +30,9 @@
             android:name=".com.example.whm.MainActivity2"
             android:noHistory="true"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.whm.ui.inventoryreceive.ReceivePO"
+            android:exported="true" />
     </application>
 
 </manifest>

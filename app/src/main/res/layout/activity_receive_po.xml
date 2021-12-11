@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/layoutpo"
+    tools:context="com.example.whm.ui.inventoryreceive.ReceivePO">
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbara">
+
+    </include>
+
+    <EditText
+        android:id="@+id/barcodetype"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/txtscan"
+        android:drawableRight="@drawable/barcode"
+        android:hint="Scan Barcode"
+        android:inputType="text"
+        android:maxLength="20"
+        android:padding="8dp"
+        android:singleLine="true"
+        app:counterEnabled="true"
+        app:hintEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbara" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/barcodeproduct"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/barcodetype"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        app:layoutManager="LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barcodetype">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</androidx.constraintlayout.widget.ConstraintLayout>

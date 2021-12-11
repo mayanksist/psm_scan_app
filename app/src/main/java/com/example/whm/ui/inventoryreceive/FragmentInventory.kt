@@ -1,5 +1,6 @@
 package com.example.whm.ui.inventoryreceive
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.DatePickerFragment
 import com.example.myapplication.databinding.FragmentInventoryFragmentBinding
+import kotlinx.coroutines.Dispatchers.Main
 import java.util.*
 
 
@@ -46,10 +48,15 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val type = parent?.getItemAtPosition(position).toString()
-                    Toast.makeText(activity,type, Toast.LENGTH_LONG).show()
+//                    Toast.makeText(activity,type, Toast.LENGTH_LONG).show()
                     println(type)
                 }
 
+            }
+
+            btnnext.setOnClickListener {
+                val intent = Intent (context, ReceivePO::class.java)
+                startActivity(intent)
             }
         }
 
