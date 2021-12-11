@@ -20,6 +20,7 @@ object AppPreferences {
     const val GET_ASSIGN_ORDER_LIST = "WDriverOrder.asmx/AssignedOrderList"
     const val GET_Packing_details = "WPackerProductList.asmx/getPackingDetails"
     const val UPDATE_STOCK = apiurl + "WPackerProductList.asmx/UpdateStock"
+    const val Bind_VENDER_LIST = BASEURL + "WPOReceive.asmx/getVendor"
     fun internetConnectionCheck(context: Context?): Boolean {
         var Connected = false
         val connectivity = context?.applicationContext
