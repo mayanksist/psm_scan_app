@@ -86,6 +86,7 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="17sp" />
+
         <Button
             android:id="@+id/btninventoryreceiv"
             android:layout_width="0dp"
@@ -99,9 +100,9 @@
             android:background="@drawable/round_btn"
             android:text="@string/Inventoryreceiv"
             android:textAllCaps="false"
-            android:visibility="visible"
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:visibility="gone" />
     </RelativeLayout>
 
 

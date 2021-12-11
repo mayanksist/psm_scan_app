@@ -5,19 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentInventoryFragmentBinding
-import android.widget.Button
 import java.util.*
 
-import android.widget.EditText
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.text.Editable
+import android.widget.*
 
 import java.sql.Time
-import android.widget.DatePicker
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.DatePickerFragment
 import java.text.SimpleDateFormat
 
@@ -50,7 +47,10 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                 // show
                 datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
             }
+
+
         }
+
     }
 
     override fun onDestroyView() {

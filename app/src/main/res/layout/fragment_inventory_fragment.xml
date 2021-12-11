@@ -27,11 +27,11 @@
 
                 <TextView
                     android:id="@+id/txtPunit"
-                    android:layout_width="80dp"
+                    style="@style/RegularMono"
+                    android:layout_width="103dp"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
-                    android:fontFamily="@font/arizonia"
                     android:padding="5dp"
                     android:text="Bill No"
                     android:textSize="17dp"
@@ -68,11 +68,11 @@
 
                 <TextView
                     android:id="@+id/txtdatebill"
-                    android:layout_width="80dp"
+                    style="@style/RegularMono"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
-                    android:fontFamily="@font/arizonia"
                     android:padding="5dp"
                     android:text="Bill Date"
                     android:textSize="17dp"
@@ -114,35 +114,36 @@
 
                 <TextView
                     android:id="@+id/txtvender"
-                    android:layout_width="80dp"
+                    style="@style/RegularMono"
+                    android:layout_width="104dp"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
-                    android:fontFamily="@font/arizonia"
                     android:padding="5dp"
                     android:text="Vendor"
                     android:textSize="17dp"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/txtvendor"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_row="0"
-                    android:layout_column="1"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="2dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_lightedittext"
-                    android:elevation="4dp"
-                    android:hint="Vendor Name"
-                    android:inputType="text"
-                    android:maxLength="6"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:textStyle="normal" />
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_lightedittext"
+                        android:inputType="none"
+                        android:padding="5dp"
+                        android:text="Select Vendor" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
                  </RelativeLayout>

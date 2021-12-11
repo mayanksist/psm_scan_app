@@ -34,6 +34,11 @@
     <string name="picallboxes">Pick all boxes</string>
     <string name="Api"></string>
     <string name="title_activity_main">MainActivity</string>
-
+    <string-array name="programming_languages">
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>CPP</item>
+    </string-array>
 </resources>
 
