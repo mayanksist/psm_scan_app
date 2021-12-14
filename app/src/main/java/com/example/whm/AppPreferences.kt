@@ -7,10 +7,15 @@ import android.net.NetworkInfo
 import android.widget.Button
 import android.app.Dialog
 import android.view.Window
+import android.os.Build
+import com.example.myapplication.BuildConfig
 
 
 object AppPreferences {
-    const val AppVersion = "2.0.0.17"
+//    const val AppVersion = "2.0.0.17"
+    const  val AppVersion = BuildConfig.VERSION_NAME
+
+
     const val BASEURL = "http://api.a1whm.com/AndroidAPI/"
     const val BASEURLSU = "https://api.a1whm.com/AndroidAPI/"
     const val apiurl = "http://api.a1whm.com/Packerapi/"
@@ -21,6 +26,7 @@ object AppPreferences {
     const val GET_Packing_details = "WPackerProductList.asmx/getPackingDetails"
     const val UPDATE_STOCK = apiurl + "WPackerProductList.asmx/UpdateStock"
     const val Bind_VENDER_LIST = BASEURL + "WPOReceive.asmx/getVendor"
+    const val SCAND_BARCODE_PADD = BASEURL + "WPOReceive.asmx/getproductbybarcode"
     fun internetConnectionCheck(context: Context?): Boolean {
         var Connected = false
         val connectivity = context?.applicationContext

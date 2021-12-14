@@ -51,14 +51,27 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                     if (resultKey == "REQUEST_KEY") {
                         val date = bundle.getString("SELECTED_DATE")
                         txtbildate.text =  date
+
                     }
+
                 }
 
                 // show
                 datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
             }
             btnnext.setOnClickListener {
+                val Bill_No: EditText = binding.txtbillno
+                val Bill_Date: CharSequence? =  txtbildate.text
+                val Vendor_ID:Spinner=binding.ddlvenderlist
+                val VENDORID = Vendor_ID.getSelectedItemId().toInt()
                 val intent = Intent(context, ReceivePO::class.java)
+                val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+                val editor = preferences.edit()
+                editor.putString("Bill_No", Bill_No.text.toString())
+                editor.putString("Bill_Date", Bill_Date.toString())
+                editor.putInt("VENDORID", VENDORID.toInt())
+                editor.apply()
+//                intent.putExtra("billna", txt);
                 startActivity(intent)
             }
         }

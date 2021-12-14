@@ -342,26 +342,20 @@ class ManualorderFragment : Fragment() {
                     if (rspCode.toString() == "200") {
                         AppPreferences.playSound()
                         pDialog.dismiss()
-                        alertsuborder.setTitle(sorderno.toString().uppercase(Locale.getDefault()))
-                        alertsuborder.setMessage(rspMsg.toString())
-                        alertsuborder.setPositiveButton(
-                            "ok",
-                            DialogInterface.OnClickListener { dialog, which ->
-                                val orderno3: EditText = binding.txtorderno
-                                orderno3.text.clear()
-                                this.findNavController()
-                                    .navigate(R.id.nav_orderlist)
-                            })
+                        val orderno3: EditText = binding.txtorderno
+                        orderno3.text.clear()
+                        this.findNavController()
+                            .navigate(com.example.myapplication.R.id.nav_orderlist)
                         FirstorderNO = ""
                         checkr = 0
-                        val dialog: AlertDialog = alertsuborder.create()
-                        dialog.show()
-                        list.clear()
-                        boxlist.clear()
-                        clear()
-                        msg!!.text = ""
-                        clear()
-                        cardview1.visibility = View.GONE
+                        val timerout = Timer()
+                        timerout.schedule(object : TimerTask() {
+                            override fun run() {
+                                //dialog.dismiss()
+                                timerout.cancel()
+                            }
+                        }, 2000)
+
                     }
                     else {
                         pDialog.dismiss()

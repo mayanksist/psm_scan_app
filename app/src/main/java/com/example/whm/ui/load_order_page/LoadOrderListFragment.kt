@@ -97,6 +97,9 @@ class LoadOrderListFragment : Fragment() {
                             }
                         }
                     } else {
+//                        SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText(
+//                            resmsg.toString()
+//                        ).show()
                         val alerts = AlertDialog.Builder(this.context)
                         alerts.setMessage(resmsg.toString())
                         alerts.setPositiveButton("ok", null)

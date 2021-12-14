@@ -62,9 +62,13 @@
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/layout/product_list_detail.xml" value="0.21981981981981982" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/menu/activity_main_drawer.xml" value="0.6" />
         <entry key="..\:/Akritifolder/psmapp/app/src/main/res/menu/main_activity2.xml" value="0.21981981981981982" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/drawable/bg_edittext.xml" value="0.68" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/bg_lightedittext.xml" value="0.91875" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/bg_totalqty.xml" value="0.91875" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/dialog_view.xml" value="0.91875" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.68" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/drawable/ic_baseline_calendar_month_24.xml" value="0.68" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.68" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.33425925925925926" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/loadorder_arrow_circle_right_24.xml" value="0.83" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/oval2.xml" value="0.33425925925925926" />
@@ -75,13 +79,15 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/font/arizonia.xml" value="0.9525" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_main2.xml" value="0.36666666666666664" />
-        <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_receive_po.xml" value="0.7616666666666667" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_receive_po.xml" value="0.8617424242424242" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/app_bar_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/content_main.xml" value="0.2916666666666667" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/dailog_log.xml" value="0.88" />
-        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_gallery.xml" value="0.7125" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_gallery.xml" value="0.6989100817438693" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_home.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_inventory_fragment.xml" value="0.88" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_item.xml" value="0.88" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_item_list.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_load_order_list.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_loadorderlists.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_manualorder.xml" value="0.25" />
@@ -92,6 +98,7 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/inventoryreceiver_fragment.xml" value="0.7843601895734598" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/msg.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/nav_header_main.xml" value="0.24583333333333332" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/receivepolist.xml" value="1.0" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/toolbar.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/menu/activity_main_drawer.xml" value="0.36102564102564105" />
         <entry key="..\:/Android App/PSM/app/src/main/res/menu/main_activity2.xml" value="0.67" />

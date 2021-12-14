@@ -32,21 +32,24 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.myapplication.ui.product.setSupportActionBar
 import android.view.ViewGroup
 import android.view.LayoutInflater
-import android.app.Activity
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import android.text.Spanned
-
-import android.text.style.BackgroundColorSpan
-
 import android.text.style.ForegroundColorSpan
-
-import android.R.id.text2
 import android.app.Dialog
-
-import android.text.SpannableStringBuilder
-
 import android.text.SpannableString
+import cn.pedant.SweetAlert.SweetAlertDialog.OnSweetClickListener
+import com.example.myapplication.com.example.whm.MainActivity
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -59,6 +62,7 @@ class GalleryFragment : Fragment() {
     var productId:TextView?=null
     var Gridlauyoutstock:RelativeLayout? = null
     var Layoutbindunit:LinearLayout? = null
+    var Layoutdefault:LinearLayout? = null
     var editlayout:ConstraintLayout?= null
     var showproductdetails:ConstraintLayout?=null
     var producdetails:ConstraintLayout?=null
@@ -78,6 +82,7 @@ class GalleryFragment : Fragment() {
     var  totalunitBqty: Int? =0
     var  totalunitCqty: Int? =0
     var  totalunitqty: Int? =0
+    var  totalstock: Int? =0
     var  txtdefaultqty: EditText? = null
     var  unitB: Int? =0
     var  unitC: Int? =0
@@ -86,6 +91,7 @@ class GalleryFragment : Fragment() {
     var barcode: EditText?=null
     var TotalStockQTY: EditText?=null
     var ProductID_S: TextView?=null
+    var TxttotalStock: TextView?=null
     var UnitChengeBox: EditText?=null
     var UnitChengeP: EditText?=null
     var UnitChengease: EditText?=null
@@ -171,10 +177,15 @@ class GalleryFragment : Fragment() {
                     btnupdatestock.setOnClickListener(
                         View.OnClickListener {
 
-                            if (TxtRemark!!.text.trim().length.toString() != "0") {
-                                updatestock(ProductID_S, TotalStockQTY!!, TxtRemark!!)
-                            } else {
+                            if (TxtRemark!!.text.trim().length.toString() == "0" ) {
                                 RemarkMessage()
+                            }
+                            else if (TotalStockQTY!!.text.trim().toString()=="" || TotalStockQTY!!.text.trim().toString()=="0") {
+                                Totalstockqtycheck()
+                            }
+                            else {
+                                updatestock(ProductID_S, TotalStockQTY!!, TxtRemark!!)
+
                             }
                         }
                     )
@@ -238,6 +249,7 @@ class GalleryFragment : Fragment() {
         val locationval: TextView = binding.txtLocation
         val barcode = binding.txtBarScanned
         val reordermark: TextView = binding.txtreordmark
+        stockfeild2.visibility=View.GONE
         val Jsonarra = JSONObject()
         val details = JSONObject()
         val JSONObj = JSONObject()
@@ -296,11 +308,14 @@ class GalleryFragment : Fragment() {
                     }
                     category.text = "$pCategory"
                     sub_category.text = "$pSubCategory"
-                       stock.text = "${DefaultStock}"
+//                       stock.text = "${DefaultStock}"
+
+
                     if(DUnit !=3){
                         stockfeild2.text = "(${DefaultStock2})"
+                        stockfeild2.visibility=View.VISIBLE
                     }
-
+                    stock.text = "${DefaultStock}"
                     barcode.text = "" + bc
                     Glide.with(this)
                         .load(imagesurl)
@@ -322,6 +337,7 @@ class GalleryFragment : Fragment() {
                         barcode.text = ""
                         barcodeC.text.clear()
                         barcode.text = ""
+                        menu?.isVisible = false
                     }
                     AppPreferences.playSoundbarcode()
                     val dialog: AlertDialog = alertemail.create()
@@ -352,7 +368,6 @@ class GalleryFragment : Fragment() {
         backinvetory = x.findItem(com.example.myapplication.R.id.backinvetory)
         if(menu!=null) {
             menu?.isVisible = false
-
         }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -377,12 +392,13 @@ class GalleryFragment : Fragment() {
                         txtunitqtyC = binding.txtCunitqty
                         var txtunitP: TextView = binding.txtPunit
                         var ProductName: TextView = binding.txtproductname
-
+                            TxttotalStock=binding.txttotal
                         var ProductID = binding.StxtProductid
                         var defaultstock = binding.defaultstock
                          TxtRemark=binding.txtreamrk
                         var TxtRemarkNotw:TextView=binding.txtremarnote
-
+                        Layoutdefault=binding.Layoutdefault
+                        Layoutdefault!!.visibility=View.GONE
                         txtunitqtyP = binding.txtPunitqty
                         val Jsonarra = JSONObject()
                         val detailstock = JSONObject()
@@ -415,7 +431,6 @@ class GalleryFragment : Fragment() {
                                 showproductdetails?.visibility = View.GONE
                                 editlayout.visibility = View.VISIBLE
                                 producdetails?.visibility = View.GONE
-
                                 val resultobjs = JSONObject(responsemsgs.getString("d"))
                                 val presponsmsgs = resultobjs.getString("responseCode")
                                 val resmsg = resultobjs.getString("responseMessage")
@@ -436,8 +451,6 @@ class GalleryFragment : Fragment() {
                                         var UnitType = unitlist.getJSONObject(i).getInt("UnitType")
                                         ProductID.text = ProductId.toString()
                                         ProductName.text = Productname
-
-
                                             if (UnitType == 1) {
                                                 txtunitC.text = if(DUnit!=1){
                                                     "$unittype"
@@ -456,15 +469,12 @@ class GalleryFragment : Fragment() {
                                                     )
                                                     txtunitC.text = spannableString
                                                 }
-
                                             }
                                             if (UnitType == 2) {
                                                 txtunitB.text =  if(DUnit!=2){
                                                     "$unittype"
                                                 }else {
                                                     "$unittype " + "*"
-
-
                                                 }
                                                 txtunitqtyB!!.setText(Qty.toString())
                                                 Layoutbindunit = binding.layoutbox
@@ -498,18 +508,17 @@ class GalleryFragment : Fragment() {
                                                     )
                                                     txtunitP.text = spannableString
                                                 }
-
                                             }
                                         if(DUnit==1){
+                                             Layoutdefault=binding.Layoutdefault
+                                            Layoutdefault!!.visibility=View.VISIBLE
                                             defaultstock.text = "Stock in Case"
                                         }
                                         if(DUnit==2){
+                                             Layoutdefault=binding.Layoutdefault
+                                            Layoutdefault!!.visibility=View.VISIBLE
                                             defaultstock.text = "Stock in Box"
                                         }
-                                        if(DUnit==3){
-                                            defaultstock.text = "Stock in Piece"
-                                        }
-
                                     }
                                     Layoutbindunit = binding.Layoutqty
                                     Layoutbindunit!!.visibility = View.VISIBLE
@@ -534,13 +543,34 @@ class GalleryFragment : Fragment() {
 
             com.example.myapplication.R.id.backinvetory  -> {
                 if (AppPreferences.internetConnectionCheck(this.context)) {
-                    showproductdetails?.visibility = View.VISIBLE
-                    producdetails?.visibility = View.VISIBLE
-                    editlayout?.visibility = View.GONE
-                    backinvetory?.isVisible = false
-                    menu?.isVisible = true
-                    clear()
+                    if (TotalStockQTY!!.text.toString()!="" && TotalStockQTY!!.text.toString().toInt()>0) {
 
+                        SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Are you sure?")
+                            .setContentText("You want to back ")
+                            .setConfirmText("ok")
+                            .setConfirmClickListener { sDialog ->
+                                sDialog.dismissWithAnimation()
+                                showproductdetails?.visibility = View.VISIBLE
+                                producdetails?.visibility = View.VISIBLE
+                                editlayout?.visibility = View.GONE
+                                backinvetory?.isVisible = false
+                                menu?.isVisible = true
+                                clear()
+                            }
+                            .setCancelButton(
+                                "Cancel"
+                            ) { sDialog -> sDialog.dismissWithAnimation() }
+                            .show()
+                    }
+                    else{
+                        showproductdetails?.visibility = View.VISIBLE
+                        producdetails?.visibility = View.VISIBLE
+                        editlayout?.visibility = View.GONE
+                        backinvetory?.isVisible = false
+                        menu?.isVisible = true
+                        clear()
+                    }
                 }
                 else{
                     CheckInterNetDailog()
@@ -559,6 +589,7 @@ class GalleryFragment : Fragment() {
              txtunitpu = binding.txtunitP
              txtunitCu = binding.txtunitC
              txtdefaultqty = binding.txtdefaultqty
+
              var DefaultStock:Int=0
              unitB = if (txtunitbu!!.text.toString() != "") {
                  txtunitbu!!.text.toString().toInt()
@@ -590,17 +621,24 @@ class GalleryFragment : Fragment() {
              totalunitqty = totalunitPqty!! + totalunitBqty!! + totalunitCqty!!
              txttotalqty!!.setText(totalunitqty.toString())
              if (DUnit==1){
+                 Layoutdefault!!.visibility=View.VISIBLE
                  DefaultStock= totalunitqty!! / txtunitqtyCase!!
                  txtdefaultqty!!.setText(DefaultStock.toString())
              }
              if (DUnit==2){
+                 Layoutdefault!!.visibility=View.VISIBLE
                  DefaultStock= totalunitqty!! / txtunitqtyBox!!
                  txtdefaultqty!!.setText(DefaultStock.toString())
              }
-             if (DUnit==3){
-                 DefaultStock= totalunitqty!! / txtunitqtyPi!!
-                 txtdefaultqty!!.setText(DefaultStock.toString())
+              totalstock=TotalStockQTY!!.text.toString().toInt()
+             if(totalstock!! >1){
+                 TxttotalStock!!.text="Stock in Pieces"
              }
+             else
+             {
+                 TxttotalStock!!.text="Stock in Piece"
+             }
+
          }
          else{
              CheckInterNetDailog()
@@ -610,7 +648,6 @@ class GalleryFragment : Fragment() {
         if (AppPreferences.internetConnectionCheck(this.context)) {
             val Jsonarra = JSONObject()
             val Jsonarrastock = JSONObject()
-            val details = JSONObject()
             val JSONObj = JSONObject()
             val queues = Volley.newRequestQueue(this.context)
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
@@ -646,23 +683,20 @@ class GalleryFragment : Fragment() {
                     val presponscode = resultobj.getString("responseCode")
                     val resmsg = resultobj.getString("responseMessage")
                     if (presponscode == "200") {
-                        val alertemail = AlertDialog.Builder(this.context)
-                        alertemail.setMessage(resmsg.toString())
-                        alertemail.setPositiveButton("ok")
-                        { dialog, which ->
-                            dialog.dismiss()
+                             SweetAlertDialog(this.context, SweetAlertDialog.SUCCESS_TYPE)
+                            .setContentText(resmsg.toString())
+                            .setConfirmText("ok")
+                            .setConfirmClickListener { sDialog -> sDialog.dismissWithAnimation()
+                                backinvetory?.isVisible = false
+                                barcodeenter = binding.txtBarScanned.text as String?
+                                bindproductdetails(barcodeenter as String)
+                                showproductdetails?.visibility = View.VISIBLE
+                                editlayout?.visibility = View.GONE
+                                producdetails?.visibility = View.GONE
+                                clear()
+                            }
+                            .show()
 
-                            backinvetory?.isVisible = false
-                            barcodeenter = binding.txtBarScanned.text as String?
-                            bindproductdetails(barcodeenter as String)
-                            showproductdetails?.visibility = View.VISIBLE
-                            editlayout?.visibility = View.GONE
-                            producdetails?.visibility = View.GONE
-                            clear()
-
-                        }
-                        val dialog: AlertDialog = alertemail.create()
-                        dialog.show()
                     } else {
                         SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText(
                             resmsg.toString()
@@ -687,6 +721,21 @@ class GalleryFragment : Fragment() {
     fun RemarkMessage() {
         SweetAlertDialog(this.context,SweetAlertDialog.ERROR_TYPE).setContentText("Remark length should be 10 character").show()
     }
+
+    fun Totalstockqtycheck()
+    {
+        SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
+            .setTitleText("Are you sure?")
+            .setContentText("You want to make out of stock.")
+            .setConfirmText("ok")
+            .setConfirmClickListener { sDialog -> sDialog.dismissWithAnimation()
+               updatestock(ProductID_S, TotalStockQTY!!, TxtRemark!!)
+            }
+            .setCancelButton(
+                "Cancel"
+            ) { sDialog -> sDialog.dismissWithAnimation() }
+            .show()
+    }
     fun clear(){
         TotalStockQTY!!.text=null
         TxtRemark!!.text=null
@@ -708,13 +757,5 @@ class GalleryFragment : Fragment() {
     }
 
     }
-
-
-
-
-
-
-
-
 
 

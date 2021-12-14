@@ -39,7 +39,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/txtunitP"
+                    android:id="@+id/txtbillno"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_row="0"
@@ -124,8 +124,6 @@
                     android:text="Vendor"
                     android:textSize="17dp"
                     android:textStyle="bold" />
-
-
 
                     <Spinner
                         android:id="@+id/ddlvenderlist"

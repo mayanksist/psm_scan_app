@@ -469,7 +469,7 @@ class ProductList : Fragment() {
                             //dialog.dismiss()
                             timerout.cancel()
                         }
-                    }, 1000)
+                    }, 2000)
 
                     boxlist.clear()
                     clear()

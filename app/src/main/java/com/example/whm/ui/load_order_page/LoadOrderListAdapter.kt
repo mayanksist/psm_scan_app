@@ -18,7 +18,7 @@ import com.example.myapplication.ui.product.ProductList
 
 internal class LoadOrderListAdapter(private var loadorderList: List<LoadOrderModel>,var activity: Context?) :
     RecyclerView.Adapter<LoadOrderListAdapter.MyViewHolder>() {
-    internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var OrderNo: TextView = view.findViewById(R.id.txtOrderNoL)
         var PackedBoxes: TextView = view.findViewById(R.id.txtboxes)
         var StopNo: TextView = view.findViewById(R.id.txtstopno)

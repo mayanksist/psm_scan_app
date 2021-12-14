@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/receive_PO"
+    android:name="com.example.whm.ui.inventoryreceive.ReceivePO"
+    tools:context="com.example.whm.ui.inventoryreceive.ReceivePO"
+    >
+
+    <RelativeLayout
+        android:id="@+id/layoutlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:context="com.example.whm.ui.inventoryreceive.ReceivePO"
+        tools:ignore="MissingConstraints">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/ProducyListPO"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent">
+
+                <TextView
+                    android:id="@+id/actiondelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:drawableStart="@drawable/ic_baseline_delete_24"
+                    android:textColor="#fff"
+                    android:textSize="12dp"
+                    android:textStyle="normal"
+                    app:layout_constraintBottom_toTopOf="@+id/divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtOrderNoL"
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="7dp"
+                    android:text="ID"
+                    android:textColor="#fff"
+                    android:textSize="16dp"
+                    android:textStyle="normal"
+                    app:layout_constraintBottom_toTopOf="@+id/divider"
+                    app:layout_constraintStart_toEndOf="@+id/actiondelete"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtboxes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="ProductName"
+                    android:textColor="#fff"
+                    android:textSize="16dp"
+                    android:textStyle="normal"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtOrderNoL"
+                    app:layout_constraintStart_toEndOf="@+id/txtOrderNoL"
+                    app:layout_constraintTop_toTopOf="@+id/txtOrderNoL" />
+
+                <TextView
+                    android:id="@+id/txtunittype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="Unit Type"
+                    android:textColor="#fff"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtboxes"
+                    app:layout_constraintStart_toEndOf="@+id/txtboxes"
+                    app:layout_constraintTop_toTopOf="@+id/txtboxes" />
+
+                <TextView
+                    android:id="@+id/txtpoqty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PO Qty"
+                    android:textColor="#fff"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtunittype"
+                    app:layout_constraintStart_toEndOf="@+id/txtunittype"
+                    app:layout_constraintTop_toTopOf="@+id/txtunittype" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    android:backgroundTint="#000000"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
