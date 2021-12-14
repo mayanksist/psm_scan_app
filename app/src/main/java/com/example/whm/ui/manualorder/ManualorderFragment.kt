@@ -286,10 +286,9 @@ class ManualorderFragment : Fragment() {
                             "ok",
                             DialogInterface.OnClickListener { dialog, which ->
                                 clear()
-//                                val orderno4: EditText = binding.txtorderno
+
                                 orderno!!.text.clear()
-                                this.findNavController()
-                                    .navigate(com.example.myapplication.R.id.nav_orderlist)
+
                             })
                         FirstorderNO = ""
                         checkr = 0
@@ -344,8 +343,7 @@ class ManualorderFragment : Fragment() {
                         pDialog.dismiss()
                         val orderno3: EditText = binding.txtorderno
                         orderno3.text.clear()
-                        this.findNavController()
-                            .navigate(com.example.myapplication.R.id.nav_orderlist)
+
                         FirstorderNO = ""
                         checkr = 0
                         val timerout = Timer()

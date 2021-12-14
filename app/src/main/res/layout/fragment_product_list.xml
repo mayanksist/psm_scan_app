@@ -35,7 +35,7 @@
             android:drawableRight="@drawable/barcode"
             android:drawablePadding="10dp"
             android:ems="10"
-            android:hint="Scan Order"
+            android:hint="Scan Order Boxes"
             android:inputType="text"
             android:padding="5dp"
             android:paddingStart="15dp"

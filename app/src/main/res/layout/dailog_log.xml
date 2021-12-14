@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+
     tools:ignore="MissingClass">
 
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="#fff"
+        android:background="#E8E5E5"
         android:src="@drawable/internet" />
 
     <TextView
@@ -26,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Please check your internet connection and try again"
+        android:text="Please check your internet connection"
         android:textSize="16sp" />
 
     <View

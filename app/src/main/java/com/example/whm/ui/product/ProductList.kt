@@ -145,7 +145,7 @@ class ProductList : Fragment() {
                             layout.visibility = View.GONE
                             if (ordernoenter.contains("/")) {
                                 val result1 = ordernoenter.trim().split("/").toMutableList()
-                                var test=SharedOrderNo
+
                                 if (result1[0].trim()==SharedOrderNo) {
                                 if (SelectOrderNo != null && result1[0].length == 0) {
                                     if (SelectOrderNo.split("/")[0] != "") {

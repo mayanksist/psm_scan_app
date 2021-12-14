@@ -259,6 +259,7 @@ class GalleryFragment : Fragment() {
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var accessToken = preferences.getString("accessToken", "")
+        var EmpTypeNo = preferences.getString("EmpTypeNo", "")
         JSONObj.put(
             "requestContainer",
             Jsonarra.put("accessToken", accessToken)
@@ -274,7 +275,9 @@ class GalleryFragment : Fragment() {
                 if (presponsmsg == "Products Found") {
                     producdetails?.visibility = View.VISIBLE
                     showproductdetails?.visibility = View.VISIBLE
-                    menu?.isVisible = true
+                    if(EmpTypeNo!="2") {
+                        menu?.isVisible = true
+                    }
 //                    Toast.makeText(this.context,barcodeenter.toString(),Toast.LENGTH_LONG).show()
                     val jsondata = resultobj.getString("responseData")
                     val jsonrepd = JSONObject(jsondata.toString())
@@ -366,6 +369,7 @@ class GalleryFragment : Fragment() {
         super.onCreateOptionsMenu(x, inflater)
         menu= x.findItem(com.example.myapplication.R.id.editproduct)
         backinvetory = x.findItem(com.example.myapplication.R.id.backinvetory)
+
         if(menu!=null) {
             menu?.isVisible = false
         }
@@ -548,7 +552,7 @@ class GalleryFragment : Fragment() {
                         SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Are you sure?")
                             .setContentText("You want to back ")
-                            .setConfirmText("ok")
+                            .setConfirmText("Yes")
                             .setConfirmClickListener { sDialog ->
                                 sDialog.dismissWithAnimation()
                                 showproductdetails?.visibility = View.VISIBLE
@@ -559,7 +563,7 @@ class GalleryFragment : Fragment() {
                                 clear()
                             }
                             .setCancelButton(
-                                "Cancel"
+                                "No"
                             ) { sDialog -> sDialog.dismissWithAnimation() }
                             .show()
                     }
@@ -727,12 +731,12 @@ class GalleryFragment : Fragment() {
         SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
             .setTitleText("Are you sure?")
             .setContentText("You want to make out of stock.")
-            .setConfirmText("ok")
+            .setConfirmText("Yes")
             .setConfirmClickListener { sDialog -> sDialog.dismissWithAnimation()
                updatestock(ProductID_S, TotalStockQTY!!, TxtRemark!!)
             }
             .setCancelButton(
-                "Cancel"
+                "No"
             ) { sDialog -> sDialog.dismissWithAnimation() }
             .show()
     }

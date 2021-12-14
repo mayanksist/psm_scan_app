@@ -150,7 +150,6 @@ class MainActivity : AppCompatActivity() {
                 var scansecuritykey=scansecurity
                    login(scansecuritykey)
             } else {
-
                 showCustomAlert()
                 scancode.text = ""
                 val preferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -168,7 +167,9 @@ class MainActivity : AppCompatActivity() {
         val btDismiss = dialogView.findViewById<Button>(R.id.btDismissCustomDialog)
         btDismiss.setOnClickListener {
             customDialog.dismiss()
-            Toast.makeText(applicationContext, "No Connection",Toast.LENGTH_SHORT).show()
+            val launchActivity1 = Intent(this@MainActivity, MainActivity::class.java)
+            startActivity(launchActivity1)
+
         }
         customDialog.show()
     }
@@ -259,8 +260,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         else{
-           AppPreferences.showAlertinternetconnection(this)
-
+          showCustomAlert()
         }
     }
 
