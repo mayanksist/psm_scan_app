@@ -1,4 +1,5 @@
 package com.example.whm.ui.inventoryreceive
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -14,6 +15,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceiveModel
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceivePOAdapter1
@@ -51,6 +53,10 @@ class ReceivePO : AppCompatActivity() {
                 val layoutManager = LinearLayoutManager(this)
                 recyclerView.layoutManager = layoutManager
                 recyclerView.itemAnimator = DefaultItemAnimator()
+                for (i in ReceiverpoList) {
+                    var pid=i
+                    Toast.makeText(this,pid.toString(),Toast.LENGTH_LONG).show()
+                }
                 recyclerView.adapter = ReceivePOAdapterl
             }
 
@@ -77,6 +83,7 @@ class ReceivePO : AppCompatActivity() {
 
         val barcodeadd: EditText = findViewById(com.example.myapplication.R.id.enterbacode)
         val draftAutoIdTV: TextView = findViewById(com.example.myapplication.R.id.draftAutoId)
+        val PIDHFPO: TextView = findViewById(com.example.myapplication.R.id.PIDHF)
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
         val JSONObj = JSONObject()
@@ -103,10 +110,6 @@ class ReceivePO : AppCompatActivity() {
         JSONObj.put("cObj", Jsonarrabarcode.put("vendorAutoId", VENDORID.toInt()))
         JSONObj.put("cObj", Jsonarrabarcode.put("barcode", barcodeadd!!.text.toString()))
         JSONObj.put("cObj", Jsonarrabarcode.put("Remark", ""))
-
-        Toast.makeText(this, draftAutoIdTV.text.toString(), Toast.LENGTH_SHORT).show();
-
-
         val BARCODEADDPRODUCT = JsonObjectRequest(
             Request.Method.POST, AppPreferences.SCAND_BARCODE_PADD, JSONObj,
             Response.Listener { response ->
@@ -124,14 +127,20 @@ class ReceivePO : AppCompatActivity() {
                     val UnitType = JSONOBJ.getString("UnitType")
                     val Qty = JSONOBJ.getInt("Qty")
                     draftAutoIdTV.text=draftAutoId.toString()
+
+//                    var i = 1
+//                    var total = 0
+//                    while (i ) {
+//
+//                        i++
+//                    }
                     DataBindPOLIST(
                         ProductId,
                         ProductName,
                         UnitType,
                         Qty
                     )
-//                    Toast.makeText(this, draftAutoId.toString(), Toast.LENGTH_SHORT).show();
-
+                    PIDHFPO.text=ProductId.toString()
                 } else {
                     Toast.makeText(this, responseMessage, Toast.LENGTH_SHORT).show()
 
@@ -147,11 +156,13 @@ class ReceivePO : AppCompatActivity() {
         )
         queues.add(BARCODEADDPRODUCT)
     }
-    private fun DataBindPOLIST( PID: Int, PNAME: String,UNITTYPE: String,POQTY:Int) {
-        var POLIST = ReceiveModel(PID, PNAME, UNITTYPE,POQTY)
+    private fun DataBindPOLIST( PID: Int, PNAME: String,UNITTYPE: String,UnitQTY:Int) {
+        var POLIST = ReceiveModel(PID, PNAME, UNITTYPE,UnitQTY)
         ReceiverpoList.add(POLIST)
         ReceivePOAdapterl.notifyDataSetChanged()
     }
+
+
 }
 
 

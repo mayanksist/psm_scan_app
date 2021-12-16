@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
@@ -16,7 +17,10 @@ class ReceivePOAdapter1(var ReceiveModelList: List<ReceiveModel>, receivePO: Rec
         var PID: TextView = view.findViewById(R.id.txtproductidl)
         var PEODUCTNAME: TextView = view.findViewById(R.id.txtproductnamePO)
         var UNITYPW: TextView = view.findViewById(R.id.txtunittype)
-        var POQTY: TextView = view.findViewById(R.id.txtpoqty)
+        var txttotalpieceqty: TextView = view.findViewById(R.id.txttotalpieceqty)
+        var POQTY: TextView = view.findViewById(R.id.txtpo_qty)
+
+
     }
 
     override fun onCreateViewHolder(
@@ -33,7 +37,15 @@ class ReceivePOAdapter1(var ReceiveModelList: List<ReceiveModel>, receivePO: Rec
         holder.PID.text = productList.getPID().toString()
         holder.PEODUCTNAME.text = productList.getPNAME()
         holder.UNITYPW.text = productList.getUnitType().toString()
-        holder.POQTY.text = productList.getPOQTY().toString()
+        holder.txttotalpieceqty.text = (productList.getUnitQTY().toString().toInt() * holder.POQTY.text.toString().toInt()).toString()
+//        var PID=productList.getPID().toString()
+//         if(holder.PID.text==PID){
+//        holder.POQTY.text.toString().toInt()+1
+//        }
+//        else{
+//            holder.POQTY.text.toString().toInt()
+//        }
+
     }
 
     override fun getItemCount(): Int {

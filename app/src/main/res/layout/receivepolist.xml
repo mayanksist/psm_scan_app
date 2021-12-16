@@ -11,9 +11,6 @@
     tools:context="com.example.whm.ui.inventoryreceive.ReceivePO"
     >
 
-
-
-
         <androidx.cardview.widget.CardView
             android:id="@+id/ProducyListPO"
             android:layout_width="match_parent"
@@ -79,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="0"
+                    android:text="1"
                     android:textSize="18dp"
                     app:layout_constraintBottom_toBottomOf="@+id/txtpoqty"
                     app:layout_constraintStart_toEndOf="@+id/txtpoqty"

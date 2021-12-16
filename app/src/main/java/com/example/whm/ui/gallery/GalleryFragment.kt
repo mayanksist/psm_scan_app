@@ -43,11 +43,7 @@ import com.example.myapplication.com.example.whm.MainActivity
 import android.graphics.Typeface
 
 import android.text.style.StyleSpan
-
-
-
-
-
+import android.util.TypedValue
 
 
 class GalleryFragment : Fragment() {
@@ -301,17 +297,14 @@ class GalleryFragment : Fragment() {
                     productId!!.text = "$ProductId"
 
                     val unitypycolor =   punitypa.trim().split("(").toMutableList()
-                     val spannableString1 = SpannableString( punitypa.trim())
-                    val red1 = ForegroundColorSpan(Color.RED)
+                    val spannableString1 = SpannableString( punitypa.trim())
+                    val red1 = ForegroundColorSpan(Color.parseColor("#E60606"))
                     val boldSpan = StyleSpan(Typeface.BOLD)
                     spannableString1.setSpan(boldSpan, 0, unitypycolor[0].trim().length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                         spannableString1.setSpan(
                             red1, 0,  unitypycolor[0].trim().length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
                         unitype.text = spannableString1
-
-
-
                     reordermark.text=Reordermark.toString()
                     price.text = "${pprice}"
                     if ("$location" == "---") {
@@ -321,9 +314,6 @@ class GalleryFragment : Fragment() {
                     }
                     category.text = "$pCategory"
                     sub_category.text = "$pSubCategory"
-//                       stock.text = "${DefaultStock}"
-
-
                     if(DUnit !=3){
                         stockfeild2.text = "(${DefaultStock2})"
                         stockfeild2.visibility=View.VISIBLE
@@ -336,6 +326,7 @@ class GalleryFragment : Fragment() {
                     pDialog.dismiss()
                 } else {
                     pDialog.dismiss()
+
                     showproductdetails?.visibility = View.GONE
                     val barcodeC: EditText = binding.barcodetype
                     barcode.text = ""
@@ -558,16 +549,14 @@ class GalleryFragment : Fragment() {
             com.example.myapplication.R.id.backinvetory  -> {
                 if (AppPreferences.internetConnectionCheck(this.context)) {
                     if (TotalStockQTY!!.text.toString()!="" && TotalStockQTY!!.text.toString().toInt()>0) {
-
-                        SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
-//                            .setTitleText("Are you sure?")
-                            .setContentText("Discard stock changes ? ")
-                            .setCancelButtonBackgroundColor(Color.GREEN)
-                            .setCancelButton( "Yes")
+                      var backbtn=  SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
+                        backbtn.setContentText("Discard stock changes?")
+                        backbtn.setCancelButtonBackgroundColor(Color.parseColor("#4cae4c"))
+                        backbtn.setCancelButton( "Yes")
                             { sDialog -> sDialog.dismissWithAnimation() }
-                            .setConfirmText("No")
-                            .setConfirmButtonBackgroundColor(Color.RED)
-                            .setCancelClickListener {
+                        backbtn.setConfirmText("No")
+                        backbtn.setConfirmButtonBackgroundColor(Color.parseColor("#E60606"))
+                        backbtn.setCancelClickListener {
                                     sDialog ->
                                 sDialog.dismissWithAnimation()
                                 showproductdetails?.visibility = View.VISIBLE
@@ -577,10 +566,12 @@ class GalleryFragment : Fragment() {
                                 menu?.isVisible = true
                                 clear()
                             }
-                            .setConfirmClickListener {
+                        backbtn.setConfirmClickListener {
                                     sDialog -> sDialog.dismissWithAnimation()
                             }
-                            .show()
+                        backbtn.setCanceledOnTouchOutside(false)
+                        backbtn.show()
+
                     }
                     else{
                         showproductdetails?.visibility = View.VISIBLE
@@ -713,10 +704,10 @@ class GalleryFragment : Fragment() {
                     val presponscode = resultobj.getString("responseCode")
                     val resmsg = resultobj.getString("responseMessage")
                     if (presponscode == "200") {
-                             SweetAlertDialog(this.context, SweetAlertDialog.SUCCESS_TYPE)
-                            .setContentText(resmsg.toString())
-                            .setConfirmText("ok")
-                            .setConfirmClickListener { sDialog -> sDialog.dismissWithAnimation()
+                        var updates=   SweetAlertDialog(this.context, SweetAlertDialog.SUCCESS_TYPE)
+                        updates.setContentText(resmsg.toString())
+                        updates.setConfirmText("ok")
+                        updates.setConfirmClickListener { sDialog -> sDialog.dismissWithAnimation()
                                 backinvetory?.isVisible = false
                                 barcodeenter = binding.txtBarScanned.text as String?
                                 bindproductdetails(barcodeenter as String)
@@ -725,12 +716,15 @@ class GalleryFragment : Fragment() {
                                 producdetails?.visibility = View.GONE
                                 clear()
                             }
-                            .show()
+                        updates.setCanceledOnTouchOutside(false)
+                        updates.show()
 
                     } else {
-                        SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText(
+                      var update=  SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText(
                             resmsg.toString()
-                        ).show()
+                        )
+                          update.setCanceledOnTouchOutside(false)
+                          update.show()
 
                     }
                 }, Response.ErrorListener { response ->
@@ -749,28 +743,35 @@ class GalleryFragment : Fragment() {
         }
     }
     fun RemarkMessage() {
-        SweetAlertDialog(this.context,SweetAlertDialog.ERROR_TYPE).setContentText("Remark length should be 10 character").show()
+
+
+        SweetAlertDialog(this.context,SweetAlertDialog.ERROR_TYPE)
+        .setContentText("Remark length should be 10 character").show()
+
+
+
     }
 
     fun Totalstockqtycheck()
     {
-        SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
-            .setTitleText("Are you sure?")
-            .setContentText("You want to make out of stock.")
-            .setCancelButtonBackgroundColor(Color.GREEN)
-            .setCancelButton( "Yes")
+        var Totalstockqtycheck = SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
+        Totalstockqtycheck.setTitleText("Are you sure?")
+        Totalstockqtycheck.setContentText("You want to make out of stock.")
+        Totalstockqtycheck.setCancelButtonBackgroundColor(Color.parseColor("#4cae4c"))
+        Totalstockqtycheck.setCancelButton( "Yes")
             { sDialog -> sDialog.dismissWithAnimation() }
-            .setConfirmText("No")
-            .setConfirmButtonBackgroundColor(Color.RED)
-            .setCancelClickListener {
+        Totalstockqtycheck.setConfirmText("No")
+        Totalstockqtycheck.setConfirmButtonBackgroundColor(Color.parseColor("#E60606"))
+        Totalstockqtycheck.setCancelClickListener {
                     sDialog ->
                 sDialog.dismissWithAnimation()
                 updatestock(ProductID_S, TotalStockQTY!!, TxtRemark!!)
             }
-            .setConfirmClickListener {
+        Totalstockqtycheck.setConfirmClickListener {
                     sDialog -> sDialog.dismissWithAnimation()
             }
-            .show()
+        Totalstockqtycheck.setCanceledOnTouchOutside(false)
+        Totalstockqtycheck.show()
     }
     fun clear(){
         TotalStockQTY!!.text=null

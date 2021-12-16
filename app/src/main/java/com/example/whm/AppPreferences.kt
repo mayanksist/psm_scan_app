@@ -66,6 +66,7 @@ object AppPreferences {
             )
             setDataSource(url)
             prepare()
+            start()
 
         }
     }
@@ -86,6 +87,20 @@ object AppPreferences {
 
     fun playSoundinvalid() {
         var url:String="https://psmnj.a1whm.com/audio/invalidboxscanned.mp3"
+        val mediaPlayer = MediaPlayer().apply {
+            setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .build()
+            )
+            setDataSource(url)
+            prepare()
+            start()
+        }
+    }
+    fun playSoundinvalidalready() {
+        var url:String="https://psmnj.a1whm.com/audio/Boxalreadyscanned.mp3"
         val mediaPlayer = MediaPlayer().apply {
             setAudioAttributes(
                 AudioAttributes.Builder()

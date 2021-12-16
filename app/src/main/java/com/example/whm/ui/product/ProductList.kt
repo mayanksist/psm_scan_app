@@ -143,97 +143,109 @@ class ProductList : Fragment() {
                             ordernoenter = orderno!!.text.toString().uppercase(Locale.getDefault())
                             val layout = binding.txtmsg
                             layout.visibility = View.GONE
-                            if (ordernoenter.contains("/")) {
-                                val result1 = ordernoenter.trim().split("/").toMutableList()
+                            if(ordernoenter.length>0) {
+                                if (ordernoenter.contains("/")) {
+                                    val result1 = ordernoenter.trim().split("/").toMutableList()
 
-                                if (result1[0].trim()==SharedOrderNo) {
-                                if (SelectOrderNo != null && result1[0].length == 0) {
-                                    if (SelectOrderNo.split("/")[0] != "") {
-//                                        pDialog.dismiss()
-                                        FirstorderNO = result1[0]
-                                        try {
-                                            if (boxlist.size > 0) {
-                                                checkr = 1
+                                    if (result1[0].trim() == SharedOrderNo) {
+                                        if (SelectOrderNo != null && result1[0].length == 0) {
+                                            if (SelectOrderNo.split("/")[0] != "") {
+                                                FirstorderNO = result1[0]
+                                                try {
+                                                    if (boxlist.size > 0) {
+                                                        checkr = 1
+                                                    }
+                                                } catch (e: IOException) {
+                                                }
                                             }
-                                        } catch (e: IOException) {
                                         }
-                                    }
-                                }
-                                boxno = result1[1]
-                                val convertboxno = boxno.toIntOrNull()
-                                if (convertboxno != null) {
-                                    if (convertboxno <= PackedBoxes) {
-                                        if (FirstorderNO == "") {
-                                            FirstorderNO = result1[0]
-                                        } else {
-                                            count = 0
-                                            if (FirstorderNO == result1[0]) {
-                                                for (i in boxlist) {
-                                                    if (i == result1[1]) {
+                                        boxno = result1[1]
+                                        val convertboxno = boxno.toIntOrNull()
+                                        if (convertboxno != null) {
+                                            if (convertboxno <= PackedBoxes) {
+                                                if (FirstorderNO == "") {
+                                                    FirstorderNO = result1[0]
+                                                } else {
+                                                    count = 0
+                                                    if (FirstorderNO == result1[0]) {
+                                                        for (i in boxlist) {
+                                                            if (i == result1[1]) {
+                                                                val layout = binding.txtmsg
+                                                                layout.visibility = View.VISIBLE
+                                                                orderno!!.setText("")
+                                                                msg!!.text = "Box Already Scanned."
+                                                                AppPreferences.playSoundinvalidalready()
+                                                                count = 1
+                                                                orderno!!.requestFocus()
+                                                            }
+                                                        }
+                                                        if (count == 0) {
+                                                            maxTextSize = boxlist.size.toString()
+                                                            txtscanproducts = binding.txtscanproduct
+                                                            if (maxTextSize == "30") {
+                                                                txtscanproducts!!.setTextSize(
+                                                                    TypedValue.COMPLEX_UNIT_SP,
+                                                                    30f
+                                                                )
+                                                            }
+                                                            if (maxTextSize == "45") {
+                                                                txtscanproducts!!.setTextSize(
+                                                                    TypedValue.COMPLEX_UNIT_SP,
+                                                                    25f
+                                                                )
+                                                            }
+
+                                                            boxlist.add(0, boxno)
+                                                            orderno!!.setText("")
+                                                            noofboxes1.text =
+                                                                boxlist.size.toString() + " out of " + "" + PackedBoxes
+                                                            lastscanprd.text =
+                                                                boxlist.toString()
+                                                                    .replace("  ", " ")
+                                                            msg!!.text = ""
+                                                            if (boxlist.size.toString() == PackedBoxes.toString()) {
+                                                                submitorder(FirstorderNO)
+                                                            }
+                                                        }
+                                                    } else {
                                                         val layout = binding.txtmsg
                                                         layout.visibility = View.VISIBLE
                                                         orderno!!.setText("")
-                                                        msg!!.text = "Box Already Scanned."
-                                                        count = 1
-                                                        orderno!!.requestFocus()
+                                                        msg!!.text = "Invalid box scanned."
+                                                        AppPreferences.playSoundinvalid()
                                                     }
                                                 }
-                                                if (count == 0) {
-                                                    maxTextSize = boxlist.size.toString()
-                                                    txtscanproducts = binding.txtscanproduct
-                                                    if (maxTextSize == "30") {
+
+                                                if (checkr == 0) {
+                                                    try {
+                                                        orderdetailsbind(FirstorderNO, ordernoenter)
+                                                        orderno!!.setText("")
+                                                    } catch (e: IOException) {
                                                         Toast.makeText(
                                                             this.context,
-                                                            "test size",
+                                                            "Error",
                                                             Toast.LENGTH_SHORT
                                                         ).show()
-                                                        txtscanproducts!!.setTextSize(
-                                                            TypedValue.COMPLEX_UNIT_SP,
-                                                            30f
-                                                        )
-                                                    }
-                                                    if (maxTextSize == "45") {
-                                                        txtscanproducts!!.setTextSize(
-                                                            TypedValue.COMPLEX_UNIT_SP,
-                                                            25f
-                                                        )
-                                                    }
-                                                    var text = boxno
-                                                    boxlist.add(0, boxno)
-                                                    orderno!!.setText("")
-                                                    noofboxes1.text =
-                                                        boxlist.size.toString() + " out of " + "" + PackedBoxes
-                                                    lastscanprd.text =
-                                                        boxlist.toString().replace("  ", " ")
-                                                    msg!!.text = ""
-                                                    if (boxlist.size.toString() == PackedBoxes.toString()) {
-                                                        submitorder(FirstorderNO)
                                                     }
                                                 }
                                             } else {
+                                                //msg for box no not equal to packedbox
+                                                //   pDialog.dismiss()
                                                 val layout = binding.txtmsg
                                                 layout.visibility = View.VISIBLE
                                                 orderno!!.setText("")
                                                 msg!!.text = "Invalid box scanned."
                                                 AppPreferences.playSoundinvalid()
                                             }
-                                        }
-
-                                        if (checkr == 0) {
-                                            try {
-                                                orderdetailsbind(FirstorderNO, ordernoenter)
-                                                orderno!!.setText("")
-                                            } catch (e: IOException) {
-                                                Toast.makeText(
-                                                    this.context,
-                                                    "Error",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
+                                        } else {
+                                            //msg for enter int value and some text
+                                            val layout = binding.txtmsg
+                                            layout.visibility = View.VISIBLE
+                                            orderno!!.setText("")
+                                            msg!!.text = "Invalid box scanned."
+                                            AppPreferences.playSoundinvalid()
                                         }
                                     } else {
-                                        //msg for box no not equal to packedbox
-                                        //   pDialog.dismiss()
                                         val layout = binding.txtmsg
                                         layout.visibility = View.VISIBLE
                                         orderno!!.setText("")
@@ -241,33 +253,15 @@ class ProductList : Fragment() {
                                         AppPreferences.playSoundinvalid()
                                     }
                                 } else {
-                                    //msg for enter int value and some text
-                                    val layout = binding.txtmsg
-                                    layout.visibility = View.VISIBLE
-                                    orderno!!.setText("")
-                                    msg!!.text = "Invalid box scanned."
-                                    AppPreferences.playSoundinvalid()
-                                }
-                            }
-                                else{
-                                    val layout = binding.txtmsg
-                                    layout.visibility = View.VISIBLE
-                                    orderno!!.setText("")
-                                    msg!!.text = "Invalid box scanned."
-                                    AppPreferences.playSoundinvalid()
-                                }
-                        }
-
-                            else {
-                                //msg for split
+                                    //msg for split
 //                                pDialog.dismiss()
-                                val layout = binding.txtmsg
-                                layout.visibility = View.VISIBLE
-                                orderno!!.setText("")
-                                msg!!.text = "Invalid box scanned."
-                                AppPreferences.playSoundinvalid()
+                                    val layout = binding.txtmsg
+                                    layout.visibility = View.VISIBLE
+                                    orderno!!.setText("")
+                                    msg!!.text = "Invalid box scanned."
+                                    AppPreferences.playSoundinvalid()
+                                }
                             }
-
 
                             return@OnKeyListener true
                         }

@@ -52,7 +52,7 @@
                     android:elevation="4dp"
                     android:hint="Bill No"
                     android:inputType="text"
-                    android:maxLength="6"
+
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="18dp"

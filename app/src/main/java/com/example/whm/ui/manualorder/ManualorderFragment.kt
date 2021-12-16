@@ -42,6 +42,7 @@ class ManualorderFragment : Fragment() {
     var msg: TextView? = null
     var count = 0
     var txtscanproducts: TextView? = null
+    var txtorderno: TextView?=null
     var orderno: EditText?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,12 +66,14 @@ class ManualorderFragment : Fragment() {
             }
             true
         })
+        val txtallpicbox: TextView = binding.txtallpickbox
         if(AppPreferences.internetConnectionCheck(this.context)) {
              orderno = binding.txtorderno
             val noofboxes1: TextView = binding.txtpackedb
             val lastscanprd: TextView = binding.txtscanproduct
             val layout = binding.txtmsg
             msg = binding.txtmsg
+            val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
             viewModelManualorder.text.observe(viewLifecycleOwner,{
                 orderno!!.requestFocus()
                 orderno!!.setOnKeyListener(View.OnKeyListener { v_, keyCode, event ->
@@ -78,110 +81,110 @@ class ManualorderFragment : Fragment() {
                         if(AppPreferences.internetConnectionCheck(this.context)) {
                             ordernoenter = orderno!!.text.toString().uppercase(Locale.getDefault())
                             layout.visibility = View.GONE
-                            if (ordernoenter.contains("/")) {
-                                val result1 = ordernoenter.trim().split("/")
-                                if (result1[0].trim() != "") {
-                                    if (result1[1].toIntOrNull() != null) {
-                                        boxno = result1[1].toIntOrNull()!!
-                                        if (FirstorderNO.trim() == "") {
-                                            FirstorderNO = result1[0].trim()
-                                        } else {
-                                            if (FirstorderNO == result1[0].trim()) {
+                            if(ordernoenter.length>0) {
+                                if (ordernoenter.contains("/")) {
+                                    val result1 = ordernoenter.trim().split("/")
+                                    if (result1[0].trim() != "") {
+                                        if (result1[1].toIntOrNull() != null) {
+                                            boxno = result1[1].toIntOrNull()!!
+                                            if (FirstorderNO.trim() == "") {
+                                                FirstorderNO = result1[0].trim()
+                                            } else {
+                                                if (FirstorderNO == result1[0].trim()) {
 
-                                                if (boxno.toInt() <= totalBoxes) {
-                                                    count = 0
-                                                    for (i in list) {
-                                                        if (i == ordernoenter) {
+                                                    if (boxno.toInt() <= totalBoxes) {
+                                                        count = 0
+                                                        for (i in list) {
+                                                            if (i == ordernoenter) {
 
-                                                            layout.visibility = View.VISIBLE
-                                                            orderno!!.setText("")
-                                                            msg!!.text = "Box Already Scanned."
-                                                            count = 1
-                                                            orderno!!.requestFocus()
-                                                            val params = LinearLayout.LayoutParams(
-                                                                LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                                LinearLayout.LayoutParams.WRAP_CONTENT
-                                                            ).apply {
-                                                                setMargins(0, 70, 0, 70)
+                                                                layout.visibility = View.VISIBLE
+                                                                orderno!!.setText("")
+                                                                msg!!.text = "Box Already Scanned."
+                                                                AppPreferences.playSoundinvalidalready()
+                                                                count = 1
+                                                                orderno!!.requestFocus()
+                                                                val params =
+                                                                    LinearLayout.LayoutParams(
+                                                                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                                        LinearLayout.LayoutParams.WRAP_CONTENT
+                                                                    ).apply {
+                                                                        setMargins(0, 70, 0, 70)
+                                                                    }
                                                             }
                                                         }
-                                                    }
-                                                    if (count == 0) {
-                                                        maxTextSize = list.size.toString()
-                                                        txtscanproducts = binding.txtscanproduct
-                                                        if (maxTextSize == "30") {
-                                                            txtscanproducts!!.setTextSize(
-                                                                TypedValue.COMPLEX_UNIT_SP,
-                                                                30f
-                                                            )
+                                                        if (count == 0) {
+                                                            maxTextSize = list.size.toString()
+                                                            txtscanproducts = binding.txtscanproduct
+                                                            if (maxTextSize == "30") {
+                                                                txtscanproducts!!.setTextSize(
+                                                                    TypedValue.COMPLEX_UNIT_SP,
+                                                                    30f
+                                                                )
+                                                            }
+                                                            if (maxTextSize == "45") {
+                                                                txtscanproducts!!.setTextSize(
+                                                                    TypedValue.COMPLEX_UNIT_SP,
+                                                                    25f
+                                                                )
+                                                            }
+                                                            list.add(list.size, ordernoenter)
+                                                            boxlist.add(0, boxno.toString())
+                                                            orderno!!.setText("")
+                                                            noofboxes1.text =
+                                                                list.size.toString() + " out of " + "" + totalBoxes
+                                                            lastscanprd.text = boxlist.toString()
+                                                            msg!!.text = ""
+                                                            if (list.size.toString() == totalBoxes.toString()) {
+                                                                submitorder(FirstorderNO)
+                                                            }
                                                         }
-                                                        if (maxTextSize == "45") {
-                                                            txtscanproducts!!.setTextSize(
-                                                                TypedValue.COMPLEX_UNIT_SP,
-                                                                25f
-                                                            )
-                                                        }
-                                                        list.add(list.size, ordernoenter)
-                                                        boxlist.add(0, boxno.toString())
+                                                    } else {
+                                                        layout.visibility = View.VISIBLE
                                                         orderno!!.setText("")
-                                                        noofboxes1.text =
-                                                            list.size.toString() + " out of " + "" + totalBoxes
-                                                        lastscanprd.text = boxlist.toString()
-                                                        msg!!.text = ""
-                                                        if (list.size.toString() == totalBoxes.toString()) {
-                                                            submitorder(FirstorderNO)
-                                                        }
+                                                        msg!!.text = "Invalid Box Scanned."
+                                                        AppPreferences.playSoundinvalid()
                                                     }
-                                                }
-                                                else
-                                                {
+                                                } else {
+                                                    // pDialog.dismiss()
+
                                                     layout.visibility = View.VISIBLE
                                                     orderno!!.setText("")
-                                                    msg!!.text = "Invalid Box Scanned."
+                                                    msg!!.text = "Invalid box scanned."
                                                     AppPreferences.playSoundinvalid()
                                                 }
-                                            } else {
-                                                // pDialog.dismiss()
+                                            }
+                                            if (checkr == 0) {
+                                                try {
+                                                    orderdetailsbind(FirstorderNO, ordernoenter)
+                                                    orderno!!.setText("")
+                                                } catch (e: IOException) {
+                                                    Toast.makeText(
+                                                        this.context,
+                                                        "Error",
+                                                        Toast.LENGTH_SHORT
+                                                    )
+                                                        .show()
+                                                }
+                                            }
+                                        } else {
+                                            layout.visibility = View.VISIBLE
+                                            orderno!!.setText("")
+                                            msg!!.text = "Invalid box scanned."
+                                            AppPreferences.playSoundinvalid()
 
-                                                layout.visibility = View.VISIBLE
-                                                orderno!!.setText("")
-                                                msg!!.text = "Invalid box scanned."
-                                                AppPreferences.playSoundinvalid()
-                                            }
-                                        }
-                                        if (checkr == 0) {
-                                            try {
-                                                orderdetailsbind(FirstorderNO, ordernoenter)
-                                                orderno!!.setText("")
-                                            } catch (e: IOException) {
-                                                Toast.makeText(
-                                                    this.context,
-                                                    "Error",
-                                                    Toast.LENGTH_SHORT
-                                                )
-                                                    .show()
-                                            }
                                         }
                                     } else {
                                         layout.visibility = View.VISIBLE
                                         orderno!!.setText("")
-                                        msg!!.text = "Invalid box scanned."
+                                        msg!!.text = "Invalid Box Scanned."
                                         AppPreferences.playSoundinvalid()
-
                                     }
-                                }
-                                else{
+                                } else {
                                     layout.visibility = View.VISIBLE
                                     orderno!!.setText("")
-                                    msg!!.text = "Invalid Box Scanned."
+                                    msg!!.text = "Invalid Box Scanned"
                                     AppPreferences.playSoundinvalid()
                                 }
-                            }
-                            else{
-                                layout.visibility = View.VISIBLE
-                                orderno!!.setText("")
-                                msg!!.text = "Invalid Box Scanned."
-                                AppPreferences.playSoundinvalid()
                             }
                             return@OnKeyListener true
                         }
@@ -192,6 +195,21 @@ class ManualorderFragment : Fragment() {
                     false
                 })
                 orderno!!.requestFocus()
+
+                orderno!!.requestFocus()
+                txtallpicbox.setOnClickListener {
+                    if (AppPreferences.internetConnectionCheck(this.context)) {
+                        pDialog.dismiss()
+                        PickAllBoxesDailog(
+                            "Are you sure you want to pick all boxes?",
+                            txtorderno!!.text.toString()
+                        )
+                    }
+
+                    else {
+                        CheckInterNetDailog()
+                    }
+                }
                 val view: ScrollView =binding.scrollView
                 view.descendantFocusability = ViewGroup.FOCUS_BEFORE_DESCENDANTS
                 view.isFocusable = false
@@ -218,7 +236,7 @@ class ManualorderFragment : Fragment() {
         pDialog.show()
         val cardview: CardView = binding.cardView2
         val layout = binding.txtmsg
-        val txtorderno: TextView = binding.txtorderNo
+        txtorderno = binding.txtorderNo
         val txtstop: TextView = binding.txtstoppage
         val txtscanproduct: TextView = binding.txtscanproduct
         val txtpacked: TextView = binding.txtpackedb
@@ -255,7 +273,7 @@ class ManualorderFragment : Fragment() {
                                     cardview.visibility = View.GONE
                                     cardview.visibility = View.VISIBLE
                                     txtstop.text = "${stoppage}"
-                                    txtorderno.text = "$dorderno"
+                                    txtorderno!!.text = "$dorderno"
                                     editor1.putString("OrderNO", dorderno)
                                     editor1.putInt("NoofBox", noofboxes)
                                     editor1.apply()
@@ -343,7 +361,7 @@ class ManualorderFragment : Fragment() {
                         pDialog.dismiss()
                         val orderno3: EditText = binding.txtorderno
                         orderno3.text.clear()
-
+                        this.findNavController().navigate(com.example.myapplication.R.id.nav_productlist)
                         FirstorderNO = ""
                         checkr = 0
                         val timerout = Timer()
@@ -387,7 +405,33 @@ class ManualorderFragment : Fragment() {
             Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
         }
     }
+    fun PickAllBoxesDailog(MSG: String,title: String){
 
+        val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
+        val alert = AlertDialog.Builder(this.context)
+        pDialog.dismiss()
+        alert.setTitle(title)
+        alert.setMessage(MSG)
+        alert.setNegativeButton("YES")
+        { dialog, which ->
+            boxlist.clear()
+            maxTextSize = ""
+            count = 0
+            alert.setTitle("")
+
+            submitorder(title)
+            dialog.dismiss()
+        }
+        alert.setPositiveButton("NO")
+        { dialog, which ->
+            dialog.dismiss()
+            alert.setTitle("")
+        }
+
+        val orderno1: EditText = binding.txtorderno
+        orderno1.setText("")
+        alert.show()
+    }
     fun clear() {
         val txtorderno: TextView = binding.txtorderNo
         val txtstop: TextView = binding.txtstoppage

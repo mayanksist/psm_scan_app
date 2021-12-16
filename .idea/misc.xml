@@ -85,17 +85,17 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/app_bar_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/content_main.xml" value="0.2916666666666667" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/dailog_log.xml" value="0.88" />
-        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_gallery.xml" value="0.6989100817438693" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_gallery.xml" value="0.4564270152505447" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_home.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_inventory_fragment.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_item.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_item_list.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_load_order_list.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_loadorderlists.xml" value="0.88" />
-        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_manualorder.xml" value="0.25" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_manualorder.xml" value="0.920997920997921" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_picallboxes.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_picallboxes_list2.xml" value="0.88" />
-        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_product_list.xml" value="0.1" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_product_list.xml" value="0.5" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_slideshow.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/inventoryreceiver_fragment.xml" value="0.7843601895734598" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/listdesign.xml" value="1.0" />

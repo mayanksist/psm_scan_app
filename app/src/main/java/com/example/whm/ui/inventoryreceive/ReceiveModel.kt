@@ -2,18 +2,18 @@ package com.example.myapplication.com.example.whm.ui.inventoryreceive
 
 class ReceiveModel (
     PID: Int, PNAME: String,
-    UNITTYPE: String,POQTY:Int) {
+    UNITTYPE: String,UnitQTY:Int) {
 
         private lateinit var PA_NEME: String
         private  var P_ID: Int = 0
     private lateinit var UNIT_TYPE: String
-    private  var PO_QTY: Int=0
+    private  var Unit_QTY: Int=0
 
         init {
             this.P_ID = PID
             this.PA_NEME = PNAME
             this.UNIT_TYPE = UNITTYPE
-            this.PO_QTY = POQTY
+            this.Unit_QTY = UnitQTY
         }
         fun getPID(): Int? {
             return P_ID
@@ -37,10 +37,10 @@ class ReceiveModel (
         fun setStoppage(UNITTYPE: String?) {
             this.UNIT_TYPE = UNITTYPE!!
         }
-    fun getPOQTY(): Int? {
-        return PO_QTY
+    fun getUnitQTY(): Int? {
+        return Unit_QTY
     }
-    fun setPOQTY(POQTY: Int?) {
-        this.PO_QTY = POQTY!!
+    fun setUNITQTY(UnitQTY: Int?) {
+        this.Unit_QTY = UnitQTY!!
     }
 }

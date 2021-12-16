@@ -58,8 +58,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtorderno"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/txtorderno">
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
                 android:layout_width="match_parent"
@@ -71,7 +70,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:screenReaderFocusable="false"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="5dp"
@@ -192,6 +191,23 @@
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+
+                        android:id="@+id/txtallpickbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="7dp"
+                        android:background="@drawable/oval3"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="Pick All Boxes"
+                        android:textColor="#ffffff"
+                        app:layout_constraintBottom_toBottomOf="@+id/txtscanproduct1"
+                        app:layout_constraintEnd_toEndOf="@+id/txtstoppage"
+                        app:layout_constraintTop_toBottomOf="@+id/txtpackedb" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

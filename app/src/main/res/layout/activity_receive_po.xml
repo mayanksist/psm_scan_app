@@ -45,6 +45,13 @@
     tools:ignore="MissingConstraints">
 
 </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/PIDHF"
+        android:visibility="gone"
+        android:text="0"
+        tools:ignore="MissingConstraints"></TextView>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/POLIST"
         android:layout_width="0dp"

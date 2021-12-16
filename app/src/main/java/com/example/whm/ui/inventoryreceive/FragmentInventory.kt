@@ -2,6 +2,7 @@ package com.example.whm.ui.inventoryreceive
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ import org.json.JSONObject
 import org.json.JSONArray
 import android.widget.ArrayAdapter
 import androidx.annotation.Nullable
+import cn.pedant.SweetAlert.SweetAlertDialog
 
 
 class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
@@ -64,15 +66,27 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                 val Bill_Date: CharSequence? =  txtbildate.text
                 val Vendor_ID:Spinner=binding.ddlvenderlist
                 val VENDORID = Vendor_ID.getSelectedItemId().toInt()
-                val intent = Intent(context, ReceivePO::class.java)
-                val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-                val editor = preferences.edit()
-                editor.putString("Bill_No", Bill_No.text.toString())
-                editor.putString("Bill_Date", Bill_Date.toString())
-                editor.putInt("VENDORID", VENDORID.toInt())
-                editor.apply()
+                if (TextUtils.isEmpty(Bill_No.getText().toString())) {
+                   EnertBill_No()
+                }
+                else if (TextUtils.isEmpty(Bill_Date.toString())) {
+                    EnertBill_Date()
+
+                }
+                else if(VENDORID==0){
+                    Select_Vendor()
+                }
+                else {
+                    val intent = Intent(context, ReceivePO::class.java)
+                    val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+                    val editor = preferences.edit()
+                    editor.putString("Bill_No", Bill_No.text.toString())
+                    editor.putString("Bill_Date", Bill_Date.toString())
+                    editor.putInt("VENDORID", VENDORID.toInt())
+                    editor.apply()
 //                intent.putExtra("billna", txt);
-                startActivity(intent)
+                    startActivity(intent)
+                }
             }
         }
             return mView
@@ -143,18 +157,24 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                         val VNAME = BINDLIST.getString("VName")
                         spinnerArray[i] = VNAME
                     }
+                    spinnerArray.set(0,"Select Vendor")
                     BINVENDERLIST.adapter = context?.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) } as SpinnerAdapter
                     BINVENDERLIST.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
                         override fun onNothingSelected(parent: AdapterView<*>?) {
+
                             println("erreur")
                         }
                         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
                             val VenderSelect = parent?.getItemAtPosition(position).toString()
+
+//
                             println(VenderSelect)
                         }
                     }
                 } else {
-                    Toast.makeText(this.context, responseMessage, Toast.LENGTH_SHORT).show();
+
+                    SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
 
 
                 }
@@ -173,5 +193,14 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
         super.onDestroyView()
         _binding = null
     }
-
+    fun EnertBill_No() {
+        SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText("Enter Bill No").show()
+    }
+    fun EnertBill_Date() {
+        SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText("Select Bill Date").show()
+    }
+    fun Select_Vendor() {
+        SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText("Select Vendor").show()
+    }
 }
+
