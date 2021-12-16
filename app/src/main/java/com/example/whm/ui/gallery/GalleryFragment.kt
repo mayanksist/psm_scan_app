@@ -40,14 +40,9 @@ import android.app.Dialog
 import android.text.SpannableString
 import cn.pedant.SweetAlert.SweetAlertDialog.OnSweetClickListener
 import com.example.myapplication.com.example.whm.MainActivity
+import android.graphics.Typeface
 
-
-
-
-
-
-
-
+import android.text.style.StyleSpan
 
 
 
@@ -97,6 +92,9 @@ class GalleryFragment : Fragment() {
     var UnitChengease: EditText?=null
     var  barcodeenter:String?=""
     var DUnit:Int=0
+    var txtunitP: TextView?=null
+    var txtunitB: TextView?=null
+    var txtunitC: TextView?=null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -301,8 +299,20 @@ class GalleryFragment : Fragment() {
                     val location = jsonrepd.getString("Location")
                     produname.text = "$pname"
                     productId!!.text = "$ProductId"
-                    unitype.text = "$punitypa"
-                    reordermark.text="$Reordermark"
+
+                    val unitypycolor =   punitypa.trim().split("(").toMutableList()
+                     val spannableString1 = SpannableString( punitypa.trim())
+                    val red1 = ForegroundColorSpan(Color.RED)
+                    val boldSpan = StyleSpan(Typeface.BOLD)
+                    spannableString1.setSpan(boldSpan, 0, unitypycolor[0].trim().length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        spannableString1.setSpan(
+                            red1, 0,  unitypycolor[0].trim().length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        unitype.text = spannableString1
+
+
+
+                    reordermark.text=Reordermark.toString()
                     price.text = "${pprice}"
                     if ("$location" == "---") {
                         locationval.text = "N/A"
@@ -390,11 +400,11 @@ class GalleryFragment : Fragment() {
                         productdetils.visibility = View.GONE
                         editlayout.visibility = View.VISIBLE
                         Gridlauyoutstock = binding.stockupdate
-                        var txtunitB: TextView = binding.txtBunit
+                         txtunitB = binding.txtBunit
                         txtunitqtyB = binding.txtBunitqty
-                        var txtunitC: TextView = binding.txtCunit
+                         txtunitC = binding.txtCunit
                         txtunitqtyC = binding.txtCunitqty
-                        var txtunitP: TextView = binding.txtPunit
+                         txtunitP= binding.txtPunit
                         var ProductName: TextView = binding.txtproductname
                             TxttotalStock=binding.txttotal
                         var ProductID = binding.StxtProductid
@@ -456,7 +466,7 @@ class GalleryFragment : Fragment() {
                                         ProductID.text = ProductId.toString()
                                         ProductName.text = Productname
                                             if (UnitType == 1) {
-                                                txtunitC.text = if(DUnit!=1){
+                                                txtunitC!!.text = if(DUnit!=1){
                                                     "$unittype"
                                                 }else {
                                                     "$unittype " + "*"
@@ -464,18 +474,18 @@ class GalleryFragment : Fragment() {
                                                 txtunitqtyC!!.setText(Qty.toString())
                                                 Layoutbindunit = binding.LayoutCase
                                                 Layoutbindunit!!.visibility = View.VISIBLE
-                                                val spannableString = SpannableString(txtunitC.text)
+                                                val spannableString = SpannableString(txtunitC!!.text)
                                                 val red = ForegroundColorSpan(Color.RED)
-                                                if(txtunitC.text.length==6) {
+                                                if(txtunitC!!.text.length==6) {
                                                     spannableString.setSpan(
                                                         red,
                                                         4, 6, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                                                     )
-                                                    txtunitC.text = spannableString
+                                                    txtunitC!!.text = spannableString
                                                 }
                                             }
                                             if (UnitType == 2) {
-                                                txtunitB.text =  if(DUnit!=2){
+                                                txtunitB!!.text =  if(DUnit!=2){
                                                     "$unittype"
                                                 }else {
                                                     "$unittype " + "*"
@@ -483,18 +493,18 @@ class GalleryFragment : Fragment() {
                                                 txtunitqtyB!!.setText(Qty.toString())
                                                 Layoutbindunit = binding.layoutbox
                                                 Layoutbindunit!!.visibility = View.VISIBLE
-                                                val spannableString = SpannableString(txtunitB.text)
+                                                val spannableString = SpannableString(txtunitB!!.text)
                                                 val green = ForegroundColorSpan(Color.RED)
-                                                if(txtunitB.text.length==5) {
+                                                if(txtunitB!!.text.length==5) {
                                                     spannableString.setSpan(
                                                         green,
                                                         3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                                                     )
-                                                    txtunitB.text = spannableString
+                                                    txtunitB!!.text = spannableString
                                                 }
                                             }
                                             if (UnitType == 3) {
-                                                txtunitP.text =  if(DUnit!=3){
+                                                txtunitP!!.text =  if(DUnit!=3){
                                                     "$unittype"
                                                 }else{
                                                     "$unittype " + "*"
@@ -503,14 +513,14 @@ class GalleryFragment : Fragment() {
                                                 txtunitqtyP!!.setText(Qty.toString())
                                                 Layoutbindunit = binding.LayoutPieace
                                                 Layoutbindunit!!.visibility = View.VISIBLE
-                                                val spannableString = SpannableString(txtunitP.text)
+                                                val spannableString = SpannableString(txtunitP!!.text)
                                                 val red = ForegroundColorSpan(Color.RED)
-                                                if(txtunitP.text.length==7) {
+                                                if(txtunitP!!.text.length==7) {
                                                     spannableString.setSpan(
                                                         red,
                                                         5, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                                                     )
-                                                    txtunitP.text = spannableString
+                                                    txtunitP!!.text = spannableString
                                                 }
                                             }
                                         if(DUnit==1){
@@ -550,10 +560,15 @@ class GalleryFragment : Fragment() {
                     if (TotalStockQTY!!.text.toString()!="" && TotalStockQTY!!.text.toString().toInt()>0) {
 
                         SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Are you sure?")
-                            .setContentText("You want to back ")
-                            .setConfirmText("Yes")
-                            .setConfirmClickListener { sDialog ->
+//                            .setTitleText("Are you sure?")
+                            .setContentText("Discard stock changes ? ")
+                            .setCancelButtonBackgroundColor(Color.GREEN)
+                            .setCancelButton( "Yes")
+                            { sDialog -> sDialog.dismissWithAnimation() }
+                            .setConfirmText("No")
+                            .setConfirmButtonBackgroundColor(Color.RED)
+                            .setCancelClickListener {
+                                    sDialog ->
                                 sDialog.dismissWithAnimation()
                                 showproductdetails?.visibility = View.VISIBLE
                                 producdetails?.visibility = View.VISIBLE
@@ -562,9 +577,9 @@ class GalleryFragment : Fragment() {
                                 menu?.isVisible = true
                                 clear()
                             }
-                            .setCancelButton(
-                                "No"
-                            ) { sDialog -> sDialog.dismissWithAnimation() }
+                            .setConfirmClickListener {
+                                    sDialog -> sDialog.dismissWithAnimation()
+                            }
                             .show()
                     }
                     else{
@@ -658,7 +673,18 @@ class GalleryFragment : Fragment() {
             val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
             var accessToken = preferences.getString("accessToken", "")
             var empautoid = preferences.getString("EmpAutoId", "")
-
+            var remark = Remark.text.toString()
+            if (UnitChengeP!!.text.toString() != "" && UnitChengeP!!.text.toString() != "0") {
+                remark = remark + "</br>" + txtunitP!!.text + ": " + UnitChengeP!!.text.toString()
+            }
+            if (UnitChengeBox!!.text.toString() != "" && UnitChengeBox!!.text.toString() != "0")
+            {
+                remark = remark + "</br>" + txtunitB!!.text + ": " + UnitChengeBox!!.text.toString()
+            }
+            if (UnitChengease!!.text.toString() != "" && UnitChengease!!.text.toString() != "0")
+            {
+                remark = remark + "</br>" + txtunitC!!.text + ": " + UnitChengease!!.text.toString()
+            }
             JSONObj.put(
                 "requestContainer", Jsonarra.put(
                     "accessTok"+"en", accessToken
@@ -676,7 +702,7 @@ class GalleryFragment : Fragment() {
                 JSONObj.put("pObj", Jsonarrastock.put("StockQty", StrockQty.text))
             }
             if (Remark.text.toString() != "") {
-                JSONObj.put("pObj", Jsonarrastock.put("Remark", Remark.text))
+                JSONObj.put("pObj", Jsonarrastock.put("Remark",remark))
             }
             val reqStockUpdate = JsonObjectRequest(
                 Request.Method.POST, AppPreferences.UPDATE_STOCK, JSONObj,
@@ -731,13 +757,19 @@ class GalleryFragment : Fragment() {
         SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
             .setTitleText("Are you sure?")
             .setContentText("You want to make out of stock.")
-            .setConfirmText("Yes")
-            .setConfirmClickListener { sDialog -> sDialog.dismissWithAnimation()
-               updatestock(ProductID_S, TotalStockQTY!!, TxtRemark!!)
+            .setCancelButtonBackgroundColor(Color.GREEN)
+            .setCancelButton( "Yes")
+            { sDialog -> sDialog.dismissWithAnimation() }
+            .setConfirmText("No")
+            .setConfirmButtonBackgroundColor(Color.RED)
+            .setCancelClickListener {
+                    sDialog ->
+                sDialog.dismissWithAnimation()
+                updatestock(ProductID_S, TotalStockQTY!!, TxtRemark!!)
             }
-            .setCancelButton(
-                "No"
-            ) { sDialog -> sDialog.dismissWithAnimation() }
+            .setConfirmClickListener {
+                    sDialog -> sDialog.dismissWithAnimation()
+            }
             .show()
     }
     fun clear(){

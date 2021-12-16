@@ -6,115 +6,146 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/receive_PO"
+    android:fitsSystemWindows="true"
     android:name="com.example.whm.ui.inventoryreceive.ReceivePO"
     tools:context="com.example.whm.ui.inventoryreceive.ReceivePO"
     >
 
-    <RelativeLayout
-        android:id="@+id/layoutlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:context="com.example.whm.ui.inventoryreceive.ReceivePO"
-        tools:ignore="MissingConstraints">
+
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/ProducyListPO"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible">
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="4dp"
+
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/productlist"
+                android:background="@drawable/oval2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent">
+                android:layout_below="@+id/layoutheader">
 
                 <TextView
-                    android:id="@+id/actiondelete"
+                    android:id="@+id/txtproductidl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:drawableStart="@drawable/ic_baseline_delete_24"
-                    android:textColor="#fff"
-                    android:textSize="12dp"
-                    android:textStyle="normal"
-                    app:layout_constraintBottom_toTopOf="@+id/divider"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Product Id"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:textColor="#C61A1A"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/txtOrderNoL"
-
+                    android:id="@+id/txtproductnamePO"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="7dp"
-                    android:text="ID"
-                    android:textColor="#fff"
-                    android:textSize="16dp"
-                    android:textStyle="normal"
-                    app:layout_constraintBottom_toTopOf="@+id/divider"
-                    app:layout_constraintStart_toEndOf="@+id/actiondelete"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/txtboxes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="5dp"
                     android:text="ProductName"
-                    android:textColor="#fff"
-                    android:textSize="16dp"
-                    android:textStyle="normal"
-                    app:layout_constraintBottom_toBottomOf="@+id/txtOrderNoL"
-                    app:layout_constraintStart_toEndOf="@+id/txtOrderNoL"
-                    app:layout_constraintTop_toTopOf="@+id/txtOrderNoL" />
-
-                <TextView
-                    android:id="@+id/txtunittype"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:text="Unit Type"
-                    android:textColor="#fff"
-                    android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/txtboxes"
-                    app:layout_constraintStart_toEndOf="@+id/txtboxes"
-                    app:layout_constraintTop_toTopOf="@+id/txtboxes" />
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtproductidl"
+                    app:layout_constraintEnd_toStartOf="@+id/aciotedit"
+                    app:layout_constraintStart_toEndOf="@+id/txtproductidl"
+                    app:layout_constraintTop_toTopOf="@+id/txtproductidl" />
 
                 <TextView
                     android:id="@+id/txtpoqty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PO Qty"
-                    android:textColor="#fff"
-                    android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/txtunittype"
-                    app:layout_constraintStart_toEndOf="@+id/txtunittype"
-                    app:layout_constraintTop_toTopOf="@+id/txtunittype" />
-
-                <View
-                    android:id="@+id/divider"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="?android:attr/listDivider"
-                    android:backgroundTint="#000000"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="POQTY:"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="@+id/txtproductidl"
+                    app:layout_constraintTop_toBottomOf="@+id/txtproductnamePO" />
 
+                <TextView
+                    android:id="@+id/txtpo_qty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="0"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtpoqty"
+                    app:layout_constraintStart_toEndOf="@+id/txtpoqty"
+                    app:layout_constraintTop_toTopOf="@+id/txtpoqty" />
+
+                <TextView
+                    android:id="@+id/txtunittype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="Piece"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtpo_qty"
+                    app:layout_constraintStart_toEndOf="@+id/txtpo_qty"
+                    app:layout_constraintTop_toTopOf="@+id/txtpo_qty" />
+
+                <TextView
+                    android:id="@+id/txttotalpiece"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="Pieces"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txttotalpieceqty"
+                    app:layout_constraintEnd_toStartOf="@+id/txttotalpieceqty"
+                    app:layout_constraintTop_toTopOf="@+id/txttotalpieceqty" />
+
+                <TextView
+                    android:id="@+id/txttotalpieceqty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtpoqty"
+                    app:layout_constraintEnd_toEndOf="@+id/txtproductnamePO"
+                    app:layout_constraintTop_toTopOf="@+id/txtpoqty" />
+
+                <ImageView
+                    android:id="@+id/aciotdelete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/oval2"
+                    android:padding="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/aciotedit"
+                    app:layout_constraintTop_toBottomOf="@+id/aciotedit"
+                    app:srcCompat="@drawable/ic_baseline_delete_24"
+                    app:tint="#B61B1B" />
+
+                <ImageView
+                    android:id="@+id/aciotedit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/oval"
+                    android:padding="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtproductnamePO"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txtproductnamePO"
+                    app:srcCompat="@drawable/ic_baseline_edit_24"
+                    app:tint="#244505" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.cardview.widget.CardView>
 
 
-    </RelativeLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>

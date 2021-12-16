@@ -13,8 +13,8 @@ class ReceivePOAdapter1(var ReceiveModelList: List<ReceiveModel>, receivePO: Rec
     RecyclerView.Adapter<ReceivePOAdapter1.MyViewHolder>() {
     class MyViewHolder(view: View):RecyclerView.ViewHolder(view){
         var ProducyListPO: CardView = view.findViewById(R.id.ProducyListPO)
-        var PID: TextView = view.findViewById(R.id.txtProductId)
-        var PEODUCTNAME: TextView = view.findViewById(R.id.txtproductname)
+        var PID: TextView = view.findViewById(R.id.txtproductidl)
+        var PEODUCTNAME: TextView = view.findViewById(R.id.txtproductnamePO)
         var UNITYPW: TextView = view.findViewById(R.id.txtunittype)
         var POQTY: TextView = view.findViewById(R.id.txtpoqty)
     }

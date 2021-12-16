@@ -38,7 +38,7 @@ class ReceiveModel (
             this.UNIT_TYPE = UNITTYPE!!
         }
     fun getPOQTY(): Int? {
-        return P_ID
+        return PO_QTY
     }
     fun setPOQTY(POQTY: Int?) {
         this.PO_QTY = POQTY!!

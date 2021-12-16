@@ -76,6 +76,7 @@ class ReceivePO : AppCompatActivity() {
     fun Addproductlist() {
 
         val barcodeadd: EditText = findViewById(com.example.myapplication.R.id.enterbacode)
+        val draftAutoIdTV: TextView = findViewById(com.example.myapplication.R.id.draftAutoId)
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
         val JSONObj = JSONObject()
@@ -95,16 +96,15 @@ class ReceivePO : AppCompatActivity() {
             "requestContainer",
             Jsonarra.put("UserAutoId", EmpAutoId)
         )
-        JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", 0))
+
+        JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", draftAutoIdTV.text.toString().toInt()))
         JSONObj.put("cObj", Jsonarrabarcode.put("billNo", Bill_No))
         JSONObj.put("cObj", Jsonarrabarcode.put("billDate", Bill_Date))
         JSONObj.put("cObj", Jsonarrabarcode.put("vendorAutoId", VENDORID.toInt()))
         JSONObj.put("cObj", Jsonarrabarcode.put("barcode", barcodeadd!!.text.toString()))
         JSONObj.put("cObj", Jsonarrabarcode.put("Remark", ""))
 
-
-
-
+        Toast.makeText(this, draftAutoIdTV.text.toString(), Toast.LENGTH_SHORT).show();
 
 
         val BARCODEADDPRODUCT = JsonObjectRequest(
@@ -123,13 +123,14 @@ class ReceivePO : AppCompatActivity() {
                     val ProductName = JSONOBJ.getString("ProductName")
                     val UnitType = JSONOBJ.getString("UnitType")
                     val Qty = JSONOBJ.getInt("Qty")
+                    draftAutoIdTV.text=draftAutoId.toString()
                     DataBindPOLIST(
                         ProductId,
                         ProductName,
                         UnitType,
                         Qty
                     )
-                    Toast.makeText(this, draftAutoId.toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, draftAutoId.toString(), Toast.LENGTH_SHORT).show();
 
                 } else {
                     Toast.makeText(this, responseMessage, Toast.LENGTH_SHORT).show()

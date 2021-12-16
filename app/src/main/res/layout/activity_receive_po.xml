@@ -36,7 +36,15 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbara" />
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/draftAutoId"
+    android:visibility="gone"
+    android:text="0"
+    tools:ignore="MissingConstraints">
 
+</TextView>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/POLIST"
         android:layout_width="0dp"

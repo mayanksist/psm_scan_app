@@ -44,7 +44,6 @@ object AppPreferences {
         return Connected
     }
 
-
     fun showAlertinternetconnection(context: Context?) {
         val dialog = context?.let { Dialog(it) }
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)

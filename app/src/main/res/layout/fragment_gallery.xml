@@ -100,6 +100,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
+
                         android:text="N/A"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView2"
@@ -218,7 +219,7 @@
                         android:layout_marginEnd="8dp"
                         android:text="N/A"
                         android:textAlignment="center"
-                        android:textColor="#C60A0A"
+                        android:textColor="#E60606"
                         android:textSize="15dp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -244,7 +245,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/txtunitype"
                         app:layout_constraintEnd_toStartOf="@+id/txtBarScanned"
                         app:layout_constraintTop_toTopOf="@+id/txtunitype"
-                        app:tint="#C60A0A" />
+                        app:tint="#E60606" />
 
                     <TextView
                         android:id="@+id/txtreorder"
@@ -326,9 +327,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/editlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/cardview"
@@ -338,12 +339,14 @@
         <RelativeLayout
             android:id="@+id/stockupdate"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="4dp"
             android:columnWidth="300dp"
             android:columnCount="4"
             android:orientation="horizontal"
             android:rowCount="3"
             android:stretchMode="columnWidth"
+            app:layout_constraintBottom_toTopOf="@+id/btnupdatestock"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints">
 
@@ -382,7 +385,6 @@
                     android:layout_row="0"
                     android:layout_column="0"
                     android:paddingStart="5dp"
-                    android:paddingTop="3dp"
                     android:paddingEnd="5dp"
                     android:textColor="@color/black"
                     android:textSize="18dp"
@@ -394,7 +396,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/Uproductname"
-                android:layout_marginTop="5dp"
                 android:visibility="gone">
 
                 <TextView
@@ -411,21 +412,21 @@
                 <EditText
                     android:id="@+id/txtPunitqty"
                     android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="38dp"
                     android:layout_row="0"
                     android:layout_column="1"
-                    android:textSize="17dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="2dp"
                     android:background="@drawable/bg_edittext"
                     android:editable="false"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textSize="20dp" />
 
                 <EditText
                     android:id="@+id/txtunitP"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_row="0"
                     android:layout_column="1"
                     android:layout_marginStart="5dp"
@@ -448,6 +449,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/LayoutPieace"
+                android:layout_marginTop="2dp"
                 android:visibility="gone">
 
                 <TextView
@@ -464,16 +466,16 @@
                 <EditText
                     android:id="@+id/txtBunitqty"
                     android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="38dp"
                     android:layout_row="0"
                     android:layout_column="1"
-                    android:textSize="17dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="2dp"
                     android:background="@drawable/bg_edittext"
                     android:editable="false"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textSize="20dp" />
 
                 <EditText
                     android:id="@+id/txtunitB"
@@ -502,6 +504,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layoutbox"
+                android:layout_marginTop="2dp"
                 android:visibility="gone">
 
                 <TextView
@@ -512,22 +515,22 @@
                     android:layout_column="0"
                     android:padding="5dp"
                     android:text=""
-                    android:textSize="17dp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/txtCunitqty"
                     android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="38dp"
                     android:layout_row="0"
                     android:layout_column="1"
-                    android:textSize="17dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="2dp"
                     android:background="@drawable/bg_edittext"
                     android:editable="false"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textSize="17dp" />
 
                 <EditText
                     android:id="@+id/txtunitC"
@@ -556,12 +559,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/LayoutCase"
+                android:layout_marginTop="2dp"
                 android:visibility="gone">
 
                 <TextView
                     android:id="@+id/txttotal"
                     android:layout_width="170dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="38dp"
                     android:layout_row="0"
                     android:layout_column="1"
                     android:padding="5dp"
@@ -572,7 +576,7 @@
                 <EditText
                     android:id="@+id/txttotalqrty"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="38dp"
                     android:layout_row="0"
                     android:layout_column="2"
                     android:layout_marginTop="2dp"
@@ -596,6 +600,7 @@
                     android:textStyle="normal" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/Layoutdefault"
                 android:layout_width="match_parent"
@@ -606,7 +611,7 @@
                 <TextView
                     android:id="@+id/defaultstock"
                     android:layout_width="170dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="38dp"
                     android:layout_row="0"
                     android:layout_column="1"
                     android:padding="5dp"
@@ -617,7 +622,7 @@
                 <EditText
                     android:id="@+id/txtdefaultqty"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="38dp"
                     android:layout_row="0"
                     android:layout_column="2"
                     android:layout_marginTop="2dp"
@@ -656,7 +661,7 @@
                     android:layout_row="0"
                     android:layout_column="0"
                     android:layout_marginTop="10dp"
-                    android:maxLength="500"
+                    android:maxLength="380"
                     android:padding="5dp"
                     android:text="Remark"
                     android:textSize="17dp"
@@ -677,7 +682,7 @@
                     android:gravity="top"
                     android:hint="Write remark here..."
                     android:inputType="textMultiLine"
-                    android:lines="3"
+                    android:lines="2"
                     android:overScrollMode="always"
                     android:padding="8dp"
                     android:paddingStart="5dp"
@@ -699,28 +704,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
-                    android:textStyle="bold"
-                    android:textColor="#D80B0B"
+
                     android:textAlignment="center"
-                    android:textSize="15dp" />
+                    android:textColor="#D80B0B"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
+
         <Button
             android:id="@+id/btnupdatestock"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_column="2"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/oval3"
-            android:text="Update"
+            android:padding="5dp"
+            android:text="Update Stock"
             android:textAllCaps="false"
             android:textColor="#fff"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stockupdate" />
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

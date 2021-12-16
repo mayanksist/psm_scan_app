@@ -65,6 +65,7 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/bg_edittext.xml" value="0.68" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/bg_lightedittext.xml" value="0.91875" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/bg_totalqty.xml" value="0.91875" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/drawable/borderd.xml" value="0.91875" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/dialog_view.xml" value="0.91875" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.68" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/ic_baseline_calendar_month_24.xml" value="0.68" />
@@ -74,12 +75,13 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/oval2.xml" value="0.33425925925925926" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/oval3.xml" value="0.33425925925925926" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/product_box_outline_blank.xml" value="0.33425925925925926" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/drawable/productborder.xml" value="0.91875" />
         <entry key="..\:/Android App/PSM/app/src/main/res/font/allerta.xml" value="0.9525" />
         <entry key="..\:/Android App/PSM/app/src/main/res/font/arial.xml" value="0.9525" />
         <entry key="..\:/Android App/PSM/app/src/main/res/font/arizonia.xml" value="0.9525" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_main2.xml" value="0.36666666666666664" />
-        <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_receive_po.xml" value="0.8617424242424242" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_receive_po.xml" value="0.7429078014184397" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/app_bar_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/content_main.xml" value="0.2916666666666667" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/dailog_log.xml" value="0.88" />
@@ -93,9 +95,10 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_manualorder.xml" value="0.25" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_picallboxes.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_picallboxes_list2.xml" value="0.88" />
-        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_product_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_product_list.xml" value="0.1" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_slideshow.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/inventoryreceiver_fragment.xml" value="0.7843601895734598" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/listdesign.xml" value="1.0" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/msg.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/nav_header_main.xml" value="0.24583333333333332" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/receivepolist.xml" value="1.0" />
