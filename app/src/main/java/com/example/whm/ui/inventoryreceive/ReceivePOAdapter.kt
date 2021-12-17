@@ -38,13 +38,7 @@ class ReceivePOAdapter1(var ReceiveModelList: List<ReceiveModel>, receivePO: Rec
         holder.PEODUCTNAME.text = productList.getPNAME()
         holder.UNITYPW.text = productList.getUnitType().toString()
         holder.txttotalpieceqty.text = (productList.getUnitQTY().toString().toInt() * holder.POQTY.text.toString().toInt()).toString()
-//        var PID=productList.getPID().toString()
-//         if(holder.PID.text==PID){
-//        holder.POQTY.text.toString().toInt()+1
-//        }
-//        else{
-//            holder.POQTY.text.toString().toInt()
-//        }
+
 
     }
 

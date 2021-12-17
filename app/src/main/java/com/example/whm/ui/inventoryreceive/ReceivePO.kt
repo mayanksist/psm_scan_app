@@ -53,10 +53,6 @@ class ReceivePO : AppCompatActivity() {
                 val layoutManager = LinearLayoutManager(this)
                 recyclerView.layoutManager = layoutManager
                 recyclerView.itemAnimator = DefaultItemAnimator()
-                for (i in ReceiverpoList) {
-                    var pid=i
-                    Toast.makeText(this,pid.toString(),Toast.LENGTH_LONG).show()
-                }
                 recyclerView.adapter = ReceivePOAdapterl
             }
 
