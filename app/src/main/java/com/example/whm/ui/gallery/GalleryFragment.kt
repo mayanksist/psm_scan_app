@@ -665,17 +665,20 @@ class GalleryFragment : Fragment() {
             var accessToken = preferences.getString("accessToken", "")
             var empautoid = preferences.getString("EmpAutoId", "")
             var remark = Remark.text.toString()
-            if (UnitChengeP!!.text.toString() != "" && UnitChengeP!!.text.toString() != "0") {
-                remark = remark + "</br>" + txtunitP!!.text + ": " + UnitChengeP!!.text.toString()
-            }
-            if (UnitChengeBox!!.text.toString() != "" && UnitChengeBox!!.text.toString() != "0")
-            {
-                remark = remark + "</br>" + txtunitB!!.text + ": " + UnitChengeBox!!.text.toString()
-            }
-            if (UnitChengease!!.text.toString() != "" && UnitChengease!!.text.toString() != "0")
-            {
-                remark = remark + "</br>" + txtunitC!!.text + ": " + UnitChengease!!.text.toString()
-            }
+
+                if (UnitChengeP!!.text.toString() != "" && UnitChengeP!!.text.toString() != "0") {
+                    remark =
+                        remark + "</br>" + txtunitP!!.text + ": " + UnitChengeP!!.text.toString()
+                }
+                if (UnitChengeBox!!.text.toString() != "" && UnitChengeBox!!.text.toString() != "0") {
+                    remark =
+                        remark + "</br>" + txtunitB!!.text + ": " + UnitChengeBox!!.text.toString()
+                }
+                if (UnitChengease!!.text.toString() != "" && UnitChengease!!.text.toString() != "0") {
+                    remark =
+                        remark + "</br>" + txtunitC!!.text + ": " + UnitChengease!!.text.toString()
+                }
+
             JSONObj.put(
                 "requestContainer", Jsonarra.put(
                     "accessTok"+"en", accessToken

@@ -44,7 +44,7 @@ class ReceivePO : AppCompatActivity() {
             }
         })
 
-        addbarcode!!.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+        addbarcode!!.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
             if ((keyCode==KeyEvent.KEYCODE_ENTER) && (event.action==KeyEvent.ACTION_DOWN)){
 
                 Addproductlist()
@@ -128,12 +128,6 @@ class ReceivePO : AppCompatActivity() {
                     val Qty = JSONOBJ.getInt("Qty")
                     draftAutoIdTV.text=draftAutoId.toString()
 
-//                    var i = 1
-//                    var total = 0
-//                    while (i ) {
-//
-//                        i++
-//                    }
                     DataBindPOLIST(
                         ProductId,
                         ProductName,
