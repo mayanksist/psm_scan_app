@@ -1,4 +1,5 @@
 package com.example.whm.ui.inventoryreceive
+import android.app.AlertDialog
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,7 +27,7 @@ class ReceivePO : AppCompatActivity() {
      var backBTN: ImageView?=null
      var addbarcode: EditText?=null
 
-
+//    var POQTY:Int=0
     private  val ReceiverpoList=ArrayList<ReceiveModel>()
     private lateinit var ReceivePOAdapterl:ReceivePOAdapter1
 
@@ -46,7 +47,6 @@ class ReceivePO : AppCompatActivity() {
 
         addbarcode!!.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
             if ((keyCode==KeyEvent.KEYCODE_ENTER) && (event.action==KeyEvent.ACTION_DOWN)){
-
                 Addproductlist()
                 val recyclerView: RecyclerView = findViewById(com.example.myapplication.R.id.POLIST)
                 ReceivePOAdapterl= ReceivePOAdapter1(ReceiverpoList,this)
@@ -54,6 +54,7 @@ class ReceivePO : AppCompatActivity() {
                 recyclerView.layoutManager = layoutManager
                 recyclerView.itemAnimator = DefaultItemAnimator()
                 recyclerView.adapter = ReceivePOAdapterl
+
             }
 
             false
@@ -61,6 +62,8 @@ class ReceivePO : AppCompatActivity() {
         })
 
     }
+
+
     override fun onBackPressed() {
         if (fragmentManager.backStackEntryCount == 0) {
             fragmentManager.popBackStack()
@@ -73,8 +76,6 @@ class ReceivePO : AppCompatActivity() {
 
         }
     }
-
-
     fun Addproductlist() {
 
         val barcodeadd: EditText = findViewById(com.example.myapplication.R.id.enterbacode)
@@ -123,18 +124,37 @@ class ReceivePO : AppCompatActivity() {
                     val UnitType = JSONOBJ.getString("UnitType")
                     val Qty = JSONOBJ.getInt("Qty")
                     draftAutoIdTV.text=draftAutoId.toString()
+                    var check=false
+                    var poreqqty:Int=0
 
-                    DataBindPOLIST(
-                        ProductId,
-                        ProductName,
-                        UnitType,
-                        Qty
-                    )
-                    PIDHFPO.text=ProductId.toString()
+                    for (n in 0..ReceiverpoList.size-1) {
+                        if(ReceiverpoList[n].getPID()==ProductId){
+                            check=true
+                            if (ReceiverpoList[n].getPOQTY() != null) {
+                                poreqqty = ReceiverpoList[n].getPOQTY()!! + 1
+                                ReceiverpoList[n].setPOQTY(poreqqty)
+                                ReceiverpoList[n].setTotalPieces(poreqqty)
+
+                            }
+                        }
+                    }
+                    if(!check) {
+                        DataBindPOLIST(
+                            ProductId,
+                            ProductName,
+                            UnitType,
+                            Qty,
+                            1
+                        )
+                    }
+
+
                 } else {
                     Toast.makeText(this, responseMessage, Toast.LENGTH_SHORT).show()
 
                 }
+                barcodeadd.setText("")
+                barcodeadd.requestFocus()
             }, Response.ErrorListener { response ->
 
                 Log.e("onError", error(response.toString()))
@@ -146,10 +166,12 @@ class ReceivePO : AppCompatActivity() {
         )
         queues.add(BARCODEADDPRODUCT)
     }
-    private fun DataBindPOLIST( PID: Int, PNAME: String,UNITTYPE: String,UnitQTY:Int) {
-        var POLIST = ReceiveModel(PID, PNAME, UNITTYPE,UnitQTY)
-        ReceiverpoList.add(POLIST)
+    private fun DataBindPOLIST( PID: Int, PNAME: String,UNITTYPE: String,UnitQTY:Int,POQTY:Int) {
+        var POLIST = ReceiveModel(PID, PNAME, UNITTYPE,UnitQTY, POQTY,UnitQTY)
+        ReceiverpoList.add(0,POLIST)
         ReceivePOAdapterl.notifyDataSetChanged()
+
+
     }
 
 

@@ -92,8 +92,11 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
             return mView
 
     }
+
 //    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
+//        super.onViewCreated(view, save
+//
+//        dInstanceState)
 //        _binding = FragmentInventoryFragmentBinding.bind(view)
 //
 //        binding.apply {
@@ -141,7 +144,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
         )
         val BINDVENDERLIST = JsonObjectRequest(
             Request.Method.POST, AppPreferences.Bind_VENDER_LIST, JSONObj,
-            Response.Listener { response ->
+            { response ->
                 val resobj = (response.toString())
                 val responsemsg = JSONObject(resobj)
                 val resultobj = JSONObject(responsemsg.getString("d"))
@@ -157,7 +160,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                         val VNAME = BINDLIST.getString("VName")
                         spinnerArray[i] = VNAME
                     }
-                    spinnerArray.set(0,"Select Vendor")
+                    spinnerArray[0] = "Select Vendor"
                     BINVENDERLIST.adapter = context?.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) } as SpinnerAdapter
                     BINVENDERLIST.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
                         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -178,7 +181,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
 
 
                 }
-            }, Response.ErrorListener { response ->
+            }, { response ->
 
                 Log.e("onError", error(response.toString()))
             })

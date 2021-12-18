@@ -2,45 +2,52 @@ package com.example.myapplication.com.example.whm.ui.inventoryreceive
 
 class ReceiveModel (
     PID: Int, PNAME: String,
-    UNITTYPE: String,UnitQTY:Int) {
+    UNITTYPE: String,UnitQTY:Int,POQTY:Int,Totalpieces:Int) {
 
-        private lateinit var PA_NEME: String
-        private  var P_ID: Int = 0
+    private lateinit var PA_NEME: String
+    private var P_ID: Int = 0
     private lateinit var UNIT_TYPE: String
-    private  var Unit_QTY: Int=0
+    private var Unit_QTY: Int = 0
+    private var PO_QTY: Int=0
+    private var Total_Pieces: Int=0
 
-        init {
-            this.P_ID = PID
-            this.PA_NEME = PNAME
-            this.UNIT_TYPE = UNITTYPE
-            this.Unit_QTY = UnitQTY
-        }
-        fun getPID(): Int? {
-            return P_ID
-        }
-        fun setPID(PID: Int?) {
-            this.P_ID = PID!!
-        }
+    init {
+        this.P_ID = PID
+        this.PA_NEME = PNAME
+        this.UNIT_TYPE = UNITTYPE
+        this.Unit_QTY = UnitQTY
+        this.PO_QTY = POQTY
+        this.Total_Pieces = Totalpieces
+    }
 
-        fun getPNAME(): String {
-            return  PA_NEME
-        }
-        fun setProductName(PNAME: String?){
+    fun getPID(): Int? {
+        return P_ID
+    }
+    fun getPNAME(): String {
+        return PA_NEME
+    }
 
-            if (PNAME != null) {
-                this.PA_NEME = PNAME
-            }
-        }
-        fun getUnitType(): String? {
-            return UNIT_TYPE
-        }
-        fun setStoppage(UNITTYPE: String?) {
-            this.UNIT_TYPE = UNITTYPE!!
-        }
+    fun getUnitType(): String? {
+        return UNIT_TYPE
+    }
     fun getUnitQTY(): Int? {
         return Unit_QTY
     }
-    fun setUNITQTY(UnitQTY: Int?) {
-        this.Unit_QTY = UnitQTY!!
+
+    fun getPOQTY(): Int? {
+        return PO_QTY
     }
-}
+    fun setPOQTY(POQTY: Int?) {
+         this.PO_QTY=POQTY!!
+    }
+    fun getTotalPieces():Int?{
+       return Total_Pieces
+    }
+    fun setTotalPieces(newpoqty:Int?) {
+        if (newpoqty != null) {
+            this.Total_Pieces= newpoqty*Unit_QTY
+        }
+    }
+
+ }
+
