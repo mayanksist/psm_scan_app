@@ -26,6 +26,7 @@ import org.json.JSONObject
 class ReceivePO : AppCompatActivity() {
      var backBTN: ImageView?=null
      var addbarcode: EditText?=null
+     var BtnSave: Button?=null
 
 //    var POQTY:Int=0
     private  val ReceiverpoList=ArrayList<ReceiveModel>()
@@ -37,6 +38,7 @@ class ReceivePO : AppCompatActivity() {
         setContentView(com.example.myapplication.R.layout.activity_receive_po)
         backBTN = findViewById(com.example.myapplication.R.id.back)
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
+        BtnSave = findViewById(com.example.myapplication.R.id.btnsubmit)
 
         backBTN?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
@@ -59,6 +61,12 @@ class ReceivePO : AppCompatActivity() {
 
             false
 
+        })
+        BtnSave?.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+            SubmitPoList()
+
+            }
         })
 
     }
@@ -134,6 +142,7 @@ class ReceivePO : AppCompatActivity() {
                                 poreqqty = ReceiverpoList[n].getPOQTY()!! + 1
                                 ReceiverpoList[n].setPOQTY(poreqqty)
                                 ReceiverpoList[n].setTotalPieces(poreqqty)
+                                Toast.makeText(this,ReceiverpoList[0].getPID().toString(),Toast.LENGTH_LONG).show()
 
                             }
                         }
@@ -173,7 +182,57 @@ class ReceivePO : AppCompatActivity() {
 
 
     }
+    fun SubmitPoList() {
+        val draftAutoIdTV: TextView = findViewById(com.example.myapplication.R.id.draftAutoId)
+        val Jsonarra = JSONObject()
+        val Jsonarrabarcode = JSONObject()
+        val JSONObj = JSONObject()
+        val queues = Volley.newRequestQueue(this)
 
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var accessToken = preferences.getString("accessToken", "")
+        var EmpAutoId = preferences.getString("EmpAutoId", "")
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put("accessToken", accessToken)
+        )
+        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put("UserAutoId", EmpAutoId)
+        )
+        JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", draftAutoIdTV.text.toString().toInt()))
+        JSONObj.put("cObj", Jsonarrabarcode.put("status", 2))
+
+        val SUBMITPOLITS = JsonObjectRequest(
+            Request.Method.POST, AppPreferences.SUMIT_PO_LIST, JSONObj,
+            Response.Listener { response ->
+                val resobj = (response.toString())
+                val responsemsg = JSONObject(resobj)
+                val resultobj = JSONObject(responsemsg.getString("d"))
+
+                val responseCode = resultobj.getString("responseCode")
+                val responseMessage = resultobj.getString("responseMessage")
+                if (responseCode == "201") {
+                    val jsondata = resultobj.getString("responseData")
+
+                    Toast.makeText(this, jsondata, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, responseMessage, Toast.LENGTH_SHORT).show()
+
+                }
+
+            }, Response.ErrorListener { response ->
+
+                Log.e("onError", error(response.toString()))
+            })
+        SUBMITPOLITS.retryPolicy = DefaultRetryPolicy(
+            1000000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queues.add(SUBMITPOLITS)
+    }
 
 }
 
