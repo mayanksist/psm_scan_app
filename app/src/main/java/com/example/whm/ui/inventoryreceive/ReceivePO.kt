@@ -1,6 +1,7 @@
 package com.example.whm.ui.inventoryreceive
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -38,18 +39,17 @@ class ReceivePO : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.myapplication.R.layout.activity_receive_po)
-
-
         toolbar = findViewById(R.id.toolbarAction)
+//        toolbar.setTitleTextColor(Color.RED)
+      //  supportActionBar!!.show()
+      //  supportActionBar!!.title="Text"
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setSupportActionBar(toolbar)
- //       toolbar?.inflateMenu(com.example.myapplication.R.menu.menuitem);
-
         backBTN = findViewById(com.example.myapplication.R.id.back)
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
         BtnSave = findViewById(com.example.myapplication.R.id.btnsubmit)
         BtnDraft = findViewById(com.example.myapplication.R.id.btnsaveasdraft)
-//
-//        setSupportActionBar(com.example.myapplication.R.id.potoolbar)
+
 
 
         if (AppPreferences.internetConnectionCheck(this)) {
