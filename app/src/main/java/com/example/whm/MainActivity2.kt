@@ -87,7 +87,8 @@ class MainActivity2 : AppCompatActivity() {
                 com.example.myapplication.R.id.nav_productlist,
                 com.example.myapplication.R.id.nav_assignorder,
                 com.example.myapplication.R.id.nav_orderlist,
-                com.example.myapplication.R.id.nav_inventory
+                com.example.myapplication.R.id.nav_inventory,
+                com.example.myapplication.R.id.nav_bindpolist
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

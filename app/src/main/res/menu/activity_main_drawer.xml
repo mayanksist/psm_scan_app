@@ -42,6 +42,11 @@
             android:visible="false"
             android:icon="@drawable/ic_menu_logout"
             android:title="Load Order" />
+        <item
+            android:id="@+id/nav_bindpolist"
+            android:icon="@drawable/unloadorders"
+            android:visible="false"
+            android:title="@string/Inventoryreceiv" />
     </group>
 
 

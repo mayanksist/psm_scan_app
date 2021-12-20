@@ -1,13 +1,23 @@
 package com.example.whm.ui.inventoryreceive
 import android.app.AlertDialog
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Dialog
+import android.content.Context
+import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
-import android.view.View
 import android.preference.PreferenceManager
 import android.util.Log
-import android.view.KeyEvent
+import android.view.*
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,17 +28,21 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
+import com.example.myapplication.com.example.whm.MainActivity
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceiveModel
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceivePOAdapter1
+import com.example.myapplication.ui.product.setSupportActionBar
 import org.json.JSONObject
 
 
 class ReceivePO : AppCompatActivity() {
-     var backBTN: ImageView?=null
-     var addbarcode: EditText?=null
-     var BtnSave: Button?=null
+    var backBTN: ImageView?=null
+    var addbarcode: EditText?=null
+    var BtnSave: Button?=null
+    var BtnDraft: Button?=null
+    var toolbar: Toolbar?=null
 
-//    var POQTY:Int=0
+    //    var POQTY:Int=0
     private  val ReceiverpoList=ArrayList<ReceiveModel>()
     private lateinit var ReceivePOAdapterl:ReceivePOAdapter1
 
@@ -39,39 +53,89 @@ class ReceivePO : AppCompatActivity() {
         backBTN = findViewById(com.example.myapplication.R.id.back)
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
         BtnSave = findViewById(com.example.myapplication.R.id.btnsubmit)
+        BtnDraft = findViewById(com.example.myapplication.R.id.btnsaveasdraft)
+         toolbar = findViewById(com.example.myapplication.R.id.potoolbar)
+        setSupportActionBar(toolbar)
 
-        backBTN?.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
+
+        if (AppPreferences.internetConnectionCheck(this)) {
+            backBTN?.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
                     onBackPressed()
 
-            }
-        })
+                }
+            })
+        } else {
+            CheckInterNetDailog()
+        }
 
-        addbarcode!!.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
-            if ((keyCode==KeyEvent.KEYCODE_ENTER) && (event.action==KeyEvent.ACTION_DOWN)){
-                Addproductlist()
-                val recyclerView: RecyclerView = findViewById(com.example.myapplication.R.id.POLIST)
-                ReceivePOAdapterl= ReceivePOAdapter1(ReceiverpoList,this)
-                val layoutManager = LinearLayoutManager(this)
-                recyclerView.layoutManager = layoutManager
-                recyclerView.itemAnimator = DefaultItemAnimator()
-                recyclerView.adapter = ReceivePOAdapterl
+        if (AppPreferences.internetConnectionCheck(this)) {
+            addbarcode!!.requestFocus()
+            addbarcode!!.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
+                if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
+                var     scanbarcodeproduct = addbarcode!!.text.toString()
+                    if (scanbarcodeproduct!!.trim().isEmpty()) {
+                        addbarcode!!.text.clear()
+                        addbarcode!!.setText("")
+                        Toast.makeText(this, "Scan product", Toast.LENGTH_SHORT).show()
+                        addbarcode!!.requestFocus()
 
-            }
 
-            false
+                    }
+                    else {
+                        Addproductlist()
+                        val recyclerView: RecyclerView =
+                            findViewById(com.example.myapplication.R.id.POLIST)
+                        ReceivePOAdapterl = ReceivePOAdapter1(ReceiverpoList, this)
+                        val layoutManager = LinearLayoutManager(this)
+                        recyclerView.layoutManager = layoutManager
+                        recyclerView.itemAnimator = DefaultItemAnimator()
+                        recyclerView.adapter = ReceivePOAdapterl
+                    }
 
-        })
-        BtnSave?.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-            SubmitPoList()
 
-            }
-        })
+                }
+
+                false
+
+            })
+        } else {
+            CheckInterNetDailog()
+        }
+        if (AppPreferences.internetConnectionCheck(this)) {
+
+            BtnSave?.setOnClickListener { SubmitPoList(2) }
+        }
+        else{
+            CheckInterNetDailog()
+        }
+        if (AppPreferences.internetConnectionCheck(this)) {
+
+            BtnDraft?.setOnClickListener { SubmitPoList(1) }
+        }
+        else{
+            CheckInterNetDailog()
+        }
 
     }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menuitem, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
+        return when (item.itemId) {
+            R.id.menu_main_setting2 -> {
 
+                true
+            }
+            R.id.menu_main_setting -> {
+
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
     override fun onBackPressed() {
         if (fragmentManager.backStackEntryCount == 0) {
             fragmentManager.popBackStack()
@@ -88,7 +152,6 @@ class ReceivePO : AppCompatActivity() {
 
         val barcodeadd: EditText = findViewById(com.example.myapplication.R.id.enterbacode)
         val draftAutoIdTV: TextView = findViewById(com.example.myapplication.R.id.draftAutoId)
-        val PIDHFPO: TextView = findViewById(com.example.myapplication.R.id.PIDHF)
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
         val JSONObj = JSONObject()
@@ -142,7 +205,7 @@ class ReceivePO : AppCompatActivity() {
                                 poreqqty = ReceiverpoList[n].getPOQTY()!! + 1
                                 ReceiverpoList[n].setPOQTY(poreqqty)
                                 ReceiverpoList[n].setTotalPieces(poreqqty)
-                                Toast.makeText(this,ReceiverpoList[0].getPID().toString(),Toast.LENGTH_LONG).show()
+                                //  Toast.makeText(this,ReceiverpoList[0].getPID().toString(),Toast.LENGTH_LONG).show()
 
                             }
                         }
@@ -182,13 +245,12 @@ class ReceivePO : AppCompatActivity() {
 
 
     }
-    fun SubmitPoList() {
+    fun SubmitPoList(Status:Int) {
         val draftAutoIdTV: TextView = findViewById(com.example.myapplication.R.id.draftAutoId)
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
         val JSONObj = JSONObject()
         val queues = Volley.newRequestQueue(this)
-
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         var accessToken = preferences.getString("accessToken", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")
@@ -202,10 +264,10 @@ class ReceivePO : AppCompatActivity() {
             Jsonarra.put("UserAutoId", EmpAutoId)
         )
         JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", draftAutoIdTV.text.toString().toInt()))
-        JSONObj.put("cObj", Jsonarrabarcode.put("status", 2))
+        JSONObj.put("cObj", Jsonarrabarcode.put("status", Status))
 
         val SUBMITPOLITS = JsonObjectRequest(
-            Request.Method.POST, AppPreferences.SUMIT_PO_LIST, JSONObj,
+            Request.Method.POST, AppPreferences.SUBMIT_PO_LIST, JSONObj,
             Response.Listener { response ->
                 val resobj = (response.toString())
                 val responsemsg = JSONObject(resobj)
@@ -214,9 +276,22 @@ class ReceivePO : AppCompatActivity() {
                 val responseCode = resultobj.getString("responseCode")
                 val responseMessage = resultobj.getString("responseMessage")
                 if (responseCode == "201") {
-                    val jsondata = resultobj.getString("responseData")
+                    // this.findNavController().navigate(com.example.myapplication.R.id.nav_orderlist)
+//                    val manager: FragmentManager = supportFragmentManager
+//                    val count: Int = manager.getBackStackEntryCount()
+//                    if (count > 0) {
+//                        val mfragment: FragmentManager.BackStackEntry = manager.getBackStackEntryAt(count - 1)
+//                        val ft: android.app.FragmentTransaction? = fragmentManager.beginTransaction()
+//                        if (ft != null) {
+//                            ft.replace(R.id.fragment_loadorder,  mfragment)
+//                        }
+//                        if (ft != null) {
+//                            ft.commit()
+//                        }
+//                    }
+                    var intent = Intent(this, ReceivePO::class.java)
+                    startActivity(intent)
 
-                    Toast.makeText(this, jsondata, Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this, responseMessage, Toast.LENGTH_SHORT).show()
 
@@ -234,7 +309,23 @@ class ReceivePO : AppCompatActivity() {
         queues.add(SUBMITPOLITS)
     }
 
+
+
+
+    fun CheckInterNetDailog(){
+        val dialog = this?.let { Dialog(it) }
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog?.setContentView(com.example.myapplication.R.layout.dailog_log)
+        val btDismiss = dialog?.findViewById<Button>(com.example.myapplication.R.id.btDismissCustomDialog)
+        btDismiss?.setOnClickListener {
+            dialog.dismiss()
+            var intent = Intent(this, ReceivePO::class.java)
+            startActivity(intent)        }
+        dialog?.show()
+    }
 }
+
+
 
 
 

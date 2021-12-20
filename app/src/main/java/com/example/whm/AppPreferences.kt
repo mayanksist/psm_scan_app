@@ -25,7 +25,7 @@ object AppPreferences {
     const val UPDATE_STOCK = apiurl + "WPackerProductList.asmx/UpdateStock"
     const val Bind_VENDER_LIST = BASEURL + "WPOReceive.asmx/getVendor"
     const val SCAND_BARCODE_PADD = BASEURL + "WPOReceive.asmx/getproductbybarcode"
-    const val SUMIT_PO_LIST = BASEURL + "WPOReceive.asmx/submitPO"
+    const val SUBMIT_PO_LIST = BASEURL + "WPOReceive.asmx/submitPO"
     fun internetConnectionCheck(context: Context?): Boolean {
         var Connected = false
         val connectivity = context?.applicationContext

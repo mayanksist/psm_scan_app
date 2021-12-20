@@ -58,4 +58,9 @@
         android:name="com.example.whm.ui.inventoryreceive.FragmentInventory"
         android:label="@string/Inventoryreceiv"
         tools:layout="@layout/fragment_inventory_fragment" />
+    <fragment
+        android:id="@+id/nav_bindpolist"
+        android:name="com.example.whm.ui.inventoryreceive.FragmentInventory"
+        android:label="@string/Inventoryreceiv"
+        tools:layout="@layout/activity_receive_po" />
 </navigation>
