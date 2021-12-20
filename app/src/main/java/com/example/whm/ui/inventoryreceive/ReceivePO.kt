@@ -43,7 +43,7 @@ class ReceivePO : AppCompatActivity() {
 //        toolbar.setTitleTextColor(Color.RED)
       //  supportActionBar!!.show()
       //  supportActionBar!!.title="Text"
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setSupportActionBar(toolbar)
         backBTN = findViewById(com.example.myapplication.R.id.back)
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
@@ -121,11 +121,11 @@ class ReceivePO : AppCompatActivity() {
 
         return when (item.itemId) {
             R.id.menu_main_setting2 -> {
-
+                SubmitPoList(2)
                 true
             }
             R.id.menu_main_setting -> {
-
+                SubmitPoList(1)
                 true
             }
             else -> super.onOptionsItemSelected(item)
