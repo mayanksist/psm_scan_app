@@ -1,23 +1,13 @@
 package com.example.whm.ui.inventoryreceive
-import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +18,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
-import com.example.myapplication.com.example.whm.MainActivity
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceiveModel
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceivePOAdapter1
 import com.example.myapplication.ui.product.setSupportActionBar
@@ -40,8 +29,7 @@ class ReceivePO : AppCompatActivity() {
     var addbarcode: EditText?=null
     var BtnSave: Button?=null
     var BtnDraft: Button?=null
-    var toolbar: Toolbar?=null
-
+    var toolbar:Toolbar?=null
     //    var POQTY:Int=0
     private  val ReceiverpoList=ArrayList<ReceiveModel>()
     private lateinit var ReceivePOAdapterl:ReceivePOAdapter1
@@ -50,12 +38,18 @@ class ReceivePO : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.myapplication.R.layout.activity_receive_po)
+
+
+        toolbar = findViewById(R.id.toolbarAction)
+        setSupportActionBar(toolbar)
+ //       toolbar?.inflateMenu(com.example.myapplication.R.menu.menuitem);
+
         backBTN = findViewById(com.example.myapplication.R.id.back)
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
         BtnSave = findViewById(com.example.myapplication.R.id.btnsubmit)
         BtnDraft = findViewById(com.example.myapplication.R.id.btnsaveasdraft)
-         toolbar = findViewById(com.example.myapplication.R.id.potoolbar)
-        setSupportActionBar(toolbar)
+//
+//        setSupportActionBar(com.example.myapplication.R.id.potoolbar)
 
 
         if (AppPreferences.internetConnectionCheck(this)) {
@@ -118,6 +112,7 @@ class ReceivePO : AppCompatActivity() {
         }
 
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menuitem, menu)
         return true
