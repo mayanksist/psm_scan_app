@@ -78,7 +78,7 @@
 
 
 
-   s
+
     <ImageView
         android:id="@+id/imgbackbtm"
         android:layout_width="wrap_content"

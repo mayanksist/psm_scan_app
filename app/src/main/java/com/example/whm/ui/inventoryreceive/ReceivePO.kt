@@ -26,9 +26,9 @@ import org.json.JSONObject
 
 
 class ReceivePO : AppCompatActivity() {
-    var backBTN: ImageView?=null
+   // var backBTN: ImageView?=null
     var addbarcode: EditText?=null
-    var backarrow: ImageButton?=null
+    var backarrow: ImageView?=null
 
      var toolbar:Toolbar?=null
 
@@ -44,7 +44,7 @@ class ReceivePO : AppCompatActivity() {
         getSupportActionBar()?.setTitle("PO Receive")
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
 
-        backBTN = findViewById(com.example.myapplication.R.id.back)
+//        backBTN = findViewById(com.example.myapplication.R.id.back)
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
         backarrow = findViewById(com.example.myapplication.R.id.imgbackbtm)
         if (AppPreferences.internetConnectionCheck(this)) {
