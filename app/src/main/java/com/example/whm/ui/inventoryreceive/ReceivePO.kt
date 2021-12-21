@@ -28,10 +28,10 @@ import org.json.JSONObject
 class ReceivePO : AppCompatActivity() {
     var backBTN: ImageView?=null
     var addbarcode: EditText?=null
-    var BtnSave: Button?=null
-    var BtnDraft: Button?=null
-    var toolbar:Toolbar?=null
-    //    var POQTY:Int=0
+    var backarrow: ImageButton?=null
+
+     var toolbar:Toolbar?=null
+
     private  val ReceiverpoList=ArrayList<ReceiveModel>()
     private lateinit var ReceivePOAdapterl:ReceivePOAdapter1
 
@@ -40,20 +40,15 @@ class ReceivePO : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(com.example.myapplication.R.layout.activity_receive_po)
         toolbar = findViewById(R.id.toolbarAction)
-//        toolbar.setTitleTextColor(Color.RED)
-      //  supportActionBar!!.show()
-      //  supportActionBar!!.title="Text"
-//        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setSupportActionBar(toolbar)
+        getSupportActionBar()?.setTitle("PO Receive")
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+
         backBTN = findViewById(com.example.myapplication.R.id.back)
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
-        BtnSave = findViewById(com.example.myapplication.R.id.btnsubmit)
-        BtnDraft = findViewById(com.example.myapplication.R.id.btnsaveasdraft)
-
-
-
+        backarrow = findViewById(com.example.myapplication.R.id.imgbackbtm)
         if (AppPreferences.internetConnectionCheck(this)) {
-            backBTN?.setOnClickListener(object : View.OnClickListener {
+            backarrow?.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
                     onBackPressed()
 
@@ -67,7 +62,7 @@ class ReceivePO : AppCompatActivity() {
             addbarcode!!.requestFocus()
             addbarcode!!.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
                 if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
-                var     scanbarcodeproduct = addbarcode!!.text.toString()
+                    var     scanbarcodeproduct = addbarcode!!.text.toString()
                     if (scanbarcodeproduct!!.trim().isEmpty()) {
                         addbarcode!!.text.clear()
                         addbarcode!!.setText("")
@@ -96,20 +91,6 @@ class ReceivePO : AppCompatActivity() {
         } else {
             CheckInterNetDailog()
         }
-        if (AppPreferences.internetConnectionCheck(this)) {
-
-            BtnSave?.setOnClickListener { SubmitPoList(2) }
-        }
-        else{
-            CheckInterNetDailog()
-        }
-        if (AppPreferences.internetConnectionCheck(this)) {
-
-            BtnDraft?.setOnClickListener { SubmitPoList(1) }
-        }
-        else{
-            CheckInterNetDailog()
-        }
 
     }
 
@@ -117,14 +98,15 @@ class ReceivePO : AppCompatActivity() {
         menuInflater.inflate(R.menu.menuitem, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
-            R.id.menu_main_setting2 -> {
+            R.id.savesubmit -> {
                 SubmitPoList(2)
                 true
             }
-            R.id.menu_main_setting -> {
+            R.id.draftsubmit -> {
                 SubmitPoList(1)
                 true
             }
@@ -200,6 +182,7 @@ class ReceivePO : AppCompatActivity() {
                                 poreqqty = ReceiverpoList[n].getPOQTY()!! + 1
                                 ReceiverpoList[n].setPOQTY(poreqqty)
                                 ReceiverpoList[n].setTotalPieces(poreqqty)
+                                ReceiverpoList.shuffle()
                                 //  Toast.makeText(this,ReceiverpoList[0].getPID().toString(),Toast.LENGTH_LONG).show()
 
                             }

@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group>
         <item
-            android:id="@+id/menu_main_setting"
+            android:id="@+id/draftsubmit"
             android:orderInCategory="100"
             app:showAsAction="collapseActionView"
             android:actionLayout="@layout/toolbar"
             android:title="Save As Draft" />
 
         <item
-            android:id="@+id/menu_main_setting2"
+            android:id="@+id/savesubmit"
             android:orderInCategory="200"
             app:showAsAction="collapseActionView"
             android:actionLayout="@layout/toolbar"
