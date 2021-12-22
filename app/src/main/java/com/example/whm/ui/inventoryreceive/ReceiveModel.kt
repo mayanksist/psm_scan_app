@@ -2,7 +2,7 @@ package com.example.myapplication.com.example.whm.ui.inventoryreceive
 
 class ReceiveModel (
     PID: Int, PNAME: String,
-    UNITTYPE: String,UnitQTY:Int,POQTY:Int,Totalpieces:Int) {
+    UNITTYPE: String,UnitQTY:Int,POQTY:Int,Totalpieces:Int,DraftID:Int) {
 
     private lateinit var PA_NEME: String
     private var P_ID: Int = 0
@@ -10,6 +10,7 @@ class ReceiveModel (
     private var Unit_QTY: Int = 0
     private var PO_QTY: Int=0
     private var Total_Pieces: Int=0
+    private var DRAFT_ID: Int=0
 
     init {
         this.P_ID = PID
@@ -18,6 +19,7 @@ class ReceiveModel (
         this.Unit_QTY = UnitQTY
         this.PO_QTY = POQTY
         this.Total_Pieces = Totalpieces
+        this.DRAFT_ID = DraftID
     }
 
     fun getPID(): Int? {
@@ -47,6 +49,9 @@ class ReceiveModel (
         if (newpoqty != null) {
             this.Total_Pieces= newpoqty*Unit_QTY
         }
+    }
+    fun getDraftID():Int?{
+        return DRAFT_ID
     }
 
  }

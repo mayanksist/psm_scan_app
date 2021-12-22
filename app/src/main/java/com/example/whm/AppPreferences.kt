@@ -15,7 +15,7 @@ object AppPreferences {
 //    const val AppVersion = "2.0.0.17"
     const  val AppVersion = BuildConfig.VERSION_NAME
     const val BASEURL = "http://api.a1whm.com/AndroidAPI/"
-    const val BASEURLSU = "https://api.a1whm.com/AndroidAPI/"
+ //   const val BASEURLSU = "https://api.a1whm.com/AndroidAPI/"
     const val apiurl = "http://api.a1whm.com/Packerapi/"
     const val GET_ORDERS = "WDriverOrder.asmx/getOrders"
     const val SUBMIT_LOAD_ORDER = "WDriverOrder.asmx/SubmitLoadOrder"
@@ -26,6 +26,8 @@ object AppPreferences {
     const val Bind_VENDER_LIST = BASEURL + "WPOReceive.asmx/getVendor"
     const val SCAND_BARCODE_PADD = BASEURL + "WPOReceive.asmx/getproductbybarcode"
     const val SUBMIT_PO_LIST = BASEURL + "WPOReceive.asmx/submitPO"
+    const val DELETE_PO_LIST = BASEURL + "WPOReceive.asmx/deletePOItem"
+    const val EDIT_PO_LIST = BASEURL + "WPOReceive.asmx/editPOQty"
     fun internetConnectionCheck(context: Context?): Boolean {
         var Connected = false
         val connectivity = context?.applicationContext

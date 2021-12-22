@@ -1,7 +1,6 @@
 package com.example.whm.ui.inventoryreceive
 import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -21,7 +20,6 @@ import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceiveModel
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceivePOAdapter1
-import com.example.myapplication.ui.product.setSupportActionBar
 import org.json.JSONObject
 
 
@@ -35,7 +33,6 @@ class ReceivePO : AppCompatActivity() {
     private  val ReceiverpoList=ArrayList<ReceiveModel>()
     private lateinit var ReceivePOAdapterl:ReceivePOAdapter1
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.myapplication.R.layout.activity_receive_po)
@@ -44,7 +41,6 @@ class ReceivePO : AppCompatActivity() {
         getSupportActionBar()?.setTitle("PO Receive")
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
 
-//        backBTN = findViewById(com.example.myapplication.R.id.back)
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
         backarrow = findViewById(com.example.myapplication.R.id.imgbackbtm)
         if (AppPreferences.internetConnectionCheck(this)) {
@@ -69,7 +65,6 @@ class ReceivePO : AppCompatActivity() {
                         Toast.makeText(this, "Scan product", Toast.LENGTH_SHORT).show()
                         addbarcode!!.requestFocus()
 
-
                     }
                     else {
                         Addproductlist()
@@ -81,7 +76,6 @@ class ReceivePO : AppCompatActivity() {
                         recyclerView.itemAnimator = DefaultItemAnimator()
                         recyclerView.adapter = ReceivePOAdapterl
                     }
-
 
                 }
 
@@ -182,8 +176,7 @@ class ReceivePO : AppCompatActivity() {
                                 poreqqty = ReceiverpoList[n].getPOQTY()!! + 1
                                 ReceiverpoList[n].setPOQTY(poreqqty)
                                 ReceiverpoList[n].setTotalPieces(poreqqty)
-                                ReceiverpoList.shuffle()
-                                //  Toast.makeText(this,ReceiverpoList[0].getPID().toString(),Toast.LENGTH_LONG).show()
+//                                ReceiverpoList.drop()
 
                             }
                         }
@@ -194,7 +187,8 @@ class ReceivePO : AppCompatActivity() {
                             ProductName,
                             UnitType,
                             Qty,
-                            1
+                            1,
+                            draftAutoId
                         )
                     }
 
@@ -216,9 +210,15 @@ class ReceivePO : AppCompatActivity() {
         )
         queues.add(BARCODEADDPRODUCT)
     }
-    private fun DataBindPOLIST( PID: Int, PNAME: String,UNITTYPE: String,UnitQTY:Int,POQTY:Int) {
-        var POLIST = ReceiveModel(PID, PNAME, UNITTYPE,UnitQTY, POQTY,UnitQTY)
+    private fun DataBindPOLIST(PID: Int, PNAME: String,
+                               UNITTYPE: String,
+                               UnitQTY:Int,
+                               POQTY:Int,
+                               DRaftID: Int
+    ) {
+        var POLIST = ReceiveModel(PID, PNAME, UNITTYPE,UnitQTY, POQTY,UnitQTY, DRaftID)
         ReceiverpoList.add(0,POLIST)
+
         ReceivePOAdapterl.notifyDataSetChanged()
 
 
@@ -290,6 +290,7 @@ class ReceivePO : AppCompatActivity() {
 
 
 
+
     fun CheckInterNetDailog(){
         val dialog = this?.let { Dialog(it) }
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -302,6 +303,7 @@ class ReceivePO : AppCompatActivity() {
         dialog?.show()
     }
 }
+
 
 
 

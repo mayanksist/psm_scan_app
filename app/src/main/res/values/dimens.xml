@@ -7,5 +7,5 @@
     <dimen name="fab_margin">20dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="design_navigation_separator_vertical_padding">0dp</dimen>
-<!--    <dimen name="design_navigation_icon_padding" tools:override="true">10dp</dimen>-->
+    <!--    <dimen name="design_navigation_icon_padding" tools:override="true">10dp</dimen>-->
 </resources>

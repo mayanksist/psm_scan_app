@@ -440,7 +440,7 @@ class ProductList : Fragment() {
         JSONObj.put("OrderNo", sorderno)
         val alertsuborder = AlertDialog.Builder(this.context)
         val resordernos = JsonObjectRequest(Request.Method.POST,
-            AppPreferences.BASEURLSU + AppPreferences.SUBMIT_LOAD_ORDER,
+            AppPreferences.BASEURL + AppPreferences.SUBMIT_LOAD_ORDER,
             JSONObj,
             { response ->
                 val resobj = (response.toString())

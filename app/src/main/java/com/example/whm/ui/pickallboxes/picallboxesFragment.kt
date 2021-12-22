@@ -116,7 +116,7 @@ class picallboxesFragment : Fragment() {
             val alertsuborder = AlertDialog.Builder(activity)
             val resordernos = JsonObjectRequest(
                 Request.Method.POST,
-                AppPreferences.BASEURLSU + AppPreferences.SUBMIT_LOAD_ORDER,
+                AppPreferences.BASEURL + AppPreferences.SUBMIT_LOAD_ORDER,
                 JSONObj,
                 { response ->
                     val resobj = (response.toString())

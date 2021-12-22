@@ -116,7 +116,7 @@
                     app:layout_constraintTop_toTopOf="@+id/txtpoqty" />
 
                 <ImageView
-                    android:id="@+id/aciotdelete"
+                    android:id="@+id/actiondelete"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -124,13 +124,13 @@
                     android:background="@drawable/oval2"
                     android:padding="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/aciotedit"
-                    app:layout_constraintTop_toBottomOf="@+id/aciotedit"
+                    app:layout_constraintEnd_toEndOf="@+id/actionedit"
+                    app:layout_constraintTop_toBottomOf="@+id/actionedit"
                     app:srcCompat="@drawable/ic_baseline_delete_24"
                     app:tint="#B61B1B" />
 
                 <ImageView
-                    android:id="@+id/aciotedit"
+                    android:id="@+id/actionedit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
@@ -141,6 +141,16 @@
                     app:layout_constraintTop_toTopOf="@+id/txtproductnamePO"
                     app:srcCompat="@drawable/ic_baseline_edit_24"
                     app:tint="#244505" />
+
+                <TextView
+                    android:id="@+id/podraftAutoId"
+                    android:layout_width="20dp"
+                    android:layout_height="19dp"
+                    android:text="0"
+                    android:visibility="gone"
+                    tools:layout_editor_absoluteX="158dp"
+                    tools:layout_editor_absoluteY="43dp"
+                    tools:ignore="MissingConstraints" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>

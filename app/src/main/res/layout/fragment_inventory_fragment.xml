@@ -1,141 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:id="@+id/layoutpo"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context="com.example.whm.ui.inventoryreceive.FragmentInventory">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.whm.ui.inventoryreceive.FragmentInventory">
 
-        <RelativeLayout
-            android:id="@+id/stockupdate"
-            android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/stockupdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnWidth="300dp"
+        android:columnCount="4"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:rowCount="3"
+        android:stretchMode="columnWidth"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/layoutbillno"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnWidth="300dp"
-            android:columnCount="4"
-            android:orientation="horizontal"
-            android:rowCount="3"
-            android:stretchMode="columnWidth"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints">
+            android:layout_marginTop="5dp">
 
-            <LinearLayout
-                android:id="@+id/layoutbillno"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/txtPunit"
+                style="@style/RegularMono"
+                android:layout_width="105dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
+                android:layout_row="0"
+                android:layout_column="0"
+                android:padding="5dp"
+                android:text="Bill No"
+                android:textSize="17dp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txtPunit"
-                    style="@style/RegularMono"
-                    android:layout_width="105dp"
-                    android:layout_height="wrap_content"
-                    android:layout_row="0"
-                    android:layout_column="0"
-                    android:padding="5dp"
-                    android:text="Bill No"
-                    android:textSize="17dp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/txtbillno"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_row="0"
-                    android:layout_column="1"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="@drawable/bg_lightedittext"
-                    android:elevation="4dp"
-                    android:hint="Bill No"
-                    android:inputType="text"
-
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:textStyle="normal" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutbilldate"
+            <EditText
+                android:id="@+id/txtbillno"
                 android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/bg_lightedittext"
+                android:elevation="4dp"
+                android:hint="Bill No"
+                android:inputType="text"
+
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutbilldate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutbillno"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtdatebill"
+                style="@style/RegularMono"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layoutbillno"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/txtdatebill"
-                    style="@style/RegularMono"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="0"
-                    android:layout_column="0"
-                    android:padding="5dp"
-                    android:text="Bill Date"
-                    android:textSize="17dp"
-                    android:textStyle="bold" />
+                android:layout_row="0"
+                android:layout_column="0"
+                android:padding="5dp"
+                android:text="Bill Date"
+                android:textSize="17dp"
+                android:textStyle="bold" />
 
 
 
-                <TextView
-                    android:id="@+id/txtbildate"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="@drawable/bg_lightedittext"
-                    android:padding="10dp"
-                    android:drawableRight="@drawable/clendericon"
-                    android:drawableTint="#000000"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:hint="MM/DD/YYYY"
-                    android:textStyle="normal" />
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="37dp"
-                    android:background="@drawable/ic_baseline_calendar_month_24">
-
-                </Button>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutvender"
+            <TextView
+                android:id="@+id/txtbildate"
                 android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/bg_lightedittext"
+                android:padding="10dp"
+                android:drawableRight="@drawable/clendericon"
+                android:drawableTint="#000000"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:hint="MM/DD/YYYY"
+                android:textStyle="normal" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:background="@drawable/ic_baseline_calendar_month_24">
+
+            </Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutvender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutbilldate"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/txtvender"
+                style="@style/RegularMono"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layoutbilldate"
-                android:layout_marginTop="5dp">
+                android:layout_row="0"
+                android:layout_column="0"
+                android:padding="5dp"
+                android:text="Vendor"
+                android:textSize="17dp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txtvender"
-                    style="@style/RegularMono"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:layout_row="0"
-                    android:layout_column="0"
-                    android:padding="5dp"
-                    android:text="Vendor"
-                    android:textSize="17dp"
-                    android:textStyle="bold" />
-
-                    <Spinner
-                        android:id="@+id/ddlvenderlist"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_lightedittext"
-                        android:inputType="none"
-                        android:padding="5dp"
-                        android:text="Select Vendor" />
-                        </LinearLayout>
-                 </RelativeLayout>
+            <Spinner
+                android:id="@+id/ddlvenderlist"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_lightedittext"
+                android:inputType="none"
+                android:padding="5dp"
+                android:text="Select Vendor" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/btnnext"
