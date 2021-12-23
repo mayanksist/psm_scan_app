@@ -88,18 +88,11 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
         val preferences = PreferenceManager.getDefaultSharedPreferences(activity)
         var accessToken = preferences.getString("accessToken", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")
-        JSONObj.put(
-            "requestContainer",
-            Jsonarra.put("accessToken", accessToken)
-        )
+        JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put(
-            "requestContainer",
-            Jsonarra.put("UserAutoId", EmpAutoId)
-        )
+        JSONObj.put("requestContainer",Jsonarra.put("UserAutoId", EmpAutoId))
         JSONObj.put("cObj", Jsonarrabarcode.put("ProductId", PID))
         JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId",draftid ))
-
         val DELETE_PO_LIST = JsonObjectRequest(
             Request.Method.POST, AppPreferences.DELETE_PO_LIST, JSONObj,
             Response.Listener { response ->
@@ -115,8 +108,6 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
                     alertbox.setCancelButtonBackgroundColor(Color.parseColor("#4cae4c"))
                     alertbox.setCancelButton( "Yes")
                     { sDialog -> sDialog.dismissWithAnimation()
-
-
                     }
                     alertbox.setConfirmText("No")
                     alertbox.setConfirmButtonBackgroundColor(Color.parseColor("#E60606"))
@@ -143,7 +134,6 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
                     )
                     update.setCanceledOnTouchOutside(false)
                     update.show()
-                  //  Toast.makeText(activity, responseMessage, Toast.LENGTH_SHORT).show()
                 }
 
             }, Response.ErrorListener { response ->
@@ -166,20 +156,12 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
         val preferences = PreferenceManager.getDefaultSharedPreferences(activity)
         var accessToken = preferences.getString("accessToken", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")
-        JSONObj.put(
-            "requestContainer",
-            Jsonarra.put("accessToken", accessToken)
-        )
+        JSONObj.put("requestContainer",Jsonarra.put("accessToken", accessToken))
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put(
-            "requestContainer",
-            Jsonarra.put("UserAutoId", EmpAutoId)
-        )
+        JSONObj.put("requestContainer", Jsonarra.put("UserAutoId", EmpAutoId))
         JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", draftid))
         JSONObj.put("cObj", Jsonarrabarcode.put("ProductId", PID))
         JSONObj.put("cObj", Jsonarrabarcode.put("pOQty", POQTYu))
-
-
         val DELETE_PO_LIST = JsonObjectRequest(
             Request.Method.POST, AppPreferences.EDIT_PO_LIST, JSONObj,
             Response.Listener { response ->
@@ -223,13 +205,9 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
         val PIPID: TextView = view.findViewById(com.example.myapplication.R.id.txtpid)
         val editpoqty: TextView = view.findViewById(com.example.myapplication.R.id.txteditpoqty)
         val btnpoqty: Button = view.findViewById(com.example.myapplication.R.id.btnsaevpoqty)
-
         POProductname.setText(ProductName.toString())
         PIPID.setText(PID.toString()+" - ")
-       // tvTitle.setTextColor(Color.RED);
-
         editpoqty.setText(POQTY.toString())
-
         btnpoqty.setOnClickListener(View.OnClickListener {
             poqtyupdate(PID.toString().toInt(),editpoqty.text.toString().toInt(),draftAutoIdTV.toString().toInt(),position)
             dialog?.dismiss()

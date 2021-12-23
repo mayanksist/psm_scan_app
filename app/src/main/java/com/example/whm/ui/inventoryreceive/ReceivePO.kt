@@ -30,6 +30,8 @@ class ReceivePO : AppCompatActivity() {
     var backarrow: ImageView?=null
 
      var toolbar:Toolbar?=null
+     var LinearLayoutV:LinearLayout?=null
+     var LinearLayoutInventoey:LinearLayout?=null
 
     var ReceiverpoList: ArrayList<ReceiveModel> = arrayListOf()
 
@@ -45,13 +47,20 @@ class ReceivePO : AppCompatActivity() {
 
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
         backarrow = findViewById(com.example.myapplication.R.id.imgbackbtm)
+        LinearLayoutV = findViewById(com.example.myapplication.R.id.LinearFragmentContainer)
+        LinearLayoutInventoey = findViewById(com.example.myapplication.R.id.fragmentinventory)
         if (AppPreferences.internetConnectionCheck(this)) {
             backarrow?.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
 
-                  val myFragment = FragmentInventory()
-                        supportFragmentManager.beginTransaction().replace(R.id.receive_PO,myFragment)
-                            .commit()
+                    val mfragment=FragmentInventory()
+                    val fragment: Fragment? =supportFragmentManager.findFragmentByTag(FragmentInventory::class.java.simpleName)
+                    if(fragment !is FragmentInventory){
+                        LinearLayoutInventoey!!.visibility=View.VISIBLE
+                        supportFragmentManager.beginTransaction().add(R.id.LinearFragmentContainer,mfragment,FragmentInventory::class.java.simpleName).commit()
+                    }
+                    LinearLayoutV!!.visibility=View.GONE
+                    LinearLayoutInventoey!!.visibility=View.VISIBLE
 
 
                 }
@@ -170,10 +179,9 @@ class ReceivePO : AppCompatActivity() {
                             check=true;
                             if (ReceiverpoList[n].getPOQTY() != null) {
                                 poreqqty = ReceiverpoList[n].getPOQTY()!! + 1
-                                ReceiverpoList[n].setPOQTY(poreqqty)
-                                ReceiverpoList[n].setTotalPieces(poreqqty)
-                               ReceivePOAdapterl.notifyItemChanged(n)
-
+//                                ReceiverpoList[n].setPOQTY(poreqqty)
+//                                ReceiverpoList[n].setTotalPieces(poreqqty)
+                                ReceivePOAdapterl.notifyItemChanged(n)
                                 ReceiverpoList.removeAt(n)
                                 DataBindPOLIST(
                                     ProductId,
