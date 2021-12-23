@@ -9,17 +9,11 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.preference.PreferenceManager
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
@@ -32,9 +26,13 @@ import org.json.JSONObject
 
 
 
-class ReceivePOAdapter1(private var ReceiveModelList: List<ReceiveModel>,var activity: Context?):
+class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activity: Context?):
+
     RecyclerView.Adapter<ReceivePOAdapter1.MyViewHolder>() {
+
     class MyViewHolder(view: View):RecyclerView.ViewHolder(view){
+
+
         var ProducyListPO: CardView = view.findViewById(com.example.myapplication.R.id.ProducyListPO)
         var PID: TextView = view.findViewById(com.example.myapplication.R.id.txtproductidl)
         var PEODUCTNAME: TextView = view.findViewById(com.example.myapplication.R.id.txtproductnamePO)
@@ -44,12 +42,8 @@ class ReceivePOAdapter1(private var ReceiveModelList: List<ReceiveModel>,var act
         var deletepolist: ImageView = view.findViewById(com.example.myapplication.R.id.actiondelete)
         var actionedit: ImageView = view.findViewById(com.example.myapplication.R.id.actionedit)
         val draftAutoIdTV: TextView = view.findViewById(com.example.myapplication.R.id.podraftAutoId)
-      //  val btnsavepoqty: TextView = view.findViewById(com.example.myapplication.R.id.btnsaevpoqty)
-
 
     }
-
-
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -62,28 +56,21 @@ class ReceivePOAdapter1(private var ReceiveModelList: List<ReceiveModel>,var act
 
     override fun onBindViewHolder(holder: ReceivePOAdapter1.MyViewHolder, position: Int) {
         var productList=ReceiveModelList[position]
-        var position=holder.position
+       // var model = ReceiveModelList.get(position)
         holder.PID.text = productList.getPID().toString()
         holder.PEODUCTNAME.text = productList.getPNAME()
         holder.UNITYPW.text = productList.getUnitType().toString()
         holder.txttotalpieceqty.text =productList.getTotalPieces().toString()
         holder.POQTY.text=productList.getPOQTY().toString()
         holder.draftAutoIdTV.text=productList.getDraftID().toString()
-        holder.deletepolist.setOnClickListener {
-            Deletepolist(holder.PID.text.toString().toInt(),holder.draftAutoIdTV.text.toString().toInt())
-            //list.removeAt(position)
-//                val list = mutableListOf<ReceiveModel>()
-//                list.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, ReceiveModelList.size)
-            notifyDataSetChanged()
 
-        }
-        holder.actionedit.setOnClickListener {
-            showpopupedit(holder.POQTY.text.toString().toInt(),holder.PID.text.toString().toInt(),holder.PEODUCTNAME.text.toString(),holder.draftAutoIdTV.text.toString().toInt())
-            notifyItemChanged(position)
+        holder.deletepolist.setOnClickListener(View.OnClickListener {
+            Deletepolist(holder.PID.text.toString().toInt(),holder.draftAutoIdTV.text.toString().toInt(),position)
             notifyDataSetChanged()
-            notifyItemInserted(position)
+        })
+        holder.actionedit.setOnClickListener {
+            showpopupedit(holder.POQTY.text.toString().toInt(),holder.PID.text.toString().toInt(),holder.PEODUCTNAME.text.toString(),holder.draftAutoIdTV.text.toString().toInt(),position)
+
         }
 
     }
@@ -93,7 +80,7 @@ class ReceivePOAdapter1(private var ReceiveModelList: List<ReceiveModel>,var act
         return ReceiveModelList.size
         notifyDataSetChanged()
     }
-    fun Deletepolist(PID: Int, draftid: Int) {
+    fun Deletepolist(PID: Int, draftid: Int, position: Int) {
 
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
@@ -129,18 +116,19 @@ class ReceivePOAdapter1(private var ReceiveModelList: List<ReceiveModel>,var act
                     alertbox.setCancelButtonBackgroundColor(Color.parseColor("#4cae4c"))
                     alertbox.setCancelButton( "Yes")
                     { sDialog -> sDialog.dismissWithAnimation()
-                        notifyDataSetChanged()
+
 
                     }
                     alertbox.setConfirmText("No")
                     alertbox.setConfirmButtonBackgroundColor(Color.parseColor("#E60606"))
                     alertbox.setCancelClickListener {
                             sDialog ->
-                        sDialog.dismissWithAnimation()
-                        notifyDataSetChanged()
                         var update=  SweetAlertDialog(activity, SweetAlertDialog.SUCCESS_TYPE).setContentText(
                             responseMessage.toString()
                         )
+                        ReceiveModelList.removeAt(position)
+                        sDialog.dismissWithAnimation()
+                        notifyDataSetChanged()
                         update.setCanceledOnTouchOutside(false)
                         update.show()
 
@@ -150,9 +138,6 @@ class ReceivePOAdapter1(private var ReceiveModelList: List<ReceiveModel>,var act
                     }
                     alertbox.setCanceledOnTouchOutside(false)
                     alertbox.show()
-
-
-
                 } else {
                     var update=  SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE).setContentText(
                         responseMessage.toString()
@@ -173,7 +158,7 @@ class ReceivePOAdapter1(private var ReceiveModelList: List<ReceiveModel>,var act
         )
         queues.add(DELETE_PO_LIST)
     }
-    fun poqtyupdate(PID: Int,POQTYu: Int,draftid: Int) {
+    fun poqtyupdate(PID: Int, POQTYu: Int, draftid: Int, position: Int) {
 
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
@@ -208,6 +193,8 @@ class ReceivePOAdapter1(private var ReceiveModelList: List<ReceiveModel>,var act
                     var updatepoqty=  SweetAlertDialog(activity, SweetAlertDialog.SUCCESS_TYPE).setContentText(
                         responseMessage.toString()
                     )
+                    ReceiveModelList.get(position).setPOQTY(POQTYu);
+                    notifyDataSetChanged()
                     updatepoqty.setCanceledOnTouchOutside(false)
                     updatepoqty.show()
                 } else {
@@ -228,7 +215,7 @@ class ReceivePOAdapter1(private var ReceiveModelList: List<ReceiveModel>,var act
         )
         queues.add(DELETE_PO_LIST)
     }
-    fun showpopupedit(POQTY: Int, PID: Int, ProductName: String,draftAutoIdTV:Int) {
+    fun showpopupedit(POQTY: Int, PID: Int, ProductName: String, draftAutoIdTV: Int, position: Int) {
         var dialog: AlertDialog? = null
         val builder = AlertDialog.Builder(activity)
         val layoutInflater = LayoutInflater.from(activity)
@@ -245,8 +232,7 @@ class ReceivePOAdapter1(private var ReceiveModelList: List<ReceiveModel>,var act
         editpoqty.setText(POQTY.toString())
 
         btnpoqty.setOnClickListener(View.OnClickListener {
-            poqtyupdate(PID.toString().toInt(),editpoqty.text.toString().toInt(),draftAutoIdTV.toString().toInt())
-            notifyDataSetChanged()
+            poqtyupdate(PID.toString().toInt(),editpoqty.text.toString().toInt(),draftAutoIdTV.toString().toInt(),position)
             dialog?.dismiss()
         })
         builder.setView(view)

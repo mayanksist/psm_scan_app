@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,7 +31,8 @@ class ReceivePO : AppCompatActivity() {
 
      var toolbar:Toolbar?=null
 
-    private  val ReceiverpoList=ArrayList<ReceiveModel>()
+    var ReceiverpoList: ArrayList<ReceiveModel> = arrayListOf()
+
     private lateinit var ReceivePOAdapterl:ReceivePOAdapter1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +48,11 @@ class ReceivePO : AppCompatActivity() {
         if (AppPreferences.internetConnectionCheck(this)) {
             backarrow?.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
-                    onBackPressed()
+
+                  val myFragment = FragmentInventory()
+                        supportFragmentManager.beginTransaction().replace(R.id.receive_PO,myFragment)
+                            .commit()
+
 
                 }
             })
@@ -59,23 +65,25 @@ class ReceivePO : AppCompatActivity() {
             addbarcode!!.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
                 if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
                     var     scanbarcodeproduct = addbarcode!!.text.toString()
+
+                    val recyclerView: RecyclerView =
+                        findViewById(com.example.myapplication.R.id.POLIST)
+                    val layoutManager = LinearLayoutManager(this)
+                    recyclerView.layoutManager = layoutManager
+
                     if (scanbarcodeproduct!!.trim().isEmpty()) {
                         addbarcode!!.text.clear()
                         addbarcode!!.setText("")
                         Toast.makeText(this, "Scan product", Toast.LENGTH_SHORT).show()
                         addbarcode!!.requestFocus()
-
                     }
                     else {
                         Addproductlist()
-                        val recyclerView: RecyclerView =
-                            findViewById(com.example.myapplication.R.id.POLIST)
-                        ReceivePOAdapterl = ReceivePOAdapter1(ReceiverpoList, this)
-                        val layoutManager = LinearLayoutManager(this)
-                        recyclerView.layoutManager = layoutManager
-                        recyclerView.itemAnimator = DefaultItemAnimator()
-                        recyclerView.adapter = ReceivePOAdapterl
                     }
+                    ReceivePOAdapterl = ReceivePOAdapter1(ReceiverpoList, this)
+                    recyclerView.adapter = ReceivePOAdapterl
+
+
 
                 }
 
@@ -105,18 +113,6 @@ class ReceivePO : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
-        }
-    }
-    override fun onBackPressed() {
-        if (fragmentManager.backStackEntryCount == 0) {
-            fragmentManager.popBackStack()
-            val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(com.example.myapplication.R.id.receive_PO, FragmentInventory())
-                .addToBackStack(null).commit()
-
-        } else {
-            super.onBackPressed()
-
         }
     }
     fun Addproductlist() {
@@ -171,12 +167,13 @@ class ReceivePO : AppCompatActivity() {
 
                     for (n in 0..ReceiverpoList.size-1) {
                         if(ReceiverpoList[n].getPID()==ProductId){
-                            check=true
+                            check=true;
                             if (ReceiverpoList[n].getPOQTY() != null) {
                                 poreqqty = ReceiverpoList[n].getPOQTY()!! + 1
                                 ReceiverpoList[n].setPOQTY(poreqqty)
                                 ReceiverpoList[n].setTotalPieces(poreqqty)
-//                                ReceiverpoList.drop()
+                            }
+                            else{
 
                             }
                         }
@@ -214,13 +211,10 @@ class ReceivePO : AppCompatActivity() {
                                UNITTYPE: String,
                                UnitQTY:Int,
                                POQTY:Int,
-                               DRaftID: Int
-    ) {
+                               DRaftID: Int) {
         var POLIST = ReceiveModel(PID, PNAME, UNITTYPE,UnitQTY, POQTY,UnitQTY, DRaftID)
         ReceiverpoList.add(0,POLIST)
-
         ReceivePOAdapterl.notifyDataSetChanged()
-
 
     }
     fun SubmitPoList(Status:Int) {
@@ -286,11 +280,6 @@ class ReceivePO : AppCompatActivity() {
         )
         queues.add(SUBMITPOLITS)
     }
-
-
-
-
-
     fun CheckInterNetDailog(){
         val dialog = this?.let { Dialog(it) }
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)

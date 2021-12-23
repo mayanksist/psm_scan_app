@@ -54,5 +54,6 @@ class ReceiveModel (
         return DRAFT_ID
     }
 
- }
+
+}
 

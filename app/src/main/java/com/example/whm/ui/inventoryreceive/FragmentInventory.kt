@@ -26,47 +26,50 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 
 
 class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
-    private var _binding: FragmentInventoryFragmentBinding? = null
-    private val binding get() = _binding!!
-
     lateinit var mView: View
+
+    var txtbildate: TextView? = null
+    var edtbillNo: EditText? = null
+    var spvendor: Spinner? = null
+    var btnNext: Button?=null
+
+
     @Nullable
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        retainInstance =false
-        mView = inflater.inflate(com.example.myapplication.R.layout.fragment_inventory_fragment, container, false)
-        _binding = FragmentInventoryFragmentBinding.bind(mView)
+        mView = inflater.inflate(R.layout.fragment_inventory_fragment, container, false)
+        txtbildate = mView.findViewById(R.id.txtbildate)
+        edtbillNo = mView.findViewById(R.id.txtbillno)
+        spvendor = mView.findViewById(R.id.ddlvenderlist)
+        btnNext = mView.findViewById(R.id.btnnext)
         bindvenderlist()
-        binding.apply {
-            txtbildate.setOnClickListener {
-                // create new instance of DatePickerFragment
+
+
+        txtbildate?.setOnClickListener {
                 val datePickerFragment = DatePickerFragment()
                 val supportFragmentManager = requireActivity().supportFragmentManager
-
-                // we have to implement setFragmentResultListener
                 supportFragmentManager.setFragmentResultListener(
                     "REQUEST_KEY",
                     viewLifecycleOwner
                 ) { resultKey, bundle ->
                     if (resultKey == "REQUEST_KEY") {
                         val date = bundle.getString("SELECTED_DATE")
-                        txtbildate.text =  date
+                        txtbildate?.text =  date
 
                     }
 
                 }
-
-                // show
                 datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
             }
-            btnnext.setOnClickListener {
-                val Bill_No: EditText = binding.txtbillno
-                val Bill_Date: CharSequence? =  txtbildate.text
-                val Vendor_ID:Spinner=binding.ddlvenderlist
-                val VENDORID = Vendor_ID.getSelectedItemId().toInt()
-                if (TextUtils.isEmpty(Bill_No.getText().toString())) {
+
+        btnNext?.setOnClickListener {
+                val Bill_No = edtbillNo
+                val Bill_Date: CharSequence? =  txtbildate?.text
+                val Vendor_ID =spvendor
+                val VENDORID = Vendor_ID?.getSelectedItemId()?.toInt()
+                if (TextUtils.isEmpty(Bill_No?.getText().toString())) {
                    EnertBill_No()
                 }
                 else if (TextUtils.isEmpty(Bill_Date.toString())) {
@@ -80,16 +83,18 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                     val intent = Intent(context, ReceivePO::class.java)
                     val preferences = PreferenceManager.getDefaultSharedPreferences(context)
                     val editor = preferences.edit()
-                    editor.putString("Bill_No", Bill_No.text.toString())
+                    editor.putString("Bill_No", Bill_No?.text.toString())
                     editor.putString("Bill_Date", Bill_Date.toString())
-                    editor.putInt("VENDORID", VENDORID.toInt())
+                    if (VENDORID != null) {
+                        editor.putInt("VENDORID", VENDORID.toInt())
+                    }
                     editor.apply()
 //                intent.putExtra("billna", txt);
                     startActivity(intent)
                 }
             }
-        }
-            return mView
+
+   return mView
 
     }
 
@@ -126,7 +131,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
 //    }
 
     fun bindvenderlist(){
-        val BINVENDERLIST: Spinner = binding.ddlvenderlist
+        val BINVENDERLIST =spvendor
         val Jsonarra = JSONObject()
         val JSONObj = JSONObject()
         val queues = Volley.newRequestQueue(this.context)
@@ -161,8 +166,8 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                         spinnerArray[i] = VNAME
                     }
                     spinnerArray[0] = "Select Vendor"
-                    BINVENDERLIST.adapter = context?.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) } as SpinnerAdapter
-                    BINVENDERLIST.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+                    BINVENDERLIST?.adapter = context?.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) } as SpinnerAdapter
+                    BINVENDERLIST?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
                         override fun onNothingSelected(parent: AdapterView<*>?) {
 
                             println("erreur")
@@ -192,10 +197,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
         )
         queues.add(BINDVENDERLIST)
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+
     fun EnertBill_No() {
         SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText("Enter Bill No").show()
     }
