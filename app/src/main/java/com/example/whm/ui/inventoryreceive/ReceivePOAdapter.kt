@@ -63,7 +63,6 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
         holder.txttotalpieceqty.text =productList.getTotalPieces().toString()
         holder.POQTY.text=productList.getPOQTY().toString()
         holder.draftAutoIdTV.text=productList.getDraftID().toString()
-
         holder.deletepolist.setOnClickListener(View.OnClickListener {
             Deletepolist(holder.PID.text.toString().toInt(),holder.draftAutoIdTV.text.toString().toInt(),position)
             notifyDataSetChanged()

@@ -172,10 +172,20 @@ class ReceivePO : AppCompatActivity() {
                                 poreqqty = ReceiverpoList[n].getPOQTY()!! + 1
                                 ReceiverpoList[n].setPOQTY(poreqqty)
                                 ReceiverpoList[n].setTotalPieces(poreqqty)
-                            }
-                            else{
+                               ReceivePOAdapterl.notifyItemChanged(n)
+
+                                ReceiverpoList.removeAt(n)
+                                DataBindPOLIST(
+                                    ProductId,
+                                    ProductName,
+                                    UnitType,
+                                    Qty,
+                                    poreqqty,
+                                    draftAutoId
+                                )
 
                             }
+
                         }
                     }
                     if(!check) {
@@ -215,6 +225,7 @@ class ReceivePO : AppCompatActivity() {
         var POLIST = ReceiveModel(PID, PNAME, UNITTYPE,UnitQTY, POQTY,UnitQTY, DRaftID)
         ReceiverpoList.add(0,POLIST)
         ReceivePOAdapterl.notifyDataSetChanged()
+
 
     }
     fun SubmitPoList(Status:Int) {
