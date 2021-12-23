@@ -50,11 +50,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="4dp"
                 android:text="ProductName"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txtproductidl"
-                app:layout_constraintEnd_toStartOf="@+id/aciotedit"
+                app:layout_constraintEnd_toStartOf="@+id/actionedit"
                 app:layout_constraintStart_toEndOf="@+id/txtproductidl"
                 app:layout_constraintTop_toTopOf="@+id/txtproductidl" />
 
@@ -84,12 +84,14 @@
 
             <TextView
                 android:id="@+id/txtunittype"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
                 android:text="Piece"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txtpo_qty"
+                app:layout_constraintEnd_toStartOf="@+id/txttotalpiece"
                 app:layout_constraintStart_toEndOf="@+id/txtpo_qty"
                 app:layout_constraintTop_toTopOf="@+id/txtpo_qty" />
 
@@ -108,11 +110,12 @@
                 android:id="@+id/txttotalpieceqty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:text="0"
-                android:textStyle="bold"
                 android:textSize="18dp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/txtpoqty"
-                app:layout_constraintEnd_toEndOf="@+id/txtproductnamePO"
+                app:layout_constraintEnd_toStartOf="@+id/actiondelete"
                 app:layout_constraintTop_toTopOf="@+id/txtpoqty" />
 
             <ImageView
