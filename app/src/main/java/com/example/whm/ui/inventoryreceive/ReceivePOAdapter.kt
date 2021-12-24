@@ -205,11 +205,15 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
         val PIPID: TextView = view.findViewById(com.example.myapplication.R.id.txtpid)
         val editpoqty: TextView = view.findViewById(com.example.myapplication.R.id.txteditpoqty)
         val btnpoqty: Button = view.findViewById(com.example.myapplication.R.id.btnsaevpoqty)
+        val btncancel: Button = view.findViewById(com.example.myapplication.R.id.btncancel)
         POProductname.setText(ProductName.toString())
         PIPID.setText(PID.toString()+" - ")
         editpoqty.setText(POQTY.toString())
         btnpoqty.setOnClickListener(View.OnClickListener {
             poqtyupdate(PID.toString().toInt(),editpoqty.text.toString().toInt(),draftAutoIdTV.toString().toInt(),position)
+            dialog?.dismiss()
+        })
+        btncancel.setOnClickListener(View.OnClickListener {
             dialog?.dismiss()
         })
         builder.setView(view)
