@@ -23,7 +23,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:textColor="#B82929"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginStart="5dp"
             app:layout_constraintBottom_toBottomOf="@+id/view"
@@ -35,83 +35,110 @@
             android:layout_height="wrap_content"
             android:padding="0dp"
             android:textColor="#000"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/view"
             tools:text="PNAME" />
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#DEDEDE"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="45dp" />
+
     </LinearLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DEDEDE"
+        tools:layout_editor_absoluteX="-6dp"
+        tools:layout_editor_absoluteY="47dp"
+        tools:ignore="MissingConstraints" />
 
     <LinearLayout
         android:id="@+id/poqtyid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/titlepid"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:orientation="vertical"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titlepid">
+        app:layout_constraintStart_toStartOf="@+id/titlepid"
+        app:layout_constraintTop_toBottomOf="@+id/view">
 
         <TextView
             android:id="@+id/txtpoty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="PO Quantity"
-            android:textStyle="bold"
-            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="5dp"
-            android:textSize="16dp" />
+            android:text="PO Quantity"
+            android:textColor="#000"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/txteditpoqty"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/oval2"
+            android:maxLength="6"
             android:padding="5dp"
             android:textColor="#000"
-            android:background="@drawable/oval2"
             android:textSize="17dp"
             tools:text="QTY" />
     </LinearLayout>
 
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="13dp"
+        android:background="#DEDEDE"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/poqtyid" />
+
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/poqtyid"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="@+id/poqtyid"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/poqtyid"
-        app:layout_constraintTop_toBottomOf="@+id/poqtyid">
+        app:layout_constraintTop_toBottomOf="@+id/view2">
+
+
+        <Button
+            android:id="@+id/btncancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="left"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            android:text="Cancel"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#000" />
 
         <Button
             android:id="@+id/btnsaevpoqty"
-            android:layout_width="wrap_content"
+            android:layout_width="111dp"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
-            android:layout_gravity="center"
+            android:layout_gravity="right"
             android:layout_marginTop="3dp"
-            android:background="@color/colorAccent"
-            android:backgroundTint="@color/colorAccent"
             android:gravity="center"
             android:text="Update"
+
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="@color/white" />
-    </LinearLayout>
+            android:textColor="#000" />
 
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

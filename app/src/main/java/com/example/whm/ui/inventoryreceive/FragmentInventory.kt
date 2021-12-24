@@ -1,28 +1,43 @@
 package com.example.whm.ui.inventoryreceive
 import android.content.Intent
+import android.hardware.camera2.TotalCaptureResult
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewDebug
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.DatePickerFragment
-import com.example.myapplication.databinding.FragmentInventoryFragmentBinding
 import org.json.JSONObject
 import org.json.JSONArray
 import android.widget.ArrayAdapter
 import androidx.annotation.Nullable
+import androidx.core.view.get
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceiveModel
+import com.example.myapplication.com.example.whm.ui.inventoryreceive.spinnervendorlist
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
@@ -31,7 +46,11 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
     var txtbildate: TextView? = null
     var edtbillNo: EditText? = null
     var spvendor: Spinner? = null
+    var spvendorid: String? = null
     var btnNext: Button?=null
+    var test:Int?=0
+
+
 
 
     @Nullable
@@ -67,8 +86,9 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
         btnNext?.setOnClickListener {
                 val Bill_No = edtbillNo
                 val Bill_Date: CharSequence? =  txtbildate?.text
-                val Vendor_ID =spvendor
-                val VENDORID = Vendor_ID?.getSelectedItemId()?.toInt()
+//                val Vendor_ID =spvendor
+                val VENDORID = spvendorid
+            // Toast.makeText(context,VENDORID!!.toString(),Toast.LENGTH_LONG).show()
                 if (TextUtils.isEmpty(Bill_No?.getText().toString())) {
                    EnertBill_No()
                 }
@@ -76,7 +96,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                     EnertBill_Date()
 
                 }
-                else if(VENDORID==0){
+                else if(VENDORID==null || VENDORID==""){
                     Select_Vendor()
                 }
                 else {
@@ -159,11 +179,13 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                     val venderlist: JSONArray = resultobj.getJSONArray("responseData")
                     val n = venderlist.length()
                     val spinnerArray = arrayOfNulls<String>(n)
+                    val spinnerArrayId = arrayOfNulls<String>(n)
                     for (i in 0 until n) {
                         val BINDLIST = venderlist.getJSONObject(i)
                         val VID = BINDLIST.getInt("Aid")
                         val VNAME = BINDLIST.getString("VName")
                         spinnerArray[i] = VNAME
+                        spinnerArrayId[i] = VID.toString()
                     }
                     spinnerArray[0] = "Select Vendor"
                     BINVENDERLIST?.adapter = context?.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) } as SpinnerAdapter
@@ -174,10 +196,11 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                         }
                         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
-                            val VenderSelect = parent?.getItemAtPosition(position).toString()
+                            val VenderSelect = parent?.getItemIdAtPosition(position).toString()
+                            for(i in 0 until  VenderSelect.toInt()+1) {
+                                spvendorid = spinnerArrayId.get(index = i)
+                            }
 
-//
-                            println(VenderSelect)
                         }
                     }
                 } else {
@@ -197,6 +220,8 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
         )
         queues.add(BINDVENDERLIST)
     }
+
+
 
     fun EnertBill_No() {
         SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText("Enter Bill No").show()

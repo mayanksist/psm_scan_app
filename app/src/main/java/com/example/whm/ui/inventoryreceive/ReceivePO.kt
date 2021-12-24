@@ -56,7 +56,7 @@ class ReceivePO : AppCompatActivity() {
                     val mfragment=FragmentInventory()
                     val fragment: Fragment? =supportFragmentManager.findFragmentByTag(FragmentInventory::class.java.simpleName)
                     if(fragment !is FragmentInventory){
-                        LinearLayoutInventoey!!.visibility=View.VISIBLE
+
                         supportFragmentManager.beginTransaction().add(R.id.LinearFragmentContainer,mfragment,FragmentInventory::class.java.simpleName).commit()
                     }
                     LinearLayoutV!!.visibility=View.GONE
