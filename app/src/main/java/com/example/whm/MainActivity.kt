@@ -46,15 +46,7 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        if(preferences.getString("email","") != "" ){
-            val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
-            mLayout.visibility = View.GONE
-            val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
-            mhiddenLayout.visibility = View.VISIBLE
-            preferences.getString("email","")?.let { Autologin(it
-            ) }
-        }
+
     }
     val APIURL: String = AppPreferences.apiurl+"wpackerlogin.asmx/login"
     fun login(email: Editable) {
@@ -95,17 +87,16 @@ class MainActivity : AppCompatActivity() {
                     editor.putString("accessToken", jsondata.getJSONObject(i).getString("accessToken"))
                     editor.putBoolean("EnabledPickallBoxes", jsondata.getJSONObject(i).getBoolean("EnabledPickallBoxes"))
                     editor.apply()
-
-                    val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
-                    mLayout.visibility = View.GONE
-                    val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
-                    mhiddenLayout.visibility = View.VISIBLE
-                    //startActivity(intent)
                     Toast.makeText(
                         this,
                         "Login Successful ",
                         Toast.LENGTH_SHORT
                     ).show()
+                    val i = Intent(
+                        applicationContext,
+                        MainActivity2::class.java
+                    )
+                    startActivity(i)
                 }
             }
             else {
@@ -174,96 +165,6 @@ class MainActivity : AppCompatActivity() {
 
         }
         customDialog.show()
-    }
-    fun Autologin(email: String) {
-        val Jsonarra=JSONObject()
-        val JSONObj = JSONObject()
-        val appversion = AppPreferences.AppVersion
-        val queues = Volley.newRequestQueue(this@MainActivity)
-        if(AppPreferences.internetConnectionCheck(this)) {
-            val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-            val editor = preferences.edit()
-            editor.putString("email", email)
-            editor.apply()
-            JSONObj.put("userName", email)
-            JSONObj.put("requestContainer", Jsonarra.put("appVersion", appversion))
-            val req = JsonObjectRequest(Request.Method.POST, APIURL, JSONObj,
-                Response.Listener { response ->
-                    val resobj = JSONObj.put("response", response.toString())
-                    val responsemsg = JSONObject(resobj.getString("response"))
-                    val responmsg = JSONObject(responsemsg.getString("d"))
-                    val msg = responmsg.getString("response")
-                    val resmsg = responmsg.getString("responseMessage")
-                    if (msg == "failed") {
-                        val mLayout =
-                            findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
-                        mLayout.visibility = View.VISIBLE
-                        val mhiddenLayout =
-                            findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
-                        mhiddenLayout.visibility = View.GONE
-                        editor.clear()
-                        editor.apply()
-                    } else {
-                        if (msg == "success") {
-                            val jsondata = responmsg.getJSONArray("responseData")
-                            for (i in 0 until jsondata.length()) {
-
-                                val Name = jsondata.getJSONObject(i).getString("Name")
-                                val emptype = jsondata.getJSONObject(i).getString("EmpTypeNo")
-                                val empname = jsondata.getJSONObject(i).getString("EmpType")
-                                val empid = jsondata.getJSONObject(i).getString("AutoId")
-                                val LName = jsondata.getJSONObject(i).getString("LName")
-                                var intent = Intent(this, MainActivity2::class.java)
-                                intent.putExtra("Name", Name.toString())
-                                intent.putExtra("EmpTypeNo", emptype.toString())
-                                intent.putExtra("empname", empname.toString())
-                                intent.putExtra("empid", empid.toString())
-                                editor.putString(
-                                    "accessToken",
-                                    jsondata.getJSONObject(i).getString("accessToken")
-                                )
-                                editor.putString("LName", LName)
-                                editor.apply()
-                                val mLayout =
-                                    findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
-                                mLayout.visibility = View.GONE
-                                val mhiddenLayout =
-                                    findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
-                                mhiddenLayout.visibility = View.VISIBLE
-                                startActivity(intent)
-
-                            }
-                        } else {
-                            val alertemail = AlertDialog.Builder(this)
-                            alertemail.setTitle("User")
-                            alertemail.setMessage(msg.toString())
-                            alertemail.setPositiveButton("ok")
-                            { dialog, which -> dialog.dismiss()
-                                scancode.text = ""
-                            }
-                            val dialog: AlertDialog = alertemail.create()
-                            dialog.show()
-                            editor.clear()
-                            editor.apply()
-                        }
-                    }
-                }, Response.ErrorListener { response ->
-                    Log.e("onError", error(response.toString()))
-                })
-            try {
-                req.retryPolicy = DefaultRetryPolicy(
-                    1000000,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-                )
-                queues.add(req)
-            } catch (e: IOException) {
-                Toast.makeText(this.applicationContext, "Server Error", Toast.LENGTH_LONG).show()
-            }
-        }
-        else{
-          showCustomAlert()
-        }
     }
 
     override fun onKeyDown(key_code: Int, key_event: KeyEvent?): Boolean {
