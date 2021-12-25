@@ -21,6 +21,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.myapplication.com.example.whm.AppPreferences
+import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import org.json.JSONObject
 
 
@@ -220,7 +221,7 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
                 dialog?.dismiss()
             }
             else{
-
+                activity?.let { it1 -> DynamicToast.makeError(it1, "Error toast with duration", 5000).show() };
             }
         })
 
