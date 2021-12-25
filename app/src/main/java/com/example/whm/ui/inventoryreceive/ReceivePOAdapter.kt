@@ -210,9 +210,20 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
         PIPID.setText(PID.toString()+" - ")
         editpoqty.setText(POQTY.toString())
         btnpoqty.setOnClickListener(View.OnClickListener {
-            poqtyupdate(PID.toString().toInt(),editpoqty.text.toString().toInt(),draftAutoIdTV.toString().toInt(),position)
-            dialog?.dismiss()
+            if(!(editpoqty.text.toString().isEmpty() || editpoqty.text.toString().toInt()==0)) {
+                poqtyupdate(
+                    PID.toString().toInt(),
+                    editpoqty.text.toString().toInt(),
+                    draftAutoIdTV.toString().toInt(),
+                    position
+                )
+                dialog?.dismiss()
+            }
+            else{
+
+            }
         })
+
         btncancel.setOnClickListener(View.OnClickListener {
             dialog?.dismiss()
         })

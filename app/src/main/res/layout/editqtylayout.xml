@@ -59,6 +59,7 @@
         android:background="@drawable/frame"
         android:maxLength="6"
         android:textColor="#000"
+        android:text="0"
         android:textSize="16dp"
         android:inputType="number"
         android:maxLines="1"
