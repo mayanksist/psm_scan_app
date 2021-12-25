@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
+import com.example.myapplication.com.example.whm.MainActivity2
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceiveModel
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceivePOAdapter1
 import org.json.JSONObject
@@ -39,6 +40,7 @@ class ReceivePO : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(com.example.myapplication.R.layout.activity_receive_po)
         toolbar = findViewById(R.id.toolbarAction)
         setSupportActionBar(toolbar)
@@ -48,19 +50,17 @@ class ReceivePO : AppCompatActivity() {
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
         backarrow = findViewById(com.example.myapplication.R.id.imgbackbtm)
         LinearLayoutV = findViewById(com.example.myapplication.R.id.LinearFragmentContainer)
-        LinearLayoutInventoey = findViewById(com.example.myapplication.R.id.fragmentinventory)
         if (AppPreferences.internetConnectionCheck(this)) {
             backarrow?.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
+                    val preferencesid = PreferenceManager.getDefaultSharedPreferences(this@ReceivePO)
+                    var EmpAutoId = preferencesid.getString("EmpAutoId", "")
+                    var EmpTypeNo = preferencesid.getString("EmpTypeNo", "")
+                    var Empname = preferencesid.getString("Empname", "")
+                    var Username = preferencesid.getString("Username", "")
+                        val intent = Intent(this@ReceivePO, MainActivity2::class.java)
+                         startActivity(intent)
 
-                    val mfragment=FragmentInventory()
-                    val fragment: Fragment? =supportFragmentManager.findFragmentByTag(FragmentInventory::class.java.simpleName)
-                    if(fragment !is FragmentInventory){
-
-                        supportFragmentManager.beginTransaction().add(R.id.LinearFragmentContainer,mfragment,FragmentInventory::class.java.simpleName).commit()
-                    }
-                    LinearLayoutV!!.visibility=View.GONE
-                    LinearLayoutInventoey!!.visibility=View.VISIBLE
 
 
                 }
@@ -132,8 +132,8 @@ class ReceivePO : AppCompatActivity() {
         val Jsonarrabarcode = JSONObject()
         val JSONObj = JSONObject()
         val queues = Volley.newRequestQueue(this)
-        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
         var accessToken = preferences.getString("accessToken", "")
         var Bill_No = preferences.getString("Bill_No", "")
         var Bill_Date = preferences.getString("Bill_Date", "")

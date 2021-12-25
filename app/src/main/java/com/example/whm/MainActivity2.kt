@@ -26,18 +26,11 @@ class MainActivity2 : AppCompatActivity() {
     var usertype: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val intent = intent
-        val epname = intent.getStringExtra("empname")
-        val nameu = intent.getStringExtra("Name")
-        val EmpTypeNo = intent.getStringExtra("EmpTypeNo")
-        val aotoidemp = intent.getStringExtra("empid")
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val editor = preferences.edit()
-        editor.putString("EmpAutoId", aotoidemp)
-        editor.putString("EmpTypeNo", EmpTypeNo)
-        editor.putString("Empname", epname)
-        editor.putString("Username", nameu)
-        editor.apply()
+       val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+                    var EmpAutoId = preferences.getString("EmpAutoId", "")
+                    var EmpTypeNo = preferences.getString("EmpTypeNo", "")
+                    var Empname = preferences.getString("Empname", "")
+                    var Username = preferences.getString("Username", "")
          binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)

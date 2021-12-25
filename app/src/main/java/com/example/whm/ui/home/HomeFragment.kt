@@ -45,6 +45,9 @@ class HomeFragment : Fragment()  {
     val btnUnLoadList = mView.findViewById<Button>(com.example.myapplication.R.id.btnunloadOrderlist)
     val btnOrderList = mView.findViewById<Button>(com.example.myapplication.R.id.btnOrderList)
     val btninventoryreceiv = mView.findViewById<Button>(com.example.myapplication.R.id.btninventoryreceiv)
+    val btninventorypodraftlist = mView.findViewById<Button>(com.example.myapplication.R.id.btninventorypodraftlist)
+    val btnsubmitpolist = mView.findViewById<Button>(com.example.myapplication.R.id.btnsubmitpolist)
+    val btnrevertpolist = mView.findViewById<Button>(com.example.myapplication.R.id.btnrevertpolist)
 
     var Usertype = preferences.getString("EmpTypeNo", "")
     if (Usertype.toString() != "2"){
@@ -65,6 +68,9 @@ class HomeFragment : Fragment()  {
             btnUnLoadList.visibility=   View.GONE
             btnOrderList.visibility=   View.GONE
             btninventoryreceiv.visibility=   View.VISIBLE
+            btninventorypodraftlist.visibility=   View.VISIBLE
+            btnsubmitpolist.visibility=   View.VISIBLE
+            btnrevertpolist.visibility=   View.VISIBLE
 
         }
 

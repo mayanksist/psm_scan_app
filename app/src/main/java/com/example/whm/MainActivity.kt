@@ -85,20 +85,22 @@ class MainActivity : AppCompatActivity() {
                     val empname=jsondata.getJSONObject(i).getString("EmpType")
                     val Name = jsondata.getJSONObject(i).getString("Name")
                     val LName=jsondata.getJSONObject(i).getString("LName")
-                    var intent = Intent(this, MainActivity2::class.java)
-                    intent.putExtra("Name", Name.toString())
-                    intent.putExtra("EmpTypeNo", emptype.toString())
-                    intent.putExtra("empname", empname.toString())
-                    intent.putExtra("empid", empid.toString())
+                    val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+                    val editor = preferences.edit()
+                    editor.putString("EmpAutoId", empid.toString())
+                    editor.putString("EmpTypeNo",  emptype.toString())
+                    editor.putString("Empname", empname.toString())
+                    editor.putString("Username", Name.toString())
                     editor.putString("LName", LName)
                     editor.putString("accessToken", jsondata.getJSONObject(i).getString("accessToken"))
                     editor.putBoolean("EnabledPickallBoxes", jsondata.getJSONObject(i).getBoolean("EnabledPickallBoxes"))
                     editor.apply()
+
                     val mLayout = findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
                     mLayout.visibility = View.GONE
                     val mhiddenLayout = findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
                     mhiddenLayout.visibility = View.VISIBLE
-                    startActivity(intent)
+                    //startActivity(intent)
                     Toast.makeText(
                         this,
                         "Login Successful ",

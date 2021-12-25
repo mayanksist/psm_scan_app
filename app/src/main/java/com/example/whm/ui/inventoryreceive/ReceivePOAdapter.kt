@@ -23,6 +23,10 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import org.json.JSONObject
+import android.view.Gravity
+
+
+
 
 
 
@@ -221,7 +225,10 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
                 dialog?.dismiss()
             }
             else{
-                activity?.let { it1 -> DynamicToast.makeError(it1, "Error toast with duration", 5000).show() };
+                activity?.let { it1 -> DynamicToast.makeError(it1, "Quantity Required", 5000).show()}
+
+                    //DynamicToast.setGravity(Gravity.TOP or Gravity.LEFT, 0, 0)
+                   // DynamicToast.show() };
             }
         })
 
