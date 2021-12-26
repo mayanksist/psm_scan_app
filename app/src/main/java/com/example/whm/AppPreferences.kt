@@ -12,10 +12,8 @@ import com.example.myapplication.BuildConfig
 
 
 object AppPreferences {
-//    const val AppVersion = "2.0.0.17"
     const  val AppVersion = BuildConfig.VERSION_NAME
     const val BASEURL = "http://api.a1whm.com/AndroidAPI/"
- //   const val BASEURLSU = "https://api.a1whm.com/AndroidAPI/"
     const val apiurl = "http://api.a1whm.com/Packerapi/"
     const val GET_ORDERS = "WDriverOrder.asmx/getOrders"
     const val SUBMIT_LOAD_ORDER = "WDriverOrder.asmx/SubmitLoadOrder"
@@ -28,6 +26,7 @@ object AppPreferences {
     const val SUBMIT_PO_LIST = BASEURL + "WPOReceive.asmx/submitPO"
     const val DELETE_PO_LIST = BASEURL + "WPOReceive.asmx/deletePOItem"
     const val EDIT_PO_LIST = BASEURL + "WPOReceive.asmx/editPOQty"
+    const val DRAFT_PO_LIST = BASEURL + "WPOReceive.asmx/DraftpoList"
     fun internetConnectionCheck(context: Context?): Boolean {
         var Connected = false
         val connectivity = context?.applicationContext
@@ -36,7 +35,6 @@ object AppPreferences {
             val info = connectivity.allNetworkInfo
             if (info != null) for (i in info.indices) if (info[i].state == NetworkInfo.State.CONNECTED) {
                 Connected = true
-            } else {
             }
         } else {
             showAlertinternetconnection(context)

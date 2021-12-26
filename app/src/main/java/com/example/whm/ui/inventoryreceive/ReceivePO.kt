@@ -46,7 +46,6 @@ class ReceivePO : AppCompatActivity() {
         setSupportActionBar(toolbar)
         getSupportActionBar()?.setTitle("PO Receive")
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
-
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
         backarrow = findViewById(com.example.myapplication.R.id.imgbackbtm)
         LinearLayoutV = findViewById(com.example.myapplication.R.id.LinearFragmentContainer)
@@ -60,9 +59,6 @@ class ReceivePO : AppCompatActivity() {
                     var Username = preferencesid.getString("Username", "")
                         val intent = Intent(this@ReceivePO, MainActivity2::class.java)
                          startActivity(intent)
-
-
-
                 }
             })
         } else {
@@ -91,9 +87,6 @@ class ReceivePO : AppCompatActivity() {
                     }
                     ReceivePOAdapterl = ReceivePOAdapter1(ReceiverpoList, this)
                     recyclerView.adapter = ReceivePOAdapterl
-
-
-
                 }
 
                 false

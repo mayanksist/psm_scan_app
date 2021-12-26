@@ -33,10 +33,7 @@
             android:visible="false"
             android:icon="@drawable/unloadorders"
             android:title="@string/menuassignorder" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_logout"
-            android:title="@string/menu_slideshow" />
+
         <item
             android:id="@+id/nav_loadorder"
             android:visible="false"
@@ -47,6 +44,25 @@
             android:icon="@drawable/unloadorders"
             android:visible="false"
             android:title="@string/Inventoryreceiv" />
+        <item
+            android:id="@+id/nav_drfatpolist"
+            android:icon="@drawable/loadorders"
+            android:visible="false"
+            android:title="@string/btninventorypodraftlist" />
+        <item
+            android:id="@+id/nav_submitpolist"
+            android:icon="@drawable/loadorder_arrow_circle_right_24"
+            android:visible="false"
+            android:title="@string/btnsubmitpolist" />
+        <item
+            android:id="@+id/nav_revertpolist"
+            android:icon="@drawable/revert"
+            android:visible="false"
+            android:title="@string/btnrevertpolist" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_logout"
+            android:title="@string/menu_slideshow" />
     </group>
 
 

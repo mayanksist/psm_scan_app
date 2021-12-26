@@ -79,7 +79,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                     EnertBill_Date()
 
                 }
-                else if(VENDORID==null || VENDORID==""){
+                else if(VENDORID==null || VENDORID=="" || VENDORID=="0"){
                     Select_Vendor()
                 }
                 else {
@@ -170,6 +170,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                         spinnerArray[i] = VNAME
                         spinnerArrayId[i] = VID.toString()
                     }
+
                     spinnerArray[0] = "Select Vendor"
                     BINVENDERLIST?.adapter = context?.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) } as SpinnerAdapter
                     BINVENDERLIST?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
@@ -180,10 +181,11 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
                             val VenderSelect = parent?.getItemIdAtPosition(position).toString()
-                            for(i in 0 until  VenderSelect.toInt()+1) {
-                                spvendorid = spinnerArrayId.get(index = i)
+                            if(position!=0) {
+                                for (i in 0 until VenderSelect.toInt() + 1) {
+                                    spvendorid = spinnerArrayId.get(index = i)
+                                }
                             }
-
                         }
                     }
                 } else {

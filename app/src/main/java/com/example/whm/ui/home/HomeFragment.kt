@@ -90,7 +90,15 @@ class HomeFragment : Fragment()  {
         btninventoryreceiv.setOnClickListener {
             this.findNavController().navigate(com.example.myapplication.R.id.nav_inventory)
         }
-
+        btninventorypodraftlist.setOnClickListener {
+            this.findNavController().navigate(com.example.myapplication.R.id.nav_drfatpolist)
+        }
+        btnsubmitpolist.setOnClickListener {
+            this.findNavController().navigate(com.example.myapplication.R.id.nav_submitpolist)
+        }
+        btnrevertpolist.setOnClickListener {
+            this.findNavController().navigate(com.example.myapplication.R.id.nav_revertpolist)
+        }
         return mView
     }
 
