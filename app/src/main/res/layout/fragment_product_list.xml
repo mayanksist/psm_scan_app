@@ -103,7 +103,7 @@
                         android:layout_marginStart="3dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginBottom="10dp"
-                        android:text="N/A"
+                        android:text="0"
                         android:textColor="#03ED0D"
                         android:textSize="45dp"
                         android:textStyle="bold"

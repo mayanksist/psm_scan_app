@@ -65,6 +65,7 @@ class DraftPOListFragment : Fragment() {
         pDialog.show()
 
         val Jsonarra = JSONObject()
+        val Jsonarrapolist = JSONObject()
         val JSONObj = JSONObject()
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var empautoid = preferences.getString("EmpAutoId", "")
@@ -73,9 +74,9 @@ class DraftPOListFragment : Fragment() {
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
         JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
         JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
-        val resorderno = JsonObjectRequest(
-            Request.Method.POST,
-            AppPreferences.BASEURL + AppPreferences.GET_ASSIGN_ORDER_LIST,
+        JSONObj.put("cObj", Jsonarrapolist.put("status", 1))
+        val draftpolist = JsonObjectRequest(
+            Request.Method.POST,AppPreferences.DRAFT_PO_LIST,
             JSONObj,
             { response ->
                 val resobj = (response.toString())
@@ -88,11 +89,11 @@ class DraftPOListFragment : Fragment() {
                     MyItemRecyclerViewAdapter.notifyDataSetChanged()
                     val jsondata = resultobj.getJSONArray("responseData")
                     for (i in 0 until jsondata.length()) {
-                        val BillNo = jsondata.getJSONObject(i).getString("ONo")
-                        val Billdate = jsondata.getJSONObject(i).getString("ONo")
-                        val VendorName = jsondata.getJSONObject(i).getString("ONo")
-                        val Status = jsondata.getJSONObject(i).getString("ONo")
-                        val NoofProduct = jsondata.getJSONObject(i).getString("ONo")
+                        val BillNo = jsondata.getJSONObject(i).getString("BillNo")
+                        val Billdate = jsondata.getJSONObject(i).getString("BillDate")
+                        val VendorName = jsondata.getJSONObject(i).getString("BillDate")
+                        val Status = jsondata.getJSONObject(i).getString("BillNo")
+                        val NoofProduct = jsondata.getJSONObject(i).getString("BillNo")
                         DataBindLoadorder(
                             BillNo, Billdate, VendorName,Status,NoofProduct)
 
@@ -123,13 +124,13 @@ class DraftPOListFragment : Fragment() {
                     }
                 }
             })
-        resorderno.retryPolicy = DefaultRetryPolicy(
+            draftpolist.retryPolicy = DefaultRetryPolicy(
             10000000,
             DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         )
         try {
-            queues.add(resorderno)
+            queues.add(draftpolist)
         } catch (e: IOException) {
             Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
         }

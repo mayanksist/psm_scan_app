@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">WHM</string>
     <string name="prompt_email">Enter User Id</string>
-    <string name="prompt_password">Password</string>
+    <string name="prompt_password">Password</string> c
     <string name="login">Login</string>
     <string name="email_error">Please enter your email address</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -28,9 +28,9 @@
     <string name="product_list_fragment">Manual Load Order</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="Inventoryreceiv">New PO Receive</string>
-    <string name="btninventorypodraftlist">Draft PO receive list</string>
-    <string name="btnsubmitpolist">Submit PO receive list</string>
-    <string name="btnrevertpolist">Revert PO receive list</string>
+    <string name="btninventorypodraftlist">Draft PO Receive List</string>
+    <string name="btnsubmitpolist">Submit PO Receive List</string>
+    <string name="btnrevertpolist">Revert PO Receive List</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="scancode">Scan security</string>

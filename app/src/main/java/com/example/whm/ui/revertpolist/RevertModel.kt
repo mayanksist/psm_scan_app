@@ -1,14 +1,16 @@
 package com.example.myapplication.com.example.whm.ui.revertpolist
 
+import kotlin.properties.Delegates
+
 class RevertModel(
     BillNo: String, Billdate: String,
-    VendorName: String,Status:String,NoofProduct:String) {
+    VendorName: String,Status:Int,NoofProduct:Int) {
 
     private lateinit var Bill_NO: String
     private lateinit var Bill_date: String
     private lateinit var Vendor_Name: String
-    private lateinit var Status_po: String
-    private lateinit var No_ofProduct: String
+    private var Status_po by Delegates.notNull<Int>()
+    private var No_ofProduct by Delegates.notNull<Int>()
 
     init {
         this.Bill_NO = BillNo
@@ -28,10 +30,10 @@ class RevertModel(
         return Vendor_Name
     }
 
-    fun getStatus(): String? {
+    fun getStatus(): Int? {
         return Status_po
     }
-    fun getnoofproducts(): String? {
+    fun getnoofproducts(): Int? {
         return No_ofProduct
     }
 }

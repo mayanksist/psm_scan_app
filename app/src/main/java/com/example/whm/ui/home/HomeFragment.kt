@@ -17,7 +17,9 @@ class HomeFragment : Fragment()  {
     private lateinit var homeViewModel: HomeViewModel
     lateinit var mView: View
     private var _binding: FragmentHomeBinding? = null
-
+private var StatusD:Int=1
+private var StatusR:Int=3
+private var StatusS:Int=2
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -50,7 +52,12 @@ class HomeFragment : Fragment()  {
     val btnrevertpolist = mView.findViewById<Button>(com.example.myapplication.R.id.btnrevertpolist)
 
     var Usertype = preferences.getString("EmpTypeNo", "")
-    if (Usertype.toString() != "2"){
+        val editor = preferences.edit()
+
+
+
+
+        if (Usertype.toString() != "2"){
         btnInvCheck.visibility=   View.GONE
     }
         if (Usertype.toString() == "9") {
@@ -62,8 +69,8 @@ class HomeFragment : Fragment()  {
 
         }
         if (Usertype.toString() == "11") {
-
-            btnInvCheck.visibility=   View.GONE
+         //   btnInvCheck.visibility=   View.VISIBLE
+            btnInvCheck.visibility=   View.VISIBLE
             btnDriLoad.visibility=   View.GONE
             btnUnLoadList.visibility=   View.GONE
             btnOrderList.visibility=   View.GONE
@@ -75,6 +82,7 @@ class HomeFragment : Fragment()  {
         }
 
     btnInvCheck.setOnClickListener {
+
         this.findNavController().navigate(com.example.myapplication.R.id.nav_product)
     }
 
@@ -91,12 +99,18 @@ class HomeFragment : Fragment()  {
             this.findNavController().navigate(com.example.myapplication.R.id.nav_inventory)
         }
         btninventorypodraftlist.setOnClickListener {
-            this.findNavController().navigate(com.example.myapplication.R.id.nav_drfatpolist)
+            editor.putInt("StatusD", StatusD)
+            editor.apply()
+            this.findNavController().navigate(com.example.myapplication.R.id.nav_revertpolist)
         }
         btnsubmitpolist.setOnClickListener {
-            this.findNavController().navigate(com.example.myapplication.R.id.nav_submitpolist)
+            editor.putInt("StatusD", StatusS)
+            editor.apply()
+            this.findNavController().navigate(com.example.myapplication.R.id.nav_revertpolist)
         }
         btnrevertpolist.setOnClickListener {
+            editor.putInt("StatusD", StatusR)
+            editor.apply()
             this.findNavController().navigate(com.example.myapplication.R.id.nav_revertpolist)
         }
         return mView

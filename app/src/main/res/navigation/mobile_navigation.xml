@@ -65,14 +65,14 @@
         tools:layout="@layout/activity_receive_po" />
     <fragment
         android:id="@+id/nav_drfatpolist"
-        android:name="com.example.whm.ui.draftpolist.DraftPOListFragment"
+        android:name="com.example.whm.ui.revertpolist.RevertPolistFragment"
         android:label="@string/btninventorypodraftlist"
-        tools:layout="@layout/fragment_draft_p_o_list_list" />
+        tools:layout="@layout/fragment_revert_polist_list" />
     <fragment
         android:id="@+id/nav_submitpolist"
-        android:name="com.example.whm.ui.submitpolist.SubmitpolistFragment"
+        android:name="com.example.whm.ui.revertpolist.RevertPolistFragment"
         android:label="@string/btnsubmitpolist"
-        tools:layout="@layout/fragment_submitpolist_list" />
+        tools:layout="@layout/fragment_revert_polist_list" />
     <fragment
         android:id="@+id/nav_revertpolist"
         android:name="com.example.whm.ui.revertpolist.RevertPolistFragment"

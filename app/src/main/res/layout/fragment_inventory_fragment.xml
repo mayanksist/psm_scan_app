@@ -25,50 +25,55 @@
         tools:ignore="MissingConstraints">
 
         <LinearLayout
-            android:id="@+id/layoutbillno"
+            android:id="@+id/layoutbillnotxt"
             android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
             <TextView
                 android:id="@+id/txtPunit"
                 style="@style/RegularMono"
-                android:layout_width="105dp"
-                android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:text="Bill No"
                 android:textSize="17dp"
                 android:textStyle="bold" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/layoutbillno"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_below="@+id/layoutbillnotxt"
+            android:layout_height="wrap_content"
+          >
             <EditText
                 android:id="@+id/txtbillno"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_row="0"
-                android:layout_column="1"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
-                android:background="@drawable/bg_lightedittext"
+                android:background="@drawable/frame"
                 android:elevation="4dp"
                 android:hint="Bill No"
                 android:inputType="text"
-
-                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="normal" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutbilldate"
+            android:id="@+id/layoutbilldatetxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layoutbillno"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -76,14 +81,18 @@
                 style="@style/RegularMono"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:padding="5dp"
                 android:text="Bill Date"
                 android:textSize="17dp"
                 android:textStyle="bold" />
 
-
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layoutbilldate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutbilldatetxt"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txtbildate"
@@ -93,13 +102,13 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
-                android:background="@drawable/bg_lightedittext"
-                android:padding="10dp"
+                android:background="@drawable/frame"
                 android:drawableRight="@drawable/clendericon"
                 android:drawableTint="#000000"
+                android:hint="MM/DD/YYYY"
+                android:padding="10dp"
                 android:textColor="@color/black"
                 android:textSize="18dp"
-                android:hint="MM/DD/YYYY"
                 android:textStyle="normal" />
 
             <Button
@@ -111,7 +120,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutvender"
+            android:id="@+id/layoutvendertxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layoutbilldate"
@@ -122,33 +131,33 @@
                 style="@style/RegularMono"
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:padding="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="Vendor"
                 android:textSize="17dp"
                 android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layoutvender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutvendertxt"
+            >
 
             <Spinner
                 android:id="@+id/ddlvenderlist"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_lightedittext"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/frame"
                 android:inputType="none"
                 android:padding="5dp"
                 android:text="Select Vendor" />
 
-            <Spinner
-                android:id="@+id/ddlvenderlistID"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:visibility="gone"
-                android:background="@drawable/bg_lightedittext"
-                android:inputType="none"
-                android:padding="5dp"
-                android:text="Select Vendor" />
+
         </LinearLayout>
     </RelativeLayout>
 

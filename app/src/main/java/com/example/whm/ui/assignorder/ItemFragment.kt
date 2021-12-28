@@ -117,6 +117,7 @@ class ItemFragment : Fragment() {
                     } else {
                         val alertscanord = AlertDialog.Builder(this.context)
                         alertscanord.setMessage(resmsg.toString())
+                        alertscanord.setCancelable(false)
                         alertscanord.setPositiveButton("ok", null)
                         val dialog: AlertDialog = alertscanord.create()
                         dialog.show()

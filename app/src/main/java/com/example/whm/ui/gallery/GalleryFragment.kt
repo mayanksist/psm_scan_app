@@ -141,6 +141,7 @@ class GalleryFragment : Fragment() {
                             try {
                                 if (barcodeenter!!.trim().isEmpty()) {
                                     val alertemail = AlertDialog.Builder(this.context)
+                                    alertemail.setCancelable(false)
                                     alertemail.setMessage("Scan Barcode")
                                     alertemail.setPositiveButton("ok")
                                     { dialog, _ ->
@@ -344,6 +345,7 @@ class GalleryFragment : Fragment() {
                         menu?.isVisible = false
                     }
                     AppPreferences.playSoundbarcode()
+                    alertemail.setCancelable(false)
                     val dialog: AlertDialog = alertemail.create()
                     dialog.show()
 

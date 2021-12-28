@@ -3,6 +3,7 @@ package com.example.myapplication.ui.product
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
+import android.content.DialogInterface.OnShowListener
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -389,6 +390,7 @@ class ProductList : Fragment() {
                 else {
                     pDialog.dismiss()
                     val alertorfailed = AlertDialog.Builder(this.context)
+                    alertorfailed.setCancelable(false)
                     alertorfailed.setTitle(orderno1)
                     alertorfailed.setMessage(presponsmsg.toString())
                     alertorfailed.setPositiveButton(
@@ -471,6 +473,7 @@ class ProductList : Fragment() {
                     cardview1.visibility = View.GONE
                 } else {
                     pDialog.dismiss()
+                    alertsuborder.setCancelable(false)
                     alertsuborder.setTitle(sorderno.uppercase(Locale.getDefault()))
                     alertsuborder.setMessage(rspMsg.toString())
                     alertsuborder.setPositiveButton(
@@ -519,6 +522,7 @@ class ProductList : Fragment() {
         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
         val alert = AlertDialog.Builder(this.context)
         pDialog.dismiss()
+        alert.setCancelable(false)
         alert.setTitle(title)
         alert.setMessage(MSG)
         alert.setNegativeButton("YES")
@@ -536,13 +540,30 @@ class ProductList : Fragment() {
             dialog.dismiss()
             alert.setTitle("")
         }
+        alert.setCancelable(false)
+        val dialog = alert.create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                .setBackgroundColor(resources.getColor(R.color.red))
+            val negative: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            negative.isFocusable = true
+            negative.isFocusableInTouchMode = true
+            negative.requestFocus(View.FOCUS_FORWARD)
+            val positive: Button = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            positive.isFocusable = false
+            positive.isFocusableInTouchMode = false
+            positive.requestFocus(View.FOCUS_FORWARD)
+
+
+        }
+        dialog.show()
         sharedLoadOrderPage.remove("OrderNo")
         sharedLoadOrderPage.remove("PackedBoxes")
         sharedLoadOrderPage.remove("SelectOrderNo")
         sharedLoadOrderPage.apply()
         val orderno1: EditText = binding.txtorderno
         orderno1.setText("")
-        alert.show()
+        //alert.show()
     }
     //check internet connection
     fun CheckInterNetDailog(){
@@ -554,6 +575,7 @@ class ProductList : Fragment() {
             dialog.dismiss()
             this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
         }
+        dialog?.setCancelable(false)
         dialog?.show()
 //        val alertnet = AlertDialog.Builder(activity)
 //        alertnet.setTitle("Connection")

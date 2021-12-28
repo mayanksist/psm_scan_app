@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
@@ -106,16 +107,34 @@ class ReceivePO : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
+
             R.id.savesubmit -> {
-                SubmitPoList(2)
-                true
+                if(ReceiverpoList.size>0){
+                    SubmitPoList(2)
+                    ReceiverpoList.clear()
+                    true
+                }
+                else{
+                    Itemlist()
+                    false
+                }
+
             }
             R.id.draftsubmit -> {
-                SubmitPoList(1)
-                true
+                if(ReceiverpoList.size>0) {
+                    SubmitPoList(1)
+                    true
+                }
+                else{
+                    Itemlist()
+                    false
+                }
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+    fun Itemlist() {
+        SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText("Atleast One Item Required").show()
     }
     fun Addproductlist() {
 
@@ -202,7 +221,9 @@ class ReceivePO : AppCompatActivity() {
 
 
                 } else {
-                    Toast.makeText(this, responseMessage, Toast.LENGTH_SHORT).show()
+                    SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
+                        AppPreferences.playSoundbarcode()
+//                  /  Toast.makeText(this, , Toast.LENGTH_SHORT).show()
 
                 }
                 barcodeadd.setText("")

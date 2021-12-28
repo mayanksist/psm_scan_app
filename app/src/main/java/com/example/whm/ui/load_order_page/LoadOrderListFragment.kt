@@ -102,6 +102,7 @@ class LoadOrderListFragment : Fragment() {
 //                        ).show()
                         val alerts = AlertDialog.Builder(this.context)
                         alerts.setMessage(resmsg.toString())
+                        alerts.setCancelable(false)
                         alerts.setPositiveButton("ok", null)
                         val dialog: AlertDialog = alerts.create()
                         dialog.show()

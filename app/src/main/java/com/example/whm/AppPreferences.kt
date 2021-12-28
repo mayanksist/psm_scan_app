@@ -26,7 +26,7 @@ object AppPreferences {
     const val SUBMIT_PO_LIST = BASEURL + "WPOReceive.asmx/submitPO"
     const val DELETE_PO_LIST = BASEURL + "WPOReceive.asmx/deletePOItem"
     const val EDIT_PO_LIST = BASEURL + "WPOReceive.asmx/editPOQty"
-    const val DRAFT_PO_LIST = BASEURL + "WPOReceive.asmx/DraftpoList"
+    const val DRAFT_PO_LIST = BASEURL + "WPOReceive.asmx/getPOList"
     fun internetConnectionCheck(context: Context?): Boolean {
         var Connected = false
         val connectivity = context?.applicationContext

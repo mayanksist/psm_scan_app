@@ -24,6 +24,7 @@ class MainActivity2 : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
     var usertype: String = ""
+    var menu: MenuItem? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -64,6 +65,7 @@ class MainActivity2 : AppCompatActivity() {
         }
 
             if (usertype == "11") {
+                nav_Menu.findItem(com.example.myapplication.R.id.nav_product).isVisible = true
             nav_Menu.findItem(com.example.myapplication.R.id.nav_inventory).isVisible = true
             nav_Menu.findItem(com.example.myapplication.R.id.nav_drfatpolist).isVisible = true
             nav_Menu.findItem(com.example.myapplication.R.id.nav_submitpolist).isVisible = true
@@ -94,7 +96,13 @@ class MainActivity2 : AppCompatActivity() {
     }
 
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
+        when (item.itemId) {
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(com.example.myapplication.R.menu.main_activity2, menu)
