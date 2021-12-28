@@ -62,7 +62,8 @@ class RevertPolistFragment : Fragment() {
             var empautoid = preferences.getString("EmpAutoId", "")
             var accessToken = preferences.getString("accessToken", "")
             var StatusD = preferences.getInt("StatusD", 0)
-            Toast.makeText(this.context,StatusD.toString(),Toast.LENGTH_LONG).show()
+            val sharedLoadOrderPage = preferences.edit()
+          //  Toast.makeText(this.context,StatusD.toString(),Toast.LENGTH_LONG).show()
             val queues = Volley.newRequestQueue(this.context)
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
             JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
@@ -91,6 +92,7 @@ class RevertPolistFragment : Fragment() {
                                 BillNo, Billdate, VendorName,Status,NoofProduct)
 
                         }
+                        sharedLoadOrderPage.remove("StatusD")
                         if (pDialog != null) {
                             if (pDialog.isShowing) {
                                 pDialog.dismiss()

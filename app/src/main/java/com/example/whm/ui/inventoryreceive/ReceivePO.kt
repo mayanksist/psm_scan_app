@@ -130,6 +130,12 @@ class ReceivePO : AppCompatActivity() {
                     false
                 }
             }
+            R.id.manualaddproduct->{
+
+
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

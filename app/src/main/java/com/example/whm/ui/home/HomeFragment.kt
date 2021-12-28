@@ -74,10 +74,10 @@ private var StatusS:Int=2
             btnDriLoad.visibility=   View.GONE
             btnUnLoadList.visibility=   View.GONE
             btnOrderList.visibility=   View.GONE
-            btninventoryreceiv.visibility=   View.VISIBLE
-            btninventorypodraftlist.visibility=   View.VISIBLE
-            btnsubmitpolist.visibility=   View.VISIBLE
-            btnrevertpolist.visibility=   View.VISIBLE
+           // btninventoryreceiv.visibility=   View.VISIBLE
+//            btninventorypodraftlist.visibility=   View.VISIBLE
+//            btnsubmitpolist.visibility=   View.VISIBLE
+//            btnrevertpolist.visibility=   View.VISIBLE
 
         }
 

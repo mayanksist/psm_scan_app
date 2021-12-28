@@ -65,12 +65,6 @@ class SplashScreen : AppCompatActivity() {
                     val msg = responmsg.getString("response")
                     val resmsg = responmsg.getString("responseMessage")
                     if (msg == "failed") {
-//                        val mLayout =
-//                            findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
-//                        mLayout.visibility = View.VISIBLE
-//                        val mhiddenLayout =
-//                            findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
-//                        mhiddenLayout.visibility = View.GONE
                         editor.clear()
                         editor.apply()
                     } else {
@@ -101,12 +95,7 @@ class SplashScreen : AppCompatActivity() {
                                     MainActivity2::class.java
                                 )
                                 startActivity(i)
-//                                val mLayout =
-//                                    findViewById<View>(com.example.myapplication.R.id.MainActivity) as RelativeLayout
-//                                mLayout.visibility = View.GONE
-//                                val mhiddenLayout =
-//                                    findViewById<View>(com.example.myapplication.R.id.MainHiddenActivity) as RelativeLayout
-//                                mhiddenLayout.visibility = View.VISIBLE
+
                             }
                         } else {
                             val alertemail = AlertDialog.Builder(this)

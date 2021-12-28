@@ -15,5 +15,11 @@
             app:showAsAction="collapseActionView"
             android:actionLayout="@layout/toolbar"
             android:title="Submit" />
+        <item
+            android:id="@+id/manualaddproduct"
+            android:orderInCategory="200"
+            app:showAsAction="collapseActionView"
+            android:actionLayout="@layout/toolbar"
+            android:title="Add Product" />
     </group>
 </menu>
