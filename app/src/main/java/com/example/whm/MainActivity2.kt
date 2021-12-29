@@ -68,10 +68,10 @@ class MainActivity2 : AppCompatActivity() {
 
             if (usertype == "11") {
             nav_Menu.findItem(com.example.myapplication.R.id.nav_product).isVisible = true
-           // nav_Menu.findItem(com.example.myapplication.R.id.nav_inventory).isVisible = true
-          //  nav_Menu.findItem(com.example.myapplication.R.id.nav_drfatpolist).isVisible = true
-          //  nav_Menu.findItem(com.example.myapplication.R.id.nav_submitpolist).isVisible = true
-           // nav_Menu.findItem(com.example.myapplication.R.id.nav_revertpolist).isVisible = true
+            nav_Menu.findItem(com.example.myapplication.R.id.nav_inventory).isVisible = true
+            nav_Menu.findItem(com.example.myapplication.R.id.nav_drfatpolist).isVisible = true
+            nav_Menu.findItem(com.example.myapplication.R.id.nav_submitpolist).isVisible = true
+            nav_Menu.findItem(com.example.myapplication.R.id.nav_revertpolist).isVisible = true
 
         }
         val navController = findNavController(com.example.myapplication.R.id.nav_host_fragment_content_main)

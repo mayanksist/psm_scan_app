@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.widget.Button
 import android.app.Dialog
+import android.bluetooth.BluetoothClass
 import android.view.Window
 import android.os.Build
 import com.example.myapplication.BuildConfig
@@ -27,6 +28,13 @@ object AppPreferences {
     const val DELETE_PO_LIST = BASEURL + "WPOReceive.asmx/deletePOItem"
     const val EDIT_PO_LIST = BASEURL + "WPOReceive.asmx/editPOQty"
     const val DRAFT_PO_LIST = BASEURL + "WPOReceive.asmx/getPOList"
+    //for devices
+
+    var manufacturer = Build.MANUFACTURER
+    var model = Build.MODEL
+    var version = Build.VERSION.SDK_INT
+    var versionRelease = Build.VERSION.RELEASE
+    var Device_ID= "$manufacturer $model $version $versionRelease"
     fun internetConnectionCheck(context: Context?): Boolean {
         var Connected = false
         val connectivity = context?.applicationContext

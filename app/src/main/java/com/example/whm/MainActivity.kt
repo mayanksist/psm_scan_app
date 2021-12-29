@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
         JSONObj.put("userName",email)
         JSONObj.put("requestContainer",Jsonarra.put("appVersion",appversion))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
         val req=JsonObjectRequest(Request.Method.POST,APIURL,JSONObj,
     Response.Listener {
             response ->

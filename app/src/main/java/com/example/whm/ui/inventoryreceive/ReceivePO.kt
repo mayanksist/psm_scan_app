@@ -1,6 +1,9 @@
 package com.example.whm.ui.inventoryreceive
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -23,7 +26,13 @@ import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.MainActivity2
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceiveModel
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceivePOAdapter1
+import com.pranavpandey.android.dynamic.toasts.DynamicToast
+import org.json.JSONArray
 import org.json.JSONObject
+import android.widget.Spinner
+
+
+
 
 
 class ReceivePO : AppCompatActivity() {
@@ -50,6 +59,7 @@ class ReceivePO : AppCompatActivity() {
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
         backarrow = findViewById(com.example.myapplication.R.id.imgbackbtm)
         LinearLayoutV = findViewById(com.example.myapplication.R.id.LinearFragmentContainer)
+     //   bindvenderlist()
         if (AppPreferences.internetConnectionCheck(this)) {
             backarrow?.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
@@ -132,6 +142,7 @@ class ReceivePO : AppCompatActivity() {
             }
             R.id.manualaddproduct->{
 
+                manualproductadd("46464")
 
                 true
             }
@@ -329,6 +340,105 @@ class ReceivePO : AppCompatActivity() {
             var intent = Intent(this, ReceivePO::class.java)
             startActivity(intent)        }
         dialog?.show()
+    }
+
+
+    fun manualproductadd(PID: String) {
+        var dialog: AlertDialog? = null
+        val builder = AlertDialog.Builder(this)
+        val layoutInflater = LayoutInflater.from(this)
+        val view = layoutInflater.inflate(com.example.myapplication.R.layout.manualproductadddailog, null)
+        val PIPID: TextView = view.findViewById(com.example.myapplication.R.id.txtmpid)
+        val btnpoqty: Button = view.findViewById(com.example.myapplication.R.id.btnsaevpoqty)
+        val btncancel: Button = view.findViewById(com.example.myapplication.R.id.btncancel)
+
+        PIPID.setText(PID)
+
+        btnpoqty.setOnClickListener(View.OnClickListener {
+
+                dialog?.dismiss()
+
+
+        })
+
+        btncancel.setOnClickListener(View.OnClickListener {
+            dialog?.dismiss()
+        })
+
+        builder.setView(view)
+        dialog = builder.create()
+        dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.show()
+        BindUnitList()
+    }
+    fun BindUnitList(){
+        var spUnitType: Spinner? = null
+         spUnitType = findViewById(R.id.spunity)
+        //val BINVENDERLIST =spvendor
+        val Jsonarra = JSONObject()
+        val JSONObj = JSONObject()
+        val queues = Volley.newRequestQueue(this)
+        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var accessToken = preferences.getString("accessToken", "")
+        var EmpAutoId = preferences.getString("EmpAutoId", "")
+        JSONObj.put("requestContainer",Jsonarra.put("accessToken", accessToken))
+        JSONObj.put("requestContainer",Jsonarra.put("UserAutoId", EmpAutoId))
+        val BINDVENDERLIST = JsonObjectRequest(
+            Request.Method.POST, AppPreferences.Bind_VENDER_LIST, JSONObj,
+            { response ->
+                val resobj = (response.toString())
+                val responsemsg = JSONObject(resobj)
+                val resultobj = JSONObject(responsemsg.getString("d"))
+                val responseCode = resultobj.getString("responseCode")
+                val responseMessage = resultobj.getString("responseMessage")
+                if (responseCode == "201") {
+                    val venderlist: JSONArray = resultobj.getJSONArray("responseData")
+                    val n = venderlist.length()
+                    val spinnerArray = arrayOfNulls<String>(n)
+                    val spinnerArrayId = arrayOfNulls<String>(n)
+                    for (i in 0 until n) {
+                        val BINDLIST = venderlist.getJSONObject(i)
+                        val VID = BINDLIST.getInt("Aid")
+                        val VNAME = BINDLIST.getString("VName")
+                        spinnerArray[i] = VNAME
+                        spinnerArrayId[i] = VID.toString()
+                    }
+
+                    spinnerArray[0] = "Select unit"
+                    spUnitType?.adapter = this?.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) } as SpinnerAdapter
+                    spUnitType?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                            println("erreur")
+                        }
+                        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                            val VenderSelect = parent?.getItemIdAtPosition(position).toString()
+                            if(position!=0) {
+                                for (i in 0 until VenderSelect.toInt() + 1) {
+                                  var  spvendorid = spinnerArrayId.get(index = i)
+                                }
+                            }
+                        }
+                    }
+                } else {
+
+                    SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
+
+
+                }
+            }, { response ->
+
+                Log.e("onError", error(response.toString()))
+            })
+        BINDVENDERLIST.retryPolicy = DefaultRetryPolicy(
+            1000000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queues.add(BINDVENDERLIST)
     }
 }
 
