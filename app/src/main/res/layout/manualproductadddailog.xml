@@ -133,12 +133,10 @@
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginTop="4dp"
-        android:maxLines="1"
-        android:inputType="none"
+        android:background="@drawable/frame"
         android:padding="5dp"
         android:text="Unit Type"
         android:textSize="16dp"
-        android:background="@drawable/frame"
         app:layout_constraintEnd_toEndOf="@+id/txtpname"
         app:layout_constraintStart_toStartOf="@+id/txtpname"
         app:layout_constraintTop_toBottomOf="@+id/txtpname" />
