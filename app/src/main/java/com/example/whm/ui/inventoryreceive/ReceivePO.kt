@@ -39,7 +39,7 @@ class ReceivePO : AppCompatActivity() {
    // var backBTN: ImageView?=null
     var addbarcode: EditText?=null
     var backarrow: ImageView?=null
-
+    var spUnitType: Spinner? = null
      var toolbar:Toolbar?=null
      var LinearLayoutV:LinearLayout?=null
      var LinearLayoutInventoey:LinearLayout?=null
@@ -351,6 +351,7 @@ class ReceivePO : AppCompatActivity() {
         val PIPID: TextView = view.findViewById(com.example.myapplication.R.id.txtmpid)
         val btnpoqty: Button = view.findViewById(com.example.myapplication.R.id.btnsaevpoqty)
         val btncancel: Button = view.findViewById(com.example.myapplication.R.id.btncancel)
+        spUnitType = view.findViewById(com.example.myapplication.R.id.spunity)
 
         PIPID.setText(PID)
 
@@ -373,9 +374,8 @@ class ReceivePO : AppCompatActivity() {
         BindUnitList()
     }
     fun BindUnitList(){
-        var spUnitType: Spinner? = null
-         spUnitType = findViewById(R.id.spunity)
-        //val BINVENDERLIST =spvendor
+
+
         val Jsonarra = JSONObject()
         val JSONObj = JSONObject()
         val queues = Volley.newRequestQueue(this)
@@ -407,7 +407,8 @@ class ReceivePO : AppCompatActivity() {
                     }
 
                     spinnerArray[0] = "Select unit"
-                    spUnitType?.adapter = this?.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) } as SpinnerAdapter
+
+                    spUnitType?.adapter = this?.let { ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, spinnerArray) } as SpinnerAdapter
                     spUnitType?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
                         override fun onNothingSelected(parent: AdapterView<*>?) {
 
