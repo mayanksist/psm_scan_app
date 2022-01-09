@@ -321,6 +321,7 @@ class ProductList : Fragment() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var empautoid = preferences.getString("EmpAutoId", "")
         var accessToken = preferences.getString("accessToken", "")
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
         val queues = Volley.newRequestQueue(this.context)
         details.put("OrderNO", orderno1)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))

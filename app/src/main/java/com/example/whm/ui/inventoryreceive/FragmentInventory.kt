@@ -139,6 +139,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
         val JSONObj = JSONObject()
         val queues = Volley.newRequestQueue(this.context)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var accessToken = preferences.getString("accessToken", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")

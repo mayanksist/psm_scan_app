@@ -68,6 +68,7 @@ class RevertPolistFragment : Fragment() {
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
             JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
             JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
+            JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
             JSONObj.put("cObj", Jsonarrapolist.put("status", StatusD))
             val draftpolist = JsonObjectRequest(
                 Request.Method.POST,AppPreferences.DRAFT_PO_LIST,

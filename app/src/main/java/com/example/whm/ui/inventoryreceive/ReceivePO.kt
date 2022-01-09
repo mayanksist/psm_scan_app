@@ -464,6 +464,7 @@ class ReceivePO : AppCompatActivity() {
         val JSONObj = JSONObject()
         val queues = Volley.newRequestQueue(this)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         var accessToken = preferences.getString("accessToken", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")

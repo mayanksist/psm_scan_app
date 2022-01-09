@@ -63,6 +63,7 @@ class LoadOrderListFragment : Fragment() {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             var empautoid = preferences.getString("EmpAutoId", "")
             var accessToken = preferences.getString("accessToken", "")
+            JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
             val queues = Volley.newRequestQueue(this.context)
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
             JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))

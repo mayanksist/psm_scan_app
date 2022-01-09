@@ -252,6 +252,7 @@ class GalleryFragment : Fragment() {
         editlayout?.visibility = View.GONE
         details.put("barcode", barcoded)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var accessToken = preferences.getString("accessToken", "")
         var EmpTypeNo = preferences.getString("EmpTypeNo", "")
@@ -416,6 +417,7 @@ class GalleryFragment : Fragment() {
                             "requestContainer",
                             Jsonarra.put("appVersion", AppPreferences.AppVersion)
                         )
+                        JSONObjs.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
                         val preferencesaccess =
                             PreferenceManager.getDefaultSharedPreferences(context)
                         var accessTokenS = preferencesaccess.getString("accessToken", "")
