@@ -1,4 +1,5 @@
 package com.example.whm.ui.inventoryreceive
+
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
@@ -6,13 +7,14 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
-import androidx.appcompat.widget.Toolbar;
+import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
@@ -26,13 +28,8 @@ import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.MainActivity2
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceiveModel
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceivePOAdapter1
-import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import org.json.JSONArray
 import org.json.JSONObject
-import android.widget.Spinner
-
-
-
 
 
 class ReceivePO : AppCompatActivity() {
@@ -40,16 +37,27 @@ class ReceivePO : AppCompatActivity() {
     var addbarcode: EditText?=null
     var backarrow: ImageView?=null
     var spUnitType: Spinner? = null
+    var sproductid: String? = null
+    var spunitypeid: String? = null
      var toolbar:Toolbar?=null
      var LinearLayoutV:LinearLayout?=null
-     var LinearLayoutInventoey:LinearLayout?=null
 
+    var autotextView: AutoCompleteTextView? = null
+    var qty: TextView? = null
+    var totalpicesqty: TextView? = null
+    var list: ArrayList<String>? = null
+    var adapter: ArrayAdapter<String>? = null
     var ReceiverpoList: ArrayList<ReceiveModel> = arrayListOf()
-
+    var spvendorid: String? = null
+    var Quantity:Int=0
+    var totalpices:Int=0
+    var Qty:Int=0
+    var  DUnit:Int=0
     private lateinit var ReceivePOAdapterl:ReceivePOAdapter1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         setContentView(com.example.myapplication.R.layout.activity_receive_po)
         toolbar = findViewById(R.id.toolbarAction)
@@ -109,9 +117,17 @@ class ReceivePO : AppCompatActivity() {
 
     }
 
+
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menuitem, menu)
-        return true
+
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menuitem, menu)
+
+
+
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -142,7 +158,7 @@ class ReceivePO : AppCompatActivity() {
             }
             R.id.manualaddproduct->{
 
-                manualproductadd("46464")
+                manualproductadd()
 
                 true
             }
@@ -298,19 +314,7 @@ class ReceivePO : AppCompatActivity() {
                 val responseCode = resultobj.getString("responseCode")
                 val responseMessage = resultobj.getString("responseMessage")
                 if (responseCode == "201") {
-                    // this.findNavController().navigate(com.example.myapplication.R.id.nav_orderlist)
-//                    val manager: FragmentManager = supportFragmentManager
-//                    val count: Int = manager.getBackStackEntryCount()
-//                    if (count > 0) {
-//                        val mfragment: FragmentManager.BackStackEntry = manager.getBackStackEntryAt(count - 1)
-//                        val ft: android.app.FragmentTransaction? = fragmentManager.beginTransaction()
-//                        if (ft != null) {
-//                            ft.replace(R.id.fragment_loadorder,  mfragment)
-//                        }
-//                        if (ft != null) {
-//                            ft.commit()
-//                        }
-//                    }
+
                     var intent = Intent(this, ReceivePO::class.java)
                     startActivity(intent)
 
@@ -343,40 +347,120 @@ class ReceivePO : AppCompatActivity() {
     }
 
 
-    fun manualproductadd(PID: String) {
+    fun manualproductadd() {
         var dialog: AlertDialog? = null
         val builder = AlertDialog.Builder(this)
         val layoutInflater = LayoutInflater.from(this)
-        val view = layoutInflater.inflate(com.example.myapplication.R.layout.manualproductadddailog, null)
-        val PIPID: TextView = view.findViewById(com.example.myapplication.R.id.txtmpid)
-        val btnpoqty: Button = view.findViewById(com.example.myapplication.R.id.btnsaevpoqty)
-        val btncancel: Button = view.findViewById(com.example.myapplication.R.id.btncancel)
-        spUnitType = view.findViewById(com.example.myapplication.R.id.spunity)
+        val view = layoutInflater.inflate(R.layout.manualproductadddailog, null)
 
-        PIPID.setText(PID)
+         autotextView = view.findViewById<AutoCompleteTextView>(R.id.txtmpid)
 
-        btnpoqty.setOnClickListener(View.OnClickListener {
+         qty = view.findViewById<TextView>(R.id.qty)
+        qty!!.isEnabled =false
+        totalpicesqty = view.findViewById<TextView>(R.id.totalpicesqty)
+     //   BindProductList()
+        autotextView!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
 
-                dialog?.dismiss()
+            }
 
+            override fun onTextChanged(
+                s: CharSequence,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
 
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                BindProductList()
+            }
         })
+        qty!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
 
+            override fun onTextChanged(
+                s: CharSequence,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                if (qty!!.text.toString() != "") {
+                    Quantity = qty!!.text.toString().toInt()
+                    totalpices = Qty * Quantity
+                    totalpicesqty!!.setText(totalpices.toString())
+                }
+            }
+        })
+        val btnpoqty: Button = view.findViewById(R.id.btnsaevpoqty)
+        val btncancel: Button = view.findViewById(R.id.btncancel)
+        spUnitType = view.findViewById(R.id.spunity)
+//        spvendorid= spUnitType.toString()
+        btnpoqty.setOnClickListener(View.OnClickListener {
+            var name: String? = null
+            name = spUnitType!!.getSelectedItem() as String?
+            if (spUnitType!!.getSelectedItem() != null && qty!!.text.toString()!="" && qty!!.text.toString()!="0" && autotextView!!.text.toString()!="") {
+                val recyclerView: RecyclerView =
+                    findViewById(com.example.myapplication.R.id.POLIST)
+                val layoutManager = LinearLayoutManager(this)
+                recyclerView.layoutManager = layoutManager
+                AddproductlistManual()
+                ReceivePOAdapterl = ReceivePOAdapter1(ReceiverpoList, this)
+                recyclerView.adapter = ReceivePOAdapterl
+                dialog?.dismiss()
+            }
+            else {
+                if (autotextView!!.text.toString()!="" || autotextView!!.text.toString()!=null)  {
+                    Select_product()
+                }
+                else if(name == null ){
+                    Select_UnitType()
+                }
+                else{
+                    Select_Qty()
+                }
+            }
+        })
         btncancel.setOnClickListener(View.OnClickListener {
             dialog?.dismiss()
         })
-
         builder.setView(view)
         dialog = builder.create()
         dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
-        BindUnitList()
+       // BindUnitList()
+
+    }
+
+    fun Select_UnitType() {
+
+        SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText("Select Unit Type").show()
+    }
+    fun Select_Qty() {
+        SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText("Quantity can't be left empty or zero.").show()
+    }
+    fun Select_product() {
+        SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText("Select Product ").show()
     }
     fun BindUnitList(){
-
-
         val Jsonarra = JSONObject()
+        val Jsonarryproduct = JSONObject()
         val JSONObj = JSONObject()
         val queues = Volley.newRequestQueue(this)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
@@ -385,8 +469,11 @@ class ReceivePO : AppCompatActivity() {
         var EmpAutoId = preferences.getString("EmpAutoId", "")
         JSONObj.put("requestContainer",Jsonarra.put("accessToken", accessToken))
         JSONObj.put("requestContainer",Jsonarra.put("UserAutoId", EmpAutoId))
-        val BINDVENDERLIST = JsonObjectRequest(
-            Request.Method.POST, AppPreferences.Bind_VENDER_LIST, JSONObj,
+        JSONObj.put("requestContainer", Jsonarra.put("filterkeyword", Jsonarryproduct))
+        JSONObj.put("filterkeyword", Jsonarryproduct.put("productId", sproductid))
+        val BINDUNITTYPE =spUnitType
+        val BindProductDetails = JsonObjectRequest(
+            Request.Method.POST,AppPreferences.GET_PRODUCT_DETAILS, JSONObj,
             { response ->
                 val resobj = (response.toString())
                 val responsemsg = JSONObject(resobj)
@@ -394,54 +481,219 @@ class ReceivePO : AppCompatActivity() {
                 val responseCode = resultobj.getString("responseCode")
                 val responseMessage = resultobj.getString("responseMessage")
                 if (responseCode == "201") {
-                    val venderlist: JSONArray = resultobj.getJSONArray("responseData")
-                    val n = venderlist.length()
+
+                    val unitlist = resultobj.getJSONArray("responseData")
+                    val n = unitlist.length()
                     val spinnerArray = arrayOfNulls<String>(n)
                     val spinnerArrayId = arrayOfNulls<String>(n)
-                    for (i in 0 until n) {
-                        val BINDLIST = venderlist.getJSONObject(i)
-                        val VID = BINDLIST.getInt("Aid")
-                        val VNAME = BINDLIST.getString("VName")
-                        spinnerArray[i] = VNAME
-                        spinnerArrayId[i] = VID.toString()
-                    }
+                    for (i in 0 until unitlist.length()) {
+                        var unittype = unitlist.getJSONObject(i).getString("UName")
+                         Qty = unitlist.getJSONObject(i).getInt("Qty")
+                        var UnitType = unitlist.getJSONObject(i).getInt("UnitType")
+                         DUnit = unitlist.getJSONObject(i).getInt("DUnit")
 
-                    spinnerArray[0] = "Select unit"
+                        Quantity=  qty!!.text.toString().toInt()
+                        totalpices= Qty.toInt()*Quantity.toInt()
+                        totalpicesqty!!.setText(totalpices.toString())
+                        spinnerArray[i] = unittype+"("+Qty+"pcs)"
+                        spinnerArrayId[i] = UnitType.toString()
 
-                    spUnitType?.adapter = this?.let { ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, spinnerArray) } as SpinnerAdapter
-                    spUnitType?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
-                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                        BINDUNITTYPE?.adapter = this?.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) } as SpinnerAdapter
+                        BINDUNITTYPE?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
 
-                            println("erreur")
-                        }
-                        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                            }
+                            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                                BINDUNITTYPE!!.setSelection(spinnerArray.indexOf(DUnit.toString()))
+                               spunitypeid = spinnerArrayId[position].toString()
 
-                            val VenderSelect = parent?.getItemIdAtPosition(position).toString()
-                            if(position!=0) {
-                                for (i in 0 until VenderSelect.toInt() + 1) {
-                                  var  spvendorid = spinnerArrayId.get(index = i)
-                                }
+                               // val unitposition = parent?.getItemIdAtPosition(position).toString()
+
+
+                              //  Toast.makeText(this@ReceivePO,spunitypeid,Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
-                } else {
-
-                    SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
-
+                    }
+                else{
+                    Toast.makeText(this@ReceivePO,responseMessage,Toast.LENGTH_SHORT).show()
 
                 }
+
             }, { response ->
 
                 Log.e("onError", error(response.toString()))
             })
-        BINDVENDERLIST.retryPolicy = DefaultRetryPolicy(
+        BindProductDetails.retryPolicy = DefaultRetryPolicy(
             1000000,
             DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         )
-        queues.add(BINDVENDERLIST)
+        queues.add(BindProductDetails)
+    }
+
+
+
+fun BindProductList(){
+
+    val Jsonarra = JSONObject()
+    val JSONObj = JSONObject()
+    val Jsonarraplist = JSONObject()
+    val queues = Volley.newRequestQueue(this)
+    JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+    val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+    var accessToken = preferences.getString("accessToken", "")
+    var EmpAutoId = preferences.getString("EmpAutoId", "")
+    JSONObj.put("requestContainer",Jsonarra.put("accessToken", accessToken))
+    JSONObj.put("requestContainer",Jsonarra.put("UserAutoId", EmpAutoId))
+    JSONObj.put("requestContainer",Jsonarra.put("deviceID", AppPreferences.Device_ID))
+    JSONObj.put("cObj", Jsonarraplist.put("search", autotextView!!.text))
+    val BINDPRODUCTLIST = JsonObjectRequest(
+        Request.Method.POST, AppPreferences.BIND_PRODUCT_IDNAME_BY_SEARCH, JSONObj,
+        { response ->
+            val resobj = (response.toString())
+            val responsemsg = JSONObject(resobj)
+            val resultobj = JSONObject(responsemsg.getString("d"))
+            val responseCode = resultobj.getString("responseCode")
+            val responseMessage = resultobj.getString("responseMessage")
+            if (responseCode == "201") {
+                val ProductList: JSONArray = resultobj.getJSONArray("responseData")
+                val n = ProductList.length()
+                val productArray = arrayOfNulls<String>(n)
+                val productArrayId = arrayOfNulls<String>(n)
+                for (i in 0 until n) {
+                    val BINDLIST = ProductList.getJSONObject(i)
+                    val PID = BINDLIST.getInt("PId")
+                    val PNAME = BINDLIST.getString("PName")
+                    productArray[i] = PID.toString() +"-"+ PNAME
+                    productArrayId[i] = PID.toString()
+                }
+                val adapter = ArrayAdapter(this,
+                    android.R.layout.simple_list_item_1, productArray)
+                    autotextView?.setAdapter(adapter)
+                    autotextView?.setOnItemClickListener( OnItemClickListener { adapterView, view, j, l ->
+                       sproductid = productArrayId[j].toString()
+                        qty!!.isEnabled =true
+
+                         BindUnitList()
+
+
+                })
+            } else {
+               Toast.makeText(this@ReceivePO,responseMessage,Toast.LENGTH_SHORT).show()
+            }
+        }, { response ->
+
+            Log.e("onError", error(response.toString()))
+        })
+    BINDPRODUCTLIST.retryPolicy = DefaultRetryPolicy(
+        1000000,
+        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+    )
+    queues.add(BINDPRODUCTLIST)
+}
+
+    fun AddproductlistManual() {
+
+        val draftAutoIdTV: TextView = findViewById(com.example.myapplication.R.id.draftAutoId)
+        val Jsonarra = JSONObject()
+        val Jsonarrabarcode = JSONObject()
+        val JSONObj = JSONObject()
+        val queues = Volley.newRequestQueue(this)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+          var accessToken = preferences.getString("accessToken", "")
+        var Bill_No = preferences.getString("Bill_No", "")
+        var Bill_Date = preferences.getString("Bill_Date", "")
+        var VENDORID = preferences.getInt("VENDORID", 0)
+        var EmpAutoId = preferences.getString("EmpAutoId", "")
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put("accessToken", accessToken)
+        )
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put("UserAutoId", EmpAutoId)
+        )
+
+        JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", draftAutoIdTV.text.toString().toInt()))
+        JSONObj.put("cObj", Jsonarrabarcode.put("billNo", Bill_No))
+        JSONObj.put("cObj", Jsonarrabarcode.put("billDate", Bill_Date))
+        JSONObj.put("cObj", Jsonarrabarcode.put("vendorAutoId", VENDORID.toInt()))
+        JSONObj.put("cObj", Jsonarrabarcode.put("productId", sproductid))
+        JSONObj.put("cObj", Jsonarrabarcode.put("UnitAutoId", spunitypeid))
+        JSONObj.put("cObj", Jsonarrabarcode.put("Remark", ""))
+        val BARCODEADDPRODUCT = JsonObjectRequest(
+            Request.Method.POST, AppPreferences.ADD_PRODUCT_MANAUL, JSONObj,
+            { response ->
+                val resobj = (response.toString())
+                val responsemsg = JSONObject(resobj)
+                val resultobj = JSONObject(responsemsg.getString("d"))
+                val responseCode = resultobj.getString("responseCode")
+                val responseMessage = resultobj.getString("responseMessage")
+                if (responseCode == "201") {
+                    val jsondata = resultobj.getString("responseData")
+                    val JSONOBJ = JSONObject(jsondata.toString())
+                    val draftAutoId = JSONOBJ.getInt("draftAutoId")
+                    val ProductId = JSONOBJ.getInt("ProductId")
+                    val ProductName = JSONOBJ.getString("ProductName")
+                    val UnitType = JSONOBJ.getString("UnitType")
+                    val Qty = JSONOBJ.getInt("Qty")
+                    draftAutoIdTV.text=draftAutoId.toString()
+                    var check=false
+                    var poreqqty:Int=0
+
+                    for (n in 0..ReceiverpoList.size-1) {
+                        if(ReceiverpoList[n].getPID()==ProductId){
+                            check=true;
+                            if (ReceiverpoList[n].getPOQTY() != null) {
+                                poreqqty = ReceiverpoList[n].getPOQTY()!! + qty!!.text.toString().toInt()
+
+                                ReceivePOAdapterl.notifyItemChanged(n)
+                                ReceiverpoList.removeAt(n)
+                                DataBindPOLIST(
+                                    ProductId,
+                                    ProductName,
+                                    UnitType,
+                                    Qty,
+                                    poreqqty,
+                                    draftAutoId
+                                )
+                            }
+
+                        }
+                    }
+                    if(!check) {
+                        DataBindPOLIST(
+                            ProductId,
+                            ProductName,
+                            UnitType,
+                            Qty,
+                            qty!!.text.toString().toInt(),
+                            draftAutoId
+                        )
+                    }
+                } else {
+                    SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
+                }
+
+            }, { response ->
+
+                Log.e("onError", error(response.toString()))
+            })
+        BARCODEADDPRODUCT.retryPolicy = DefaultRetryPolicy(
+            1000000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queues.add(BARCODEADDPRODUCT)
     }
 }
+
+
+
+
 
 
 

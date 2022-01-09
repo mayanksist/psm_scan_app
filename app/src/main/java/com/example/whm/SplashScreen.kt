@@ -57,6 +57,8 @@ class SplashScreen : AppCompatActivity() {
             editor.apply()
             JSONObj.put("userName", email)
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", appversion))
+            JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
+
             val req = JsonObjectRequest(Request.Method.POST, APIURL, JSONObj,
                 Response.Listener { response ->
                     val resobj = JSONObj.put("response", response.toString())
@@ -71,7 +73,6 @@ class SplashScreen : AppCompatActivity() {
                         if (msg == "success") {
                             val jsondata = responmsg.getJSONArray("responseData")
                             for (i in 0 until jsondata.length()) {
-
                                 val Name = jsondata.getJSONObject(i).getString("Name")
                                 val emptype = jsondata.getJSONObject(i).getString("EmpTypeNo")
                                 val empname = jsondata.getJSONObject(i).getString("EmpType")

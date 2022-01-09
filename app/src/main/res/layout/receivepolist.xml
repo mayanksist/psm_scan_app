@@ -36,33 +36,31 @@
                     android:id="@+id/txtproductidl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="1dp"
                     android:text="Product Id"
                     android:textColor="#C61A1A"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/txtproductnamePO"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="4dp"
                     android:text="ProductName"
                     android:textColor="#000"
-                    android:textSize="16dp"
-                    app:layout_constraintEnd_toStartOf="@+id/actionedit"
-                    app:layout_constraintStart_toEndOf="@+id/txtproductidl"
-                    app:layout_constraintTop_toTopOf="@+id/txtproductidl" />
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/txtproductidl"
+                    app:layout_constraintTop_toBottomOf="@+id/txtproductidl" />
 
                 <TextView
                     android:id="@+id/txtpoqty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="2dp"
                     android:text="POQTY :"
                     android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -112,44 +110,21 @@
                     android:id="@+id/txttotalpieceqty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:text="0"
                     android:textColor="#000"
                     android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="@+id/txtpoqty"
-                    app:layout_constraintEnd_toStartOf="@+id/actiondelete"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/txtpoqty"
                     app:layout_constraintVertical_bias="0.0" />
-
-                <ImageView
-                    android:id="@+id/actiondelete"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/oval2"
-                    android:padding="2dp"
-                    android:clickable="false"
-                    android:cursorVisible="false"
-                    android:defaultFocusHighlightEnabled="false"
-                    android:editable="false"
-                    android:elevation="4dp"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusedByDefault="false"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/actionedit"
-                    app:layout_constraintTop_toBottomOf="@+id/actionedit"
-                    app:srcCompat="@drawable/ic_baseline_delete_24"
-                    app:tint="#B61B1B" />
 
                 <ImageView
                     android:id="@+id/actionedit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="2dp"
                     android:background="@drawable/oval"
-                    android:padding="2dp"
                     android:clickable="false"
                     android:cursorVisible="false"
                     android:defaultFocusHighlightEnabled="false"
@@ -158,9 +133,10 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:focusedByDefault="false"
-                    app:layout_constraintBottom_toBottomOf="@+id/txtproductnamePO"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/txtproductnamePO"
+                    android:padding="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtproductidl"
+                    app:layout_constraintEnd_toStartOf="@+id/actiondelete"
+                    app:layout_constraintTop_toTopOf="@+id/txtproductidl"
                     app:srcCompat="@drawable/ic_baseline_edit_24"
                     app:tint="#244505" />
 
@@ -174,9 +150,30 @@
                     tools:layout_editor_absoluteY="43dp"
                     tools:ignore="MissingConstraints" />
 
+                <ImageView
+                    android:id="@+id/actiondelete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/oval2"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:defaultFocusHighlightEnabled="false"
+                    android:editable="false"
+                    android:elevation="4dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:focusedByDefault="false"
+                    android:padding="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/actionedit"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/actionedit"
+                    app:srcCompat="@drawable/ic_baseline_delete_24"
+                    app:tint="#B61B1B" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

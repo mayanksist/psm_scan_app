@@ -28,6 +28,9 @@ object AppPreferences {
     const val DELETE_PO_LIST = BASEURL + "WPOReceive.asmx/deletePOItem"
     const val EDIT_PO_LIST = BASEURL + "WPOReceive.asmx/editPOQty"
     const val DRAFT_PO_LIST = BASEURL + "WPOReceive.asmx/getPOList"
+    const val BIND_PRODUCT_IDNAME_BY_SEARCH = BASEURL + "WPOReceive.asmx/getProductSearch"
+    const val GET_PRODUCT_DETAILS = BASEURL + "WPOReceive.asmx/getPackingDetails"
+    const val ADD_PRODUCT_MANAUL = BASEURL + "WPOReceive.asmx/getproductbyproductid"
     //for devices
 
     var manufacturer = Build.MANUFACTURER

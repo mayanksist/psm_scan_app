@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="5dp"
-    android:layout_margin="4dp"
-    tools:context="com.example.whm.ui.revertpolist.RevertPolistFragment">
+    android:layout_marginBottom="4dp"
+    app:cardCornerRadius="4dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/POListRecyclerView"
@@ -45,7 +46,7 @@
                 tools:layout_editor_absoluteY="4dp" />
 
             <TextView
-                android:id="@+id/billdate"
+                android:id="@+id/txtbildate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
@@ -70,8 +71,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/product"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/billdate"
-                app:layout_constraintTop_toBottomOf="@+id/billdate"
+                app:layout_constraintStart_toStartOf="@+id/txtbildate"
+                app:layout_constraintTop_toBottomOf="@+id/txtbildate"
                 app:layout_constraintVertical_bias="0.0" />
 
             <View
@@ -97,6 +98,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
-
-</RelativeLayout>
+</androidx.cardview.widget.CardView>
