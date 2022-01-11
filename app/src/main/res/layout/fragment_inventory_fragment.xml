@@ -61,6 +61,7 @@
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/frame"
                 android:elevation="4dp"
+                android:maxLength="10"
                 android:hint="Bill No"
                 android:inputType="text"
                 android:textColor="@color/black"
@@ -107,7 +108,7 @@
                 android:drawableRight="@drawable/clendericon"
                 android:drawableTint="#000000"
                 android:hint="MM/DD/YYYY"
-                android:padding="10dp"
+                android:paddingLeft="12dp"
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="normal" />

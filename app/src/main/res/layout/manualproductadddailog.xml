@@ -50,7 +50,7 @@
         android:background="@drawable/frame"
         android:textColor="#000"
         android:textSize="16dp"
-        android:hint="Search by product by and product id"
+        android:hint="Search by Product name and Id"
         android:paddingLeft="14dp"
         android:layout_alignParentTop="true"
         android:iconifiedByDefault="false"
@@ -157,7 +157,7 @@
         app:layout_constraintTop_toBottomOf="@+id/spunity" />
 
     <EditText
-        android:id="@+id/qty"
+        android:id="@+id/qtym"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -165,7 +165,8 @@
         android:maxLines="1"
         android:inputType="number"
         android:text="1"
-        android:paddingLeft="12dp"
+        android:maxLength="5"
+        android:paddingLeft="14dp"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="@+id/txtqty"
         app:layout_constraintStart_toStartOf="@+id/txtqty"
@@ -180,9 +181,9 @@
         android:textColor="#000"
         android:text="Total Pieces"
         android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/qty"
-        app:layout_constraintStart_toStartOf="@+id/qty"
-        app:layout_constraintTop_toBottomOf="@+id/qty" />
+        app:layout_constraintEnd_toEndOf="@+id/qtym"
+        app:layout_constraintStart_toStartOf="@+id/qtym"
+        app:layout_constraintTop_toBottomOf="@+id/qtym" />
     <EditText
         android:id="@+id/totalpicesqty"
         android:layout_width="0dp"
@@ -192,7 +193,7 @@
         android:textColor="#000"
         android:inputType="number"
         android:editable="false"
-        android:paddingLeft="12dp"
+        android:paddingLeft="14dp"
         android:enabled="false"
         android:background="@drawable/frame"
         android:text="1"

@@ -17,9 +17,11 @@ import com.google.android.material.navigation.NavigationView
 import android.view.MenuItem
 import android.widget.Toast
 import android.R
+import android.content.Intent
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.fragment.findNavController
 import com.example.whm.ui.revertpolist.RevertPolistFragment
 import java.lang.Exception
 
@@ -29,6 +31,10 @@ class MainActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
     var usertype: String = ""
     var menu: MenuItem? = null
+    var navigationView:NavigationView?=null
+    private var StatusD:Int=1
+    private var StatusR:Int=3
+    private var StatusS:Int=2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -98,8 +104,8 @@ class MainActivity2 : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
             navView.setupWithNavController(navController)
-//        val navigationView = findViewById<View>(com.example.myapplication.R.id.nav_view) as NavigationView
-//        setupDrawerContent(navigationView);
+         navigationView = findViewById<View>(com.example.myapplication.R.id.nav_view) as NavigationView
+        setupDrawerContent(navigationView!!);
 
         }
 
@@ -125,29 +131,43 @@ class MainActivity2 : AppCompatActivity() {
     }
     private fun setupDrawerContent(navigationView: NavigationView) {
         navigationView.setNavigationItemSelectedListener { menuItem ->
-          //  selectDrawerItem(menuItem)
+            selectDrawerItem(menuItem)
             true
+
         }
     }
 
-//    fun selectDrawerItem(menuItem: MenuItem) {
-//        var fragment: Fragment? = null
-//     //   val fragmentClass: Class<*>
-//         when (menuItem.itemId) {
-//            com.example.myapplication.R.id.fragment_podraftlist -> RevertPolistFragment::class.java
-//           // Toast.makeText(applicationContext, menuItem.toString()"Item 1 Selected", Toast.LENGTH_LONG).show()
-//
-//
-//            else -> RevertPolistFragment::class.java
-//        }
-//        try {
-//
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-//
-//
-//    }
+    fun selectDrawerItem(menuItem: MenuItem) {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this@MainActivity2)
+        val editor = preferences.edit()
+         when (menuItem.itemId) {
+          //  com.example.myapplication.R.id.fragment_podraftlist -> RevertPolistFragment::class.java
+             com.example.myapplication.R.id.nav_drfatpolist -> {
+                 editor.putInt("StatusD", StatusD)
+                 editor.apply()
+                 val intent = Intent(this, RevertPolistFragment::class.java)
+                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                 startActivity(intent)
+                 Toast.makeText(this@MainActivity2, "Draft List", Toast.LENGTH_LONG).show()
+                 true
+             }
+             com.example.myapplication.R.id.nav_submitpolist -> {
+
+                 Toast.makeText(this@MainActivity2, "Submit List", Toast.LENGTH_LONG).show()
+                 true
+             }
+             com.example.myapplication.R.id.nav_revertpolist -> {
+
+                 Toast.makeText(this@MainActivity2, "Revert List", Toast.LENGTH_LONG).show()
+                 true
+             }
+
+             else -> RevertPolistFragment::class.java
+        }
+
+
+
+    }
 
 
 }

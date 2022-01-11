@@ -665,6 +665,7 @@ class GalleryFragment : Fragment() {
             val JSONObj = JSONObject()
             val queues = Volley.newRequestQueue(this.context)
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+            JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
             val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
             var accessToken = preferences.getString("accessToken", "")
             var empautoid = preferences.getString("EmpAutoId", "")

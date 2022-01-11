@@ -355,7 +355,7 @@ class ReceivePO : AppCompatActivity() {
 
          autotextView = view.findViewById<AutoCompleteTextView>(R.id.txtmpid)
 
-         qty = view.findViewById<TextView>(R.id.qty)
+         qty = view.findViewById<TextView>(R.id.qtym)
         qty!!.isEnabled =false
         totalpicesqty = view.findViewById<TextView>(R.id.totalpicesqty)
      //   BindProductList()
@@ -414,7 +414,9 @@ class ReceivePO : AppCompatActivity() {
         btnpoqty.setOnClickListener(View.OnClickListener {
             var name: String? = null
             name = spUnitType!!.getSelectedItem() as String?
-            if (spUnitType!!.getSelectedItem() != null && qty!!.text.toString()!="" && qty!!.text.toString()!="0" && autotextView!!.text.toString()!="") {
+            var productname=autotextView!!.text.toString()
+            //Toast.makeText(this,productname,Toast.LENGTH_SHORT).show()
+            if (spUnitType!!.getSelectedItem() != null && qty!!.text.toString()!="" && qty!!.text.toString().toInt()!=0 && productname!="") {
                 val recyclerView: RecyclerView =
                     findViewById(com.example.myapplication.R.id.POLIST)
                 val layoutManager = LinearLayoutManager(this)
@@ -425,7 +427,7 @@ class ReceivePO : AppCompatActivity() {
                 dialog?.dismiss()
             }
             else {
-                if (autotextView!!.text.toString()!="" || autotextView!!.text.toString()!=null)  {
+                if (productname=="")  {
                     Select_product()
                 }
                 else if(name == null ){
@@ -489,13 +491,10 @@ class ReceivePO : AppCompatActivity() {
                     val spinnerArrayId = arrayOfNulls<String>(n)
                     for (i in 0 until unitlist.length()) {
                         var unittype = unitlist.getJSONObject(i).getString("UName")
-                         Qty = unitlist.getJSONObject(i).getInt("Qty")
+
+                        Qty = unitlist.getJSONObject(i).getInt("Qty")
                         var UnitType = unitlist.getJSONObject(i).getInt("UnitType")
                          DUnit = unitlist.getJSONObject(i).getInt("DUnit")
-
-                        Quantity=  qty!!.text.toString().toInt()
-                        totalpices= Qty.toInt()*Quantity.toInt()
-                        totalpicesqty!!.setText(totalpices.toString())
                         spinnerArray[i] = unittype+"("+Qty+"pcs)"
                         spinnerArrayId[i] = UnitType.toString()
 
@@ -506,12 +505,20 @@ class ReceivePO : AppCompatActivity() {
                             }
                             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                                 BINDUNITTYPE!!.setSelection(spinnerArray.indexOf(DUnit.toString()))
-                               spunitypeid = spinnerArrayId[position].toString()
+                                spunitypeid = spinnerArrayId[position].toString()
+                               var  spunitypename = spinnerArray[position].toString()
+                                    Quantity=  qty!!.text.toString().toInt()
+                                    totalpices= Qty.toInt()*Quantity.toInt()
+                                    totalpicesqty!!.setText(totalpices.toString())
+                                if (spunitypename.contains("(")){
+                                    val result1 = spunitypename.trim().split("(").toMutableList()
+                                    Toast.makeText(this@ReceivePO,  result1[1].trim().toString(),Toast.LENGTH_SHORT).show()
 
+                                }
                                // val unitposition = parent?.getItemIdAtPosition(position).toString()
 
 
-                              //  Toast.makeText(this@ReceivePO,spunitypeid,Toast.LENGTH_SHORT).show()
+
                             }
                         }
                     }
@@ -549,7 +556,7 @@ fun BindProductList(){
     JSONObj.put("requestContainer",Jsonarra.put("UserAutoId", EmpAutoId))
     JSONObj.put("requestContainer",Jsonarra.put("deviceID", AppPreferences.Device_ID))
     JSONObj.put("cObj", Jsonarraplist.put("search", autotextView!!.text))
-    val BINDPRODUCTLIST = JsonObjectRequest(
+    val BINDPRODUCTLISTm = JsonObjectRequest(
         Request.Method.POST, AppPreferences.BIND_PRODUCT_IDNAME_BY_SEARCH, JSONObj,
         { response ->
             val resobj = (response.toString())
@@ -587,12 +594,12 @@ fun BindProductList(){
 
             Log.e("onError", error(response.toString()))
         })
-    BINDPRODUCTLIST.retryPolicy = DefaultRetryPolicy(
+    BINDPRODUCTLISTm.retryPolicy = DefaultRetryPolicy(
         1000000,
         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
     )
-    queues.add(BINDPRODUCTLIST)
+    queues.add(BINDPRODUCTLISTm)
 }
 
     fun AddproductlistManual() {
@@ -644,20 +651,19 @@ fun BindProductList(){
                     draftAutoIdTV.text=draftAutoId.toString()
                     var check=false
                     var poreqqty:Int=0
-
                     for (n in 0..ReceiverpoList.size-1) {
                         if(ReceiverpoList[n].getPID()==ProductId){
                             check=true;
                             if (ReceiverpoList[n].getPOQTY() != null) {
-                                poreqqty = ReceiverpoList[n].getPOQTY()!! + qty!!.text.toString().toInt()
-
+                                poreqqty = ReceiverpoList[n].getPOQTY()!! + Quantity
+                              // var totalpicess =  * poreqqty
                                 ReceivePOAdapterl.notifyItemChanged(n)
                                 ReceiverpoList.removeAt(n)
                                 DataBindPOLIST(
                                     ProductId,
                                     ProductName,
                                     UnitType,
-                                    Qty,
+                                    totalpices,
                                     poreqqty,
                                     draftAutoId
                                 )
@@ -670,8 +676,8 @@ fun BindProductList(){
                             ProductId,
                             ProductName,
                             UnitType,
-                            Qty,
-                            qty!!.text.toString().toInt(),
+                            totalpices,
+                            Quantity,
                             draftAutoId
                         )
                     }

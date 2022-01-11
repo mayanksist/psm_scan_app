@@ -53,10 +53,6 @@ private var StatusS:Int=2
 
     var Usertype = preferences.getString("EmpTypeNo", "")
         val editor = preferences.edit()
-
-
-
-
         if (Usertype.toString() != "2"){
         btnInvCheck.visibility=   View.GONE
     }
