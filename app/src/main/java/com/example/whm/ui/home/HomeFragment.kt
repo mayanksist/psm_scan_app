@@ -95,18 +95,15 @@ private var StatusS:Int=2
             this.findNavController().navigate(com.example.myapplication.R.id.nav_inventory)
         }
         btninventorypodraftlist.setOnClickListener {
-            editor.putInt("StatusD", StatusD)
-            editor.apply()
-            this.findNavController().navigate(com.example.myapplication.R.id.nav_revertpolist)
+
+            this.findNavController().navigate(com.example.myapplication.R.id.nav_drfatpolist)
         }
         btnsubmitpolist.setOnClickListener {
-            editor.putInt("StatusD", StatusS)
-            editor.apply()
-            this.findNavController().navigate(com.example.myapplication.R.id.nav_revertpolist)
+
+            this.findNavController().navigate(com.example.myapplication.R.id.nav_submitpolist)
         }
         btnrevertpolist.setOnClickListener {
-            editor.putInt("StatusD", StatusR)
-            editor.apply()
+
             this.findNavController().navigate(com.example.myapplication.R.id.nav_revertpolist)
         }
         return mView

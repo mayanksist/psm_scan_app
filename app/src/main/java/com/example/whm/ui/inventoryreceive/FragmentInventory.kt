@@ -88,6 +88,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                     val editor = preferences.edit()
                     editor.putString("Bill_No", Bill_No?.text.toString())
                     editor.putString("Bill_Date", Bill_Date.toString())
+                    editor.remove("DAutoid")
                     if (VENDORID != null) {
                         editor.putInt("VENDORID", VENDORID.toInt())
                     }

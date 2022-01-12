@@ -87,8 +87,13 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/content_main.xml" value="0.2916666666666667" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/dailog_log.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/editqtylayout.xml" value="0.9" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_draft_p_o_list.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_draft_p_o_list_list.xml" value="0.1" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_draftpol_list2.xml" value="0.7517899761336515" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_draftpolist.xml" value="0.7464454976303317" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_draftpolist2.xml" value="0.88" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_draftpolist3.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_gallery.xml" value="0.7750865051903114" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_home.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_inventory_fragment.xml" value="0.67" />
@@ -103,8 +108,10 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_po_oreceive_list.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_product_list.xml" value="0.5" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_revert_polist.xml" value="0.6622807017543859" />
-        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_revert_polist_list.xml" value="0.8425" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_revert_polist_list.xml" value="0.7855361596009975" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_slideshow.xml" value="0.88" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_submit_polis_list.xml" value="0.7517899761336515" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_submitpolist.xml" value="0.7464454976303317" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_submitpolist_list.xml" value="0.87125" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/inventoryreceiver_fragment.xml" value="0.7843601895734598" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/listdesign.xml" value="0.8770833333333333" />

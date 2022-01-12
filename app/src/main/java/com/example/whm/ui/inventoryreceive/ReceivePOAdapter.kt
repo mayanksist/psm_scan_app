@@ -180,6 +180,8 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
                         responseMessage.toString()
                     )
                     ReceiveModelList.get(position).setPOQTY(POQTYu);
+
+                    ReceiveModelList.get(position).setTotalPieces(POQTYu);
                     notifyDataSetChanged()
                     updatepoqty.setCanceledOnTouchOutside(false)
                     updatepoqty.show()

@@ -104,8 +104,8 @@ class MainActivity2 : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
             navView.setupWithNavController(navController)
-         navigationView = findViewById<View>(com.example.myapplication.R.id.nav_view) as NavigationView
-        setupDrawerContent(navigationView!!);
+       //  navigationView = findViewById<View>(com.example.myapplication.R.id.nav_view) as NavigationView
+       // setupDrawerContent(navigationView!!);
 
         }
 
@@ -142,27 +142,27 @@ class MainActivity2 : AppCompatActivity() {
         val editor = preferences.edit()
          when (menuItem.itemId) {
           //  com.example.myapplication.R.id.fragment_podraftlist -> RevertPolistFragment::class.java
-             com.example.myapplication.R.id.nav_drfatpolist -> {
-                 editor.putInt("StatusD", StatusD)
-                 editor.apply()
-                 val intent = Intent(this, RevertPolistFragment::class.java)
-                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                 startActivity(intent)
-                 Toast.makeText(this@MainActivity2, "Draft List", Toast.LENGTH_LONG).show()
-                 true
-             }
-             com.example.myapplication.R.id.nav_submitpolist -> {
-
-                 Toast.makeText(this@MainActivity2, "Submit List", Toast.LENGTH_LONG).show()
-                 true
-             }
-             com.example.myapplication.R.id.nav_revertpolist -> {
-
-                 Toast.makeText(this@MainActivity2, "Revert List", Toast.LENGTH_LONG).show()
-                 true
-             }
-
-             else -> RevertPolistFragment::class.java
+//             com.example.myapplication.R.id.nav_drfatpolist -> {
+//                 editor.putInt("StatusD", StatusD)
+//                 editor.apply()
+//                 val intent = Intent(this, RevertPolistFragment::class.java)
+//                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                 startActivity(intent)
+//                 Toast.makeText(this@MainActivity2, "Draft List", Toast.LENGTH_LONG).show()
+//                 true
+//             }
+//             com.example.myapplication.R.id.nav_submitpolist -> {
+//
+//                 Toast.makeText(this@MainActivity2, "Submit List", Toast.LENGTH_LONG).show()
+//                 true
+//             }
+//             com.example.myapplication.R.id.nav_revertpolist -> {
+//
+//                 Toast.makeText(this@MainActivity2, "Revert List", Toast.LENGTH_LONG).show()
+//                 true
+//             }
+//
+//             else -> RevertPolistFragment::class.java
         }
 
 

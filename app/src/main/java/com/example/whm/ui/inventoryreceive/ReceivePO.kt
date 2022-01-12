@@ -33,14 +33,14 @@ import org.json.JSONObject
 
 
 class ReceivePO : AppCompatActivity() {
-   // var backBTN: ImageView?=null
+    // var backBTN: ImageView?=null
     var addbarcode: EditText?=null
     var backarrow: ImageView?=null
     var spUnitType: Spinner? = null
     var sproductid: String? = null
     var spunitypeid: String? = null
-     var toolbar:Toolbar?=null
-     var LinearLayoutV:LinearLayout?=null
+    var toolbar:Toolbar?=null
+    var LinearLayoutV:LinearLayout?=null
 
     var autotextView: AutoCompleteTextView? = null
     var qty: TextView? = null
@@ -53,6 +53,7 @@ class ReceivePO : AppCompatActivity() {
     var totalpices:Int=0
     var Qty:Int=0
     var  DUnit:Int=0
+    var  DAutoid:Int=0
     private lateinit var ReceivePOAdapterl:ReceivePOAdapter1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,17 +68,29 @@ class ReceivePO : AppCompatActivity() {
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
         backarrow = findViewById(com.example.myapplication.R.id.imgbackbtm)
         LinearLayoutV = findViewById(com.example.myapplication.R.id.LinearFragmentContainer)
-     //   bindvenderlist()
+        val preferencesid = PreferenceManager.getDefaultSharedPreferences(this@ReceivePO)
+        DAutoid = preferencesid.getInt("DAutoid", 0)
+
+        if(DAutoid!=null && DAutoid!=0){
+            val recyclerView: RecyclerView =
+                findViewById(com.example.myapplication.R.id.POLIST)
+            val layoutManager = LinearLayoutManager(this)
+            recyclerView.layoutManager = layoutManager
+            Draftproductlist()
+            ReceivePOAdapterl = ReceivePOAdapter1(ReceiverpoList, this)
+            recyclerView.adapter = ReceivePOAdapterl
+        }
+
         if (AppPreferences.internetConnectionCheck(this)) {
             backarrow?.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
-                    val preferencesid = PreferenceManager.getDefaultSharedPreferences(this@ReceivePO)
+
                     var EmpAutoId = preferencesid.getString("EmpAutoId", "")
                     var EmpTypeNo = preferencesid.getString("EmpTypeNo", "")
                     var Empname = preferencesid.getString("Empname", "")
                     var Username = preferencesid.getString("Username", "")
-                        val intent = Intent(this@ReceivePO, MainActivity2::class.java)
-                         startActivity(intent)
+                    val intent = Intent(this@ReceivePO, MainActivity2::class.java)
+                    startActivity(intent)
                 }
             })
         } else {
@@ -123,10 +136,6 @@ class ReceivePO : AppCompatActivity() {
 
         val inflater = menuInflater
         inflater.inflate(R.menu.menuitem, menu)
-
-
-
-
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -179,6 +188,7 @@ class ReceivePO : AppCompatActivity() {
         val queues = Volley.newRequestQueue(this)
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", AppPreferences.Device_ID))
         var accessToken = preferences.getString("accessToken", "")
         var Bill_No = preferences.getString("Bill_No", "")
         var Bill_Date = preferences.getString("Bill_Date", "")
@@ -192,13 +202,21 @@ class ReceivePO : AppCompatActivity() {
             "requestContainer",
             Jsonarra.put("UserAutoId", EmpAutoId)
         )
-
-        JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", draftAutoIdTV.text.toString().toInt()))
+        if(DAutoid!=0) {
+            JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", DAutoid))
+        }
+        else {
+            JSONObj.put(
+                "cObj",
+                Jsonarrabarcode.put("draftAutoId", draftAutoIdTV.text.toString().toInt())
+            )
+        }
         JSONObj.put("cObj", Jsonarrabarcode.put("billNo", Bill_No))
         JSONObj.put("cObj", Jsonarrabarcode.put("billDate", Bill_Date))
         JSONObj.put("cObj", Jsonarrabarcode.put("vendorAutoId", VENDORID.toInt()))
         JSONObj.put("cObj", Jsonarrabarcode.put("barcode", barcodeadd!!.text.toString()))
         JSONObj.put("cObj", Jsonarrabarcode.put("Remark", ""))
+
         val BARCODEADDPRODUCT = JsonObjectRequest(
             Request.Method.POST, AppPreferences.SCAND_BARCODE_PADD, JSONObj,
             Response.Listener { response ->
@@ -215,7 +233,9 @@ class ReceivePO : AppCompatActivity() {
                     val ProductName = JSONOBJ.getString("ProductName")
                     val UnitType = JSONOBJ.getString("UnitType")
                     val Qty = JSONOBJ.getInt("Qty")
-                    draftAutoIdTV.text=draftAutoId.toString()
+
+                    draftAutoIdTV.text = draftAutoId.toString()
+
                     var check=false
                     var poreqqty:Int=0
 
@@ -224,15 +244,15 @@ class ReceivePO : AppCompatActivity() {
                             check=true;
                             if (ReceiverpoList[n].getPOQTY() != null) {
                                 poreqqty = ReceiverpoList[n].getPOQTY()!! + 1
-//                                ReceiverpoList[n].setPOQTY(poreqqty)
-//                                ReceiverpoList[n].setTotalPieces(poreqqty)
+                                totalpices = Qty * poreqqty
+
                                 ReceivePOAdapterl.notifyItemChanged(n)
                                 ReceiverpoList.removeAt(n)
                                 DataBindPOLIST(
                                     ProductId,
                                     ProductName,
                                     UnitType,
-                                    Qty,
+                                    totalpices,
                                     poreqqty,
                                     draftAutoId
                                 )
@@ -255,7 +275,7 @@ class ReceivePO : AppCompatActivity() {
 
                 } else {
                     SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
-                        AppPreferences.playSoundbarcode()
+                    AppPreferences.playSoundbarcode()
 //                  /  Toast.makeText(this, , Toast.LENGTH_SHORT).show()
 
                 }
@@ -297,6 +317,7 @@ class ReceivePO : AppCompatActivity() {
             Jsonarra.put("accessToken", accessToken)
         )
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", AppPreferences.Device_ID))
         JSONObj.put(
             "requestContainer",
             Jsonarra.put("UserAutoId", EmpAutoId)
@@ -353,12 +374,12 @@ class ReceivePO : AppCompatActivity() {
         val layoutInflater = LayoutInflater.from(this)
         val view = layoutInflater.inflate(R.layout.manualproductadddailog, null)
 
-         autotextView = view.findViewById<AutoCompleteTextView>(R.id.txtmpid)
+        autotextView = view.findViewById<AutoCompleteTextView>(R.id.txtmpid)
 
-         qty = view.findViewById<TextView>(R.id.qtym)
+        qty = view.findViewById<TextView>(R.id.qtym)
         qty!!.isEnabled =false
         totalpicesqty = view.findViewById<TextView>(R.id.totalpicesqty)
-     //   BindProductList()
+        //   BindProductList()
         autotextView!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence,
@@ -446,7 +467,7 @@ class ReceivePO : AppCompatActivity() {
         dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
-       // BindUnitList()
+        // BindUnitList()
 
     }
 
@@ -494,7 +515,7 @@ class ReceivePO : AppCompatActivity() {
 
                         Qty = unitlist.getJSONObject(i).getInt("Qty")
                         var UnitType = unitlist.getJSONObject(i).getInt("UnitType")
-                         DUnit = unitlist.getJSONObject(i).getInt("DUnit")
+                        DUnit = unitlist.getJSONObject(i).getInt("DUnit")
                         spinnerArray[i] = unittype+"("+Qty+"pcs)"
                         spinnerArrayId[i] = UnitType.toString()
 
@@ -506,23 +527,23 @@ class ReceivePO : AppCompatActivity() {
                             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                                 BINDUNITTYPE!!.setSelection(spinnerArray.indexOf(DUnit.toString()))
                                 spunitypeid = spinnerArrayId[position].toString()
-                               var  spunitypename = spinnerArray[position].toString()
-                                    Quantity=  qty!!.text.toString().toInt()
-                                    totalpices= Qty.toInt()*Quantity.toInt()
-                                    totalpicesqty!!.setText(totalpices.toString())
+                                var  spunitypename = spinnerArray[position].toString()
+                                Quantity=  qty!!.text.toString().toInt()
+                                totalpices= Qty.toInt()*Quantity.toInt()
+                                totalpicesqty!!.setText(totalpices.toString())
                                 if (spunitypename.contains("(")){
                                     val result1 = spunitypename.trim().split("(").toMutableList()
-                                    Toast.makeText(this@ReceivePO,  result1[1].trim().toString(),Toast.LENGTH_SHORT).show()
+                                    //      Toast.makeText(this@ReceivePO,  result1[1].trim().toString(),Toast.LENGTH_SHORT).show()
 
                                 }
-                               // val unitposition = parent?.getItemIdAtPosition(position).toString()
+                                // val unitposition = parent?.getItemIdAtPosition(position).toString()
 
 
 
                             }
                         }
                     }
-                    }
+                }
                 else{
                     Toast.makeText(this@ReceivePO,responseMessage,Toast.LENGTH_SHORT).show()
 
@@ -542,65 +563,65 @@ class ReceivePO : AppCompatActivity() {
 
 
 
-fun BindProductList(){
+    fun BindProductList(){
 
-    val Jsonarra = JSONObject()
-    val JSONObj = JSONObject()
-    val Jsonarraplist = JSONObject()
-    val queues = Volley.newRequestQueue(this)
-    JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-    val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-    var accessToken = preferences.getString("accessToken", "")
-    var EmpAutoId = preferences.getString("EmpAutoId", "")
-    JSONObj.put("requestContainer",Jsonarra.put("accessToken", accessToken))
-    JSONObj.put("requestContainer",Jsonarra.put("UserAutoId", EmpAutoId))
-    JSONObj.put("requestContainer",Jsonarra.put("deviceID", AppPreferences.Device_ID))
-    JSONObj.put("cObj", Jsonarraplist.put("search", autotextView!!.text))
-    val BINDPRODUCTLISTm = JsonObjectRequest(
-        Request.Method.POST, AppPreferences.BIND_PRODUCT_IDNAME_BY_SEARCH, JSONObj,
-        { response ->
-            val resobj = (response.toString())
-            val responsemsg = JSONObject(resobj)
-            val resultobj = JSONObject(responsemsg.getString("d"))
-            val responseCode = resultobj.getString("responseCode")
-            val responseMessage = resultobj.getString("responseMessage")
-            if (responseCode == "201") {
-                val ProductList: JSONArray = resultobj.getJSONArray("responseData")
-                val n = ProductList.length()
-                val productArray = arrayOfNulls<String>(n)
-                val productArrayId = arrayOfNulls<String>(n)
-                for (i in 0 until n) {
-                    val BINDLIST = ProductList.getJSONObject(i)
-                    val PID = BINDLIST.getInt("PId")
-                    val PNAME = BINDLIST.getString("PName")
-                    productArray[i] = PID.toString() +"-"+ PNAME
-                    productArrayId[i] = PID.toString()
-                }
-                val adapter = ArrayAdapter(this,
-                    android.R.layout.simple_list_item_1, productArray)
+        val Jsonarra = JSONObject()
+        val JSONObj = JSONObject()
+        val Jsonarraplist = JSONObject()
+        val queues = Volley.newRequestQueue(this)
+        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var accessToken = preferences.getString("accessToken", "")
+        var EmpAutoId = preferences.getString("EmpAutoId", "")
+        JSONObj.put("requestContainer",Jsonarra.put("accessToken", accessToken))
+        JSONObj.put("requestContainer",Jsonarra.put("UserAutoId", EmpAutoId))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", AppPreferences.Device_ID))
+        JSONObj.put("cObj", Jsonarraplist.put("search", autotextView!!.text))
+        val BINDPRODUCTLISTm = JsonObjectRequest(
+            Request.Method.POST, AppPreferences.BIND_PRODUCT_IDNAME_BY_SEARCH, JSONObj,
+            { response ->
+                val resobj = (response.toString())
+                val responsemsg = JSONObject(resobj)
+                val resultobj = JSONObject(responsemsg.getString("d"))
+                val responseCode = resultobj.getString("responseCode")
+                val responseMessage = resultobj.getString("responseMessage")
+                if (responseCode == "201") {
+                    val ProductList: JSONArray = resultobj.getJSONArray("responseData")
+                    val n = ProductList.length()
+                    val productArray = arrayOfNulls<String>(n)
+                    val productArrayId = arrayOfNulls<String>(n)
+                    for (i in 0 until n) {
+                        val BINDLIST = ProductList.getJSONObject(i)
+                        val PID = BINDLIST.getInt("PId")
+                        val PNAME = BINDLIST.getString("PName")
+                        productArray[i] = PID.toString() +"-"+ PNAME
+                        productArrayId[i] = PID.toString()
+                    }
+                    val adapter = ArrayAdapter(this,
+                        android.R.layout.simple_list_item_1, productArray)
                     autotextView?.setAdapter(adapter)
                     autotextView?.setOnItemClickListener( OnItemClickListener { adapterView, view, j, l ->
-                       sproductid = productArrayId[j].toString()
+                        sproductid = productArrayId[j].toString()
                         qty!!.isEnabled =true
 
-                         BindUnitList()
+                        BindUnitList()
 
 
-                })
-            } else {
-               Toast.makeText(this@ReceivePO,responseMessage,Toast.LENGTH_SHORT).show()
-            }
-        }, { response ->
+                    })
+                } else {
+                    Toast.makeText(this@ReceivePO,responseMessage,Toast.LENGTH_SHORT).show()
+                }
+            }, { response ->
 
-            Log.e("onError", error(response.toString()))
-        })
-    BINDPRODUCTLISTm.retryPolicy = DefaultRetryPolicy(
-        1000000,
-        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-    )
-    queues.add(BINDPRODUCTLISTm)
-}
+                Log.e("onError", error(response.toString()))
+            })
+        BINDPRODUCTLISTm.retryPolicy = DefaultRetryPolicy(
+            1000000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queues.add(BINDPRODUCTLISTm)
+    }
 
     fun AddproductlistManual() {
 
@@ -611,7 +632,8 @@ fun BindProductList(){
         val queues = Volley.newRequestQueue(this)
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-          var accessToken = preferences.getString("accessToken", "")
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", AppPreferences.Device_ID))
+        var accessToken = preferences.getString("accessToken", "")
         var Bill_No = preferences.getString("Bill_No", "")
         var Bill_Date = preferences.getString("Bill_Date", "")
         var VENDORID = preferences.getInt("VENDORID", 0)
@@ -624,14 +646,19 @@ fun BindProductList(){
             "requestContainer",
             Jsonarra.put("UserAutoId", EmpAutoId)
         )
+        if(DAutoid!=0){
+            JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", DAutoid))
+        }else{
+            JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", draftAutoIdTV.text.toString().toInt()))
+        }
 
-        JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", draftAutoIdTV.text.toString().toInt()))
         JSONObj.put("cObj", Jsonarrabarcode.put("billNo", Bill_No))
         JSONObj.put("cObj", Jsonarrabarcode.put("billDate", Bill_Date))
         JSONObj.put("cObj", Jsonarrabarcode.put("vendorAutoId", VENDORID.toInt()))
         JSONObj.put("cObj", Jsonarrabarcode.put("productId", sproductid))
         JSONObj.put("cObj", Jsonarrabarcode.put("UnitAutoId", spunitypeid))
         JSONObj.put("cObj", Jsonarrabarcode.put("Remark", ""))
+        JSONObj.put("cObj", Jsonarrabarcode.put("pOQty", qty!!.text.toString().toInt()))
         val BARCODEADDPRODUCT = JsonObjectRequest(
             Request.Method.POST, AppPreferences.ADD_PRODUCT_MANAUL, JSONObj,
             { response ->
@@ -656,7 +683,7 @@ fun BindProductList(){
                             check=true;
                             if (ReceiverpoList[n].getPOQTY() != null) {
                                 poreqqty = ReceiverpoList[n].getPOQTY()!! + Quantity
-                              // var totalpicess =  * poreqqty
+                                totalpices = Qty * poreqqty
                                 ReceivePOAdapterl.notifyItemChanged(n)
                                 ReceiverpoList.removeAt(n)
                                 DataBindPOLIST(
@@ -677,7 +704,7 @@ fun BindProductList(){
                             ProductName,
                             UnitType,
                             totalpices,
-                            Quantity,
+                            qty!!.text.toString().toInt(),
                             draftAutoId
                         )
                     }
@@ -695,6 +722,126 @@ fun BindProductList(){
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         )
         queues.add(BARCODEADDPRODUCT)
+    }
+
+
+
+    fun Draftproductlist() {
+
+
+        val Jsonarra = JSONObject()
+        val Jsonarrabarcode = JSONObject()
+        val JSONObj = JSONObject()
+        val queues = Volley.newRequestQueue(this)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", AppPreferences.Device_ID))
+        var accessToken = preferences.getString("accessToken", "")
+
+        var EmpAutoId = preferences.getString("EmpAutoId", "")
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put("accessToken", accessToken)
+        )
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put("userAutoId", EmpAutoId)
+        )
+
+        JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", DAutoid))
+
+        val DRAFTADDPRODUCT = JsonObjectRequest(
+            Request.Method.POST, AppPreferences.Draft_PRODUCT_List, JSONObj,
+            Response.Listener { response ->
+                val resobj = (response.toString())
+                val responsemsg = JSONObject(resobj)
+                val resultobj = JSONObject(responsemsg.getString("d"))
+                val responseCode = resultobj.getString("responseCode")
+                val responseMessage = resultobj.getString("responseMessage")
+                var PID:Int=0
+                var UnitAutoId:Int=0
+                var TotalPieces:Int=0
+                var Quantity:Int=0
+                var QtyPerUnit:Int=0
+                var PName: String? =null
+                var UnitType: String? =null
+                if (responseCode == "201") {
+                    val jsondata = resultobj.getString("responseData")
+                    val jsonrepdu = JSONObject(jsondata.toString())
+                    val VendorAutoId = jsonrepdu.getInt("VendorAutoId")
+                    val BillNo = jsonrepdu.getString("BillNo")
+                    val draftAutoId = jsonrepdu.getInt("DAutoId")
+                    val BillDate = jsonrepdu.getString("BillDate")
+                    val Remarks = jsonrepdu.getString("Remarks")
+                    val Status = jsonrepdu.getString("Status")
+                    val POItems = jsonrepdu.getJSONArray("POItems")
+                    for (i in 0 until POItems.length()) {
+                        PName = POItems.getJSONObject(i).getString("PName")
+                        PID = POItems.getJSONObject(i).getInt("PID")
+                        UnitAutoId = POItems.getJSONObject(i).getInt("UnitAutoId")
+                        UnitType = POItems.getJSONObject(i).getString("UnitType")
+                        TotalPieces = POItems.getJSONObject(i).getInt("TotalPieces")
+                        Quantity = POItems.getJSONObject(i).getInt("Quantity")
+                        QtyPerUnit = POItems.getJSONObject(i).getInt("QtyPerUnit")
+                        var check=false
+                        var poreqqty:Int=0
+                        for (n in 0..ReceiverpoList.size-1) {
+                            if(ReceiverpoList[n].getPID()==PID){
+                                check=true;
+                                if (ReceiverpoList[n].getPOQTY() != null) {
+                                    poreqqty = ReceiverpoList[n].getPOQTY()!! + 1
+                                    ReceivePOAdapterl.notifyItemChanged(n)
+                                    ReceiverpoList.removeAt(n)
+                                    if (UnitType != null) {
+                                        if (PName != null) {
+                                            DataBindPOLIST(
+                                                PID,
+                                                PName,
+                                                UnitType,
+                                                TotalPieces,
+                                                Quantity,
+                                                draftAutoId
+                                            )
+                                        }
+                                    }
+
+                                }
+
+                            }
+                        }
+                        if(!check) {
+                            if (UnitType != null) {
+                                if (PName != null) {
+                                    DataBindPOLIST(
+                                        PID,
+                                        PName,
+                                        UnitType,
+                                        TotalPieces,
+                                        Quantity,
+                                        draftAutoId
+                                    )
+                                }
+                            }
+                        }
+
+                    }
+                } else {
+                    SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
+                    AppPreferences.playSoundbarcode()
+//                  /  Toast.makeText(this, , Toast.LENGTH_SHORT).show()
+
+                }
+
+            }, Response.ErrorListener { response ->
+
+                Log.e("onError", error(response.toString()))
+            })
+        DRAFTADDPRODUCT.retryPolicy = DefaultRetryPolicy(
+            1000000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queues.add(DRAFTADDPRODUCT)
     }
 }
 

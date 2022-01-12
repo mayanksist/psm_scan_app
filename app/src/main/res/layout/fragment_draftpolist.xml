@@ -7,9 +7,8 @@
     android:elevation="5dp"
     android:layout_margin="4dp"
     tools:context="com.example.whm.ui.draftpolist.draftpolistFragment">
-
     <androidx.cardview.widget.CardView
-        android:id="@+id/POListRecyclerView"
+        android:id="@+id/POListDraftRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="3dp"
@@ -102,6 +101,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
-
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.whm.ui.revertpolist
+package com.example.whm.ui.draftpolist
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
@@ -24,15 +24,15 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
-import com.example.myapplication.com.example.whm.ui.revertpolist.RevertAdapter
-import com.example.myapplication.com.example.whm.ui.revertpolist.RevertModel
+import com.example.myapplication.com.example.whm.ui.draftpolist.draftpoadapter
+import com.example.myapplication.com.example.whm.ui.draftpolist.draftpomodel
 import org.json.JSONObject
 import java.io.IOException
 
-class RevertPolistFragment : Fragment() {
 
-    private val revertModel = ArrayList<RevertModel>()
-    private lateinit var revertAdapter: RevertAdapter
+class draftpolistFragment : Fragment() {
+    private val draftModel = ArrayList<draftpomodel>()
+    private lateinit var draftAdapter: draftpoadapter
 
 
 
@@ -40,38 +40,37 @@ class RevertPolistFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_revert_polist_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_draftpol_list2, container, false)
 
         if (AppPreferences.internetConnectionCheck(this.context)) {
             val recyclerView: RecyclerView = view.findViewById(R.id.load_order)
-            revertAdapter = RevertAdapter(revertModel, this.context)
+            draftAdapter = draftpoadapter(draftModel, this.context)
             val layoutManager = LinearLayoutManager(this.context)
             recyclerView.layoutManager = layoutManager
             recyclerView.itemAnimator = DefaultItemAnimator()
-            recyclerView.adapter = revertAdapter
+            recyclerView.adapter = draftAdapter
             val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
             pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
             pDialog.titleText = "Fetching ..."
             pDialog.setCancelable(false)
             pDialog.show()
-
             val Jsonarrapolist = JSONObject()
             val Jsonarra = JSONObject()
             val JSONObj = JSONObject()
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             var empautoid = preferences.getString("EmpAutoId", "")
             var accessToken = preferences.getString("accessToken", "")
-            var StatusD = 3
-            val sharedLoadOrderPage = preferences.edit()
-          //  Toast.makeText(this.context,StatusD.toString(),Toast.LENGTH_LONG).show()
+            var StatusD = 1
+        //    val sharedLoadOrderPage = preferences.edit()
+            //  Toast.makeText(this.context,StatusD.toString(),Toast.LENGTH_LONG).show()
             val queues = Volley.newRequestQueue(this.context)
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
             JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
             JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
-            JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
+            JSONObj.put("requestContainer",Jsonarra.put("deviceID", AppPreferences.Device_ID))
             JSONObj.put("cObj", Jsonarrapolist.put("status", StatusD))
             val draftpolist = JsonObjectRequest(
-                Request.Method.POST,AppPreferences.DRAFT_PO_LIST,
+                Request.Method.POST, AppPreferences.DRAFT_PO_LIST,
                 JSONObj,
                 { response ->
                     val resobj = (response.toString())
@@ -80,20 +79,21 @@ class RevertPolistFragment : Fragment() {
                     val resmsg = resultobj.getString("responseMessage")
                     val rescode = resultobj.getString("responseCode")
                     if (rescode == "201") {
-                        revertModel.clear()
-                        revertAdapter.notifyDataSetChanged()
+                        draftModel.clear()
+                        draftAdapter.notifyDataSetChanged()
                         val jsondata = resultobj.getJSONArray("responseData")
                         for (i in 0 until jsondata.length()) {
                             val BillNo = jsondata.getJSONObject(i).getString("BillNo")
                             val Billdate = jsondata.getJSONObject(i).getString("BillDate")
                             val VendorName = jsondata.getJSONObject(i).getString("VAutoId")
+                            val DAutoId = jsondata.getJSONObject(i).getInt("DAutoId")
                             val Status = jsondata.getJSONObject(i).getInt("Status")
                             val NoofProduct = jsondata.getJSONObject(i).getInt("NoOfI")
                             DataBindLoadorder(
-                                BillNo, Billdate, VendorName,Status,NoofProduct)
+                                BillNo, Billdate, VendorName,Status,NoofProduct,DAutoId)
 
                         }
-                        sharedLoadOrderPage.remove("StatusD")
+
                         if (pDialog != null) {
                             if (pDialog.isShowing) {
                                 pDialog.dismiss()
@@ -150,10 +150,11 @@ class RevertPolistFragment : Fragment() {
         Billdate: String,
         VendorName: String,
         Status: Int,
-        NoofProduct: Int
+        NoofProduct: Int,
+        DAutoId: Int
     ) {
-        var RevertPoList = RevertModel(BillNo, Billdate, VendorName, Status, NoofProduct)
-        revertModel.add(RevertPoList)
-        revertAdapter.notifyDataSetChanged()
+        var RevertPoList = draftpomodel(BillNo, Billdate, VendorName, Status, NoofProduct, DAutoId)
+        draftModel.add(RevertPoList)
+        draftAdapter.notifyDataSetChanged()
     }
 }
