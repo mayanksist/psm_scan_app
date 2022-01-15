@@ -240,6 +240,7 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
         editpoqty!!.setText(POQTY.toString())
         plus.setOnClickListener {
             totalqty(editpoqty!!.text.toString().toInt() + 1)
+
         }
         minusbtn!!.setOnClickListener {
             if(editpoqty!!.text.toString().toInt()!=0) {
