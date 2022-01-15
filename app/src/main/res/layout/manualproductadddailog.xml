@@ -50,7 +50,7 @@
         android:background="@drawable/frame"
         android:textColor="#000"
         android:textSize="16dp"
-        android:hint="Search by Product name and Id"
+        android:hint="Search by Product name and ID"
         android:paddingLeft="14dp"
         android:layout_alignParentTop="true"
         android:iconifiedByDefault="false"

@@ -15,6 +15,9 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="com.example.whm.ui.submitpolist.SubmitdetailsActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.whm.SplashScreen"
             android:exported="true">
             <intent-filter>
@@ -26,14 +29,16 @@
         <activity
             android:name=".com.example.whm.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".com.example.whm.MainActivity2"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.example.whm.ui.inventoryreceive.ReceivePO"
-            android:exported="true" />
+            android:exported="true"
+
+            android:screenOrientation="portrait"/>
+<!--        android:windowSoftInputMode="stateHidden"-->
     </application>
 
 </manifest>

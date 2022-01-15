@@ -87,10 +87,13 @@ class submitpolistFragment : Fragment() {
                             val BillNo = jsondata.getJSONObject(i).getString("BillNo")
                             val Billdate = jsondata.getJSONObject(i).getString("BillDate")
                             val VendorName = jsondata.getJSONObject(i).getString("VAutoId")
+                           // val VendorName = jsondata.getJSONObject(i).getString("VendorName")
                             val Status = jsondata.getJSONObject(i).getInt("Status")
+                           // val StatusType = jsondata.getJSONObject(i).getInt("StatusType")
                             val NoofProduct = jsondata.getJSONObject(i).getInt("NoOfI")
+                            val DAutoId = jsondata.getJSONObject(i).getInt("DAutoId")
                             DataBindLoadorder(
-                                BillNo, Billdate, VendorName,Status,NoofProduct)
+                                BillNo, Billdate, VendorName,Status,NoofProduct,DAutoId)
 
                         }
                         sharedLoadOrderPage.remove("StatusD")
@@ -150,9 +153,10 @@ class submitpolistFragment : Fragment() {
         Billdate: String,
         VendorName: String,
         Status: Int,
-        NoofProduct: Int
+        NoofProduct: Int,
+        DAutoId: Int
     ) {
-        var RevertPoList = submitmodel(BillNo, Billdate, VendorName, Status, NoofProduct)
+        var RevertPoList = submitmodel(BillNo, Billdate, VendorName, Status, NoofProduct,DAutoId)
         submitmodel.add(RevertPoList)
         submitadapter.notifyDataSetChanged()
     }

@@ -72,9 +72,13 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/ic_baseline_calendar_month_24.xml" value="0.68" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.68" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.33425925925925926" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/drawable/ic_baseline_minimize_24.xml" value="0.8855421686746988" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/loadorder_arrow_circle_right_24.xml" value="0.83" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/drawable/mins.xml" value="0.8855421686746988" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/drawable/minus.xml" value="0.8855421686746988" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/oval2.xml" value="0.33425925925925926" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/oval3.xml" value="0.33425925925925926" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/drawable/pkus.xml" value="0.8855421686746988" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/product_box_outline_blank.xml" value="0.33425925925925926" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/productborder.xml" value="0.91875" />
         <entry key="..\:/Android App/PSM/app/src/main/res/font/allerta.xml" value="0.9525" />
@@ -83,6 +87,8 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_main2.xml" value="0.36666666666666664" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_receive_po.xml" value="0.4425087108013937" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_splash_screen.xml" value="0.88" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_submitdetails.xml" value="0.9" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/app_bar_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/content_main.xml" value="0.2916666666666667" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/dailog_log.xml" value="0.88" />
@@ -119,8 +125,9 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/menu.xml" value="0.515" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/msg.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/nav_header_main.xml" value="0.24583333333333332" />
-        <entry key="..\:/Android App/PSM/app/src/main/res/layout/receivepolist.xml" value="0.75" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/receivepolist.xml" value="0.8586497890295358" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/searchproduct.xml" value="0.8492822966507177" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/submit_details_item_fragment.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/toolbar.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/menu/activity_main_drawer.xml" value="0.36102564102564105" />
         <entry key="..\:/Android App/PSM/app/src/main/res/menu/main_activity2.xml" value="0.67" />
@@ -205,5 +212,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.67" />
+      </ProjectState>
+    </option>
   </component>
 </project>

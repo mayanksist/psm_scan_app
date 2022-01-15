@@ -26,6 +26,7 @@ internal class draftpoadapter(private var draftModel: List<draftpomodel>, var ac
         var vendorname: TextView = view.findViewById(R.id.vendorname)
         var CardView : CardView = view.findViewById(R.id.POListDraftRecyclerView)
         var DAutoid:Int=0
+        var Status:Int=0
 
     }
 
@@ -43,12 +44,14 @@ internal class draftpoadapter(private var draftModel: List<draftpomodel>, var ac
         holder.vendorname.text = revertpolist.getVendorname()
         holder.txtnoofproduct.text = revertpolist.getnoofproducts().toString()
         holder.DAutoid= revertpolist.getDAutoid()!!
+        holder.Status= revertpolist.getStatus()!!.toInt()
         holder.CardView.setOnClickListener(View.OnClickListener { view ->
             val intent = Intent(activity, ReceivePO::class.java)
             activity?.startActivity(intent)
             val sharedLoadOrderPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
             val sharedLoadOrderPage = sharedLoadOrderPreferences.edit()
             sharedLoadOrderPage.putInt("DAutoid", holder.DAutoid)
+            sharedLoadOrderPage.putInt("Status", holder.Status)
             sharedLoadOrderPage.apply()
           //  Toast.makeText(activity, holder.DAutoid.toString(),Toast.LENGTH_SHORT).show()
             //view.findNavController().navigate(R.id.nav_bindpolist)

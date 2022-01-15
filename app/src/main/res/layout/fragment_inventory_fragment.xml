@@ -53,6 +53,7 @@
             <EditText
                 android:paddingLeft="12dp"
                 android:id="@+id/txtbillno"
+                android:focusable="true"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
@@ -62,6 +63,10 @@
                 android:background="@drawable/frame"
                 android:elevation="4dp"
                 android:maxLength="10"
+                android:singleLine="true"
+                app:counterEnabled="true"
+
+                android:focusedByDefault="true"
                 android:hint="Bill No"
                 android:inputType="text"
                 android:textColor="@color/black"
@@ -111,6 +116,10 @@
                 android:paddingLeft="12dp"
                 android:textColor="@color/black"
                 android:textSize="18dp"
+                android:singleLine="true"
+                app:counterEnabled="true"
+                android:focusable="false"
+                android:focusedByDefault="true"
                 android:textStyle="normal" />
 
             <Button
@@ -156,6 +165,10 @@
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/frame"
                 android:inputType="none"
+                android:singleLine="true"
+                app:counterEnabled="true"
+                android:focusable="false"
+                android:focusedByDefault="true"
                 android:padding="5dp"
                 android:text="Select Vendor" />
 

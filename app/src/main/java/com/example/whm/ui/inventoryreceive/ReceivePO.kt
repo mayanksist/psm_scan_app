@@ -11,6 +11,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
@@ -26,8 +27,11 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.MainActivity2
+import com.example.myapplication.com.example.whm.ui.home.HomeFragment
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceiveModel
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceivePOAdapter1
+import com.example.whm.ui.draftpolist.draftpolistFragment
+import com.example.whm.ui.submitpolist.submitpolistFragment
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -54,41 +58,60 @@ class ReceivePO : AppCompatActivity() {
     var Qty:Int=0
     var  DUnit:Int=0
     var  DAutoid:Int=0
+    var  Status:Int=0
+    var getdefault:String?=null
+    var tqty:Int=0
+    var qtyperunit:Int=0
     private lateinit var ReceivePOAdapterl:ReceivePOAdapter1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+//        hideSoftKeyboard()
 
         setContentView(com.example.myapplication.R.layout.activity_receive_po)
         toolbar = findViewById(R.id.toolbarAction)
+        val preferencesid = PreferenceManager.getDefaultSharedPreferences(this@ReceivePO)
+        Status = preferencesid.getInt("Status", 0)
         setSupportActionBar(toolbar)
-        getSupportActionBar()?.setTitle("PO Receive")
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+        if(Status==3){
+            supportActionBar?.setTitle("Revert PO ")
+        }
+        else if(Status==1){
+            supportActionBar?.setTitle("Draft PO")
+        }
+        else{
+            supportActionBar?.setTitle("PO Receive")
+        }
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
         backarrow = findViewById(com.example.myapplication.R.id.imgbackbtm)
         LinearLayoutV = findViewById(com.example.myapplication.R.id.LinearFragmentContainer)
-        val preferencesid = PreferenceManager.getDefaultSharedPreferences(this@ReceivePO)
-        DAutoid = preferencesid.getInt("DAutoid", 0)
 
-        if(DAutoid!=null && DAutoid!=0){
-            val recyclerView: RecyclerView =
-                findViewById(com.example.myapplication.R.id.POLIST)
-            val layoutManager = LinearLayoutManager(this)
-            recyclerView.layoutManager = layoutManager
-            Draftproductlist()
-            ReceivePOAdapterl = ReceivePOAdapter1(ReceiverpoList, this)
-            recyclerView.adapter = ReceivePOAdapterl
+        DAutoid = preferencesid.getInt("DAutoid", 0)
+        if (AppPreferences.internetConnectionCheck(this)) {
+            if (DAutoid != null && DAutoid != 0) {
+                val recyclerView: RecyclerView =
+                    findViewById(com.example.myapplication.R.id.POLIST)
+                val layoutManager = LinearLayoutManager(this)
+                recyclerView.layoutManager = layoutManager
+                Draftproductlist()
+                ReceivePOAdapterl = ReceivePOAdapter1(ReceiverpoList, this)
+                recyclerView.adapter = ReceivePOAdapterl
+            }
+        }
+        else{
+            CheckInterNetDailog()
         }
 
         if (AppPreferences.internetConnectionCheck(this)) {
             backarrow?.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
-
-                    var EmpAutoId = preferencesid.getString("EmpAutoId", "")
-                    var EmpTypeNo = preferencesid.getString("EmpTypeNo", "")
-                    var Empname = preferencesid.getString("Empname", "")
-                    var Username = preferencesid.getString("Username", "")
+                    val preferences = PreferenceManager.getDefaultSharedPreferences(this@ReceivePO)
+                    val editor = preferences.edit()
+                    editor.remove("DAutoid")
                     val intent = Intent(this@ReceivePO, MainActivity2::class.java)
                     startActivity(intent)
                 }
@@ -130,6 +153,32 @@ class ReceivePO : AppCompatActivity() {
 
     }
 
+    fun hideSoftKeyboard() {
+        if (currentFocus != null) {
+            val inputMethodManager: InputMethodManager =
+                getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        }
+    }
+
+    /**
+     * Shows the soft keyboard
+     */
+    fun showSoftKeyboard(view: View) {
+        val inputMethodManager: InputMethodManager =
+            getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        view.requestFocus()
+        inputMethodManager.showSoftInput(view, 0)
+    }
+    override fun onKeyDown(key_code: Int, key_event: KeyEvent?): Boolean {
+        if (key_code == KeyEvent.ACTION_DOWN) {
+            if (key_code == KeyEvent.KEYCODE_BACK) {
+
+            }
+        }
+       return true
+
+    }
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -179,7 +228,7 @@ class ReceivePO : AppCompatActivity() {
         SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText("Atleast One Item Required").show()
     }
     fun Addproductlist() {
-
+        var noofitems:TextView=findViewById(R.id.txtnoofproduc)
         val barcodeadd: EditText = findViewById(com.example.myapplication.R.id.enterbacode)
         val draftAutoIdTV: TextView = findViewById(com.example.myapplication.R.id.draftAutoId)
         val Jsonarra = JSONObject()
@@ -242,19 +291,20 @@ class ReceivePO : AppCompatActivity() {
                     for (n in 0..ReceiverpoList.size-1) {
                         if(ReceiverpoList[n].getPID()==ProductId){
                             check=true;
+
                             if (ReceiverpoList[n].getPOQTY() != null) {
                                 poreqqty = ReceiverpoList[n].getPOQTY()!! + 1
-                                totalpices = Qty * poreqqty
-
+                                qtyperunit = Qty * poreqqty
                                 ReceivePOAdapterl.notifyItemChanged(n)
                                 ReceiverpoList.removeAt(n)
                                 DataBindPOLIST(
                                     ProductId,
                                     ProductName,
                                     UnitType,
-                                    totalpices,
+                                    qtyperunit,
                                     poreqqty,
-                                    draftAutoId
+                                    draftAutoId,
+                                    Qty
                                 )
 
                             }
@@ -268,15 +318,19 @@ class ReceivePO : AppCompatActivity() {
                             UnitType,
                             Qty,
                             1,
-                            draftAutoId
+                            draftAutoId,
+                            Qty
                         )
                     }
-
-
-                } else {
+                    if(ReceiverpoList.size!=0) {
+                        noofitems.setText("Total Items: " + ReceiverpoList.size.toString())
+                        noofitems.visibility=View.VISIBLE
+                    }
+                }
+                else {
                     SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
                     AppPreferences.playSoundbarcode()
-//                  /  Toast.makeText(this, , Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, , Toast.LENGTH_SHORT).show()
 
                 }
                 barcodeadd.setText("")
@@ -296,8 +350,9 @@ class ReceivePO : AppCompatActivity() {
                                UNITTYPE: String,
                                UnitQTY:Int,
                                POQTY:Int,
-                               DRaftID: Int) {
-        var POLIST = ReceiveModel(PID, PNAME, UNITTYPE,UnitQTY, POQTY,UnitQTY, DRaftID)
+                               DRaftID: Int,
+                               QtyperUnit:Int) {
+        var POLIST = ReceiveModel(PID, PNAME, UNITTYPE,UnitQTY, POQTY,UnitQTY, DRaftID,QtyperUnit)
         ReceiverpoList.add(0,POLIST)
         ReceivePOAdapterl.notifyDataSetChanged()
 
@@ -322,7 +377,16 @@ class ReceivePO : AppCompatActivity() {
             "requestContainer",
             Jsonarra.put("UserAutoId", EmpAutoId)
         )
-        JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", draftAutoIdTV.text.toString().toInt()))
+        if(DAutoid!=0) {
+            JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", DAutoid))
+        }
+        else {
+            JSONObj.put(
+                "cObj",
+                Jsonarrabarcode.put("draftAutoId", draftAutoIdTV.text.toString().toInt())
+            )
+        }
+
         JSONObj.put("cObj", Jsonarrabarcode.put("status", Status))
 
         val SUBMITPOLITS = JsonObjectRequest(
@@ -335,12 +399,33 @@ class ReceivePO : AppCompatActivity() {
                 val responseCode = resultobj.getString("responseCode")
                 val responseMessage = resultobj.getString("responseMessage")
                 if (responseCode == "201") {
-
-                    var intent = Intent(this, ReceivePO::class.java)
-                    startActivity(intent)
+                    var alertbox = SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                    alertbox.setContentText(responseMessage)
+                    alertbox.setConfirmText("ok")
+                    alertbox.setConfirmClickListener {
+                            sDialog ->
+                        var intent = Intent(this, MainActivity2::class.java)
+                        startActivity(intent)
+                    }
+                    alertbox.setCanceledOnTouchOutside(false)
+                    alertbox.show()
 
                 } else {
-                    Toast.makeText(this, responseMessage, Toast.LENGTH_SHORT).show()
+                    var alertbox = SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                    alertbox.setContentText(responseMessage)
+                    alertbox.setCancelButtonBackgroundColor(Color.parseColor("#4cae4c"))
+
+                    alertbox.setConfirmText("ok")
+                    alertbox.setConfirmButtonBackgroundColor(Color.parseColor("#E60606"))
+                    alertbox.setConfirmClickListener {
+                            sDialog ->
+                        var intent = Intent(this, draftpolistFragment::class.java)
+                        startActivity(intent)
+
+                    }
+
+                    alertbox.setCanceledOnTouchOutside(false)
+                    alertbox.show()
 
                 }
 
@@ -363,7 +448,8 @@ class ReceivePO : AppCompatActivity() {
         btDismiss?.setOnClickListener {
             dialog.dismiss()
             var intent = Intent(this, ReceivePO::class.java)
-            startActivity(intent)        }
+            startActivity(intent)
+        }
         dialog?.show()
     }
 
@@ -421,9 +507,12 @@ class ReceivePO : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
+
+
                 if (qty!!.text.toString() != "") {
+                    tqty=getdefault!!.trim().toInt()
                     Quantity = qty!!.text.toString().toInt()
-                    totalpices = Qty * Quantity
+                    totalpices = tqty  * Quantity
                     totalpicesqty!!.setText(totalpices.toString())
                 }
             }
@@ -432,6 +521,7 @@ class ReceivePO : AppCompatActivity() {
         val btncancel: Button = view.findViewById(R.id.btncancel)
         spUnitType = view.findViewById(R.id.spunity)
 //        spvendorid= spUnitType.toString()
+
         btnpoqty.setOnClickListener(View.OnClickListener {
             var name: String? = null
             name = spUnitType!!.getSelectedItem() as String?
@@ -505,7 +595,7 @@ class ReceivePO : AppCompatActivity() {
                 val responseCode = resultobj.getString("responseCode")
                 val responseMessage = resultobj.getString("responseMessage")
                 if (responseCode == "201") {
-
+                    var UnitType:Int=0
                     val unitlist = resultobj.getJSONArray("responseData")
                     val n = unitlist.length()
                     val spinnerArray = arrayOfNulls<String>(n)
@@ -514,32 +604,33 @@ class ReceivePO : AppCompatActivity() {
                         var unittype = unitlist.getJSONObject(i).getString("UName")
 
                         Qty = unitlist.getJSONObject(i).getInt("Qty")
-                        var UnitType = unitlist.getJSONObject(i).getInt("UnitType")
+                         UnitType = unitlist.getJSONObject(i).getInt("UnitType")
                         DUnit = unitlist.getJSONObject(i).getInt("DUnit")
-                        spinnerArray[i] = unittype+"("+Qty+"pcs)"
+                        if(DUnit==UnitType){
+                            spinnerArray[i] = unittype+"("+Qty+"pcs) *"
+                        }
+                        else{
+                            spinnerArray[i] = unittype+"("+Qty+"pcs)"
+                        }
                         spinnerArrayId[i] = UnitType.toString()
 
                         BINDUNITTYPE?.adapter = this?.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) } as SpinnerAdapter
+                        BINDUNITTYPE!!.setSelection(spinnerArrayId.indexOf(DUnit.toString()))
                         BINDUNITTYPE?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
                             override fun onNothingSelected(parent: AdapterView<*>?) {
-
                             }
                             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                                BINDUNITTYPE!!.setSelection(spinnerArray.indexOf(DUnit.toString()))
                                 spunitypeid = spinnerArrayId[position].toString()
                                 var  spunitypename = spinnerArray[position].toString()
-                                Quantity=  qty!!.text.toString().toInt()
-                                totalpices= Qty.toInt()*Quantity.toInt()
-                                totalpicesqty!!.setText(totalpices.toString())
                                 if (spunitypename.contains("(")){
                                     val result1 = spunitypename.trim().split("(").toMutableList()
-                                    //      Toast.makeText(this@ReceivePO,  result1[1].trim().toString(),Toast.LENGTH_SHORT).show()
+                                    getdefault=result1[1].replace("pcs)","" ).replace("*","")
+                                   // Toast.makeText(this@ReceivePO,  getdefault!!.trim().toString(),Toast.LENGTH_SHORT).show()
+                                    totalpicesqty!!.setText(getdefault.toString())
+                                    var defaultqty:Int=1
+                                    qty!!.setText(defaultqty.toString())
 
                                 }
-                                // val unitposition = parent?.getItemIdAtPosition(position).toString()
-
-
-
                             }
                         }
                     }
@@ -624,7 +715,7 @@ class ReceivePO : AppCompatActivity() {
     }
 
     fun AddproductlistManual() {
-
+        var noofitems:TextView=findViewById(R.id.txtnoofproduc)
         val draftAutoIdTV: TextView = findViewById(com.example.myapplication.R.id.draftAutoId)
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
@@ -646,6 +737,7 @@ class ReceivePO : AppCompatActivity() {
             "requestContainer",
             Jsonarra.put("UserAutoId", EmpAutoId)
         )
+
         if(DAutoid!=0){
             JSONObj.put("cObj", Jsonarrabarcode.put("draftAutoId", DAutoid))
         }else{
@@ -675,25 +767,31 @@ class ReceivePO : AppCompatActivity() {
                     val ProductName = JSONOBJ.getString("ProductName")
                     val UnitType = JSONOBJ.getString("UnitType")
                     val Qty = JSONOBJ.getInt("Qty")
+                  //  Toast.makeText(this,Qty.toString(),Toast.LENGTH_SHORT).show()
                     draftAutoIdTV.text=draftAutoId.toString()
                     var check=false
                     var poreqqty:Int=0
+
                     for (n in 0..ReceiverpoList.size-1) {
                         if(ReceiverpoList[n].getPID()==ProductId){
                             check=true;
                             if (ReceiverpoList[n].getPOQTY() != null) {
-                                poreqqty = ReceiverpoList[n].getPOQTY()!! + Quantity
-                                totalpices = Qty * poreqqty
+                                poreqqty = ReceiverpoList[n].getPOQTY()!! + qty!!.text.toString().toInt()
+
+                                qtyperunit = Qty * poreqqty
                                 ReceivePOAdapterl.notifyItemChanged(n)
                                 ReceiverpoList.removeAt(n)
                                 DataBindPOLIST(
                                     ProductId,
                                     ProductName,
                                     UnitType,
-                                    totalpices,
+                                    qtyperunit,
                                     poreqqty,
-                                    draftAutoId
+                                    draftAutoId,
+                                    Qty
                                 )
+
+
                             }
 
                         }
@@ -705,8 +803,15 @@ class ReceivePO : AppCompatActivity() {
                             UnitType,
                             totalpices,
                             qty!!.text.toString().toInt(),
-                            draftAutoId
+                            draftAutoId,
+                            Qty
                         )
+
+                        //Toast.makeText(this,totalpices.toString(),Toast.LENGTH_SHORT).show()
+                    }
+                    if(ReceiverpoList.size!=0) {
+                        noofitems.setText("Total Items: " + ReceiverpoList.size.toString())
+                        noofitems.visibility=View.VISIBLE
                     }
                 } else {
                     SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
@@ -728,7 +833,7 @@ class ReceivePO : AppCompatActivity() {
 
     fun Draftproductlist() {
 
-
+        var noofitems:TextView=findViewById(R.id.txtnoofproduc)
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
         val JSONObj = JSONObject()
@@ -737,10 +842,8 @@ class ReceivePO : AppCompatActivity() {
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
         JSONObj.put("requestContainer",Jsonarra.put("deviceID", AppPreferences.Device_ID))
         var accessToken = preferences.getString("accessToken", "")
-
         var EmpAutoId = preferences.getString("EmpAutoId", "")
-        JSONObj.put(
-            "requestContainer",
+        JSONObj.put("requestContainer",
             Jsonarra.put("accessToken", accessToken)
         )
         JSONObj.put(
@@ -780,12 +883,14 @@ class ReceivePO : AppCompatActivity() {
                         PID = POItems.getJSONObject(i).getInt("PID")
                         UnitAutoId = POItems.getJSONObject(i).getInt("UnitAutoId")
                         UnitType = POItems.getJSONObject(i).getString("UnitType")
-                        TotalPieces = POItems.getJSONObject(i).getInt("TotalPieces")
-                        Quantity = POItems.getJSONObject(i).getInt("Quantity")
-                        QtyPerUnit = POItems.getJSONObject(i).getInt("QtyPerUnit")
+                         TotalPieces = POItems.getJSONObject(i).getInt("TotalPieces")
+                         Quantity = POItems.getJSONObject(i).getInt("Quantity")
+                         QtyPerUnit = POItems.getJSONObject(i).getInt("QtyPerUnit")
                         var check=false
                         var poreqqty:Int=0
+
                         for (n in 0..ReceiverpoList.size-1) {
+
                             if(ReceiverpoList[n].getPID()==PID){
                                 check=true;
                                 if (ReceiverpoList[n].getPOQTY() != null) {
@@ -798,15 +903,14 @@ class ReceivePO : AppCompatActivity() {
                                                 PID,
                                                 PName,
                                                 UnitType,
-                                                TotalPieces,
+                                                QtyPerUnit,
                                                 Quantity,
-                                                draftAutoId
+                                                draftAutoId,
+                                                Qty
                                             )
                                         }
                                     }
-
                                 }
-
                             }
                         }
                         if(!check) {
@@ -818,20 +922,32 @@ class ReceivePO : AppCompatActivity() {
                                         UnitType,
                                         TotalPieces,
                                         Quantity,
-                                        draftAutoId
+                                        draftAutoId,
+                                        QtyPerUnit
                                     )
                                 }
+
                             }
+
                         }
 
                     }
+                    if(ReceiverpoList.size!=0) {
+                        noofitems.setText("Total Items: " + ReceiverpoList.size.toString())
+                        noofitems.visibility=View.VISIBLE
+                    }
                 } else {
-                    SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
-                    AppPreferences.playSoundbarcode()
-//                  /  Toast.makeText(this, , Toast.LENGTH_SHORT).show()
-
+                    var alertbox = SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                    alertbox.setContentText(responseMessage)
+                    alertbox.setConfirmText("Ok")
+                    alertbox.setConfirmButtonBackgroundColor(Color.parseColor("#E60606"))
+                    alertbox.setConfirmClickListener { sDialog ->
+                        val intent = Intent(this@ReceivePO, draftpolistFragment::class.java)
+                        startActivity(intent)
+                    }
+                    alertbox.setCanceledOnTouchOutside(false)
+                    alertbox.show()
                 }
-
             }, Response.ErrorListener { response ->
 
                 Log.e("onError", error(response.toString()))

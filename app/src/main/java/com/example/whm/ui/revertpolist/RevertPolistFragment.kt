@@ -88,9 +88,10 @@ class RevertPolistFragment : Fragment() {
                             val Billdate = jsondata.getJSONObject(i).getString("BillDate")
                             val VendorName = jsondata.getJSONObject(i).getString("VAutoId")
                             val Status = jsondata.getJSONObject(i).getInt("Status")
+                            val DAutoId = jsondata.getJSONObject(i).getInt("DAutoId")
                             val NoofProduct = jsondata.getJSONObject(i).getInt("NoOfI")
                             DataBindLoadorder(
-                                BillNo, Billdate, VendorName,Status,NoofProduct)
+                                BillNo, Billdate, VendorName,Status,NoofProduct,DAutoId)
 
                         }
                         sharedLoadOrderPage.remove("StatusD")
@@ -150,9 +151,10 @@ class RevertPolistFragment : Fragment() {
         Billdate: String,
         VendorName: String,
         Status: Int,
-        NoofProduct: Int
+        NoofProduct: Int,
+        DAutoId: Int
     ) {
-        var RevertPoList = RevertModel(BillNo, Billdate, VendorName, Status, NoofProduct)
+        var RevertPoList = RevertModel(BillNo, Billdate, VendorName, Status, NoofProduct,DAutoId)
         revertModel.add(RevertPoList)
         revertAdapter.notifyDataSetChanged()
     }

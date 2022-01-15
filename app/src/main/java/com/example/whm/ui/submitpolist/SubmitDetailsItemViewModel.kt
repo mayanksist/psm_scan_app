@@ -1,10 +1,11 @@
-package com.example.myapplication.com.example.whm.ui.inventoryreceive
+package com.example.whm.ui.submitpolist
 
-import android.widget.Toast
+import androidx.lifecycle.ViewModel
 
-class ReceiveModel (
+
+class SubmitDetailsItemViewModel (
     PID: Int, PNAME: String,
-    UNITTYPE: String,UnitQTY:Int,POQTY:Int,Totalpieces:Int,DraftID:Int,qtyperunit:Int) {
+    UNITTYPE: String,UnitQTY:Int,POQTY:Int,Totalpieces:Int,DraftID:Int) {
 
     private lateinit var PA_NEME: String
     private var P_ID: Int = 0
@@ -13,7 +14,6 @@ class ReceiveModel (
     private var PO_QTY: Int=0
     private var Total_Pieces: Int=0
     private var DRAFT_ID: Int=0
-    private var qtyper_unit: Int=0
 
     init {
         this.P_ID = PID
@@ -23,7 +23,6 @@ class ReceiveModel (
         this.PO_QTY = POQTY
         this.Total_Pieces = Totalpieces
         this.DRAFT_ID = DraftID
-        this.qtyper_unit = qtyperunit
     }
 
     fun getPID(): Int? {
@@ -41,34 +40,27 @@ class ReceiveModel (
     }
 
     fun getPOQTY(): Int? {
-
         return PO_QTY
     }
     fun setPOQTY(POQTY: Int?) {
-         this.PO_QTY=POQTY!!
+        this.PO_QTY=POQTY!!
     }
     fun getTotalPieces():Int?{
-       return Total_Pieces
+        return Total_Pieces
     }
     fun setTotalPieces(newpoqty:Int?) {
         if (newpoqty != null) {
             this.Total_Pieces= newpoqty*Unit_QTY
+
+
         }
     }
-    fun getasperunitqty(): Int? {
-        return qtyper_unit
-    }
-    fun setasperunitqty(newpoqty1:Int?){
-        this.qtyper_unit=newpoqty1!!
-    }
-    fun getTotalPiece(QTYPerUint:Int?, POQTY:Int? ) {
-        if (QTYPerUint != null) {
-            this.Total_Pieces=QTYPerUint*POQTY!!
-        }
-    }
+
+
     fun getDraftID():Int?{
         return DRAFT_ID
     }
+
 
 }
 
