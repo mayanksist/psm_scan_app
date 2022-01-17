@@ -25,7 +25,7 @@ import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import org.json.JSONObject
 
 
-class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activity: Context?,var  cellClickListener: View.OnClickListener):
+class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activity: Context?):
 
     RecyclerView.Adapter<ReceivePOAdapter1.MyViewHolder>() {
 
@@ -64,9 +64,7 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
         holder.POQTY.text=productList.getPOQTY().toString()
         holder.qtyperunit.text=productList.getasperunitqty().toString()
         holder.draftAutoIdTV.text=productList.getDraftID().toString()
-       // Toast.makeText(activity,holder.qtyperunit.text.toString(),Toast.LENGTH_SHORT).show()
-        holder.deletepolist.setOnClickListener(View.OnClickListener {
-//            cellClickListener.onClick()
+        holder.deletepolist.setOnClickListener(View.OnClickListener {view->
             var alertbox = SweetAlertDialog(activity, SweetAlertDialog.WARNING_TYPE)
             alertbox.setTitleText("Are you sure?")
             alertbox.setContentText("You want to delete "+  holder.PID.text + "-"+ holder.PEODUCTNAME.text +".")
@@ -76,8 +74,8 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
                     sDialog -> sDialog.dismissWithAnimation()
 
             }
-            alertbox.confirmText = "No"
-            alertbox.confirmButtonBackgroundColor = Color.parseColor("#E60606")
+            alertbox.setConfirmText("No")
+            alertbox.setConfirmButtonBackgroundColor(Color.parseColor("#E60606"))
             alertbox.setCancelClickListener {
                     sDialog ->
                 Deletepolist(holder.PID.text.toString().toInt(),holder.draftAutoIdTV.text.toString().toInt(),position)
@@ -85,7 +83,6 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
                 ReceiveModelList.removeAt(position)
                 sDialog.dismissWithAnimation()
                 notifyDataSetChanged()
-//                view.findNavController().navigate(R.id.nav_drfatpolist)
 
             }
             alertbox.setConfirmClickListener {
@@ -145,9 +142,12 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
                     alertbox.setConfirmText("ok")
                     alertbox.setConfirmClickListener {
                             sDialog -> alertbox.dismiss()
+
+
                     }
                     alertbox.setCanceledOnTouchOutside(false)
                     alertbox.show()
+
                 } else {
                     var update=  SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE).setContentText(
                         responseMessage.toString()
@@ -301,8 +301,6 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
 
 
 }
-
-
 
 
 

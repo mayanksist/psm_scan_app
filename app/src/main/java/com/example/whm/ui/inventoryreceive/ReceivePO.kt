@@ -539,7 +539,7 @@ class ReceivePO : AppCompatActivity() {
         SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText("Select Unit Type").show()
     }
     fun Select_Qty() {
-        SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText("Quantity can't be left empty or zero.").show()
+        SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText("Quantity can not be left empty or zero.").show()
     }
     fun Select_product() {
         SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText("Select Product ").show()
