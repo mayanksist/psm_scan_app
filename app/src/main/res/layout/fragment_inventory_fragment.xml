@@ -60,12 +60,14 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
+                android:keepScreenOn="false"
+                android:imeOptions="actionDone"
+                android:keyboardNavigationCluster="false"
                 android:background="@drawable/frame"
                 android:elevation="4dp"
                 android:maxLength="10"
                 android:singleLine="true"
                 app:counterEnabled="true"
-
                 android:focusedByDefault="true"
                 android:hint="Bill No"
                 android:inputType="text"
@@ -117,17 +119,13 @@
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 android:singleLine="true"
+                android:keyboardNavigationCluster="false"
                 app:counterEnabled="true"
-                android:focusable="false"
+                android:focusable="true"
+                android:nextFocusDown="@id/txtvender"
                 android:focusedByDefault="true"
                 android:textStyle="normal" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="37dp"
-                android:background="@drawable/ic_baseline_calendar_month_24">
-
-            </Button>
         </LinearLayout>
 
         <LinearLayout
@@ -164,10 +162,12 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/frame"
+                android:keyboardNavigationCluster="false"
                 android:inputType="none"
                 android:singleLine="true"
                 app:counterEnabled="true"
-                android:focusable="false"
+                android:focusable="true"
+                android:nextFocusDown="@id/btnnext"
                 android:focusedByDefault="true"
                 android:padding="5dp"
                 android:text="Select Vendor" />

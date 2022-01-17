@@ -1,17 +1,19 @@
 package com.example.myapplication.com.example.whm.ui.inventoryreceive
 
+import android.R
 import android.app.AlertDialog
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.cardview.widget.CardView
-import androidx.recyclerview.widget.RecyclerView
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.preference.PreferenceManager
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.*
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
@@ -41,8 +43,6 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
         val draftAutoIdTV: TextView = view.findViewById(com.example.myapplication.R.id.podraftAutoId)
         val qtyperunit: TextView = view.findViewById(com.example.myapplication.R.id.qtyperunit)
       //  var qtyperunit:Int=0
-
-
     }
 
     override fun onCreateViewHolder(
@@ -65,13 +65,15 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
         holder.qtyperunit.text=productList.getasperunitqty().toString()
         holder.draftAutoIdTV.text=productList.getDraftID().toString()
        // Toast.makeText(activity,holder.qtyperunit.text.toString(),Toast.LENGTH_SHORT).show()
-        holder.deletepolist.setOnClickListener(View.OnClickListener {
+        holder.deletepolist.setOnClickListener(View.OnClickListener {view->
             var alertbox = SweetAlertDialog(activity, SweetAlertDialog.WARNING_TYPE)
             alertbox.setTitleText("Are you sure?")
             alertbox.setContentText("You want to delete "+  holder.PID.text + "-"+ holder.PEODUCTNAME.text +".")
             alertbox.setCancelButtonBackgroundColor(Color.parseColor("#4cae4c"))
             alertbox.setCancelButton( "Yes")
-            { sDialog -> sDialog.dismissWithAnimation()
+            {
+                    sDialog -> sDialog.dismissWithAnimation()
+
             }
             alertbox.setConfirmText("No")
             alertbox.setConfirmButtonBackgroundColor(Color.parseColor("#E60606"))
@@ -82,6 +84,7 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
                 ReceiveModelList.removeAt(position)
                 sDialog.dismissWithAnimation()
                 notifyDataSetChanged()
+//                view.findNavController().navigate(R.id.nav_drfatpolist)
 
             }
             alertbox.setConfirmClickListener {
@@ -132,10 +135,26 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
                 val responseCode = resultobj.getString("responseCode")
                 val responseMessage = resultobj.getString("responseMessage")
                 if (responseCode == "201") {
-                        var update=  SweetAlertDialog(activity, SweetAlertDialog.SUCCESS_TYPE).setContentText(
-                            responseMessage.toString())
-                        update.setCanceledOnTouchOutside(false)
-                        update.show()
+
+                    ReceiveModelList.size
+                    notifyDataSetChanged()
+
+                    var alertbox = SweetAlertDialog(activity, SweetAlertDialog.SUCCESS_TYPE)
+                    alertbox.setContentText(responseMessage)
+                    alertbox.setConfirmText("ok")
+                    alertbox.setConfirmClickListener {
+                            sDialog -> alertbox.dismiss()
+
+//                        ReceivePOAdapter1()
+                      //  view.findNavController().navigate(R.id.nav_drfatpolist)
+
+                    }
+                    alertbox.setCanceledOnTouchOutside(false)
+                    alertbox.show()
+//                        var update=  SweetAlertDialog(activity, SweetAlertDialog.SUCCESS_TYPE).setContentText(
+//                            responseMessage.toString())
+//                        update.setCanceledOnTouchOutside(false)
+//                        update.show()
                 } else {
                     var update=  SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE).setContentText(
                         responseMessage.toString()
@@ -236,6 +255,8 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
         val plus = view.findViewById<ImageView>(com.example.myapplication.R.id.increase)
         val  minusbtn = view.findViewById<ImageView>(com.example.myapplication.R.id.decrease)
         POProductname.setText(ProductName.toString())
+        editpoqty!!.setEnabled(false);
+
         PIPID.setText(PID.toString()+" - ")
         editpoqty!!.setText(POQTY.toString())
         plus.setOnClickListener {
@@ -258,7 +279,16 @@ class ReceivePOAdapter1(var ReceiveModelList: ArrayList<ReceiveModel>,var activi
                 dialog?.dismiss()
             }
             else{
-                activity?.let { it1 -> DynamicToast.makeError(it1, "Quantity Required", 5000).show()}
+
+                val toast: Toast = Toast.makeText(activity, "Quantity Required", Toast.LENGTH_SHORT)
+                toast.setGravity(Gravity.TOP, 0, 200)
+                //toast.getView()?.setBackgroundColor(Color.parseColor("#770E0A"));
+                toast.show()
+//                activity?.let { it1 -> DynamicToast.makeError(it1, "", 5000)
+//
+//                    .show()
+//
+//                }
             }
         })
 

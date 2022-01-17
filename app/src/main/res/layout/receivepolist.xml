@@ -172,7 +172,6 @@
                     android:editable="false"
                     android:elevation="4dp"
                     android:focusable="false"
-
                     android:focusableInTouchMode="false"
                     android:focusedByDefault="false"
                     android:padding="2dp"

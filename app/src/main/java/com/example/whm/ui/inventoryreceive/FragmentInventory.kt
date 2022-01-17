@@ -57,8 +57,8 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
         spvendor = mView.findViewById(R.id.ddlvenderlist)
         btnNext = mView.findViewById(R.id.btnnext)
         edtbillNo!!.requestFocus()
-        txtbildate!!.requestFocus()
-        spvendor!!.requestFocus()
+//        txtbildate!!.requestFocus()
+//        spvendor!!.requestFocus()
         if (AppPreferences.internetConnectionCheck(context)) {
             bindvenderlist()
         }
@@ -76,6 +76,10 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                     if (resultKey == "REQUEST_KEY") {
                         val date = bundle.getString("SELECTED_DATE")
                         txtbildate?.text =  date
+                        txtbildate!!.clearFocus()
+                        spvendor!!.requestFocus()
+                        edtbillNo!!.clearFocus()
+
 
 
                     }
@@ -83,6 +87,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                 }
                 datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
                 datePickerFragment.enterTransition
+
             }
         if (AppPreferences.internetConnectionCheck(context)) {
             btnNext?.setOnClickListener {
@@ -100,6 +105,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                     editor.putString("Bill_No", Bill_No?.text.toString())
                     editor.putString("Bill_Date", Bill_Date.toString())
                     editor.putInt("VENDORID", spvendorid.toString().toInt())
+                    editor.putString("VENDORName", spvendor.toString())
                     editor.remove("DAutoid")
                     editor.remove("Status")
 
@@ -176,6 +182,8 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                             spvendorid = spinnerArrayId[position].toString()
                             var  spunitypename = spinnerArray[position].toString()
+                            btnNext?.requestFocus()
+
                           //  Toast.makeText(context,spvendorid.toString(),Toast.LENGTH_SHORT).show()
 
                         }

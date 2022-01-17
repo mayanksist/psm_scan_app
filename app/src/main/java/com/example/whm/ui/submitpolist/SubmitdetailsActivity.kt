@@ -2,6 +2,7 @@ package com.example.whm.ui.submitpolist
 
 import android.app.Dialog
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -11,6 +12,7 @@ import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
@@ -22,6 +24,7 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.MainActivity2
+import com.example.myapplication.com.example.whm.ui.home.HomeFragment
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceiveModel
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceivePOAdapter1
 import com.example.myapplication.com.example.whm.ui.submitpolist.submitdetailsadapter
@@ -40,6 +43,7 @@ class SubmitdetailsActivity : AppCompatActivity() {
         val preferencesid = PreferenceManager.getDefaultSharedPreferences(this@SubmitdetailsActivity)
         DAutoid = preferencesid.getInt("DAutoid", 0)
         backarrow = findViewById(com.example.myapplication.R.id.imgbackbtm)
+
         if (AppPreferences.internetConnectionCheck(this)) {
             if (DAutoid != null && DAutoid != 0) {
                 val recyclerView: RecyclerView =
@@ -50,29 +54,30 @@ class SubmitdetailsActivity : AppCompatActivity() {
                 ReceivePOAdapterl = submitdetailsadapter(ReceiverpoList, this)
                 recyclerView.adapter = ReceivePOAdapterl
             }
+
         }
         else{
             CheckInterNetDailog()
         }
 
         if (AppPreferences.internetConnectionCheck(this)) {
-            backarrow?.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View?) {
-                    val intent = Intent(this@SubmitdetailsActivity, submitpolistFragment::class.java)
-                    startActivity(intent)
-                }
-            })
+            backarrow?.setOnClickListener {
+                val intent = Intent(this@SubmitdetailsActivity, MainActivity2::class.java)
+                startActivity(intent)
+//                val intent = Intent(applicationContext, HomeFragment::class.java)
+//                startActivity(intent)
+            }
         } else {
             CheckInterNetDailog()
         }
 
     }
     fun Draftproductlist() {
-
-        val txtbillno: EditText = findViewById(com.example.myapplication.R.id.txtbillno)
-        val txtbilldatepo: EditText = findViewById(com.example.myapplication.R.id.txtbilldatepo)
-        val vendornamepo: EditText = findViewById(com.example.myapplication.R.id.vendornamepo)
-        val statuspo: EditText = findViewById(com.example.myapplication.R.id.statuspo)
+        var noofitems: TextView =findViewById(R.id.txtnoofproduc)
+        val txtbillno: TextView = findViewById(com.example.myapplication.R.id.txtbillno)
+        val txtbilldatepo: TextView = findViewById(com.example.myapplication.R.id.txtbilldatepo)
+        val vendornamepo: TextView = findViewById(com.example.myapplication.R.id.vendornamepo)
+        val statuspo: TextView = findViewById(com.example.myapplication.R.id.statuspo)
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
         val JSONObj = JSONObject()
@@ -124,7 +129,7 @@ class SubmitdetailsActivity : AppCompatActivity() {
                     txtbillno.setText(BillNo)
                     txtbilldatepo.setText(BillDate)
                     vendornamepo.setText(VendorName)
-                    statuspo.setText(StatusType)
+                    statuspo.setText("Status : "+StatusType)
                     // Toast.makeText(this,POItems.toString(),Toast.LENGTH_SHORT).show()
                     for (i in 0 until POItems.length()) {
                         PName = POItems.getJSONObject(i).getString("PName")
@@ -173,7 +178,10 @@ class SubmitdetailsActivity : AppCompatActivity() {
                                 }
                             }
                         }
-
+                        if(ReceiverpoList.size!=0) {
+                            noofitems.setText("Total Items: " + ReceiverpoList.size.toString())
+                            noofitems.visibility=View.VISIBLE
+                        }
                     }
                 } else {
                     SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
@@ -211,8 +219,11 @@ class SubmitdetailsActivity : AppCompatActivity() {
         val btDismiss = dialog?.findViewById<Button>(com.example.myapplication.R.id.btDismissCustomDialog)
         btDismiss?.setOnClickListener {
             dialog.dismiss()
-            var intent = Intent(this, SubmitdetailsActivity::class.java)
-            startActivity(intent)        }
+            val mServiceIntent = Intent(this, HomeFragment::class.java)
+            startActivity(mServiceIntent)
+//            var intent = Intent(this, HomeFragment::class.java)
+//            startActivity(intent)
+            }
         dialog?.show()
     }
 }

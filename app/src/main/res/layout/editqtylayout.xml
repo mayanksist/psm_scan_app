@@ -62,9 +62,9 @@
         android:paddingTop="10dp"
         android:text="PO Quantity : "
         android:textAlignment="center"
-        android:textSize="16sp"
         android:textColor="#000"
-        app:layout_constraintEnd_toStartOf="@+id/increase"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/decrease"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider6" />
 
@@ -80,10 +80,13 @@
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/increase"
-        app:layout_constraintEnd_toStartOf="@+id/decrease"
-        app:layout_constraintStart_toEndOf="@+id/increase"
-        app:layout_constraintTop_toTopOf="@+id/increase"
+        android:focusable="false"
+        android:editable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/decrease"
+        app:layout_constraintEnd_toStartOf="@+id/increase"
+        app:layout_constraintStart_toEndOf="@+id/decrease"
+        app:layout_constraintTop_toTopOf="@+id/decrease"
+        app:layout_constraintVertical_bias="0.53"
         tools:text="QTY" />
 
     <Button
@@ -156,26 +159,25 @@
         android:id="@+id/decrease"
         android:layout_width="40dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="4dp"
         android:background="@drawable/frame"
         android:src="@drawable/mins"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/txteditpoqty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txteditpoqty"
-        app:layout_constraintTop_toTopOf="@+id/txteditpoqty" />
-
-    <ImageView
-        android:id="@+id/increase"
-        android:layout_width="40dp"
-        android:layout_height="50dp"
-        android:background="@drawable/frame"
-        android:src="@drawable/pls"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/txtpoty"
         app:layout_constraintEnd_toStartOf="@+id/txteditpoqty"
         app:layout_constraintStart_toEndOf="@+id/txtpoty"
         app:layout_constraintTop_toTopOf="@+id/txtpoty" />
+
+    <ImageView
+        android:id="@+id/increase"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/frame"
+        android:src="@drawable/pls"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/txteditpoqty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txteditpoqty" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

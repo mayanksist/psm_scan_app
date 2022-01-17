@@ -67,8 +67,6 @@ class ReceivePO : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-//        hideSoftKeyboard()
 
         setContentView(com.example.myapplication.R.layout.activity_receive_po)
         toolbar = findViewById(R.id.toolbarAction)
@@ -121,6 +119,7 @@ class ReceivePO : AppCompatActivity() {
         }
 
         if (AppPreferences.internetConnectionCheck(this)) {
+
             addbarcode!!.requestFocus()
             addbarcode!!.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
                 if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) {
@@ -153,32 +152,6 @@ class ReceivePO : AppCompatActivity() {
 
     }
 
-    fun hideSoftKeyboard() {
-        if (currentFocus != null) {
-            val inputMethodManager: InputMethodManager =
-                getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
-        }
-    }
-
-    /**
-     * Shows the soft keyboard
-     */
-    fun showSoftKeyboard(view: View) {
-        val inputMethodManager: InputMethodManager =
-            getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        view.requestFocus()
-        inputMethodManager.showSoftInput(view, 0)
-    }
-    override fun onKeyDown(key_code: Int, key_event: KeyEvent?): Boolean {
-        if (key_code == KeyEvent.ACTION_DOWN) {
-            if (key_code == KeyEvent.KEYCODE_BACK) {
-
-            }
-        }
-       return true
-
-    }
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -355,6 +328,7 @@ class ReceivePO : AppCompatActivity() {
         var POLIST = ReceiveModel(PID, PNAME, UNITTYPE,UnitQTY, POQTY,UnitQTY, DRaftID,QtyperUnit)
         ReceiverpoList.add(0,POLIST)
         ReceivePOAdapterl.notifyDataSetChanged()
+        ReceivePOAdapterl.notifyItemChanged(ReceiverpoList.size)
 
 
     }
@@ -465,7 +439,6 @@ class ReceivePO : AppCompatActivity() {
         qty = view.findViewById<TextView>(R.id.qtym)
         qty!!.isEnabled =false
         totalpicesqty = view.findViewById<TextView>(R.id.totalpicesqty)
-        //   BindProductList()
         autotextView!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence,
@@ -482,7 +455,7 @@ class ReceivePO : AppCompatActivity() {
                 before: Int,
                 count: Int
             ) {
-
+                BindProductList()
             }
 
             override fun afterTextChanged(s: Editable) {
@@ -557,7 +530,7 @@ class ReceivePO : AppCompatActivity() {
         dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
-        // BindUnitList()
+
 
     }
 
@@ -689,16 +662,20 @@ class ReceivePO : AppCompatActivity() {
                         productArrayId[i] = PID.toString()
                     }
                     val adapter = ArrayAdapter(this,
-                        android.R.layout.simple_list_item_1, productArray)
+                        android.R.layout.simple_dropdown_item_1line, productArray)
+                    autotextView?.showDropDown()
+                    autotextView?.threshold = 2
                     autotextView?.setAdapter(adapter)
-                    autotextView?.setOnItemClickListener( OnItemClickListener { adapterView, view, j, l ->
-                        sproductid = productArrayId[j].toString()
-                        qty!!.isEnabled =true
+                    this.adapter?.setNotifyOnChange(true)
+                    this.adapter?.notifyDataSetChanged()
+                    autotextView?.onItemClickListener =
+                        OnItemClickListener { _, _, j, _ ->
+                            sproductid = productArrayId[j].toString()
+                            qty!!.isEnabled =true
+                            BindUnitList()
 
-                        BindUnitList()
 
-
-                    })
+                        }
                 } else {
                     Toast.makeText(this@ReceivePO,responseMessage,Toast.LENGTH_SHORT).show()
                 }
@@ -728,6 +705,7 @@ class ReceivePO : AppCompatActivity() {
         var Bill_No = preferences.getString("Bill_No", "")
         var Bill_Date = preferences.getString("Bill_Date", "")
         var VENDORID = preferences.getInt("VENDORID", 0)
+        var VENDORName   = preferences.getString("VENDORName", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")
         JSONObj.put(
             "requestContainer",
@@ -777,7 +755,6 @@ class ReceivePO : AppCompatActivity() {
                             check=true;
                             if (ReceiverpoList[n].getPOQTY() != null) {
                                 poreqqty = ReceiverpoList[n].getPOQTY()!! + qty!!.text.toString().toInt()
-
                                 qtyperunit = Qty * poreqqty
                                 ReceivePOAdapterl.notifyItemChanged(n)
                                 ReceiverpoList.removeAt(n)
@@ -935,6 +912,8 @@ class ReceivePO : AppCompatActivity() {
                     if(ReceiverpoList.size!=0) {
                         noofitems.setText("Total Items: " + ReceiverpoList.size.toString())
                         noofitems.visibility=View.VISIBLE
+
+
                     }
                 } else {
                     var alertbox = SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)

@@ -68,6 +68,8 @@
                 android:singleLine="true"
                 app:counterEnabled="true"
                 app:hintEnabled="true"
+                android:imeOptions="actionDone"
+                android:keyboardNavigationCluster="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
