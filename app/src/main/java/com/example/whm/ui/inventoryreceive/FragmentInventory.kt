@@ -27,7 +27,6 @@ import com.example.myapplication.com.example.whm.ui.home.HomeFragment
 
 class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
     lateinit var mView: View
-
     var txtbildate: TextView? = null
     var   Bill_No: TextView? = null
     var edtbillNo: EditText? = null
@@ -129,7 +128,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
         val btDismiss = dialog?.findViewById<Button>(com.example.myapplication.R.id.btDismissCustomDialog)
         btDismiss?.setOnClickListener {
             dialog.dismiss()
-            this.findNavController().navigate(com.example.myapplication.R.id.nav_home)
+            this.findNavController().navigate(R.id.nav_home)
 //            var intent = Intent(context, HomeFragment::class.java)
 //            startActivity(intent)
             }

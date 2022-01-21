@@ -26,52 +26,52 @@
         tools:text="PID" />
 
     <TextView
-            android:id="@+id/txtpid"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="6dp"
-            android:gravity="center"
-            android:textColor="#B82929"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="PID" />
+        android:id="@+id/txtpid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:textColor="#B82929"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="PID" />
 
-        <TextView
-            android:id="@+id/txtpoproductname"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="4dp"
-            android:padding="0dp"
-            android:textColor="#000"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/txtpid"
-            app:layout_constraintTop_toTopOf="@+id/txtpid"
-            tools:text="PNAME" />
+    <TextView
+        android:id="@+id/txtpoproductname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:padding="0dp"
+        android:textColor="#000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtqtyperunit"
+        app:layout_constraintTop_toBottomOf="@+id/txtqtyperunit"
+        tools:text="PNAME" />
 
     <TextView
         android:id="@+id/txtpoty"
-        android:layout_width="107dp"
-        android:layout_height="50dp"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
         android:paddingTop="10dp"
         android:text="PO Quantity : "
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/decrease"
         app:layout_constraintEnd_toStartOf="@+id/decrease"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider6" />
+        app:layout_constraintTop_toTopOf="@+id/decrease" />
 
     <EditText
         android:id="@+id/txteditpoqty"
         android:layout_width="98dp"
         android:layout_height="50dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/frame"
         android:inputType="number"
         android:maxLength="6"
@@ -80,11 +80,8 @@
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/decrease"
         app:layout_constraintEnd_toStartOf="@+id/increase"
-        app:layout_constraintStart_toEndOf="@+id/decrease"
-        app:layout_constraintTop_toTopOf="@+id/decrease"
-        app:layout_constraintVertical_bias="0.53"
+        app:layout_constraintTop_toBottomOf="@+id/divider6"
         tools:text="QTY" />
 
     <Button
@@ -93,13 +90,11 @@
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
-            android:layout_gravity="left"
-            android:background="@drawable/transparent"
-            android:gravity="center"
-            android:text="Cancel"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="#000"
+        android:text="Cancel"
+        android:background = "#FF0000"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/divider8"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,28 +107,29 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_gravity="right"
-            android:background="@drawable/transparent"
+            android:background = "#4CAF50"
             android:gravity="center"
-            android:text="Update"
+            android:text="Add"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="#000"
+            android:textColor="#ffffff"
             app:layout_constraintBottom_toBottomOf="@+id/divider8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/divider8"
             app:layout_constraintTop_toTopOf="@+id/divider8" />
 
-        <View
-            android:id="@+id/divider6"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="6dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtpoproductname" />
+    <View
+        android:id="@+id/divider6"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtpoproductname" />
 
-        <View
+    <View
             android:id="@+id/divider7"
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -160,10 +156,9 @@
         android:background="@drawable/frame"
         android:src="@drawable/mins"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/txtpoty"
+        app:layout_constraintBottom_toBottomOf="@+id/txteditpoqty"
         app:layout_constraintEnd_toStartOf="@+id/txteditpoqty"
-        app:layout_constraintStart_toEndOf="@+id/txtpoty"
-        app:layout_constraintTop_toTopOf="@+id/txtpoty" />
+        app:layout_constraintTop_toTopOf="@+id/txteditpoqty" />
 
     <ImageView
         android:id="@+id/increase"

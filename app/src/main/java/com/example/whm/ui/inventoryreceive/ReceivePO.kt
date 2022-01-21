@@ -82,12 +82,12 @@ class ReceivePO : AppCompatActivity() {
             editor.putString("header", "Revert PO ")
         }
         else if(Status==1){
-            supportActionBar?.setTitle("Draft PO")
-            editor.putString("header", "Draft PO")
+            supportActionBar?.setTitle("Draft PO ")
+            editor.putString("header", "Draft PO ")
         }
         else{
-            supportActionBar?.setTitle("PO Receive")
-            editor.putString("header", "PO Receive")
+            supportActionBar?.setTitle("New PO Receive ")
+            editor.putString("header", "New PO Receive ")
         }
         editor.apply()
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
