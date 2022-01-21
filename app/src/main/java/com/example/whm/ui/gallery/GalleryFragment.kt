@@ -230,7 +230,7 @@ class GalleryFragment : Fragment() {
         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
         pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
         pDialog.titleText = "Fetching ..."
-        pDialog.setCancelable(true)
+        pDialog.setCancelable(false)
         pDialog.show()
         val produname: TextView = binding.productname
          productId = binding.txtProductId
@@ -327,29 +327,21 @@ class GalleryFragment : Fragment() {
                         .into(imagur)
                     pDialog.dismiss()
                 } else {
-                    pDialog.dismiss()
-
                     showproductdetails?.visibility = View.GONE
                     val barcodeC: EditText = binding.barcodetype
-                    barcode.text = ""
                     barcodeC.text.clear()
-                    barcode.text = ""
-                    val alertemail = AlertDialog.Builder(this.context)
-                    alertemail.setTitle("Barcode")
-                    alertemail.setMessage(presponsmsg.toString())
-                    alertemail.setPositiveButton("ok")
-                    { dialog, which ->
-                        dialog.dismiss()
-                        barcode.text = ""
-                        barcodeC.text.clear()
-                        barcode.text = ""
-                        menu?.isVisible = false
-                    }
-                    AppPreferences.playSoundbarcode()
-                    alertemail.setCancelable(false)
-                    val dialog: AlertDialog = alertemail.create()
+                    barcode.setText("")
+                    pDialog.dismiss()
+                    val dialog = SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                    dialog.setContentText(""+presponsmsg.toString())
+                    dialog.setConfirmText("ok").currentFocus
+                    dialog.setConfirmClickListener { sDialog -> sDialog.dismissWithAnimation()
+                            barcodeC.text.clear()
+                            barcode.setText("")
+                            menu?.isVisible = false }
+                    dialog.setCancelable(false)
                     dialog.show()
-
+                    AppPreferences.playSoundbarcode()
                 }
             }, Response.ErrorListener { response ->
                 pDialog.dismiss()
@@ -554,12 +546,12 @@ class GalleryFragment : Fragment() {
                 if (AppPreferences.internetConnectionCheck(this.context)) {
                     if (TotalStockQTY!!.text.toString()!="" && TotalStockQTY!!.text.toString().toInt()>0) {
                       var backbtn=  SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
-                        backbtn.setContentText("Discard stock changes?")
-                        backbtn.setCancelButtonBackgroundColor(Color.parseColor("#4cae4c"))
+                        backbtn.contentText = "Discard stock changes?"
+                        backbtn.cancelButtonBackgroundColor = Color.parseColor("#4cae4c")
                         backbtn.setCancelButton( "Yes")
                             { sDialog -> sDialog.dismissWithAnimation() }
-                        backbtn.setConfirmText("No")
-                        backbtn.setConfirmButtonBackgroundColor(Color.parseColor("#E60606"))
+                        backbtn.confirmText = "No"
+                        backbtn.confirmButtonBackgroundColor = Color.parseColor("#E60606")
                         backbtn.setCancelClickListener {
                                     sDialog ->
                                 sDialog.dismissWithAnimation()
@@ -713,8 +705,8 @@ class GalleryFragment : Fragment() {
                     val resmsg = resultobj.getString("responseMessage")
                     if (presponscode == "200") {
                         var updates=   SweetAlertDialog(this.context, SweetAlertDialog.SUCCESS_TYPE)
-                        updates.setContentText(resmsg.toString())
-                        updates.setConfirmText("ok")
+                        updates.contentText = resmsg.toString()
+                        updates.confirmText = "ok"
                         updates.setConfirmClickListener { sDialog -> sDialog.dismissWithAnimation()
                                 backinvetory?.isVisible = false
                                 barcodeenter = binding.txtBarScanned.text as String?
@@ -751,25 +743,19 @@ class GalleryFragment : Fragment() {
         }
     }
     fun RemarkMessage() {
-
-
         SweetAlertDialog(this.context,SweetAlertDialog.ERROR_TYPE)
         .setContentText("Remark length should be 10 character").show()
-
-
-
     }
-
     fun Totalstockqtycheck()
     {
         var Totalstockqtycheck = SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
-        Totalstockqtycheck.setTitleText("Are you sure?")
-        Totalstockqtycheck.setContentText("You want to make out of stock.")
-        Totalstockqtycheck.setCancelButtonBackgroundColor(Color.parseColor("#4cae4c"))
+        Totalstockqtycheck.titleText = "Are you sure?"
+        Totalstockqtycheck.contentText = "You want to make out of stock."
+        Totalstockqtycheck.cancelButtonBackgroundColor = Color.parseColor("#4cae4c")
         Totalstockqtycheck.setCancelButton( "Yes")
             { sDialog -> sDialog.dismissWithAnimation() }
-        Totalstockqtycheck.setConfirmText("No")
-        Totalstockqtycheck.setConfirmButtonBackgroundColor(Color.parseColor("#E60606"))
+        Totalstockqtycheck.confirmText = "No"
+        Totalstockqtycheck.confirmButtonBackgroundColor = Color.parseColor("#E60606")
         Totalstockqtycheck.setCancelClickListener {
                     sDialog ->
                 sDialog.dismissWithAnimation()
@@ -800,7 +786,6 @@ class GalleryFragment : Fragment() {
         }
         dialog?.show()
     }
-
     }
 
 

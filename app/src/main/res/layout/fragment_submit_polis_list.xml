@@ -11,13 +11,11 @@
     >
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/load_order"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"
         app:layoutManager="LinearLayoutManager"
-
         tools:listitem="@layout/fragment_draftpolist" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

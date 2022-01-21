@@ -2,19 +2,21 @@ package com.example.whm.ui.inventoryreceive
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.text.Editable
+import android.text.TextUtils.split
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,13 +29,15 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.MainActivity2
-import com.example.myapplication.com.example.whm.ui.home.HomeFragment
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceiveModel
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceivePOAdapter1
 import com.example.whm.ui.draftpolist.draftpolistFragment
-import com.example.whm.ui.submitpolist.submitpolistFragment
 import org.json.JSONArray
 import org.json.JSONObject
+import android.content.SharedPreferences
+
+
+
 
 
 class ReceivePO : AppCompatActivity() {
@@ -45,7 +49,7 @@ class ReceivePO : AppCompatActivity() {
     var spunitypeid: String? = null
     var toolbar:Toolbar?=null
     var LinearLayoutV:LinearLayout?=null
-
+    var noofitems : TextView?=null
     var autotextView: AutoCompleteTextView? = null
     var qty: TextView? = null
     var totalpicesqty: TextView? = null
@@ -67,26 +71,30 @@ class ReceivePO : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         setContentView(com.example.myapplication.R.layout.activity_receive_po)
         toolbar = findViewById(R.id.toolbarAction)
         val preferencesid = PreferenceManager.getDefaultSharedPreferences(this@ReceivePO)
         Status = preferencesid.getInt("Status", 0)
         setSupportActionBar(toolbar)
+        val editor = getSharedPreferences("CheckShared", MODE_PRIVATE).edit()
         if(Status==3){
             supportActionBar?.setTitle("Revert PO ")
+            editor.putString("header", "Revert PO ")
         }
         else if(Status==1){
             supportActionBar?.setTitle("Draft PO")
+            editor.putString("header", "Draft PO")
         }
         else{
             supportActionBar?.setTitle("PO Receive")
+            editor.putString("header", "PO Receive")
         }
-
+        editor.apply()
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
         backarrow = findViewById(com.example.myapplication.R.id.imgbackbtm)
         LinearLayoutV = findViewById(com.example.myapplication.R.id.LinearFragmentContainer)
+
 
         DAutoid = preferencesid.getInt("DAutoid", 0)
         if (AppPreferences.internetConnectionCheck(this)) {
@@ -98,6 +106,7 @@ class ReceivePO : AppCompatActivity() {
                 Draftproductlist()
                 ReceivePOAdapterl = ReceivePOAdapter1(ReceiverpoList, this)
                 recyclerView.adapter = ReceivePOAdapterl
+
             }
         }
         else{
@@ -130,7 +139,7 @@ class ReceivePO : AppCompatActivity() {
                     val layoutManager = LinearLayoutManager(this)
                     recyclerView.layoutManager = layoutManager
 
-                    if (scanbarcodeproduct!!.trim().isEmpty()) {
+                    if (scanbarcodeproduct.trim().isEmpty()) {
                         addbarcode!!.text.clear()
                         addbarcode!!.setText("")
                         Toast.makeText(this, "Scan product", Toast.LENGTH_SHORT).show()
@@ -201,7 +210,6 @@ class ReceivePO : AppCompatActivity() {
         SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText("Atleast One Item Required").show()
     }
     fun Addproductlist() {
-        var noofitems:TextView=findViewById(R.id.txtnoofproduc)
         val barcodeadd: EditText = findViewById(com.example.myapplication.R.id.enterbacode)
         val draftAutoIdTV: TextView = findViewById(com.example.myapplication.R.id.draftAutoId)
         val Jsonarra = JSONObject()
@@ -236,7 +244,7 @@ class ReceivePO : AppCompatActivity() {
         JSONObj.put("cObj", Jsonarrabarcode.put("billNo", Bill_No))
         JSONObj.put("cObj", Jsonarrabarcode.put("billDate", Bill_Date))
         JSONObj.put("cObj", Jsonarrabarcode.put("vendorAutoId", VENDORID.toInt()))
-        JSONObj.put("cObj", Jsonarrabarcode.put("barcode", barcodeadd!!.text.toString()))
+        JSONObj.put("cObj", Jsonarrabarcode.put("barcode", barcodeadd.text.toString()))
         JSONObj.put("cObj", Jsonarrabarcode.put("Remark", ""))
 
         val BARCODEADDPRODUCT = JsonObjectRequest(
@@ -263,7 +271,7 @@ class ReceivePO : AppCompatActivity() {
 
                     for (n in 0..ReceiverpoList.size-1) {
                         if(ReceiverpoList[n].getPID()==ProductId){
-                            check=true;
+                            check=true
 
                             if (ReceiverpoList[n].getPOQTY() != null) {
                                 poreqqty = ReceiverpoList[n].getPOQTY()!! + 1
@@ -296,13 +304,16 @@ class ReceivePO : AppCompatActivity() {
                         )
                     }
                     if(ReceiverpoList.size!=0) {
-                        noofitems.setText("Total Items: " + ReceiverpoList.size.toString())
-                        noofitems.visibility=View.VISIBLE
+                        noofitems?.text = "Total Items: " + ReceiverpoList.size.toString()
+                        noofitems?.visibility=View.VISIBLE
                     }
                 }
                 else {
                     SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
-                    AppPreferences.playSoundbarcode()
+                    var d= responseMessage.split("\\s".toRegex())[0]
+                    if (d == "Barcode"){
+                        AppPreferences.playSoundbarcode()
+                    }
 //                    Toast.makeText(this, , Toast.LENGTH_SHORT).show()
 
                 }
@@ -374,8 +385,8 @@ class ReceivePO : AppCompatActivity() {
                 val responseMessage = resultobj.getString("responseMessage")
                 if (responseCode == "201") {
                     var alertbox = SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
-                    alertbox.setContentText(responseMessage)
-                    alertbox.setConfirmText("ok")
+                    alertbox.contentText = responseMessage
+                    alertbox.confirmText = "ok"
                     alertbox.setConfirmClickListener {
                             sDialog ->
                         var intent = Intent(this, MainActivity2::class.java)
@@ -386,11 +397,11 @@ class ReceivePO : AppCompatActivity() {
 
                 } else {
                     var alertbox = SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
-                    alertbox.setContentText(responseMessage)
-                    alertbox.setCancelButtonBackgroundColor(Color.parseColor("#4cae4c"))
+                    alertbox.contentText = responseMessage
+                    alertbox.cancelButtonBackgroundColor = Color.parseColor("#4cae4c")
 
-                    alertbox.setConfirmText("ok")
-                    alertbox.setConfirmButtonBackgroundColor(Color.parseColor("#E60606"))
+                    alertbox.confirmText = "ok"
+                    alertbox.confirmButtonBackgroundColor = Color.parseColor("#E60606")
                     alertbox.setConfirmClickListener {
                             sDialog ->
                         var intent = Intent(this, draftpolistFragment::class.java)
@@ -415,16 +426,16 @@ class ReceivePO : AppCompatActivity() {
         queues.add(SUBMITPOLITS)
     }
     fun CheckInterNetDailog(){
-        val dialog = this?.let { Dialog(it) }
-        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog?.setContentView(com.example.myapplication.R.layout.dailog_log)
-        val btDismiss = dialog?.findViewById<Button>(com.example.myapplication.R.id.btDismissCustomDialog)
+        val dialog = this.let { Dialog(it) }
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(com.example.myapplication.R.layout.dailog_log)
+        val btDismiss = dialog.findViewById<Button>(com.example.myapplication.R.id.btDismissCustomDialog)
         btDismiss?.setOnClickListener {
             dialog.dismiss()
             var intent = Intent(this, ReceivePO::class.java)
             startActivity(intent)
         }
-        dialog?.show()
+        dialog.show()
     }
 
 
@@ -446,7 +457,7 @@ class ReceivePO : AppCompatActivity() {
                 count: Int,
                 after: Int
             ) {
-
+//                BindProductList()
             }
 
             override fun onTextChanged(
@@ -486,7 +497,7 @@ class ReceivePO : AppCompatActivity() {
                     tqty=getdefault!!.trim().toInt()
                     Quantity = qty!!.text.toString().toInt()
                     totalpices = tqty  * Quantity
-                    totalpicesqty!!.setText(totalpices.toString())
+                    totalpicesqty!!.text = totalpices.toString()
                 }
             }
         })
@@ -497,10 +508,10 @@ class ReceivePO : AppCompatActivity() {
 
         btnpoqty.setOnClickListener(View.OnClickListener {
             var name: String? = null
-            name = spUnitType!!.getSelectedItem() as String?
+            name = spUnitType!!.selectedItem as String?
             var productname=autotextView!!.text.toString()
             //Toast.makeText(this,productname,Toast.LENGTH_SHORT).show()
-            if (spUnitType!!.getSelectedItem() != null && qty!!.text.toString()!="" && qty!!.text.toString().toInt()!=0 && productname!="") {
+            if (spUnitType!!.selectedItem != null && qty!!.text.toString()!="" && qty!!.text.toString().toInt()!=0 && productname!="") {
                 val recyclerView: RecyclerView =
                     findViewById(com.example.myapplication.R.id.POLIST)
                 val layoutManager = LinearLayoutManager(this)
@@ -527,7 +538,7 @@ class ReceivePO : AppCompatActivity() {
         })
         builder.setView(view)
         dialog = builder.create()
-        dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
 
@@ -587,9 +598,9 @@ class ReceivePO : AppCompatActivity() {
                         }
                         spinnerArrayId[i] = UnitType.toString()
 
-                        BINDUNITTYPE?.adapter = this?.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) } as SpinnerAdapter
+                        BINDUNITTYPE?.adapter = this.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) }
                         BINDUNITTYPE!!.setSelection(spinnerArrayId.indexOf(DUnit.toString()))
-                        BINDUNITTYPE?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+                        BINDUNITTYPE.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
                             override fun onNothingSelected(parent: AdapterView<*>?) {
                             }
                             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -599,9 +610,9 @@ class ReceivePO : AppCompatActivity() {
                                     val result1 = spunitypename.trim().split("(").toMutableList()
                                     getdefault=result1[1].replace("pcs)","" ).replace("*","")
                                    // Toast.makeText(this@ReceivePO,  getdefault!!.trim().toString(),Toast.LENGTH_SHORT).show()
-                                    totalpicesqty!!.setText(getdefault.toString())
+                                    totalpicesqty!!.text = getdefault.toString()
                                     var defaultqty:Int=1
-                                    qty!!.setText(defaultqty.toString())
+                                    qty!!.text = defaultqty.toString()
 
                                 }
                             }
@@ -677,7 +688,7 @@ class ReceivePO : AppCompatActivity() {
 
                         }
                 } else {
-                    Toast.makeText(this@ReceivePO,responseMessage,Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@ReceivePO,responseMessage,Toast.LENGTH_SHORT).show()
                 }
             }, { response ->
 
@@ -692,7 +703,6 @@ class ReceivePO : AppCompatActivity() {
     }
 
     fun AddproductlistManual() {
-        var noofitems:TextView=findViewById(R.id.txtnoofproduc)
         val draftAutoIdTV: TextView = findViewById(com.example.myapplication.R.id.draftAutoId)
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
@@ -752,7 +762,7 @@ class ReceivePO : AppCompatActivity() {
 
                     for (n in 0..ReceiverpoList.size-1) {
                         if(ReceiverpoList[n].getPID()==ProductId){
-                            check=true;
+                            check=true
                             if (ReceiverpoList[n].getPOQTY() != null) {
                                 poreqqty = ReceiverpoList[n].getPOQTY()!! + qty!!.text.toString().toInt()
                                 qtyperunit = Qty * poreqqty
@@ -787,8 +797,8 @@ class ReceivePO : AppCompatActivity() {
                         //Toast.makeText(this,totalpices.toString(),Toast.LENGTH_SHORT).show()
                     }
                     if(ReceiverpoList.size!=0) {
-                        noofitems.setText("Total Items: " + ReceiverpoList.size.toString())
-                        noofitems.visibility=View.VISIBLE
+                        noofitems?.text = "Total Items: " + ReceiverpoList.size.toString()
+                        noofitems?.visibility=View.VISIBLE
                     }
                 } else {
                     SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
@@ -810,7 +820,7 @@ class ReceivePO : AppCompatActivity() {
 
     fun Draftproductlist() {
 
-        var noofitems:TextView=findViewById(R.id.txtnoofproduc)
+
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
         val JSONObj = JSONObject()
@@ -869,7 +879,7 @@ class ReceivePO : AppCompatActivity() {
                         for (n in 0..ReceiverpoList.size-1) {
 
                             if(ReceiverpoList[n].getPID()==PID){
-                                check=true;
+                                check=true
                                 if (ReceiverpoList[n].getPOQTY() != null) {
                                     poreqqty = ReceiverpoList[n].getPOQTY()!! + 1
                                     ReceivePOAdapterl.notifyItemChanged(n)
@@ -910,16 +920,16 @@ class ReceivePO : AppCompatActivity() {
 
                     }
                     if(ReceiverpoList.size!=0) {
-                        noofitems.setText("Total Items: " + ReceiverpoList.size.toString())
-                        noofitems.visibility=View.VISIBLE
+                        noofitems?.text = "Total Items: " + ReceiverpoList.size.toString()
+                        noofitems?.visibility=View.VISIBLE
 
 
                     }
                 } else {
                     var alertbox = SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
-                    alertbox.setContentText(responseMessage)
-                    alertbox.setConfirmText("Ok")
-                    alertbox.setConfirmButtonBackgroundColor(Color.parseColor("#E60606"))
+                    alertbox.contentText = responseMessage
+                    alertbox.confirmText = "Ok"
+                    alertbox.confirmButtonBackgroundColor = Color.parseColor("#E60606")
                     alertbox.setConfirmClickListener { sDialog ->
                         val intent = Intent(this@ReceivePO, draftpolistFragment::class.java)
                         startActivity(intent)
@@ -938,6 +948,7 @@ class ReceivePO : AppCompatActivity() {
         )
         queues.add(DRAFTADDPRODUCT)
     }
+
 }
 
 

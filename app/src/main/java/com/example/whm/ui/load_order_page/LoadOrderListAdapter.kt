@@ -63,6 +63,6 @@ internal class LoadOrderListAdapter(private var loadorderList: List<LoadOrderMod
     }
 }
 
-private fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
+fun AppCompatActivity?.setSupportActionBar(toolbar: Toolbar?) {
 
 }

@@ -25,7 +25,6 @@ internal class RevertAdapter(private var revertModel: List<RevertModel>, var act
         var txtnoofproduct: TextView = view.findViewById(R.id.product)
         var vendorname: TextView = view.findViewById(R.id.vendorname)
         var CardView : CardView = view.findViewById(R.id.POListRecyclerView)
-
         var DAutoid:Int=0
         var Status:Int=0
     }
@@ -59,6 +58,9 @@ internal class RevertAdapter(private var revertModel: List<RevertModel>, var act
         })
     }
     override fun getItemCount(): Int {
+        if(revertModel.size!=0){
+            (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Revert PO List ("+revertModel.size+")"
+        }
         return revertModel.size
     }
 

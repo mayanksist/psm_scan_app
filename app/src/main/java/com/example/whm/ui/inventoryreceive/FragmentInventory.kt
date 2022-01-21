@@ -93,7 +93,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
             btnNext?.setOnClickListener {
                 Bill_No = edtbillNo
                 val Bill_Date: CharSequence? = txtbildate?.text
-                if (TextUtils.isEmpty(Bill_No?.getText().toString())) {
+                if (TextUtils.isEmpty(Bill_No?.text.toString())) {
                     EnertBill_No()
                 } else if (TextUtils.isEmpty(Bill_Date.toString())) {
                     EnertBill_Date()

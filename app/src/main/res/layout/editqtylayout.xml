@@ -80,8 +80,6 @@
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="25dp"
-        android:focusable="false"
-        android:editable="false"
         app:layout_constraintBottom_toBottomOf="@+id/decrease"
         app:layout_constraintEnd_toStartOf="@+id/increase"
         app:layout_constraintStart_toEndOf="@+id/decrease"

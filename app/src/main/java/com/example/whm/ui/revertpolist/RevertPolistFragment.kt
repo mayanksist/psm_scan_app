@@ -34,8 +34,6 @@ class RevertPolistFragment : Fragment() {
     private val revertModel = ArrayList<RevertModel>()
     private lateinit var revertAdapter: RevertAdapter
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

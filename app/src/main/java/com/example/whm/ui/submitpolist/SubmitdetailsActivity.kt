@@ -126,10 +126,10 @@ class SubmitdetailsActivity : AppCompatActivity() {
                     val Status = jsonrepdu.getInt("Status")
                     val StatusType = jsonrepdu.getString("StatusType")
                     val POItems = jsonrepdu.getJSONArray("POItems")
-                    txtbillno.setText(BillNo)
-                    txtbilldatepo.setText(BillDate)
-                    vendornamepo.setText(VendorName)
-                    statuspo.setText("Status : "+StatusType)
+                    txtbillno.text = BillNo
+                    txtbilldatepo.text = BillDate
+                    vendornamepo.text = VendorName
+                    statuspo.text = "Status : "+StatusType
                     // Toast.makeText(this,POItems.toString(),Toast.LENGTH_SHORT).show()
                     for (i in 0 until POItems.length()) {
                         PName = POItems.getJSONObject(i).getString("PName")
@@ -144,7 +144,7 @@ class SubmitdetailsActivity : AppCompatActivity() {
                         var poreqqty:Int=0
                         for (n in 0..ReceiverpoList.size-1) {
                             if(ReceiverpoList[n].getPID()==PID){
-                                check=true;
+                                check=true
                                 if (ReceiverpoList[n].getPOQTY() != null) {
                                     poreqqty = ReceiverpoList[n].getPOQTY()!! + 1
                                     ReceivePOAdapterl.notifyItemChanged(n)
@@ -179,7 +179,7 @@ class SubmitdetailsActivity : AppCompatActivity() {
                             }
                         }
                         if(ReceiverpoList.size!=0) {
-                            noofitems.setText("Total Items: " + ReceiverpoList.size.toString())
+                            noofitems.text = "Total Items: " + ReceiverpoList.size.toString()
                             noofitems.visibility=View.VISIBLE
                         }
                     }
@@ -213,10 +213,10 @@ class SubmitdetailsActivity : AppCompatActivity() {
 
     }
     fun CheckInterNetDailog(){
-        val dialog = this?.let { Dialog(it) }
-        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog?.setContentView(com.example.myapplication.R.layout.dailog_log)
-        val btDismiss = dialog?.findViewById<Button>(com.example.myapplication.R.id.btDismissCustomDialog)
+        val dialog = this.let { Dialog(it) }
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(com.example.myapplication.R.layout.dailog_log)
+        val btDismiss = dialog.findViewById<Button>(com.example.myapplication.R.id.btDismissCustomDialog)
         btDismiss?.setOnClickListener {
             dialog.dismiss()
             val mServiceIntent = Intent(this, HomeFragment::class.java)
@@ -224,6 +224,6 @@ class SubmitdetailsActivity : AppCompatActivity() {
 //            var intent = Intent(this, HomeFragment::class.java)
 //            startActivity(intent)
             }
-        dialog?.show()
+        dialog.show()
     }
 }

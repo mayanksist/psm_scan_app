@@ -8,12 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.annotation.NonNull
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
+import com.example.myapplication.com.example.whm.ui.load_order_page.setSupportActionBar
 import com.example.whm.ui.inventoryreceive.ReceivePO
 
 
@@ -27,7 +30,7 @@ internal class draftpoadapter(private var draftModel: List<draftpomodel>, var ac
         var CardView : CardView = view.findViewById(R.id.POListDraftRecyclerView)
         var DAutoid:Int=0
         var Status:Int=0
-
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
     }
 
     @NonNull
@@ -64,6 +67,9 @@ internal class draftpoadapter(private var draftModel: List<draftpomodel>, var ac
     }
 
     override fun getItemCount(): Int {
+        if(draftModel.size!=0){
+            (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Draft PO List ("+draftModel.size+")"
+        }
         return draftModel.size
     }
 }

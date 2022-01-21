@@ -27,11 +27,11 @@
         <LinearLayout
             android:id="@+id/layoutbillnotxt"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtPunit"
@@ -82,6 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/layoutbillno"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:orientation="horizontal">
 
@@ -100,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layoutbilldatetxt"
-            android:layout_marginTop="5dp"
+
             android:orientation="horizontal">
 
             <TextView
@@ -133,14 +134,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layoutbilldate"
-            android:layout_marginTop="5dp">
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp">
 
             <TextView
                 android:id="@+id/txtvender"
                 style="@style/RegularMono"
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:text="Vendor"
                 android:textSize="17dp"
@@ -150,6 +152,7 @@
             android:id="@+id/layoutvender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:layout_below="@+id/layoutvendertxt"
             >
 

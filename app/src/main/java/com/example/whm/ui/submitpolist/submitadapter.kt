@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
@@ -58,6 +59,9 @@ internal class submitadapter(private var draftModel: List<submitmodel>, var acti
     }
 
     override fun getItemCount(): Int {
+        if(draftModel.size!=0){
+            (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Pending PO List ("+draftModel.size+")"
+        }
         return draftModel.size
     }
 }

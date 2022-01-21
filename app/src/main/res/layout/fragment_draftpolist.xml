@@ -1,33 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="5dp"
-    android:layout_margin="4dp"
+    android:padding="0dp"
     tools:context="com.example.whm.ui.draftpolist.draftpolistFragment">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/POListDraftRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="2dp"
         android:elevation="3dp"
-        android:visibility="visible">
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/frame">
 
             <TextView
                 android:id="@+id/txtbillno"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:text="123456"
-                android:textColor="#B36B5E"
-                android:textSize="21dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="12dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="123456789123456789"
+                android:textColor="#D82B0A"
+                android:textSize="14dp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/imageView10"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,70 +47,61 @@
                 android:id="@+id/product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
                 android:text="5"
                 android:textColor="#D82B0A"
-                android:textSize="21dp"
+                android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:layout_editor_absoluteY="4dp" />
+                app:layout_constraintTop_toBottomOf="@+id/billdate" />
 
             <TextView
                 android:id="@+id/billdate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
                 android:text="12-12-2021"
                 android:textColor="#000"
-                android:textSize="18dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="@+id/product"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/txtbillno"
-                app:layout_constraintTop_toBottomOf="@+id/txtbillno"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/vendorname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="Kav Imports"
                 android:textColor="#000"
-                android:textSize="18dp"
+                android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/product"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/billdate"
-                app:layout_constraintTop_toBottomOf="@+id/billdate"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:backgroundTint="#000000"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintEnd_toStartOf="@+id/imageView8"
+                app:layout_constraintStart_toStartOf="@+id/txtbillno"
+                app:layout_constraintTop_toBottomOf="@+id/txtbillno" />
 
             <TextView
                 android:id="@+id/imageView8"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="275dp"
-                android:layout_marginEnd="6dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="1dp"
                 android:text="Items: "
                 android:textColor="#000"
-                android:textSize="18dp"
+                android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="@+id/product"
                 app:layout_constraintEnd_toStartOf="@+id/product"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/txtbillno"
                 app:layout_constraintTop_toTopOf="@+id/product"
                 app:layout_constraintVertical_bias="0.0" />
 
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_outline_calendar_month_24"
+                app:layout_constraintBottom_toBottomOf="@+id/billdate"
+                app:layout_constraintEnd_toStartOf="@+id/billdate"
+                app:layout_constraintTop_toTopOf="@+id/billdate"
+                app:tint="@color/colorAccent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
