@@ -2,12 +2,10 @@ package com.example.myapplication.com.example.whm.ui.inventoryreceive
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.preference.PreferenceManager
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,15 +18,12 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.myapplication.com.example.whm.AppPreferences
-import com.example.whm.ui.inventoryreceive.ReceivePO
 import org.json.JSONObject
 import android.content.Context.MODE_PRIVATE
 
 import android.content.SharedPreferences
-import android.icu.text.Transliterator
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.ui.load_order_page.setSupportActionBar
 
@@ -116,6 +111,7 @@ class ReceivePOAdapter1(
                 holder.POQTY.text.toString().toInt(),
                 holder.PID.text.toString().toInt(),
                 holder.PEODUCTNAME.text.toString(),
+                holder.UNITYPW.text.toString(),
                 holder.draftAutoIdTV.text.toString().toInt(),
                 position
             )
@@ -262,6 +258,7 @@ class ReceivePOAdapter1(
         POQTY: Int,
         PID: Int,
         ProductName: String,
+        UNITYPW: String,
         draftAutoIdTV: Int,
         position: Int
     ) {
@@ -272,6 +269,7 @@ class ReceivePOAdapter1(
         val POProductname: TextView =
             view.findViewById(com.example.myapplication.R.id.txtpoproductname)
         val PIPID: TextView = view.findViewById(com.example.myapplication.R.id.txtpid)
+        val PInStockType: TextView = view.findViewById(com.example.myapplication.R.id.PInStockType)
         editpoqty = view.findViewById(com.example.myapplication.R.id.txteditpoqty)
         val btnpoqty: Button = view.findViewById(com.example.myapplication.R.id.btnsaevpoqty)
         val btncancel: Button = view.findViewById(com.example.myapplication.R.id.btncancel)
@@ -280,16 +278,28 @@ class ReceivePOAdapter1(
         POProductname.text = ProductName.toString()
 //        editpoqty!!.setEnabled(false);
 
-        PIPID.text = PID.toString() + " - "
+        PIPID.text = PID.toString()
+        PInStockType.text = "(In "+UNITYPW+")"
         editpoqty!!.text = POQTY.toString()
         plus.setOnClickListener {
-            totalqty(editpoqty!!.text.toString().toInt() + 1)
-
+            if(editpoqty!!.text.toString()!="") {
+                if (editpoqty!!.text.toString().toInt() >= 0) {
+                    totalqty(editpoqty!!.text.toString().toInt() + 1)
+                }
+            }else{
+                editpoqty!!.text = "1"
+            }
         }
         minusbtn!!.setOnClickListener {
-            if (editpoqty!!.text.toString().toInt() != 0) {
-                totalqty(editpoqty!!.text.toString().toInt() - 1)
+            if (editpoqty!!.text.toString() != "") {
+                if (editpoqty!!.text.toString().toInt() >0) {
+                    totalqty(editpoqty!!.text.toString().toInt() - 1)
+                }
             }
+            else {
+                editpoqty!!.text = "0"
+            }
+
         }
         btnpoqty.setOnClickListener(View.OnClickListener {
             if (!(editpoqty!!.text.toString().isEmpty() || editpoqty!!.text.toString()
@@ -313,7 +323,6 @@ class ReceivePOAdapter1(
                 alertbox.show()
             }
         })
-
         btncancel.setOnClickListener(View.OnClickListener {
             dialog?.dismiss()
         })

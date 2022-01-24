@@ -399,7 +399,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/Uproductname"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/txtPunit"
@@ -453,7 +453,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/LayoutPieace"
                 android:layout_marginTop="2dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/txtBunit"
@@ -508,7 +508,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layoutbox"
                 android:layout_marginTop="2dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/txtCunit"
@@ -563,7 +563,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/LayoutCase"
                 android:layout_marginTop="2dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/txttotal"
@@ -609,7 +609,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/Layoutqty"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/defaultstock"

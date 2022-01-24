@@ -52,6 +52,8 @@ class ReceivePO : AppCompatActivity() {
     var noofitems : TextView?=null
     var autotextView: AutoCompleteTextView? = null
     var qty: TextView? = null
+    var btnpoadd: ImageButton? = null
+    var btnpoqtyminus: ImageButton? = null
     var totalpicesqty: TextView? = null
     var list: ArrayList<String>? = null
     var adapter: ArrayAdapter<String>? = null
@@ -94,7 +96,8 @@ class ReceivePO : AppCompatActivity() {
         addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
         backarrow = findViewById(com.example.myapplication.R.id.imgbackbtm)
         LinearLayoutV = findViewById(com.example.myapplication.R.id.LinearFragmentContainer)
-
+        btnpoadd = findViewById(R.id.btnpoadd)
+        btnpoqtyminus = findViewById(R.id.btnpoqtyminus)
 
         DAutoid = preferencesid.getInt("DAutoid", 0)
         if (AppPreferences.internetConnectionCheck(this)) {
@@ -159,6 +162,8 @@ class ReceivePO : AppCompatActivity() {
             CheckInterNetDailog()
         }
 
+
+
     }
 
 
@@ -197,9 +202,7 @@ class ReceivePO : AppCompatActivity() {
                 }
             }
             R.id.manualaddproduct->{
-
                 manualproductadd()
-
                 true
             }
 
@@ -309,7 +312,10 @@ class ReceivePO : AppCompatActivity() {
                     }
                 }
                 else {
-                    SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
+                    val dialog = SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                    dialog.contentText = responseMessage
+                    dialog.setCancelable(false)
+                    dialog.show()
                     var d= responseMessage.split("\\s".toRegex())[0]
                     if (d == "Barcode"){
                         AppPreferences.playSoundbarcode()
@@ -408,7 +414,6 @@ class ReceivePO : AppCompatActivity() {
                         startActivity(intent)
 
                     }
-
                     alertbox.setCanceledOnTouchOutside(false)
                     alertbox.show()
 
@@ -444,11 +449,16 @@ class ReceivePO : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         val layoutInflater = LayoutInflater.from(this)
         val view = layoutInflater.inflate(R.layout.manualproductadddailog, null)
-
+        val btnpoqty: Button = view.findViewById(R.id.btnsaevpoqty)
+        val btncancel: Button = view.findViewById(R.id.btncancel)
+        btnpoadd = view.findViewById(R.id.btnpoadd)
+        btnpoqtyminus = view.findViewById(R.id.btnpoqtyminus)
         autotextView = view.findViewById<AutoCompleteTextView>(R.id.txtmpid)
 
         qty = view.findViewById<TextView>(R.id.qtym)
         qty!!.isEnabled =false
+        btnpoadd?.isEnabled  = false
+        btnpoqtyminus?.isEnabled  = false
         totalpicesqty = view.findViewById<TextView>(R.id.totalpicesqty)
         autotextView!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
@@ -499,10 +509,12 @@ class ReceivePO : AppCompatActivity() {
                     totalpices = tqty  * Quantity
                     totalpicesqty!!.text = totalpices.toString()
                 }
+                else{
+                    totalpicesqty!!.text = ""
+                }
             }
         })
-        val btnpoqty: Button = view.findViewById(R.id.btnsaevpoqty)
-        val btncancel: Button = view.findViewById(R.id.btncancel)
+
         spUnitType = view.findViewById(R.id.spunity)
 //        spvendorid= spUnitType.toString()
 
@@ -541,12 +553,47 @@ class ReceivePO : AppCompatActivity() {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
+        btnpoadd?.setOnClickListener {
+            if(qty!!.text.toString()!=""){
+                if (qty!!.text.toString().toInt() >=0) {
+                    tqty=getdefault!!.trim().toInt()
+                    Quantity = qty!!.text.toString().toInt()+1
+                    totalpices = tqty * Quantity
+                    totalpicesqty!!.text = totalpices.toString()
+                    qty!!.text = Quantity.toString()
+                }
+                else{
+                    totalpicesqty!!.text = "0"
+                    qty!!.text = "0"
+                }
+            }
+            else{
+                qty!!.text = "1"
+                tqty=getdefault!!.trim().toInt()
+                Quantity = qty!!.text.toString().toInt()
+                totalpicesqty!!.text = ((tqty * Quantity).toString())
 
+            }
 
+        }
+        btnpoqtyminus!!.setOnClickListener {
+            if (qty!!.text.toString() != "") {
+                if (qty!!.text.toString().toInt() >0) {
+                    tqty = getdefault!!.trim().toInt()
+                    Quantity = qty!!.text.toString().toInt() - 1
+                    totalpices = tqty * Quantity
+                    totalpicesqty!!.text = totalpices.toString()
+                    qty!!.text = Quantity.toString()
+                }
+
+            }
+            else {
+                totalpicesqty!!.text = "0"
+                qty!!.text = "0"
+            }
+        }
     }
-
     fun Select_UnitType() {
-
         SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText("Select Unit Type").show()
     }
     fun Select_Qty() {
@@ -591,10 +638,10 @@ class ReceivePO : AppCompatActivity() {
                          UnitType = unitlist.getJSONObject(i).getInt("UnitType")
                         DUnit = unitlist.getJSONObject(i).getInt("DUnit")
                         if(DUnit==UnitType){
-                            spinnerArray[i] = unittype+"("+Qty+"pcs) *"
+                            spinnerArray[i] = unittype+" ("+Qty+"pcs) *"
                         }
                         else{
-                            spinnerArray[i] = unittype+"("+Qty+"pcs)"
+                            spinnerArray[i] = unittype+" ("+Qty+"pcs)"
                         }
                         spinnerArrayId[i] = UnitType.toString()
 
@@ -635,8 +682,6 @@ class ReceivePO : AppCompatActivity() {
         )
         queues.add(BindProductDetails)
     }
-
-
 
     fun BindProductList(){
 
@@ -683,6 +728,8 @@ class ReceivePO : AppCompatActivity() {
                         OnItemClickListener { _, _, j, _ ->
                             sproductid = productArrayId[j].toString()
                             qty!!.isEnabled =true
+                            btnpoadd?.isEnabled = true
+                            btnpoqtyminus?.isEnabled = true
                             BindUnitList()
 
 
@@ -801,7 +848,10 @@ class ReceivePO : AppCompatActivity() {
                         noofitems?.visibility=View.VISIBLE
                     }
                 } else {
-                    SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
+                    val dialog = SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                    dialog.contentText = responseMessage
+                    dialog.setCancelable(false)
+                    dialog.show()
                 }
 
             }, { response ->
@@ -816,11 +866,7 @@ class ReceivePO : AppCompatActivity() {
         queues.add(BARCODEADDPRODUCT)
     }
 
-
-
     fun Draftproductlist() {
-
-
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
         val JSONObj = JSONObject()
@@ -862,6 +908,13 @@ class ReceivePO : AppCompatActivity() {
                     val BillNo = jsonrepdu.getString("BillNo")
                     val draftAutoId = jsonrepdu.getInt("DAutoId")
                     val BillDate = jsonrepdu.getString("BillDate")
+                    val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+                    val editor = preferences.edit()
+                    editor.putString("Bill_No", BillNo)
+                    editor.putString("Bill_Date", BillDate.toString())
+                    editor.putInt("VENDORID", VendorAutoId.toString().toInt())
+                    editor.apply()
+
                     val Remarks = jsonrepdu.getString("Remarks")
                     val Status = jsonrepdu.getString("Status")
                     val POItems = jsonrepdu.getJSONArray("POItems")

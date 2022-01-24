@@ -330,14 +330,14 @@ class GalleryFragment : Fragment() {
                     showproductdetails?.visibility = View.GONE
                     val barcodeC: EditText = binding.barcodetype
                     barcodeC.text.clear()
-                    barcode.setText("")
+                    barcode.text = ""
                     pDialog.dismiss()
                     val dialog = SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
-                    dialog.setContentText(""+presponsmsg.toString())
+                    dialog.contentText = ""+presponsmsg.toString()
                     dialog.setConfirmText("ok").currentFocus
                     dialog.setConfirmClickListener { sDialog -> sDialog.dismissWithAnimation()
                             barcodeC.text.clear()
-                            barcode.setText("")
+                        barcode.text = ""
                             menu?.isVisible = false }
                     dialog.setCancelable(false)
                     dialog.show()
@@ -385,6 +385,8 @@ class GalleryFragment : Fragment() {
                         val editlayout = binding.editlayout
                         productdetils.visibility = View.GONE
                         editlayout.visibility = View.VISIBLE
+
+
                         Gridlauyoutstock = binding.stockupdate
                          txtunitB = binding.txtBunit
                         txtunitqtyB = binding.txtBunitqty
@@ -400,6 +402,15 @@ class GalleryFragment : Fragment() {
                         Layoutdefault=binding.Layoutdefault
                         Layoutdefault!!.visibility=View.GONE
                         txtunitqtyP = binding.txtPunitqty
+
+
+                        Layoutbindunit = binding.LayoutCase
+                        Layoutbindunit!!.visibility = View.GONE
+                        Layoutbindunit = binding.LayoutPieace
+                        Layoutbindunit!!.visibility = View.GONE
+                        Layoutbindunit = binding.layoutbox
+                        Layoutbindunit!!.visibility = View.GONE
+
                         val Jsonarra = JSONObject()
                         val detailstock = JSONObject()
                         val JSONObjs = JSONObject()
@@ -443,6 +454,7 @@ class GalleryFragment : Fragment() {
                                     var StockRemark = jsonrepdu.getString("StockRemark")
                                     var StockNote = jsonrepdu.getString("StockNote")
                                      DUnit = jsonrepdu.getInt("DUnit")
+
                                     TxtRemark!!.setText(StockRemark)
                                     TxtRemarkNotw.text=StockNote
                                     val unitlist = jsonrepdu.getJSONArray("UList")
@@ -453,10 +465,11 @@ class GalleryFragment : Fragment() {
                                         ProductID.text = ProductId.toString()
                                         ProductName.text = Productname
                                             if (UnitType == 1) {
-                                                txtunitC!!.text = if(DUnit!=1){
-                                                    "$unittype"
+
+                                                    if(DUnit!=1){
+                                                        txtunitC!!.text =  "$unittype"
                                                 }else {
-                                                    "$unittype " + "*"
+                                                        txtunitC!!.text =  "$unittype " + "*"
                                                 }
                                                 txtunitqtyC!!.setText(Qty.toString())
                                                 Layoutbindunit = binding.LayoutCase
@@ -471,11 +484,12 @@ class GalleryFragment : Fragment() {
                                                     txtunitC!!.text = spannableString
                                                 }
                                             }
+
                                             if (UnitType == 2) {
-                                                txtunitB!!.text =  if(DUnit!=2){
-                                                    "$unittype"
+                                                 if(DUnit!=2){
+                                                     txtunitB!!.text =    "$unittype"
                                                 }else {
-                                                    "$unittype " + "*"
+                                                     txtunitB!!.text =   "$unittype " + "*"
                                                 }
                                                 txtunitqtyB!!.setText(Qty.toString())
                                                 Layoutbindunit = binding.layoutbox
@@ -490,11 +504,12 @@ class GalleryFragment : Fragment() {
                                                     txtunitB!!.text = spannableString
                                                 }
                                             }
+
                                             if (UnitType == 3) {
-                                                txtunitP!!.text =  if(DUnit!=3){
-                                                    "$unittype"
+                                                 if(DUnit!=3){
+                                                     txtunitP!!.text = "$unittype"
                                                 }else{
-                                                    "$unittype " + "*"
+                                                     txtunitP!!.text = "$unittype " + "*"
 
                                                 }
                                                 txtunitqtyP!!.setText(Qty.toString())
@@ -510,6 +525,7 @@ class GalleryFragment : Fragment() {
                                                     txtunitP!!.text = spannableString
                                                 }
                                             }
+
                                         if(DUnit==1){
                                              Layoutdefault=binding.Layoutdefault
                                             Layoutdefault!!.visibility=View.VISIBLE
@@ -549,18 +565,22 @@ class GalleryFragment : Fragment() {
                         backbtn.contentText = "Discard stock changes?"
                         backbtn.cancelButtonBackgroundColor = Color.parseColor("#4cae4c")
                         backbtn.setCancelButton( "Yes")
-                            { sDialog -> sDialog.dismissWithAnimation() }
+                            { sDialog -> sDialog.dismissWithAnimation()
+                               }
                         backbtn.confirmText = "No"
                         backbtn.confirmButtonBackgroundColor = Color.parseColor("#E60606")
                         backbtn.setCancelClickListener {
                                     sDialog ->
                                 sDialog.dismissWithAnimation()
+                               (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Inventory Check"
                                 showproductdetails?.visibility = View.VISIBLE
                                 producdetails?.visibility = View.VISIBLE
                                 editlayout?.visibility = View.GONE
                                 backinvetory?.isVisible = false
                                 menu?.isVisible = true
+                               (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Inventory Check"
                                 clear()
+
                             }
                         backbtn.setConfirmClickListener {
                                     sDialog -> sDialog.dismissWithAnimation()
@@ -570,6 +590,7 @@ class GalleryFragment : Fragment() {
 
                     }
                     else{
+                        (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Inventory Check"
                         showproductdetails?.visibility = View.VISIBLE
                         producdetails?.visibility = View.VISIBLE
                         editlayout?.visibility = View.GONE
@@ -715,6 +736,7 @@ class GalleryFragment : Fragment() {
                                 editlayout?.visibility = View.GONE
                                 producdetails?.visibility = View.GONE
                                 clear()
+                            (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Inventory Check"
                             }
                         updates.setCanceledOnTouchOutside(false)
                         updates.show()

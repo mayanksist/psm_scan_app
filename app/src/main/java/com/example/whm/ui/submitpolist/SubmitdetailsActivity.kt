@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
@@ -32,7 +33,7 @@ import com.example.whm.ui.inventoryreceive.ReceivePO
 import org.json.JSONObject
 
 class SubmitdetailsActivity : AppCompatActivity() {
-
+    var toolbar: Toolbar?=null
     var  DAutoid:Int=0
     var ReceiverpoList: ArrayList<SubmitDetailsItemViewModel> = arrayListOf()
     var backarrow: ImageView?=null
@@ -73,11 +74,9 @@ class SubmitdetailsActivity : AppCompatActivity() {
 
     }
     fun Draftproductlist() {
-        var noofitems: TextView =findViewById(R.id.txtnoofproduc)
         val txtbillno: TextView = findViewById(com.example.myapplication.R.id.txtbillno)
         val txtbilldatepo: TextView = findViewById(com.example.myapplication.R.id.txtbilldatepo)
         val vendornamepo: TextView = findViewById(com.example.myapplication.R.id.vendornamepo)
-        val statuspo: TextView = findViewById(com.example.myapplication.R.id.statuspo)
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
         val JSONObj = JSONObject()
@@ -124,12 +123,10 @@ class SubmitdetailsActivity : AppCompatActivity() {
                     val Remarks = jsonrepdu.getString("Remarks")
                     val VendorName = jsonrepdu.getString("VendorName")
                     val Status = jsonrepdu.getInt("Status")
-                    val StatusType = jsonrepdu.getString("StatusType")
                     val POItems = jsonrepdu.getJSONArray("POItems")
                     txtbillno.text = BillNo
                     txtbilldatepo.text = BillDate
                     vendornamepo.text = VendorName
-                    statuspo.text = "Status : "+StatusType
                     // Toast.makeText(this,POItems.toString(),Toast.LENGTH_SHORT).show()
                     for (i in 0 until POItems.length()) {
                         PName = POItems.getJSONObject(i).getString("PName")
@@ -179,8 +176,9 @@ class SubmitdetailsActivity : AppCompatActivity() {
                             }
                         }
                         if(ReceiverpoList.size!=0) {
-                            noofitems.text = "Total Items: " + ReceiverpoList.size.toString()
-                            noofitems.visibility=View.VISIBLE
+                            toolbar = findViewById(R.id.toolbarAction)
+                            setSupportActionBar(toolbar)
+                            supportActionBar?.setTitle("Pending PO ("+ReceiverpoList.size+")")
                         }
                     }
                 } else {

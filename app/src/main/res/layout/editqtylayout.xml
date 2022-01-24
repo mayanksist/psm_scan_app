@@ -27,14 +27,13 @@
 
     <TextView
         android:id="@+id/txtpid"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:gravity="center"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
         android:textColor="#B82929"
         android:textSize="17sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="PID" />
@@ -44,6 +43,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
         android:padding="0dp"
         android:textColor="#000"
         android:textSize="16sp"
@@ -52,27 +52,12 @@
         app:layout_constraintTop_toBottomOf="@+id/txtqtyperunit"
         tools:text="PNAME" />
 
-    <TextView
-        android:id="@+id/txtpoty"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:paddingTop="10dp"
-        android:text="PO Quantity : "
-        android:textAlignment="center"
-        android:textColor="#000"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/decrease"
-        app:layout_constraintEnd_toStartOf="@+id/decrease"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/decrease" />
-
     <EditText
         android:id="@+id/txteditpoqty"
-        android:layout_width="98dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/frame"
+        android:background="@drawable/removeborderframe"
         android:inputType="number"
         android:maxLength="6"
         android:maxLines="1"
@@ -91,6 +76,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
         android:text="Cancel"
+        android:textSize="18dp"
         android:background = "#FF0000"
         android:textAlignment="center"
         android:textAllCaps="false"
@@ -109,7 +95,8 @@
             android:layout_gravity="right"
             android:background = "#4CAF50"
             android:gravity="center"
-            android:text="Add"
+            android:text="Update"
+            android:textSize="18dp"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="#ffffff"
@@ -117,6 +104,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/divider8"
             app:layout_constraintTop_toTopOf="@+id/divider8" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="6dp"
+        android:text="QTY"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toStartOf="@+id/decrease"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider6" />
 
     <View
         android:id="@+id/divider6"
@@ -130,14 +131,14 @@
         app:layout_constraintTop_toBottomOf="@+id/txtpoproductname" />
 
     <View
-            android:id="@+id/divider7"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txteditpoqty" />
+        android:id="@+id/divider7"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="14dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txteditpoqty" />
 
         <View
             android:id="@+id/divider8"
@@ -151,26 +152,40 @@
 
     <ImageView
         android:id="@+id/decrease"
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/frame"
-        android:src="@drawable/mins"
+        android:background="@drawable/redframe"
+        android:src="@drawable/minus"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/txteditpoqty"
         app:layout_constraintEnd_toStartOf="@+id/txteditpoqty"
-        app:layout_constraintTop_toTopOf="@+id/txteditpoqty" />
+        app:layout_constraintTop_toTopOf="@+id/txteditpoqty"
+        app:tint="#FF0000" />
 
     <ImageView
         android:id="@+id/increase"
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/frame"
-        android:src="@drawable/pls"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/greenframe"
+        android:src="@drawable/add"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/txteditpoqty"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txteditpoqty" />
+        app:layout_constraintTop_toTopOf="@+id/txteditpoqty"
+        app:tint="#4CAF50" />
+
+    <TextView
+        android:id="@+id/PInStockType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PInStockType"
+        android:textSize="14dp"
+        android:textColor="#B82929"
+        app:layout_constraintBottom_toBottomOf="@+id/txteditpoqty"
+        app:layout_constraintEnd_toEndOf="@+id/textView11"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
