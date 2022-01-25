@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
 import android.view.*
@@ -140,7 +141,8 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
         val JSONObj = JSONObject()
         val queues = Volley.newRequestQueue(this.context)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID",
+            Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var accessToken = preferences.getString("accessToken", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")
@@ -211,7 +213,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
         val JSONObj = JSONObject()
         val queues = Volley.newRequestQueue(this.context)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID",Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var accessToken = preferences.getString("accessToken", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")

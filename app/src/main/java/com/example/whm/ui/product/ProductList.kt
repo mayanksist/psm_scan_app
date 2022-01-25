@@ -7,6 +7,7 @@ import android.content.DialogInterface.OnShowListener
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.provider.Settings
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
@@ -321,7 +322,8 @@ class ProductList : Fragment() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var empautoid = preferences.getString("EmpAutoId", "")
         var accessToken = preferences.getString("accessToken", "")
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID",
+            Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
         val queues = Volley.newRequestQueue(this.context)
         details.put("OrderNO", orderno1)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))

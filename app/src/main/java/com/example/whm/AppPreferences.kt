@@ -9,7 +9,9 @@ import android.app.Dialog
 import android.bluetooth.BluetoothClass
 import android.view.Window
 import android.os.Build
+import android.provider.Settings
 import com.example.myapplication.BuildConfig
+import java.security.AccessController.getContext
 
 
 object AppPreferences {
@@ -39,7 +41,6 @@ object AppPreferences {
     var model = Build.MODEL
     var version = Build.VERSION.SDK_INT
     var versionRelease = Build.VERSION.RELEASE
-    var Device_ID= "$manufacturer $model $version $versionRelease"
     fun internetConnectionCheck(context: Context?): Boolean {
         var Connected = false
         val connectivity = context?.applicationContext

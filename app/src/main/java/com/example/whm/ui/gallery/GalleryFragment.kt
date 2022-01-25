@@ -41,6 +41,7 @@ import android.text.SpannableString
 import cn.pedant.SweetAlert.SweetAlertDialog.OnSweetClickListener
 import com.example.myapplication.com.example.whm.MainActivity
 import android.graphics.Typeface
+import android.provider.Settings
 
 import android.text.style.StyleSpan
 import android.util.TypedValue
@@ -58,7 +59,7 @@ class GalleryFragment : Fragment() {
     var showproductdetails:ConstraintLayout?=null
     var producdetails:ConstraintLayout?=null
     var menu: MenuItem? = null
-    var   backinvetory: MenuItem? = null
+    var backinvetory: MenuItem? = null
     var txtunitpu: EditText? = null
     var txtunitbu: EditText? = null
     var txtunitCu: EditText? = null
@@ -252,7 +253,7 @@ class GalleryFragment : Fragment() {
         editlayout?.visibility = View.GONE
         details.put("barcode", barcoded)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var accessToken = preferences.getString("accessToken", "")
         var EmpTypeNo = preferences.getString("EmpTypeNo", "")
@@ -420,7 +421,7 @@ class GalleryFragment : Fragment() {
                             "requestContainer",
                             Jsonarra.put("appVersion", AppPreferences.AppVersion)
                         )
-                        JSONObjs.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
+                        JSONObjs.put("requestContainer",Jsonarra.put("deviceID",Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
                         val preferencesaccess =
                             PreferenceManager.getDefaultSharedPreferences(context)
                         var accessTokenS = preferencesaccess.getString("accessToken", "")
@@ -587,6 +588,8 @@ class GalleryFragment : Fragment() {
                             }
                         backbtn.setCanceledOnTouchOutside(false)
                         backbtn.show()
+                        barcode?.setText("")
+                        barcode?.requestFocus()
 
                     }
                     else{
@@ -597,6 +600,8 @@ class GalleryFragment : Fragment() {
                         backinvetory?.isVisible = false
                         menu?.isVisible = true
                         clear()
+                        barcode?.setText("")
+                        barcode?.requestFocus()
                     }
                 }
                 else{
@@ -678,7 +683,7 @@ class GalleryFragment : Fragment() {
             val JSONObj = JSONObject()
             val queues = Volley.newRequestQueue(this.context)
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-            JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
+            JSONObj.put("requestContainer",Jsonarra.put("deviceID",Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
             val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
             var accessToken = preferences.getString("accessToken", "")
             var empautoid = preferences.getString("EmpAutoId", "")
@@ -740,6 +745,8 @@ class GalleryFragment : Fragment() {
                             }
                         updates.setCanceledOnTouchOutside(false)
                         updates.show()
+                        barcode?.setText("")
+                        barcode?.requestFocus()
 
                     } else {
                       var update=  SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText(

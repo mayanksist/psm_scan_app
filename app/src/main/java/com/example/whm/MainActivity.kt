@@ -7,6 +7,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.provider.Settings
 import android.text.Editable
 import android.util.Log
 import android.view.KeyEvent
@@ -60,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
         JSONObj.put("userName",email)
         JSONObj.put("requestContainer",Jsonarra.put("appVersion",appversion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
         val req=JsonObjectRequest(Request.Method.POST,APIURL,JSONObj,
     Response.Listener {
             response ->

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
+import android.provider.Settings
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
@@ -57,7 +58,8 @@ class SplashScreen : AppCompatActivity() {
             editor.apply()
             JSONObj.put("userName", email)
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", appversion))
-            JSONObj.put("requestContainer",Jsonarra.put("deviceID",AppPreferences.Device_ID))
+            JSONObj.put("requestContainer",Jsonarra.put("deviceID",
+                Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
 
             val req = JsonObjectRequest(Request.Method.POST, APIURL, JSONObj,
                 Response.Listener { response ->

@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -67,7 +68,7 @@ class draftpolistFragment : Fragment() {
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
             JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
             JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
-            JSONObj.put("requestContainer",Jsonarra.put("deviceID", AppPreferences.Device_ID))
+            JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
             JSONObj.put("cObj", Jsonarrapolist.put("status", StatusD))
             val draftpolist = JsonObjectRequest(
                 Request.Method.POST, AppPreferences.DRAFT_PO_LIST,
