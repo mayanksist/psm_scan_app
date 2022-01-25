@@ -122,7 +122,6 @@ class ReceivePOAdapter1(
         notifyDataSetChanged()
     }
     fun Deletepolist(PID: Int, draftid: Int, position: Int) {
-
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
         val JSONObj = JSONObject()
