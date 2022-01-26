@@ -133,6 +133,8 @@ class ReceivePOAdapter1(
         var DAutoid = preferences.getInt("DAutoid", 0)
         JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(activity?.getContentResolver(), Settings.Secure.ANDROID_ID)))
+
         JSONObj.put("requestContainer", Jsonarra.put("UserAutoId", EmpAutoId))
         JSONObj.put("cObj", Jsonarrabarcode.put("ProductId", PID))
         if (DAutoid != null && DAutoid != 0) {
