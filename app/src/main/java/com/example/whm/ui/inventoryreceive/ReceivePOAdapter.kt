@@ -22,6 +22,7 @@ import org.json.JSONObject
 import android.content.Context.MODE_PRIVATE
 
 import android.content.SharedPreferences
+import android.provider.Settings
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
@@ -199,6 +200,7 @@ class ReceivePOAdapter1(
         var EmpAutoId = preferences.getString("EmpAutoId", "")
         JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(activity?.getContentResolver(), Settings.Secure.ANDROID_ID)))
         JSONObj.put("requestContainer", Jsonarra.put("UserAutoId", EmpAutoId))
         var DAutoidE = preferences.getInt("DAutoid", 0)
         if (DAutoidE != null && DAutoidE != 0) {

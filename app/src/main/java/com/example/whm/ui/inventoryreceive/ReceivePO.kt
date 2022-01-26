@@ -159,12 +159,7 @@ class ReceivePO : AppCompatActivity() {
         } else {
             CheckInterNetDailog()
         }
-
-
-
     }
-
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
@@ -264,12 +259,9 @@ class ReceivePO : AppCompatActivity() {
                     val ProductName = JSONOBJ.getString("ProductName")
                     val UnitType = JSONOBJ.getString("UnitType")
                     val Qty = JSONOBJ.getInt("Qty")
-
                     draftAutoIdTV.text = draftAutoId.toString()
-
                     var check=false
                     var poreqqty:Int=0
-
                     for (n in 0..ReceiverpoList.size-1) {
                         if(ReceiverpoList[n].getPID()==ProductId){
                             check=true
@@ -452,7 +444,6 @@ class ReceivePO : AppCompatActivity() {
         btnpoadd = view.findViewById(R.id.btnpoadd)
         btnpoqtyminus = view.findViewById(R.id.btnpoqtyminus)
         autotextView = view.findViewById<AutoCompleteTextView>(R.id.txtmpid)
-
         qty = view.findViewById<TextView>(R.id.qtym)
         qty!!.isEnabled =false
         btnpoadd?.isEnabled  = false
@@ -465,7 +456,7 @@ class ReceivePO : AppCompatActivity() {
                 count: Int,
                 after: Int
             ) {
-//                BindProductList()
+
             }
 
             override fun onTextChanged(
@@ -489,7 +480,6 @@ class ReceivePO : AppCompatActivity() {
                 after: Int
             ) {
             }
-
             override fun onTextChanged(
                 s: CharSequence,
                 start: Int,
@@ -499,8 +489,6 @@ class ReceivePO : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-
-
                 if (qty!!.text.toString() != "") {
                     tqty=getdefault!!.trim().toInt()
                     Quantity = qty!!.text.toString().toInt()
@@ -514,13 +502,12 @@ class ReceivePO : AppCompatActivity() {
         })
 
         spUnitType = view.findViewById(R.id.spunity)
-//        spvendorid= spUnitType.toString()
+
 
         btnpoqty.setOnClickListener(View.OnClickListener {
             var name: String? = null
             name = spUnitType!!.selectedItem as String?
             var productname=autotextView!!.text.toString()
-            //Toast.makeText(this,productname,Toast.LENGTH_SHORT).show()
             if (spUnitType!!.selectedItem != null && qty!!.text.toString()!="" && qty!!.text.toString().toInt()!=0 && productname!="") {
                 val recyclerView: RecyclerView =
                     findViewById(com.example.myapplication.R.id.POLIST)
@@ -822,8 +809,6 @@ class ReceivePO : AppCompatActivity() {
                                     draftAutoId,
                                     Qty
                                 )
-
-
                             }
 
                         }
