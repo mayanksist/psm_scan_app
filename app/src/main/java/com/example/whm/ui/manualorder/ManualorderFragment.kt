@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.provider.Settings
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
@@ -252,6 +253,8 @@ class ManualorderFragment : Fragment() {
         JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
         JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
         JSONObj.put("requestContainer", Jsonarra.put("filterkeyword", details))
+        JSONObj.put("requestContainer", Jsonarra.put("deviceID",
+            Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
         val resorderno = JsonObjectRequest(
             Request.Method.POST, AppPreferences.BASEURL+ AppPreferences.GET_ORDERS, JSONObj,
             { response ->
@@ -345,9 +348,12 @@ class ManualorderFragment : Fragment() {
         var empautoid = preferences.getString("EmpAutoId", "")
         var accessToken = preferences.getString("accessToken", "")
         val queues = Volley.newRequestQueue(this.context)
+
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", appversion))
         JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
         JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
+        JSONObj.put("requestContainer", Jsonarra.put("deviceID",
+            Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
         JSONObj.put("OrderNo", sorderno)
         val alertsuborder = AlertDialog.Builder(this.context)
         alertsuborder.setCancelable(false)

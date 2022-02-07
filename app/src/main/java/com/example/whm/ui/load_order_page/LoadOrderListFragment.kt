@@ -70,6 +70,7 @@ class LoadOrderListFragment : Fragment() {
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
             JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
             JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
+            JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
             val resorderno = JsonObjectRequest(
                 Request.Method.POST,
                 AppPreferences.BASEURL + AppPreferences.GET_ASSIGN_ORDER_LIST,

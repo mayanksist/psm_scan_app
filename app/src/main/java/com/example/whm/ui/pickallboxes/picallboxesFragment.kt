@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -112,6 +113,8 @@ class picallboxesFragment : Fragment() {
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", appversion))
             JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
             JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
+            JSONObj.put("requestContainer", Jsonarra.put("deviceID",
+                Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
             JSONObj.put("OrderNo", OrderNO)
             val alertsuborder = AlertDialog.Builder(activity)
             val resordernos = JsonObjectRequest(

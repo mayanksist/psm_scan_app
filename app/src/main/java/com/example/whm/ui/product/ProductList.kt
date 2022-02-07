@@ -442,6 +442,8 @@ class ProductList : Fragment() {
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", appversion))
         JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
         JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
+        JSONObj.put("requestContainer", Jsonarra.put("deviceID",
+            Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
         JSONObj.put("OrderNo", sorderno)
         val alertsuborder = AlertDialog.Builder(this.context)
         val resordernos = JsonObjectRequest(Request.Method.POST,
