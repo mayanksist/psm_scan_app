@@ -11,10 +11,10 @@ android {
 
     defaultConfig {
         applicationId "com.android.application"
-        minSdk 23
+        minSdk 24
         targetSdk 31
-        versionCode 23
-        versionName "3.0.0.8"
+        versionCode 24
+        versionName "3.0.0.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

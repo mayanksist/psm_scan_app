@@ -17,7 +17,19 @@
         app:itemIconPadding="0dp"
         app:itemIconSize="20dp"
         app:showAsAction="ifRoom" />
-
+    <item
+        android:id="@+id/addmproduct"
+        android:backgroundTint="#fff"
+        android:checkable="true"
+        android:icon="@drawable/search"
+        android:orderInCategory="100"
+        android:theme="@style/NavigationTheme"
+        android:title="Add Manual Product"
+        android:visible="false"
+        android:iconTint="#fff"
+        app:itemIconPadding="2dp"
+        app:itemIconSize="20dp"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/backinvetory"
         android:backgroundTint="#fff"

@@ -73,6 +73,7 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.68" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.33425925925925926" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/ic_baseline_minimize_24.xml" value="0.8855421686746988" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.91875" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/loadorder_arrow_circle_right_24.xml" value="0.83" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/mins.xml" value="0.8855421686746988" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/minus.xml" value="0.8855421686746988" />
@@ -123,6 +124,7 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_submitpolist_list.xml" value="0.87125" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/inventoryreceiver_fragment.xml" value="0.7843601895734598" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/listdesign.xml" value="0.8770833333333333" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/manualaddprodctinventorym.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/manualproductadddailog.xml" value="0.75" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/menu.xml" value="0.515" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/msg.xml" value="0.88" />

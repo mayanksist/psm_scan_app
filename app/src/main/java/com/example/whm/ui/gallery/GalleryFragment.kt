@@ -41,10 +41,15 @@ import android.text.SpannableString
 import cn.pedant.SweetAlert.SweetAlertDialog.OnSweetClickListener
 import com.example.myapplication.com.example.whm.MainActivity
 import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
 import android.provider.Settings
 
 import android.text.style.StyleSpan
 import android.util.TypedValue
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceivePOAdapter1
+import org.json.JSONArray
 
 
 class GalleryFragment : Fragment() {
@@ -60,6 +65,7 @@ class GalleryFragment : Fragment() {
     var producdetails:ConstraintLayout?=null
     var menu: MenuItem? = null
     var backinvetory: MenuItem? = null
+    var addmproduct: MenuItem? = null
     var txtunitpu: EditText? = null
     var txtunitbu: EditText? = null
     var txtunitCu: EditText? = null
@@ -92,7 +98,13 @@ class GalleryFragment : Fragment() {
     var txtunitP: TextView?=null
     var txtunitB: TextView?=null
     var txtunitC: TextView?=null
-
+    var autotextView: AutoCompleteTextView? = null
+    var sproductid: String? = null
+    var  DAutoid:Int=0
+    var  Status:Int=0
+    var adapter: ArrayAdapter<String>? = null
+    var getdefault:String?=null
+    var dialog: AlertDialog? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -366,9 +378,13 @@ class GalleryFragment : Fragment() {
         super.onCreateOptionsMenu(x, inflater)
         menu= x.findItem(com.example.myapplication.R.id.editproduct)
         backinvetory = x.findItem(com.example.myapplication.R.id.backinvetory)
+        addmproduct = x.findItem(com.example.myapplication.R.id.addmproduct)
 
         if(menu!=null) {
             menu?.isVisible = false
+        }
+        if(addmproduct!=null) {
+            addmproduct?.isVisible = true
         }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -381,6 +397,7 @@ class GalleryFragment : Fragment() {
                         (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
                         (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Stock Update"
                         menu?.isVisible = false
+                        addmproduct?.isVisible=false
                         backinvetory?.isVisible = true
                         val productdetils = binding.producdetails
                         val editlayout = binding.editlayout
@@ -561,6 +578,7 @@ class GalleryFragment : Fragment() {
 
             com.example.myapplication.R.id.backinvetory  -> {
                 if (AppPreferences.internetConnectionCheck(this.context)) {
+                    addmproduct?.isVisible=true
                     if (TotalStockQTY!!.text.toString()!="" && TotalStockQTY!!.text.toString().toInt()>0) {
                       var backbtn=  SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
                         backbtn.contentText = "Discard stock changes?"
@@ -579,6 +597,7 @@ class GalleryFragment : Fragment() {
                                 editlayout?.visibility = View.GONE
                                 backinvetory?.isVisible = false
                                 menu?.isVisible = true
+
                                (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Inventory Check"
                                 clear()
 
@@ -609,12 +628,97 @@ class GalleryFragment : Fragment() {
                 }
                 true
             }
-
+                com.example.myapplication.R.id.addmproduct->{
+                    if (AppPreferences.internetConnectionCheck(this.context)) {
+                        manualproductadd()
+                    }
+                    else{
+                        CheckInterNetDailog()
+                    }
+                    true
+                }
             else -> super.onOptionsItemSelected(item)
         }
     }
+    fun manualproductadd() {
 
-     fun calculationtotalunitqty() {
+
+
+        val builder = AlertDialog.Builder(context)
+        val layoutInflater = LayoutInflater.from(context)
+        val view = layoutInflater.inflate(com.example.myapplication.R.layout.manualaddprodctinventorym, null)
+        val btnpoqty: Button = view.findViewById(com.example.myapplication.R.id.btnsaevpoqty)
+        val btncancel: Button = view.findViewById(com.example.myapplication.R.id.btncancel)
+        autotextView = view.findViewById<AutoCompleteTextView>(com.example.myapplication.R.id.txtmpid)
+        autotextView!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+
+            }
+
+            override fun onTextChanged(
+                s: CharSequence,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                BindProductList()
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                BindProductList()
+            }
+        })
+
+        btnpoqty.setOnClickListener(View.OnClickListener {
+            if (AppPreferences.internetConnectionCheck(this.context)) {
+                var productname = autotextView!!.text.toString()
+                if (productname != "") {
+                     sproductid?.let { it1 -> manualbindproductdetails(it1) }
+
+                    dialog?.dismiss()
+                } else {
+                    if (productname == "") {
+                        Select_product()
+                    }
+
+                }
+            }
+            else{
+
+                CheckInterNetDailog()
+                dialog?.dismiss()
+            }
+        })
+        btncancel.setOnClickListener(View.OnClickListener {
+            dialog?.dismiss()
+        })
+        builder.setView(view)
+        dialog = builder.create()
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.setCanceledOnTouchOutside(false)
+        dialog?.show()
+
+
+
+    }
+
+    fun Select_product() {
+        if (AppPreferences.internetConnectionCheck(this.context)) {
+            SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE).setContentText("Select Product ")
+                .show()
+        }
+        else{
+
+            CheckInterNetDailog()
+            dialog?.dismiss()
+        }
+    }
+    fun calculationtotalunitqty() {
          if (AppPreferences.internetConnectionCheck(this.context)) {
              txttotalqty = binding.txttotalqrty
              txtunitbu = binding.txtunitB
@@ -775,6 +879,7 @@ class GalleryFragment : Fragment() {
         SweetAlertDialog(this.context,SweetAlertDialog.ERROR_TYPE)
         .setContentText("Remark length should be 10 character").show()
     }
+
     fun Totalstockqtycheck()
     {
         var Totalstockqtycheck = SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
@@ -804,6 +909,212 @@ class GalleryFragment : Fragment() {
         UnitChengease!!.text=null
         txttotalqty!!.text=null
     }
+
+    fun BindProductList(){
+        if (AppPreferences.internetConnectionCheck(this.context)) {
+            val Jsonarra = JSONObject()
+            val JSONObj = JSONObject()
+            val Jsonarraplist = JSONObject()
+            val queues = Volley.newRequestQueue(context)
+            JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+            val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+            var accessToken = preferences.getString("accessToken", "")
+            var EmpAutoId = preferences.getString("EmpAutoId", "")
+            JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
+            JSONObj.put("requestContainer", Jsonarra.put("UserAutoId", EmpAutoId))
+            JSONObj.put(
+                "requestContainer",
+                Jsonarra.put(
+                    "deviceID",
+                    Settings.Secure.getString(
+                        getContext()?.getContentResolver(),
+                        Settings.Secure.ANDROID_ID
+                    )
+                )
+            )
+            JSONObj.put("cObj", Jsonarraplist.put("search", autotextView!!.text))
+            val BINDPRODUCTLISTm = JsonObjectRequest(
+                Request.Method.POST, AppPreferences.BIND_PRODUCT_IDNAME_BY_SEARCH, JSONObj,
+                { response ->
+                    val resobj = (response.toString())
+                    val responsemsg = JSONObject(resobj)
+                    val resultobj = JSONObject(responsemsg.getString("d"))
+                    val responseCode = resultobj.getString("responseCode")
+                    val responseMessage = resultobj.getString("responseMessage")
+                    if (responseCode == "201") {
+                        val ProductList: JSONArray = resultobj.getJSONArray("responseData")
+                        val n = ProductList.length()
+                        val productArray = arrayOfNulls<String>(n)
+                        val productArrayId = arrayOfNulls<String>(n)
+                        for (i in 0 until n) {
+                            val BINDLIST = ProductList.getJSONObject(i)
+                            val PID = BINDLIST.getInt("PId")
+                            val PNAME = BINDLIST.getString("PName")
+                            productArray[i] = PID.toString() + "-" + PNAME
+                            productArrayId[i] = PID.toString()
+                        }
+                        adapter = context?.let {
+                            ArrayAdapter(
+                                it,
+                                R.layout.simple_dropdown_item_1line, productArray
+                            )
+                        }
+                        autotextView?.showDropDown()
+                        autotextView?.threshold = 2
+                        autotextView?.setAdapter(adapter)
+
+                        adapter?.setNotifyOnChange(true)
+                        adapter?.notifyDataSetChanged()
+                        autotextView?.onItemClickListener =
+                            AdapterView.OnItemClickListener { _, _, j, _ ->
+                                sproductid = productArrayId[j].toString()
+
+                            }
+                    }
+                }, { response ->
+
+                    Log.e("onError", error(response.toString()))
+                })
+            BINDPRODUCTLISTm.retryPolicy = DefaultRetryPolicy(
+                1000000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            )
+            queues.add(BINDPRODUCTLISTm)
+        }
+        else{
+            CheckInterNetDailog()
+            dialog?.dismiss()
+        }
+    }
+
+
+
+    fun manualbindproductdetails(sproductid: String) {
+
+        val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)
+        pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
+        pDialog.titleText = "Fetching ..."
+        pDialog.setCancelable(false)
+        pDialog.show()
+        val produname: TextView = binding.productname
+        productId = binding.txtProductId
+        val unitype: TextView = binding.txtunitype
+        val price: TextView = binding.priductprise
+        val imagur: ImageView = binding.productimage
+        val stock: TextView = binding.txtStockfeild1
+        val stockfeild2: TextView = binding.txtStockfeild2
+        val category: TextView = binding.txtCategory
+        val sub_category: TextView = binding.txtSubCategory
+        val locationval: TextView = binding.txtLocation
+        val barcode = binding.txtBarScanned
+        val reordermark: TextView = binding.txtreordmark
+        stockfeild2.visibility=View.GONE
+        val Jsonarra = JSONObject()
+        val details = JSONObject()
+        val JSONObj = JSONObject()
+        val queues = Volley.newRequestQueue(this.context)
+        editlayout?.visibility = View.GONE
+
+        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        var accessToken = preferences.getString("accessToken", "")
+
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put("accessToken", accessToken)
+        )
+        JSONObj.put("pObj", details.put("productId", sproductid))
+        val reqPRODUCTDETAILS = JsonObjectRequest(
+            Request.Method.POST, AppPreferences.PRODUCT_MANAUL_DETAILS, JSONObj,
+            Response.Listener { response ->
+                val resobj = (response.toString())
+                val responsemsg = JSONObject(resobj)
+                val resultobj = JSONObject(responsemsg.getString("d"))
+                val presponsmsgc = resultobj.getString("responseCode")
+                val presponsmsg = resultobj.getString("responseMessage")
+                if (presponsmsgc == "201") {
+                    producdetails?.visibility = View.VISIBLE
+                    showproductdetails?.visibility = View.VISIBLE
+                   // Toast.makeText(context, presponsmsg, Toast.LENGTH_SHORT).show()
+                    menu?.isVisible = true
+                    val jsondata = resultobj.getString("responseData")
+                    val jsonrepd = JSONObject(jsondata.toString())
+                    val ProductId = jsonrepd.getString("PId")
+                    val pname = jsonrepd.getString("PName")
+                    val pCategory = jsonrepd.getString("Cat")
+                    val pSubCategory = jsonrepd.getString("SCat")
+                    val punitypa = jsonrepd.getString("Unit")
+                    val Reordermark = jsonrepd.getString("ROM")
+                    val bc = jsonrepd.getString("bc")
+                    val pprice = ("%.2f".format(jsonrepd.getDouble("Price")))
+                    val DefaultStock = jsonrepd.getString("stock")
+                    val DefaultStock2 = jsonrepd.getString("SPiece")
+                    DUnit = jsonrepd.getInt("Dunit")
+                    var imagesurl = ""
+                    if (jsonrepd.getString("OPath") == null) {
+                        imagesurl = jsonrepd.getString("ImageUrl")
+                    } else {
+                        imagesurl = jsonrepd.getString("OPath")
+                    }
+                    val location = jsonrepd.getString("Location")
+                    produname.text = "$pname"
+                    productId!!.text = "$ProductId"
+
+                    val unitypycolor =   punitypa.trim().split("(").toMutableList()
+                    val spannableString1 = SpannableString( punitypa.trim())
+                    val red1 = ForegroundColorSpan(Color.parseColor("#E60606"))
+                    val boldSpan = StyleSpan(Typeface.BOLD)
+                    spannableString1.setSpan(boldSpan, 0, unitypycolor[0].trim().length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    spannableString1.setSpan(
+                        red1, 0,  unitypycolor[0].trim().length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    unitype.text = spannableString1
+                    reordermark.text=Reordermark.toString()
+                    price.text = "${pprice}"
+                    if ("$location" == "---") {
+                        locationval.text = "N/A"
+                    } else {
+                        locationval.text = "$location"
+                    }
+                    category.text = "$pCategory"
+                    sub_category.text = "$pSubCategory"
+                    if(DUnit !=3){
+                        stockfeild2.text = "(${DefaultStock2})"
+                        stockfeild2.visibility=View.VISIBLE
+                    }
+                    stock.text = "${DefaultStock}"
+                    barcode.text = "" + bc
+                    Glide.with(this)
+                        .load(imagesurl)
+                        .into(imagur)
+                    pDialog.dismiss()
+                } else {
+                    showproductdetails?.visibility = View.GONE
+                    pDialog.dismiss()
+                    val dialog = SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                    dialog.contentText = ""+presponsmsg.toString()
+                    dialog.setConfirmText("ok").currentFocus
+                    dialog.setConfirmClickListener { sDialog -> sDialog.dismissWithAnimation()
+                        menu?.isVisible = false }
+                    dialog.setCancelable(false)
+                    dialog.show()
+                    AppPreferences.playSoundbarcode()
+                }
+            }, Response.ErrorListener { response ->
+                pDialog.dismiss()
+                Log.e("onError", error(response.toString()))
+            })
+        reqPRODUCTDETAILS.retryPolicy = DefaultRetryPolicy(
+            1000000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queues.add(reqPRODUCTDETAILS)
+    }
+
+
     fun CheckInterNetDailog(){
         val dialog = context?.let { Dialog(it) }
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)

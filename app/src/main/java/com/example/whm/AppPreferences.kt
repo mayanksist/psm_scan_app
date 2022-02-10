@@ -35,6 +35,7 @@ object AppPreferences {
     const val ADD_PRODUCT_MANAUL = BASEURL + "WPOReceive.asmx/getproductbyproductid"
     const val Draft_PRODUCT_List = BASEURL + "WPOReceive.asmx/getPODetails"
     const val CHECK_BILL_NO = BASEURL + "WPOReceive.asmx/CheckBillNo"
+    const val PRODUCT_MANAUL_DETAILS = apiurl + "WPackerProductList.asmx/getproductbyProductId"
     //for devices
 
     var manufacturer = Build.MANUFACTURER
