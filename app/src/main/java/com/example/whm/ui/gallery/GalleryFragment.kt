@@ -578,13 +578,14 @@ class GalleryFragment : Fragment() {
 
             com.example.myapplication.R.id.backinvetory  -> {
                 if (AppPreferences.internetConnectionCheck(this.context)) {
-                    addmproduct?.isVisible=true
+
                     if (TotalStockQTY!!.text.toString()!="" && TotalStockQTY!!.text.toString().toInt()>0) {
                       var backbtn=  SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
                         backbtn.contentText = "Discard stock changes?"
                         backbtn.cancelButtonBackgroundColor = Color.parseColor("#4cae4c")
                         backbtn.setCancelButton( "Yes")
                             { sDialog -> sDialog.dismissWithAnimation()
+
                                }
                         backbtn.confirmText = "No"
                         backbtn.confirmButtonBackgroundColor = Color.parseColor("#E60606")
@@ -597,6 +598,7 @@ class GalleryFragment : Fragment() {
                                 editlayout?.visibility = View.GONE
                                 backinvetory?.isVisible = false
                                 menu?.isVisible = true
+                                addmproduct?.isVisible=true
 
                                (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Inventory Check"
                                 clear()
@@ -618,6 +620,7 @@ class GalleryFragment : Fragment() {
                         editlayout?.visibility = View.GONE
                         backinvetory?.isVisible = false
                         menu?.isVisible = true
+                        addmproduct?.isVisible=true
                         clear()
                         barcode?.setText("")
                         barcode?.requestFocus()
@@ -839,6 +842,7 @@ class GalleryFragment : Fragment() {
                         updates.confirmText = "ok"
                         updates.setConfirmClickListener { sDialog -> sDialog.dismissWithAnimation()
                                 backinvetory?.isVisible = false
+                                addmproduct?.isVisible=true
                                 barcodeenter = binding.txtBarScanned.text as String?
                                 bindproductdetails(barcodeenter as String)
                                 showproductdetails?.visibility = View.VISIBLE
@@ -851,6 +855,7 @@ class GalleryFragment : Fragment() {
                         updates.show()
                         barcode?.setText("")
                         barcode?.requestFocus()
+
 
                     } else {
                       var update=  SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText(
@@ -876,8 +881,11 @@ class GalleryFragment : Fragment() {
         }
     }
     fun RemarkMessage() {
-        SweetAlertDialog(this.context,SweetAlertDialog.ERROR_TYPE)
-        .setContentText("Remark length should be 10 character").show()
+        var Remarkalert=   SweetAlertDialog(this.context,SweetAlertDialog.ERROR_TYPE)
+        Remarkalert?.contentText = "Remark length should be 10 character"
+        Remarkalert.setCanceledOnTouchOutside(false)
+        Remarkalert.show()
+
     }
 
     fun Totalstockqtycheck()
