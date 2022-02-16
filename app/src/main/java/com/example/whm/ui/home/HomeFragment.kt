@@ -50,6 +50,7 @@ private var StatusS:Int=2
     val btninventorypodraftlist = mView.findViewById<Button>(com.example.myapplication.R.id.btninventorypodraftlist)
     val btnsubmitpolist = mView.findViewById<Button>(com.example.myapplication.R.id.btnsubmitpolist)
     val btnrevertpolist = mView.findViewById<Button>(com.example.myapplication.R.id.btnrevertpolist)
+    val btnpointernallist = mView.findViewById<Button>(com.example.myapplication.R.id.btnpointernallist)
 
     var Usertype = preferences.getString("EmpTypeNo", "")
         val editor = preferences.edit()
@@ -74,6 +75,7 @@ private var StatusS:Int=2
             btninventorypodraftlist.visibility=   View.VISIBLE
             btnsubmitpolist.visibility=   View.VISIBLE
             btnrevertpolist.visibility=   View.VISIBLE
+            btnpointernallist.visibility=   View.VISIBLE
 
         }
 
@@ -105,6 +107,11 @@ private var StatusS:Int=2
         btnrevertpolist.setOnClickListener {
 
             this.findNavController().navigate(com.example.myapplication.R.id.nav_revertpolist)
+        }
+
+        btnpointernallist.setOnClickListener {
+
+            this.findNavController().navigate(com.example.myapplication.R.id.nav_internalpos)
         }
         return mView
     }

@@ -78,6 +78,7 @@ class MainActivity2 : AppCompatActivity() {
             nav_Menu.findItem(com.example.myapplication.R.id.nav_drfatpolist).isVisible = true
             nav_Menu.findItem(com.example.myapplication.R.id.nav_submitpolist).isVisible = true
             nav_Menu.findItem(com.example.myapplication.R.id.nav_revertpolist).isVisible = true
+            nav_Menu.findItem(com.example.myapplication.R.id.nav_internalpos).isVisible = true
 
         }
         val navController = findNavController(com.example.myapplication.R.id.nav_host_fragment_content_main)
@@ -100,6 +101,7 @@ class MainActivity2 : AppCompatActivity() {
                 com.example.myapplication.R.id.nav_drfatpolist,
                 com.example.myapplication.R.id.nav_submitpolist,
                 com.example.myapplication.R.id.nav_revertpolist,
+                com.example.myapplication.R.id.nav_internalpos
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

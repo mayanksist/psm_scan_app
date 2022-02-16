@@ -78,4 +78,11 @@
         android:name="com.example.whm.ui.revertpolist.RevertPolistFragment"
         android:label="@string/btnrevertpolist"
         tools:layout="@layout/fragment_revert_polist_list" />
+    <fragment
+        android:id="@+id/nav_internalpos"
+        android:name="com.example.whm.ui.internalpolist.InternalpoListFragment"
+        android:label="@string/btninternlpilist"
+        tools:layout="@layout/submit_details_item_fragment">
+
+    </fragment>
 </navigation>

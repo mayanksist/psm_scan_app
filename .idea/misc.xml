@@ -77,6 +77,7 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/loadorder_arrow_circle_right_24.xml" value="0.83" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/mins.xml" value="0.8855421686746988" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/minus.xml" value="0.8855421686746988" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/drawable/oval.xml" value="0.91875" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/oval2.xml" value="0.33425925925925926" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/oval3.xml" value="0.33425925925925926" />
         <entry key="..\:/Android App/PSM/app/src/main/res/drawable/pdimgbg.xml" value="0.8855421686746988" />
@@ -87,6 +88,7 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/font/allerta.xml" value="0.9525" />
         <entry key="..\:/Android App/PSM/app/src/main/res/font/arial.xml" value="0.9525" />
         <entry key="..\:/Android App/PSM/app/src/main/res/font/arizonia.xml" value="0.9525" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_internalpodetails.xml" value="0.15" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_main2.xml" value="0.36666666666666664" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/activity_receive_po.xml" value="0.75" />
@@ -107,7 +109,9 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_home.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_inventory_fragment.xml" value="0.67" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_item.xml" value="0.88" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_item2.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_item_list.xml" value="0.88" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_item_list2.xml" value="0.90875" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_load_order_list.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_loadorderlists.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_manualorder.xml" value="0.920997920997921" />
@@ -122,6 +126,8 @@
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_submit_polis_list.xml" value="0.7517899761336515" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_submitpolist.xml" value="1.25" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/fragment_submitpolist_list.xml" value="0.87125" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/internalpo_list_fragment.xml" value="0.88" />
+        <entry key="..\:/Android App/PSM/app/src/main/res/layout/internalpo_polist_lists.xml" value="0.88" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/inventoryreceiver_fragment.xml" value="0.7843601895734598" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/listdesign.xml" value="0.8770833333333333" />
         <entry key="..\:/Android App/PSM/app/src/main/res/layout/manualaddprodctinventorym.xml" value="0.88" />
@@ -220,7 +226,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.67" />
+        <option name="scale" value="0.15" />
       </ProjectState>
     </option>
   </component>

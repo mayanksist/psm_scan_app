@@ -2,7 +2,7 @@
     <string name="app_name">WHM</string>
     <string name="prompt_email">Enter User Id</string>
     <string name="prompt_password">Password</string>
-    c
+
     <string name="login">Login</string>
     <string name="email_error">Please enter your email address</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -32,6 +32,7 @@
     <string name="btninventorypodraftlist">Draft PO List</string>
     <string name="btnsubmitpolist">Pending PO List</string>
     <string name="btnrevertpolist">Revert PO List</string>
+    <string name="btninternlpilist">Internal Po List</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="scancode">Scan security</string>
