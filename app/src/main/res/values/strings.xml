@@ -32,7 +32,7 @@
     <string name="btninventorypodraftlist">Draft PO List</string>
     <string name="btnsubmitpolist">Pending PO List</string>
     <string name="btnrevertpolist">Revert PO List</string>
-    <string name="btninternlpilist">Internal Po List</string>
+    <string name="btninternlpilist">Internal PO List</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="scancode">Scan security</string>

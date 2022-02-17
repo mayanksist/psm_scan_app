@@ -21,5 +21,13 @@
             app:showAsAction="collapseActionView"
             android:actionLayout="@layout/toolbar"
             android:title="Add Product" />
+
+        <item
+            android:id="@+id/verifyproduct"
+            android:orderInCategory="200"
+            app:showAsAction="collapseActionView"
+            android:visible="false"
+            android:actionLayout="@layout/toolbar"
+            android:title="Verify Product" />
     </group>
 </menu>

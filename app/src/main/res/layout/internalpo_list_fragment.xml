@@ -23,7 +23,7 @@
             android:background="@drawable/frame">
 
             <TextView
-                android:id="@+id/txtbillno"
+                android:id="@+id/txtpoNO"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -47,10 +47,10 @@
                 android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/billdate" />
+                app:layout_constraintTop_toBottomOf="@+id/txtpodate" />
 
             <TextView
-                android:id="@+id/billdate"
+                android:id="@+id/txtpodate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="12-12-2021"
@@ -71,8 +71,8 @@
                 android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageView8"
-                app:layout_constraintStart_toStartOf="@+id/txtbillno"
-                app:layout_constraintTop_toBottomOf="@+id/txtbillno" />
+                app:layout_constraintStart_toStartOf="@+id/txtpoNO"
+                app:layout_constraintTop_toBottomOf="@+id/txtpoNO" />
 
 
             <TextView
@@ -94,8 +94,8 @@
                 android:layout_height="0dp"
                 android:src="@drawable/ic_baseline_calendar_month_24"
                 app:layout_constraintBottom_toTopOf="@+id/imageView8"
-                app:layout_constraintEnd_toStartOf="@+id/billdate"
-                app:layout_constraintTop_toTopOf="@+id/billdate"
+                app:layout_constraintEnd_toStartOf="@+id/txtpodate"
+                app:layout_constraintTop_toTopOf="@+id/txtpodate"
                 app:tint="@color/colorAccent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

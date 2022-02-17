@@ -7,14 +7,17 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.Settings
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +30,7 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
 import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.ui.internalpolist.Internalpoadapter
+import com.example.myapplication.ui.product.setSupportActionBar
 import org.json.JSONObject
 import java.io.IOException
 
@@ -35,7 +39,7 @@ class InternalpoListFragment : Fragment() {
 
     private val InternalModel = ArrayList<InternalpoListViewModel>()
     private lateinit var InternalAdapter: Internalpoadapter
-
+    var searcpo: MenuItem? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,16 +65,16 @@ class InternalpoListFragment : Fragment() {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             var empautoid = preferences.getString("EmpAutoId", "")
             var accessToken = preferences.getString("accessToken", "")
-            var StatusD = 1
+            var StatusPO = 11
 
             val queues = Volley.newRequestQueue(this.context)
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
             JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
             JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
             JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
-            JSONObj.put("cObj", Jsonarrapolist.put("status", StatusD))
-            val draftpolist = JsonObjectRequest(
-                Request.Method.POST, AppPreferences.DRAFT_PO_LIST,
+            JSONObj.put("cObj", Jsonarrapolist.put("Status", StatusPO))
+            val internalpolist = JsonObjectRequest(
+                Request.Method.POST, AppPreferences.InternalPOLIST,
                 JSONObj,
                 { response ->
                     val resobj = (response.toString())
@@ -83,14 +87,14 @@ class InternalpoListFragment : Fragment() {
                         InternalAdapter.notifyDataSetChanged()
                         val jsondata = resultobj.getJSONArray("responseData")
                         for (i in 0 until jsondata.length()) {
-                            val BillNo = jsondata.getJSONObject(i).getString("BillNo")
-                            val Billdate = jsondata.getJSONObject(i).getString("BillDate")
-                            val VendorName = jsondata.getJSONObject(i).getString("VAutoId")
-                            val DAutoId = jsondata.getJSONObject(i).getInt("DAutoId")
-                            val Status = jsondata.getJSONObject(i).getInt("Status")
-                            val NoofProduct = jsondata.getJSONObject(i).getInt("NoOfI")
-                            DataBindLoadorder(
-                                BillNo, Billdate, VendorName,Status,NoofProduct,DAutoId)
+                            val PONO = jsondata.getJSONObject(i).getString("PoNo")
+                            val PODATE = jsondata.getJSONObject(i).getString("PODate")
+                            val VendorName = jsondata.getJSONObject(i).getString("VendorName")
+                            val POAUTOID = jsondata.getJSONObject(i).getInt("AutoId")
+                            val POStatus = jsondata.getJSONObject(i).getString("POStatus")
+                            val NoofProduct = jsondata.getJSONObject(i).getInt("NoofItems")
+                            DataBindInternalPOLIST(
+                                PONO, PODATE, VendorName,POStatus,NoofProduct,POAUTOID)
 
                         }
 
@@ -120,13 +124,13 @@ class InternalpoListFragment : Fragment() {
                         }
                     }
                 })
-            draftpolist.retryPolicy = DefaultRetryPolicy(
+            internalpolist.retryPolicy = DefaultRetryPolicy(
                 10000000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
             )
             try {
-                queues.add(draftpolist)
+                queues.add(internalpolist)
             } catch (e: IOException) {
                 Toast.makeText(this.context, "Server Error", Toast.LENGTH_LONG).show()
             }
@@ -145,15 +149,37 @@ class InternalpoListFragment : Fragment() {
         return  view
     }
 
-    private fun DataBindLoadorder(
-        BillNo: String,
-        Billdate: String,
+    override fun onCreateOptionsMenu(x: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.ipomenuitem, x)
+        super.onCreateOptionsMenu(x, inflater)
+        searcpo= x.findItem(R.id.searchpo)
+
+
+        if(searcpo!=null) {
+            searcpo?.isVisible = false
+        }
+
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.searchpo -> {
+
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun DataBindInternalPOLIST(
+        PONO: String,
+        PODATE: String,
         VendorName: String,
-        Status: Int,
+        Status: String,
         NoofProduct: Int,
         DAutoId: Int
     ) {
-        var RevertPoList = InternalpoListViewModel(BillNo, Billdate, VendorName, Status, NoofProduct, DAutoId)
+        var RevertPoList = InternalpoListViewModel(PONO, PODATE, VendorName, Status, NoofProduct, DAutoId)
         InternalModel.add(RevertPoList)
         InternalAdapter.notifyDataSetChanged()
     }
