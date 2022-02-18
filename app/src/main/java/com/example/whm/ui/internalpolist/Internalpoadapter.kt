@@ -29,6 +29,8 @@ internal class Internalpoadapter(private var internalpoListViewModel: List<Inter
         var POAutoid:Int=0
         var searchpo: MenuItem? = null
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+
+
     }
 
 
