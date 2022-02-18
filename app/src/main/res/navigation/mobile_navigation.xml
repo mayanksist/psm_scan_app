@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home"
+    android:layout_gravity="center"
+    android:textAlignment="center"
+    >
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.myapplication.com.example.whm.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home"
+        android:layout_gravity="center"
+        android:textAlignment="center" />
+
+    <fragment
+        android:id="@+id/nav_product"
+        android:name="com.example.myapplication.com.example.whm.ui.gallery.GalleryFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_productlist"
+        android:name="com.example.whm.ui.manualorder.ManualorderFragment"
+        android:label="@string/product_list_fragment"
+        tools:layout="@layout/fragment_manualorder" />
+    <fragment
+        android:id="@+id/nav_orderlist"
+        android:label="@string/OrderList"
+        android:name="com.example.whm.ui.load_order_page.LoadOrderListFragment"
+        tools:layout="@layout/fragment_loadorderlists" />
+    <fragment
+        android:id="@+id/nav_assignorder"
+        android:label="@string/menuassignorder"
+        android:name="com.example.whm.ui.assignorder.ItemFragment"
+        tools:layout="@layout/fragment_item_list" />
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:label="@string/menu_slideshow"
+        android:name="com.example.myapplication.com.example.whm.ui.slideshow.SlideshowFragment"
+        tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_allpickbox"
+        android:label="@string/picallboxes"
+        android:name="com.example.whm.ui.pickallboxes.picallboxesFragment"
+        tools:layout="@layout/fragment_picallboxes_list2" />
+    <fragment
+        android:id="@+id/nav_scanorder"
+        android:name="com.example.myapplication.ui.product.ProductList"
+        android:label="@string/OrderList"
+        tools:layout="@layout/fragment_product_list" />
+    <fragment
+        android:id="@+id/nav_inventory"
+        android:name="com.example.whm.ui.inventoryreceive.FragmentInventory"
+        android:label="@string/Inventoryreceiv"
+        tools:layout="@layout/fragment_inventory_fragment" />
+    <fragment
+        android:id="@+id/nav_bindpolist"
+        android:name="com.example.whm.ui.inventoryreceive.FragmentInventory"
+        android:label="@string/Inventoryreceiv"
+        tools:layout="@layout/activity_receive_po" />
+    <fragment
+        android:id="@+id/nav_drfatpolist"
+        android:name="com.example.whm.ui.draftpolist.draftpolistFragment"
+        android:label="@string/btninventorypodraftlist"
+        tools:layout="@layout/fragment_draftpol_list2" />
+    <fragment
+        android:id="@+id/nav_submitpolist"
+        android:name="com.example.whm.ui.submitpolist.submitpolistFragment"
+        android:label="@string/btnsubmitpolist"
+        tools:layout="@layout/fragment_revert_polist_list" />
+    <fragment
+        android:id="@+id/nav_revertpolist"
+        android:name="com.example.whm.ui.revertpolist.RevertPolistFragment"
+        android:label="@string/btnrevertpolist"
+        tools:layout="@layout/fragment_revert_polist_list" />
+    <fragment
+        android:id="@+id/nav_internalpos"
+        android:name="com.example.whm.ui.internalpolist.InternalpoListFragment"
+        android:label="@string/btninternlpilist"
+        tools:layout="@layout/submit_details_item_fragment">
+
+    </fragment>
+</navigation>

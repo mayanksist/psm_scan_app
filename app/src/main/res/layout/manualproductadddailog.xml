@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+android:layout_margin="5dp"
+    android:background="#fff"
+    android:elevation="3dp"
+    android:fitsSystemWindows="true">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/frame"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/btnpoadd"
+                android:layout_width="35dp"
+                android:layout_height="0dp"
+                android:background="@drawable/greenframe"
+                android:src="@drawable/add"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="@+id/qtym"
+                app:layout_constraintStart_toEndOf="@+id/qtym"
+                app:layout_constraintTop_toTopOf="@+id/qtym"
+                app:layout_constraintVertical_bias="1.0"
+                app:tint="#4CAF50" />
+
+            <ImageButton
+                android:id="@+id/btnpoqtyminus"
+                android:layout_width="35dp"
+                android:layout_height="0dp"
+                android:background="@drawable/redframe"
+                android:src="@drawable/minus"
+                app:layout_constraintBottom_toBottomOf="@+id/qtym"
+                app:layout_constraintStart_toStartOf="@+id/txtqty"
+                app:layout_constraintTop_toTopOf="@+id/qtym"
+                app:tint="#FF0000" />
+
+            <ListView
+                android:id="@+id/lv1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/txtmpid"
+                android:divider="#ad5"
+                android:dividerHeight="2dp"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:maxLines="1"
+                android:paddingLeft="1dp"
+                android:text="Product"
+                android:textColor="#000"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+            <AutoCompleteTextView
+                android:id="@+id/txtmpid"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/frame"
+                android:hint="Search by Product Name and ID"
+                android:iconifiedByDefault="false"
+                android:paddingLeft="14dp"
+                android:textColor="#000"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView7"
+                app:layout_constraintTop_toBottomOf="@+id/textView7"
+                tools:text="" />
+
+
+            <Button
+                android:id="@+id/btncancel"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="left"
+                android:background="#FF0000"
+                android:gravity="center"
+                android:text="Cancel"
+                android:textSize="18dp"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#ffffff"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/divider8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider7"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <Button
+                android:id="@+id/btnsaevpoqty"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:background="#4CAF50"
+                android:gravity="center"
+                android:text="Add"
+                android:textSize="18dp"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#ffffff"
+                app:layout_constraintBottom_toBottomOf="@+id/divider8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/divider8"
+                app:layout_constraintTop_toTopOf="@+id/divider8" />
+
+            <View
+                android:id="@+id/divider7"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="14dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/totalpicesqty" />
+
+            <View
+                android:id="@+id/divider8"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="@+id/btncancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/btncancel"
+                app:layout_constraintTop_toBottomOf="@+id/divider7" />
+
+            <TextView
+                android:id="@+id/txtunittype"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Unit Type"
+                android:textColor="#000"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/txtmpid"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/txtmpid"
+                app:layout_constraintTop_toBottomOf="@+id/txtmpid" />
+
+            <Spinner
+                android:id="@+id/spunity"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/frame"
+                android:text="Unit Type"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/txtmpid"
+                app:layout_constraintStart_toStartOf="@+id/txtmpid"
+                app:layout_constraintTop_toBottomOf="@+id/txtunittype" />
+
+            <TextView
+                android:id="@+id/txtqty"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:maxLines="1"
+                android:text="Quantity"
+                android:textColor="#000"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="@+id/spunity"
+                app:layout_constraintTop_toBottomOf="@+id/spunity" />
+
+            <EditText
+                android:id="@+id/qtym"
+                android:layout_width="90dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/removeborderframe"
+                android:inputType="number"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:text="1"
+                android:textAlignment="center"
+                android:textSize="16dp"
+                app:layout_constraintStart_toEndOf="@+id/btnpoqtyminus"
+                app:layout_constraintTop_toBottomOf="@+id/txtqty" />
+
+            <TextView
+                android:id="@+id/totalpices"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:maxLines="1"
+                android:text="Total Pieces"
+                android:textColor="#000"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="@+id/totalpicesqty"
+                app:layout_constraintTop_toBottomOf="@+id/spunity" />
+
+            <EditText
+                android:id="@+id/totalpicesqty"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/frame"
+                android:editable="false"
+                android:enabled="false"
+                android:inputType="number"
+                android:maxLines="1"
+                android:paddingLeft="14dp"
+                android:text="1"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/spunity"
+                app:layout_constraintTop_toBottomOf="@+id/totalpices" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

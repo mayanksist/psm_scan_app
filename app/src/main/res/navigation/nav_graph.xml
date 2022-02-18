@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/productList2">
+
+    <fragment
+        android:id="@+id/LoadOrderListFragment"
+        android:name="com.example.whm.ui.load_order_page.LoadOrderListFragment"
+        android:label="fragment_item_list"
+        tools:layout="@layout/fragment_item_list" />
+    <fragment
+        android:id="@+id/productList2"
+        android:name="com.example.myapplication.ui.product.ProductList"
+        android:label="fragment_product_list"
+        tools:layout="@layout/fragment_product_list"
+        />
+    <fragment
+        android:id="@+id/picallboxesFragment"
+        android:name="com.example.whm.ui.pickallboxes.picallboxesFragment"
+        android:label="fragment_picallboxes_list2"
+        tools:layout="@layout/fragment_picallboxes_list2"
+        />
+</navigation>

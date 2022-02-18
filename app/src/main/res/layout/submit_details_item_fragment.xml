@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/receive_PO"
+        android:fitsSystemWindows="true"
+        android:name="com.example.whm.ui.submitpolist.SubmitDetailsItemFragment"
+        tools:context="com.example.whm.ui.submitpolist.SubmitDetailsItemFragment"
+        >
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ProducyListPO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="4dp"
+
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/productlist"
+            android:background="@drawable/frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutheader">
+
+            <TextView
+                android:id="@+id/txtproductidl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="Product ID"
+                android:textColor="#C61A1A"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtproductnamePO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="ProductName"
+                android:textColor="#000"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtproductidl"
+                app:layout_constraintTop_toBottomOf="@+id/txtproductidl" />
+
+            <TextView
+                android:id="@+id/txtpoqty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="PO Qty :"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtproductidl"
+                app:layout_constraintTop_toBottomOf="@+id/txtproductnamePO" />
+
+            <TextView
+                android:id="@+id/txtpo_qty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:text="1"
+                android:textColor="#000"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtpoqty"
+                app:layout_constraintStart_toEndOf="@+id/txtpoqty"
+                app:layout_constraintTop_toTopOf="@+id/txtpoqty" />
+
+            <TextView
+                android:id="@+id/txtunittype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:text="Piece"
+                android:textColor="#000"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtpo_qty"
+                app:layout_constraintEnd_toStartOf="@+id/txttotalpiece"
+                app:layout_constraintHorizontal_bias="0.18"
+                app:layout_constraintStart_toEndOf="@+id/txtpo_qty"
+                app:layout_constraintTop_toTopOf="@+id/txtpo_qty"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/txttotalpiece"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
+                android:text="Pieces :"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/txttotalpieceqty"
+                app:layout_constraintEnd_toStartOf="@+id/txttotalpieceqty"
+                app:layout_constraintTop_toTopOf="@+id/txttotalpieceqty"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/txttotalpieceqty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#000"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtpoqty"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtpoqty"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/actionedit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/oval"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:visibility="gone"
+                android:defaultFocusHighlightEnabled="false"
+                android:editable="false"
+                android:elevation="4dp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:focusedByDefault="false"
+                android:padding="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtproductidl"
+                app:layout_constraintEnd_toStartOf="@+id/actiondelete"
+                app:layout_constraintTop_toTopOf="@+id/txtproductidl"
+                app:srcCompat="@drawable/ic_baseline_edit_24"
+                app:tint="#244505" />
+
+            <TextView
+                android:id="@+id/podraftAutoId"
+                android:layout_width="20dp"
+                android:layout_height="19dp"
+                android:text="0"
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="158dp"
+                tools:layout_editor_absoluteY="43dp"
+                tools:ignore="MissingConstraints" />
+
+            <ImageView
+                android:id="@+id/actiondelete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/oval2"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:defaultFocusHighlightEnabled="false"
+                android:editable="false"
+                android:elevation="4dp"
+                android:focusable="false"
+                android:visibility="gone"
+                android:focusableInTouchMode="false"
+                android:focusedByDefault="false"
+                android:padding="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/actionedit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/actionedit"
+                app:srcCompat="@drawable/ic_baseline_delete_24"
+                app:tint="#B61B1B" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
