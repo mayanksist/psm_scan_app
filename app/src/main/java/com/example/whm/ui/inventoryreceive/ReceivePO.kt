@@ -98,6 +98,7 @@ class ReceivePO : AppCompatActivity() {
         btnpoqtyminus = findViewById(R.id.btnpoqtyminus)
 
         DAutoid = preferencesid.getInt("DAutoid", 0)
+
         if (AppPreferences.internetConnectionCheck(this)) {
             if (DAutoid != null && DAutoid != 0) {
                 val recyclerView: RecyclerView =

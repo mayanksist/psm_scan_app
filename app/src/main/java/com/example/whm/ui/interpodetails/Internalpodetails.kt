@@ -29,6 +29,7 @@ import com.example.myapplication.com.example.whm.ui.home.HomeFragment
 import com.example.myapplication.com.example.whm.ui.interpodetails.Detailsadapter
 import org.json.JSONObject
 import android.widget.CompoundButton
+import com.example.myapplication.com.example.whm.MainActivity2
 import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceivePOAdapter1
 
 
@@ -67,6 +68,19 @@ class Internalpodetails : AppCompatActivity() {
             recyclerView.adapter = Detailsadapterpo
         }
         else{
+            CheckInterNetDailog()
+        }
+        if (AppPreferences.internetConnectionCheck(this)) {
+            backarrow?.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    val preferences = PreferenceManager.getDefaultSharedPreferences(this@Internalpodetails)
+                    val editor = preferences.edit()
+                    editor.remove("POAutoid")
+                    val intent = Intent(this@Internalpodetails, MainActivity2::class.java)
+                    startActivity(intent)
+                }
+            })
+        } else {
             CheckInterNetDailog()
         }
     }
@@ -126,11 +140,12 @@ class Internalpodetails : AppCompatActivity() {
                         PODate = PODetails.getJSONObject(i).getString("PODate")
                         VendorName = PODetails.getJSONObject(i).getString("VendorName")
                         POtAutoId = PODetails.getJSONObject(i).getInt("AutoId")
+                        txtpono.text = PONo
+                        txtbilldatepo.text = PODate
+                        vendornamepo.text = VendorName
                     }
 
-                    txtpono.text = PONo
-                    txtbilldatepo.text = PODate
-                    vendornamepo.text = VendorName
+
 
                     val POItems = jsonrepdu.getJSONArray("POItems")
                     for (i in 0 until POItems.length()) {
@@ -195,9 +210,6 @@ class Internalpodetails : AppCompatActivity() {
 
                 } else {
                     SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
-
-
-
                 }
 
             }, Response.ErrorListener { response ->

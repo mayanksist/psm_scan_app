@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.whm.ui.interpodetails.DetailsItemsViewModel
@@ -33,6 +34,8 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         var txtisexchange: TextView = view.findViewById(com.example.myapplication.R.id.txtisexchange)
         val draftAutoIdTV: TextView = view.findViewById(com.example.myapplication.R.id.podraftAutoId)
         var actionedit: ImageView = view.findViewById(com.example.myapplication.R.id.actionedit)
+        var free: ConstraintLayout = view.findViewById(com.example.myapplication.R.id.free)
+        var exchange: ConstraintLayout = view.findViewById(com.example.myapplication.R.id.exchange)
 
     }
 
@@ -55,8 +58,21 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         holder.draftAutoIdTV.text=productList.getDraftID().toString()
         holder.txtisfree.text=productList.getISfree().toString()
         holder.txtisexchange.text=productList.getIsexchaNGe().toString()
-        holder.txtisfree!!.setEnabled(true);
-        holder.txtisexchange!!.setEnabled(true);
+       if(holder.txtisexchange.text=="1"){
+           holder.txtisexchange.text="Is Exchange"
+       }
+        else{
+           holder.txtisexchange.text=""
+           holder.exchange.setBackgroundColor(Color.WHITE);
+
+       }
+        if(holder.txtisfree.text=="1"){
+            holder.txtisfree.text="Is Free"
+        }
+        else{
+            holder.txtisfree.text=""
+            holder.free.setBackgroundColor(Color.WHITE);
+        }
         holder.actionedit.setOnClickListener {
             showpopupedit(
                 holder.POQTY.text.toString().toInt(),
