@@ -32,6 +32,7 @@ internal class Internalpoadapter(private var internalpoListViewModel: List<Inter
     }
 
 
+
     @NonNull
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
