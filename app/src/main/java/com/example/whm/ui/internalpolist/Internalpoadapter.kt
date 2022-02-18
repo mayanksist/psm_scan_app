@@ -31,6 +31,7 @@ internal class Internalpoadapter(private var internalpoListViewModel: List<Inter
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
     }
 
+
     @NonNull
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
