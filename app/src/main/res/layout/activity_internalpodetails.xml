@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:name="com.example.whm.ui.interpodetails.Internalpodetails"
     tools:context="com.example.whm.ui.interpodetails.Internalpodetails"
-   >
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

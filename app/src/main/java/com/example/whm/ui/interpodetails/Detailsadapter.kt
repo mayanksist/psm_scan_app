@@ -2,6 +2,7 @@ package com.example.myapplication.com.example.whm.ui.interpodetails
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
@@ -10,10 +11,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.example.myapplication.R
+import com.example.myapplication.com.example.whm.ui.load_order_page.setSupportActionBar
 import com.example.whm.ui.interpodetails.DetailsItemsViewModel
 
 
@@ -36,7 +41,7 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         var actionedit: ImageView = view.findViewById(com.example.myapplication.R.id.actionedit)
         var free: ConstraintLayout = view.findViewById(com.example.myapplication.R.id.free)
         var exchange: ConstraintLayout = view.findViewById(com.example.myapplication.R.id.exchange)
-
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbarAction)
     }
 
     override fun onCreateViewHolder(
@@ -50,6 +55,15 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
 
     override fun onBindViewHolder(holder: Detailsadapter.MyViewHolder, position: Int) {
         var productList=ReceiveModelList[position]
+        (activity as? AppCompatActivity)?.setSupportActionBar(holder.toolbar)
+        (activity as? AppCompatActivity)?.supportActionBar?.show()
+
+        if(ReceiveModelList.size!=0){
+            (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Internal PO List ("+ReceiveModelList.size+")"
+
+        }
+
+
         holder.PID.text = productList.getPID().toString()
         holder.PEODUCTNAME.text = productList.getPNAME()
         holder.UNITYPW.text = productList.getUnitType().toString()
@@ -58,14 +72,14 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         holder.draftAutoIdTV.text=productList.getDraftID().toString()
         holder.txtisfree.text=productList.getISfree().toString()
         holder.txtisexchange.text=productList.getIsexchaNGe().toString()
-       if(holder.txtisexchange.text=="1"){
-           holder.txtisexchange.text="Is Exchange"
-       }
+        if(holder.txtisexchange.text=="1"){
+            holder.txtisexchange.text="Is Exchange"
+        }
         else{
-           holder.txtisexchange.text=""
-           holder.exchange.setBackgroundColor(Color.WHITE);
+            holder.txtisexchange.text=""
+            holder.exchange.setBackgroundColor(Color.WHITE);
 
-       }
+        }
         if(holder.txtisfree.text=="1"){
             holder.txtisfree.text="Is Free"
         }
@@ -112,7 +126,7 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         val plus = view.findViewById<ImageView>(com.example.myapplication.R.id.increase)
         val minusbtn = view.findViewById<ImageView>(com.example.myapplication.R.id.decrease)
         POProductname.text = ProductName.toString()
-            //editpoqty!!.setEnabled(true);
+        //editpoqty!!.setEnabled(true);
 
         PIPID.text = PID.toString()
         PInStockType.text = "(In "+UNITYPW+")"

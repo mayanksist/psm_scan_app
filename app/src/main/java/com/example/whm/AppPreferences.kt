@@ -38,6 +38,7 @@ object AppPreferences {
     const val PRODUCT_MANAUL_DETAILS = apiurl + "WPackerProductList.asmx/getproductbyProductId"
     const val InternalPOLIST = BASEURL+"WinternalPOReceive.asmx/getInternalpopendinglist"
     const val InternalPOLISTDETAILS = BASEURL+"WinternalPOReceive.asmx/getInternalpoDetails"
+    const val INTERNAL_PO_PRODUCT_LIST = BASEURL+"WinternalPOReceive.asmx/getpoproducbindbypo"
     //for devices
 
     var manufacturer = Build.MANUFACTURER
