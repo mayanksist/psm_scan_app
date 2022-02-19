@@ -715,6 +715,7 @@ class Internalpodetails : AppCompatActivity() {
         queues.add(BINDPRODUCTLISTm)
     }
 
+
     fun BindUnitList(){
         val Jsonarra = JSONObject()
         val Jsonarryproduct = JSONObject()
