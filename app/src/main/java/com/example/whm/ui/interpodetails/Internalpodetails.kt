@@ -716,6 +716,8 @@ class Internalpodetails : AppCompatActivity() {
     }
 
 
+
+
     fun BindUnitList(){
         val Jsonarra = JSONObject()
         val Jsonarryproduct = JSONObject()
