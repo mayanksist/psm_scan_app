@@ -82,12 +82,11 @@
                 android:id="@+id/txtunittype"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
                 android:text="Piece"
                 android:textColor="#000"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txtpo_qty"
-                app:layout_constraintEnd_toStartOf="@+id/txttotalpiece"
+                app:layout_constraintEnd_toStartOf="@+id/txtverifyqty"
                 app:layout_constraintHorizontal_bias="0.18"
                 app:layout_constraintStart_toEndOf="@+id/txtpo_qty"
                 app:layout_constraintTop_toTopOf="@+id/txtpo_qty"
@@ -229,6 +228,29 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/txtverifyqty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Verify Qty "
+                app:layout_constraintBottom_toBottomOf="@+id/txtunittype"
+                app:layout_constraintEnd_toStartOf="@+id/txtveriqtypo"
+                app:layout_constraintTop_toTopOf="@+id/txtunittype"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/txtveriqtypo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:textColor="#000"
+                android:text="0"
+                app:layout_constraintBottom_toBottomOf="@+id/txtverifyqty"
+                app:layout_constraintEnd_toStartOf="@+id/txttotalpiece"
+                app:layout_constraintTop_toTopOf="@+id/txtverifyqty"
+                app:layout_constraintVertical_bias="0.0" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

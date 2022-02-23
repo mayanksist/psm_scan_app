@@ -2,29 +2,38 @@ package com.example.whm.ui.interpodetails
 
 
 
-    class DetailsItemsViewModel (
-        PID: Int, PNAME: String,
-        UNITTYPE: String,UnitQTY:Int,POQTY:Int,Totalpieces:Int,DraftID:Int,ISfree:Int,IsexchaNGe:Int) {
+    class DetailsItemsViewModel(
+        PID: Int,
+        PNAME: String,
+        UNITTYPE: String,
+        POQTY: Int,
+        Totalpieces: Int,
+        PoAutoidtID: Int,
+        ISfree: Int,
+        IsexchaNGe: Int,
+        Is_VerifyQty: Int
+    ) {
 
         private lateinit var PA_NEME: String
         private var P_ID: Int = 0
         private lateinit var UNIT_TYPE: String
-        private var Unit_QTY: Int = 0
         private var PO_QTY: Int=0
+        private var Unit_QTY: Int = 0
         private var Total_Pieces: Int=0
         private var DRAFT_ID: Int=0
         private var IS_free:Int = 0
         private var Is_exchaNGe:Int = 0
+        private var Is_VerifyQty:Int = 0
         init {
             this.P_ID = PID
             this.PA_NEME = PNAME
             this.UNIT_TYPE = UNITTYPE
-            this.Unit_QTY = UnitQTY
             this.PO_QTY = POQTY
             this.Total_Pieces = Totalpieces
-            this.DRAFT_ID = DraftID
+            this.P_ID = PoAutoidtID
             this.IS_free = ISfree
             this.Is_exchaNGe = IsexchaNGe
+            this.Is_VerifyQty = Is_VerifyQty
         }
 
         fun getPID(): Int? {
@@ -37,29 +46,20 @@ package com.example.whm.ui.interpodetails
         fun getUnitType(): String? {
             return UNIT_TYPE
         }
-        fun getUnitQTY(): Int? {
-            return Unit_QTY
-        }
 
-        fun getPOQTY(): Int? {
+
+        fun getPackedPOQTY(): Int? {
             return PO_QTY
         }
-        fun setPOQTY(POQTY: Int?) {
+        fun setPackedPOQTY(POQTY: Int?) {
             this.PO_QTY=POQTY!!
         }
         fun getTotalPieces():Int?{
             return Total_Pieces
         }
-        fun setTotalPieces(newpoqty:Int?) {
-            if (newpoqty != null) {
-                this.Total_Pieces= newpoqty*Unit_QTY
 
 
-            }
-        }
-
-
-        fun getDraftID():Int?{
+        fun getPoAutoidID():Int?{
             return DRAFT_ID
         }
         fun getISfree(): Int? {
@@ -69,4 +69,7 @@ package com.example.whm.ui.interpodetails
             return Is_exchaNGe
         }
 
+        fun getIs_VerifyQty(): Int? {
+            return Is_VerifyQty
+        }
     }

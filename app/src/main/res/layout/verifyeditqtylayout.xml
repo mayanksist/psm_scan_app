@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:fitsSystemWindows="true"
+    android:background="#fff"
+    android:elevation="3dp">
+
+    <TextView
+        android:id="@+id/packedqty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Packed Qty"
+        android:textAlignment="center"
+        android:textColor="#4CAF50"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/txtqtyperunit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.906"
+        app:layout_constraintStart_toEndOf="@+id/txtqtyperunit"
+        app:layout_constraintTop_toTopOf="@+id/txtqtyperunit" />
+
+    <TextView
+        android:id="@+id/txtqtyperunit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:textColor="#B82929"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="PID" />
+
+    <TextView
+        android:id="@+id/txtpid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:textColor="#B82929"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="PID" />
+
+    <TextView
+        android:id="@+id/txtpoproductname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:padding="0dp"
+        android:textColor="#000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtqtyperunit"
+        app:layout_constraintTop_toBottomOf="@+id/txtqtyperunit"
+        tools:text="PNAME" />
+
+    <EditText
+        android:id="@+id/txteditpoqty"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/removeborderframe"
+        android:inputType="number"
+        android:maxLength="6"
+        android:maxLines="1"
+        android:text="0"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toStartOf="@+id/increase"
+        app:layout_constraintTop_toBottomOf="@+id/divider6"
+        tools:text="QTY" />
+
+    <Button
+        android:id="@+id/btncancel"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:background="#FF0000"
+        android:text="Cancel"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/divider8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider7" />
+
+    <Button
+        android:id="@+id/btnsaevpoqty"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:background = "#4CAF50"
+        android:gravity="center"
+        android:text="Update"
+        android:textSize="18dp"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="@+id/divider8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/divider8"
+        app:layout_constraintTop_toTopOf="@+id/divider8" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="6dp"
+        android:text="Verify Qty"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/decrease"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider6" />
+
+    <View
+        android:id="@+id/divider6"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtisexchangeverify" />
+
+    <View
+        android:id="@+id/divider7"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txteditpoqty" />
+
+    <View
+        android:id="@+id/divider8"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="@+id/btncancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btncancel"
+        app:layout_constraintTop_toTopOf="@+id/btncancel" />
+
+    <ImageView
+        android:id="@+id/decrease"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/redframe"
+        android:src="@drawable/minus"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/txteditpoqty"
+        app:layout_constraintEnd_toStartOf="@+id/txteditpoqty"
+        app:layout_constraintTop_toTopOf="@+id/txteditpoqty"
+        app:tint="#FF0000" />
+
+    <ImageView
+        android:id="@+id/increase"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/greenframe"
+        android:src="@drawable/add"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/txteditpoqty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txteditpoqty"
+        app:tint="#4CAF50" />
+
+    <TextView
+        android:id="@+id/PInStockType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PInStockType"
+        android:textSize="14dp"
+        android:textColor="#B82929"
+        app:layout_constraintBottom_toBottomOf="@+id/txteditpoqty"
+        app:layout_constraintEnd_toEndOf="@+id/textView11"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/txisfreeverify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        android:text="Is Free"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtpoproductname" />
+
+    <TextView
+        android:id="@+id/txtisexchangeverify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Is Exchange"
+        app:layout_constraintBottom_toBottomOf="@+id/txisfreeverify"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtpoproductname" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
