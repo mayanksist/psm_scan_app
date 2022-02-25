@@ -255,8 +255,6 @@ class ProductList : Fragment() {
                                         AppPreferences.playSoundinvalid()
                                     }
                                 } else {
-                                    //msg for split
-//                                pDialog.dismiss()
                                     val layout = binding.txtmsg
                                     layout.visibility = View.VISIBLE
                                     orderno!!.setText("")

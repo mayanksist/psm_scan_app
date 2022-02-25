@@ -33,6 +33,10 @@ import com.example.myapplication.com.example.whm.MainActivity2
 import com.example.whm.ui.draftpolist.draftpolistFragment
 import com.example.whm.ui.internalpolist.InternalpoListFragment
 import org.json.JSONArray
+import android.widget.CheckBox
+
+
+
 
 
 class Internalpodetails : AppCompatActivity() {
@@ -48,10 +52,10 @@ class Internalpodetails : AppCompatActivity() {
     var totalpicesqty: TextView? = null
     var getdefault: String? = null
     var tqty: Int = 0
-    var PoQuantity:Int=0
+    var PoQuantity: Int = 0
     var qtyperunit: Int = 0
-    var ChkIsFree: CheckBox? = null
-    var ChkIsExchange: CheckBox? = null
+    public final var ChkIsFree: CheckBox? = null
+    public final var ChkIsExchange: CheckBox? = null
     var Quantity: Int = 0
     var totalpices: Int = 0
     var spunitypeid: String? = null
@@ -65,6 +69,8 @@ class Internalpodetails : AppCompatActivity() {
     var ReceiverpoList: ArrayList<DetailsItemsViewModel> = arrayListOf()
     lateinit var Detailsadapterpo: Detailsadapter
     var backarrow: ImageView? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -200,7 +206,13 @@ class Internalpodetails : AppCompatActivity() {
         val queues = Volley.newRequestQueue(this)
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put(
+                "deviceID",
+                Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)
+            )
+        )
         var accessToken = preferences.getString("accessToken", "")
 
         var EmpAutoId = preferences.getString("EmpAutoId", "")
@@ -223,21 +235,21 @@ class Internalpodetails : AppCompatActivity() {
                 val resultobj = JSONObject(responsemsg.getString("d"))
                 val responseCode = resultobj.getString("responseCode")
                 val responseMessage = resultobj.getString("responseMessage")
-                var PID:Int=0
-                var POtAutoIdh:Int=0
-                var UnitAutoId:Int=0
-                var TotalPieces:Int=0
+                var PID: Int = 0
+                var POtAutoIdh: Int = 0
+                var UnitAutoId: Int = 0
+                var TotalPieces: Int = 0
 
-                var PQuantity:Int=0
-                var VerifiedQty:Int=0
-                var QtyPerUnit:Int=0
-                var isFreeItem:Int=0
-                var IsExchange:Int=0
-                var PName: String? =null
-                var PODate: String? =null
-                var VendorName: String? =null
-                var PONo: String? =null
-                var UnitType: String? =null
+                var PQuantity: Int = 0
+                var VerifiedQty: Int = 0
+                var QtyPerUnit: Int = 0
+                var isFreeItem: Int = 0
+                var IsExchange: Int = 0
+                var PName: String? = null
+                var PODate: String? = null
+                var VendorName: String? = null
+                var PONo: String? = null
+                var UnitType: String? = null
                 if (responseCode == "201") {
                     val jsondata = resultobj.getString("responseData")
                     val jsonrepdu = JSONObject(jsondata.toString())
@@ -263,17 +275,17 @@ class Internalpodetails : AppCompatActivity() {
                         isFreeItem = POItems.getJSONObject(i).getInt("isFreeItem")
                         IsExchange = POItems.getJSONObject(i).getInt("IsExchange")
                         VerifiedQty = POItems.getJSONObject(i).getInt("VerifiedQty")
-                        var check=false
-                        if(!check) {
+                        var check = false
+                        if (!check) {
                             if (UnitType != null) {
                                 if (PName != null) {
                                     DataBindPOLIST(
-                                        PID ,
+                                        PID,
                                         PName,
                                         UnitType,
                                         PQuantity,
                                         TotalPieces,
-                                        POtAutoIdh ,
+                                        POtAutoIdh,
                                         isFreeItem,
                                         IsExchange,
                                         VerifiedQty,
@@ -311,12 +323,12 @@ class Internalpodetails : AppCompatActivity() {
         PID: Int, PNAME: String,
         UNITTYPE: String,
         PackedQTY: Int,
-        Totalpieces:Int,
+        Totalpieces: Int,
         POautoID: Int,
         IS_free: Int,
         Is_exchaNGe: Int,
         Is_VerifyQty: Int,
-        UnitAutoid:Int
+        UnitAutoid: Int
     ) {
         var POLIST = DetailsItemsViewModel(
             PID,
@@ -337,38 +349,28 @@ class Internalpodetails : AppCompatActivity() {
     }
 
 
-
     fun onCheckboxClicked(view: View) {
         if (view is CheckBox) {
 
             val checked: Boolean = view.isChecked
             val isexchange = findViewById<CheckBox>(R.id.isexchange);
             val isfreeitem = findViewById<CheckBox>(R.id.isfreeitem);
+
             when (view.id) {
                 R.id.isexchange -> {
                     if (checked) {
-                        isexchange.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, b ->
-                            if (b) {
-                                isfreeitem.setChecked(false)
-                            }
-                        })
-
+                                isfreeitem.isChecked = false
                     } else {
-
+                        isexchange.isChecked = false
                     }
                 }
                 R.id.isfreeitem -> {
                     if (checked) {
-                        isfreeitem.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, b ->
-                            if (b) {
-                                isexchange.setChecked(false)
-                            }
-                        })
+                                isexchange.isChecked = false
                     } else {
-
+                        isfreeitem.isChecked = false
                     }
                 }
-
             }
         }
     }
@@ -427,7 +429,7 @@ class Internalpodetails : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                  BindProductPOList()
+                BindProductPOList()
             }
         })
         qty!!.addTextChangedListener(object : TextWatcher {
@@ -487,6 +489,26 @@ class Internalpodetails : AppCompatActivity() {
                 }
             }
         })
+
+        ChkIsExchange!!.setOnClickListener { view ->
+            if (ChkIsExchange!!.isChecked) {
+                ChkIsFree!!.isChecked = false
+
+
+            } else {
+                ChkIsExchange!!.isChecked = false
+
+            }
+        }
+        ChkIsFree!!.setOnClickListener { view ->
+            if (ChkIsFree!!.isChecked) {
+                ChkIsExchange!!.isChecked = false
+
+
+            } else {
+                ChkIsFree!!.isChecked = false
+            }
+        }
         btncancel.setOnClickListener(View.OnClickListener {
             dialog?.dismiss()
         })
@@ -591,18 +613,19 @@ class Internalpodetails : AppCompatActivity() {
         }
 
 
-        var SBcheckedIsfree: Int = 0
-        var SBcheckedIsexchange: Int = 0
+        scheckedIsexchange = 0
+        scheckedIsfree = 0
         if (isexchange!!.isChecked) {
-
-            SBcheckedIsexchange = 1
-            JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", SBcheckedIsexchange))
+            isfreeitem.setChecked(false)
+            scheckedIsexchange = 1
+            JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", scheckedIsexchange))
         } else {
             JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", 0))
         }
         if (isfreeitem!!.isChecked) {
-            SBcheckedIsfree = 1
-            JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", SBcheckedIsfree))
+            isexchange.setChecked(false)
+            scheckedIsfree = 1
+            JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", scheckedIsfree))
         } else {
             JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", 0))
         }
@@ -619,14 +642,13 @@ class Internalpodetails : AppCompatActivity() {
                     val jsondata = resultobj.getString("responseData")
                     val JSONOBJ = JSONObject(jsondata.toString())
                     val EMessage = JSONOBJ.getString("response")
-                    if(EMessage=="Error"){
+                    if (EMessage == "Error") {
                         val ErrorMessage = JSONOBJ.getString("ErrorMessage")
                         val dialog = SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
                         dialog.contentText = ErrorMessage.toString()
                         dialog.setCancelable(false)
                         dialog.show()
-                    }
-                    else{
+                    } else {
                         val ProductId = JSONOBJ.getInt("ProductId")
                         val ProductName = JSONOBJ.getString("ProductName")
                         val UnitType = JSONOBJ.getString("L_UnitType")
@@ -635,7 +657,7 @@ class Internalpodetails : AppCompatActivity() {
                         val VerifiedQty = JSONOBJ.getInt("VerifiedQty")
                         val TotalPackedPieces = JSONOBJ.getInt("TotalPackedPieces")
                         for (n in 0..ReceiverpoList.size - 1) {
-                            if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() == SBcheckedIsfree && ReceiverpoList[n].getIsexchaNGe() == SBcheckedIsexchange) {
+                            if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() == scheckedIsfree && ReceiverpoList[n].getIsexchaNGe() == scheckedIsexchange) {
 
                                 if (ReceiverpoList[n].getIs_VerifyQty() != null) {
                                     Detailsadapterpo.notifyItemChanged(n)
@@ -646,7 +668,7 @@ class Internalpodetails : AppCompatActivity() {
                                         UnitType,
                                         PQty,
                                         TotalPackedPieces,
-                                        POAutoid ,
+                                        POAutoid,
                                         scheckedIsfree,
                                         scheckedIsexchange,
                                         VerifiedQty,
@@ -655,8 +677,7 @@ class Internalpodetails : AppCompatActivity() {
                                     )
                                 }
                             }
-
-                    }
+                        }
 
                     }
 
@@ -665,12 +686,7 @@ class Internalpodetails : AppCompatActivity() {
                     dialog.contentText = responseMessage
                     dialog.setCancelable(false)
                     dialog.show()
-                    var d = responseMessage.split("\\s".toRegex())[0]
-                    if (d == "Barcode") {
-                        AppPreferences.playSoundbarcode()
-                    }
-//                    Toast.makeText(this, , Toast.LENGTH_SHORT).show()
-
+                    AppPreferences.playSoundbarcode()
                 }
                 barcodeadd.setText("")
                 barcodeadd.requestFocus()
@@ -687,7 +703,7 @@ class Internalpodetails : AppCompatActivity() {
     }
 
 
-    fun BindProductPOList(){
+    fun BindProductPOList() {
 
         val Jsonarra = JSONObject()
         val JSONObj = JSONObject()
@@ -697,9 +713,15 @@ class Internalpodetails : AppCompatActivity() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         var accessToken = preferences.getString("accessToken", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")
-        JSONObj.put("requestContainer",Jsonarra.put("accessToken", accessToken))
-        JSONObj.put("requestContainer",Jsonarra.put("UserAutoId", EmpAutoId))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
+        JSONObj.put("requestContainer", Jsonarra.put("UserAutoId", EmpAutoId))
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put(
+                "deviceID",
+                Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)
+            )
+        )
         JSONObj.put("cObj", Jsonarraplist.put("search", autotextView!!.text))
         JSONObj.put("cObj", Jsonarraplist.put("POAutoId", POAutoid))
         val BINDPRODUCTLISTm = JsonObjectRequest(
@@ -723,14 +745,16 @@ class Internalpodetails : AppCompatActivity() {
                         val isFreeItem = BINDLIST.getInt("isFreeItem")
                         PoQuantity = BINDLIST.getInt("Qty")
 
-                            productArray[i] = PID.toString() + "-" + PNAME
-                            productArrayId[i] = PID.toString()
+                        productArray[i] = PID.toString() + "-" + PNAME
+                        productArrayId[i] = PID.toString()
 
                     }
-                    val adapter = ArrayAdapter(this,
-                        android.R.layout.simple_dropdown_item_1line, productArray)
-                   // autotextView?.showDropDown()
-                    autotextView?.threshold =3
+                    val adapter = ArrayAdapter(
+                        this,
+                        android.R.layout.simple_dropdown_item_1line, productArray
+                    )
+                    autotextView?.showDropDown()
+                    autotextView?.threshold = 3
                     autotextView?.setAdapter(adapter)
                     adapter?.setNotifyOnChange(true)
                     adapter?.notifyDataSetChanged()
@@ -758,23 +782,29 @@ class Internalpodetails : AppCompatActivity() {
     }
 
 
-    fun BindUnitList(){
+    fun BindUnitList() {
         val Jsonarra = JSONObject()
         val Jsonarryproduct = JSONObject()
         val JSONObj = JSONObject()
         val queues = Volley.newRequestQueue(this)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID",Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put(
+                "deviceID",
+                Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)
+            )
+        )
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         var accessToken = preferences.getString("accessToken", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")
-        JSONObj.put("requestContainer",Jsonarra.put("accessToken", accessToken))
-        JSONObj.put("requestContainer",Jsonarra.put("UserAutoId", EmpAutoId))
+        JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
+        JSONObj.put("requestContainer", Jsonarra.put("UserAutoId", EmpAutoId))
         JSONObj.put("requestContainer", Jsonarra.put("filterkeyword", Jsonarryproduct))
         JSONObj.put("filterkeyword", Jsonarryproduct.put("productId", sproductid))
-        val BINDUNITTYPE =spUnitType
+        val BINDUNITTYPE = spUnitType
         val BindProductDetails = JsonObjectRequest(
-            Request.Method.POST,AppPreferences.GET_PRODUCT_DETAILS, JSONObj,
+            Request.Method.POST, AppPreferences.GET_PRODUCT_DETAILS, JSONObj,
             { response ->
                 val resobj = (response.toString())
                 val responsemsg = JSONObject(resobj)
@@ -782,7 +812,7 @@ class Internalpodetails : AppCompatActivity() {
                 val responseCode = resultobj.getString("responseCode")
                 val responseMessage = resultobj.getString("responseMessage")
                 if (responseCode == "201") {
-                    var UnitType:Int=0
+                    var UnitType: Int = 0
                     val unitlist = resultobj.getJSONArray("responseData")
                     val n = unitlist.length()
                     val spinnerArray = arrayOfNulls<String>(n)
@@ -793,36 +823,49 @@ class Internalpodetails : AppCompatActivity() {
                         Qty = unitlist.getJSONObject(i).getInt("Qty")
                         UnitType = unitlist.getJSONObject(i).getInt("UnitType")
                         DUnit = unitlist.getJSONObject(i).getInt("DUnit")
-                        if(DUnit==UnitType){
-                            spinnerArray[i] = unittype+" ("+Qty+"pcs) *"
-                        }
-                        else{
-                            spinnerArray[i] = unittype+" ("+Qty+"pcs)"
+                        if (DUnit == UnitType) {
+                            spinnerArray[i] = unittype + " (" + Qty + "pcs) *"
+                        } else {
+                            spinnerArray[i] = unittype + " (" + Qty + "pcs)"
                         }
                         spinnerArrayId[i] = UnitType.toString()
 
-                        BINDUNITTYPE?.adapter = this.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) }
+                        BINDUNITTYPE?.adapter = this.let {
+                            ArrayAdapter(
+                                it,
+                                R.layout.support_simple_spinner_dropdown_item,
+                                spinnerArray
+                            )
+                        }
                         BINDUNITTYPE!!.setSelection(spinnerArrayId.indexOf(DUnit.toString()))
-                        BINDUNITTYPE.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
-                            override fun onNothingSelected(parent: AdapterView<*>?) {
-                            }
-                            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                                spunitypeid = spinnerArrayId[position].toString()
-                                var  spunitypename = spinnerArray[position].toString()
-                                if (spunitypename.contains("(")){
-                                    val result1 = spunitypename.trim().split("(").toMutableList()
-                                    getdefault=result1[1].replace("pcs)","" ).replace("*","")
-                                    totalpicesqty!!.text = getdefault.toString()
-                                    var defaultqty:Int=1
-                                    qty!!.text = defaultqty.toString()
+                        BINDUNITTYPE.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+                                override fun onNothingSelected(parent: AdapterView<*>?) {
+                                }
 
+                                override fun onItemSelected(
+                                    parent: AdapterView<*>?,
+                                    view: View?,
+                                    position: Int,
+                                    id: Long
+                                ) {
+                                    spunitypeid = spinnerArrayId[position].toString()
+                                    var spunitypename = spinnerArray[position].toString()
+                                    if (spunitypename.contains("(")) {
+                                        val result1 =
+                                            spunitypename.trim().split("(").toMutableList()
+                                        getdefault = result1[1].replace("pcs)", "").replace("*", "")
+                                        totalpicesqty!!.text = getdefault.toString()
+                                        var defaultqty: Int = 1
+                                        qty!!.text = defaultqty.toString()
+
+                                    }
                                 }
                             }
-                        }
                     }
-                }
-                else{
-                    Toast.makeText(this@Internalpodetails,responseMessage,Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@Internalpodetails, responseMessage, Toast.LENGTH_SHORT)
+                        .show()
 
                 }
 
@@ -847,7 +890,13 @@ class Internalpodetails : AppCompatActivity() {
         val queues = Volley.newRequestQueue(this)
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put(
+                "deviceID",
+                Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)
+            )
+        )
         var accessToken = preferences.getString("accessToken", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")
         JSONObj.put(
@@ -859,24 +908,25 @@ class Internalpodetails : AppCompatActivity() {
             Jsonarra.put("UserAutoId", EmpAutoId)
         )
 
-        if(POAutoid!=0){
+        if (POAutoid != 0) {
             JSONObj.put("cObj", Jsonarrabarcode.put("POAutoId", POAutoid))
-        }else{
+        } else {
             JSONObj.put("cObj", Jsonarrabarcode.put("POAutoId", PAutoIdTV.text.toString().toInt()))
         }
         JSONObj.put("cObj", sproductid?.let { Jsonarrabarcode.put("productId", it.toInt()) })
         JSONObj.put("cObj", spunitypeid?.let { Jsonarrabarcode.put("UnitAutoId", it.toInt()) })
-        scheckedIsexchange=0
+        scheckedIsexchange = 0
         if (ChkIsExchange!!.isChecked) {
-
+            ChkIsExchange!!.setChecked(false)
             scheckedIsexchange = 1
             JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", scheckedIsexchange))
         } else {
             JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", 0))
         }
-        scheckedIsfree=0
+        scheckedIsfree = 0
         if (ChkIsFree!!.isChecked) {
             scheckedIsfree = 1
+            ChkIsFree!!.setChecked(false)
             JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", scheckedIsfree))
         } else {
             JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", 0))
@@ -911,30 +961,30 @@ class Internalpodetails : AppCompatActivity() {
                         PAutoIdTV.text = POAutoid.toString()
 
 
-                    for (n in 0..ReceiverpoList.size - 1) {
+                        for (n in 0..ReceiverpoList.size - 1) {
 
-                        if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() == scheckedIsfree && ReceiverpoList[n].getIsexchaNGe() == scheckedIsexchange) {
+                            if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() == scheckedIsfree && ReceiverpoList[n].getIsexchaNGe() == scheckedIsexchange) {
 
-                            if (ReceiverpoList[n].getIs_VerifyQty() != null) {
-                                Detailsadapterpo.notifyItemChanged(n)
-                                ReceiverpoList.removeAt(n)
-                                DataBindPOLIST(
-                                    ProductId,
-                                    ProductName,
-                                    UnitType,
-                                    PQty,
-                                    TotalPackedPieces,
-                                    POAutoid,
-                                    scheckedIsfree,
-                                    scheckedIsexchange,
-                                    qty!!.text.toString().toInt(),
-                                    UnitTypeid
+                                if (ReceiverpoList[n].getIs_VerifyQty() != null) {
+                                    Detailsadapterpo.notifyItemChanged(n)
+                                    ReceiverpoList.removeAt(n)
+                                    DataBindPOLIST(
+                                        ProductId,
+                                        ProductName,
+                                        UnitType,
+                                        PQty,
+                                        TotalPackedPieces,
+                                        POAutoid,
+                                        scheckedIsfree,
+                                        scheckedIsexchange,
+                                        qty!!.text.toString().toInt(),
+                                        UnitTypeid
 
-                                )
+                                    )
+                                }
                             }
                         }
                     }
-                }
 
                 } else {
                     val dialog = SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
@@ -970,15 +1020,20 @@ class Internalpodetails : AppCompatActivity() {
             Jsonarra.put("accessToken", accessToken)
         )
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put(
+                "deviceID",
+                Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)
+            )
+        )
         JSONObj.put(
             "requestContainer",
             Jsonarra.put("UserAutoId", EmpAutoId)
         )
-        if(POAutoid!=0) {
+        if (POAutoid != 0) {
             JSONObj.put("cObj", Jsonarrabarcode.put("POAutoId", POAutoid))
-        }
-        else {
+        } else {
             JSONObj.put(
                 "cObj",
                 Jsonarrabarcode.put("POAutoId", POAutoIdTV.text.toString().toInt())
@@ -1000,8 +1055,7 @@ class Internalpodetails : AppCompatActivity() {
                     var alertbox = SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
                     alertbox.contentText = responseMessage
                     alertbox.confirmText = "ok"
-                    alertbox.setConfirmClickListener {
-                            sDialog ->
+                    alertbox.setConfirmClickListener { sDialog ->
                         var intent = Intent(this, MainActivity2::class.java)
                         startActivity(intent)
                     }
@@ -1015,8 +1069,7 @@ class Internalpodetails : AppCompatActivity() {
 
                     alertbox.confirmText = "ok"
                     alertbox.confirmButtonBackgroundColor = Color.parseColor("#E60606")
-                    alertbox.setConfirmClickListener {
-                            sDialog ->
+                    alertbox.setConfirmClickListener { sDialog ->
                         var intent = Intent(this, InternalpoListFragment::class.java)
                         startActivity(intent)
 
@@ -1037,5 +1090,8 @@ class Internalpodetails : AppCompatActivity() {
         )
         queues.add(SUBMITPOLITS)
     }
+
+
+
 }
 
