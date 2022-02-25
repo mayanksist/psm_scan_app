@@ -16,7 +16,9 @@
         android:usesCleartextTraffic="true" >
         <activity
             android:name="com.example.whm.ui.interpodetails.Internalpodetails"
-            android:exported="false" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name="com.example.whm.ui.submitpolist.SubmitdetailsActivity"
             android:exported="false" />

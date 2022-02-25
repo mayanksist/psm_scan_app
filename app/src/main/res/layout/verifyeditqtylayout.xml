@@ -14,7 +14,6 @@
         android:id="@+id/packedqty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Packed Qty"
         android:textAlignment="center"
         android:textColor="#4CAF50"
         android:textSize="17sp"
@@ -138,12 +137,12 @@
         android:id="@+id/divider6"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="16dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtisexchangeverify" />
+        app:layout_constraintTop_toBottomOf="@+id/txthidenunitautoid" />
 
     <View
         android:id="@+id/divider7"
@@ -203,21 +202,46 @@
         app:layout_constraintStart_toStartOf="@+id/textView11"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-    <TextView
-        android:id="@+id/txisfreeverify"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="2dp"
-        android:text="Is Free"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtpoproductname" />
 
     <TextView
-        android:id="@+id/txtisexchangeverify"
+        android:id="@+id/txisfreeverify"
+        android:layout_width="47dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/isfree"
+        android:text="Free"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/txtqtyperunit"
+        app:layout_constraintStart_toEndOf="@+id/txtpid"
+        app:layout_constraintTop_toTopOf="@+id/txtqtyperunit"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/txisExchangeverify"
+        android:layout_width="81dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/isexchange"
+        android:text="Exchange"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/txtpid"
+        app:layout_constraintStart_toEndOf="@+id/txtpid"
+        app:layout_constraintTop_toTopOf="@+id/txtqtyperunit"
+        app:layout_constraintVertical_bias="0.0"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/txthidenunitautoid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Is Exchange"
+        android:layout_marginEnd="16dp"
+        android:text=""
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/txisfreeverify"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtpoproductname" />

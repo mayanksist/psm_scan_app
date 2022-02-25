@@ -18,11 +18,7 @@
             android:icon="@drawable/unloadorders"
             android:visible="false"
             android:title="@string/Inventoryreceiv" />
-        <item
-            android:id="@+id/nav_internalpos"
-            android:icon="@drawable/poinpo"
-            android:visible="false"
-            android:title="@string/btninternlpilist" />
+
         <item
             android:id="@+id/nav_productlist"
             android:icon="@drawable/order"
@@ -64,6 +60,11 @@
             android:icon="@drawable/revert"
             android:visible="false"
             android:title="@string/btnrevertpolist" />
+        <item
+            android:id="@+id/nav_internalpos"
+            android:icon="@drawable/poinpo"
+            android:visible="false"
+            android:title="@string/btninternlpilist" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_logout"

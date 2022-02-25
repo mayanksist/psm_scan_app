@@ -49,7 +49,11 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         var free: ConstraintLayout = view.findViewById(com.example.myapplication.R.id.free)
         var exchange: ConstraintLayout = view.findViewById(com.example.myapplication.R.id.exchange)
         var txtveriqtypo: TextView = view.findViewById(com.example.myapplication.R.id.txtveriqtypo)
+        var txtunitautoid: TextView = view.findViewById(com.example.myapplication.R.id.txtunitautoid)
         val toolbar = view.findViewById<Toolbar>(R.id.toolbarAction)
+        var getisfree:Int=0
+        var getisexchange:Int=0
+
 
     }
 
@@ -73,7 +77,6 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
 
         }
 
-
         holder.PID.text = productList.getPID().toString()
         holder.PEODUCTNAME.text = productList.getPNAME()
         holder.UNITYPW.text = productList.getUnitType().toString()
@@ -81,23 +84,31 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         holder.POQTY.text=productList.getPackedPOQTY().toString()
         holder.POAutoIdTV.text=productList.getPoAutoidID().toString()
         holder.txtisfree.text=productList.getISfree().toString()
+        holder.getisfree=productList.getISfree().toString().toInt()
+        holder.getisexchange=productList.getIsexchaNGe().toString().toInt()
         holder.txtisexchange.text=productList.getIsexchaNGe().toString()
         holder.txtveriqtypo.text=productList.getIs_VerifyQty().toString()
-        if(holder.txtisexchange.text=="1"){
-            holder.txtisexchange.text="Is Exchange"
+        holder.txtunitautoid.text=productList.getUnitAutoid().toString()
+
+
+        if(holder.getisexchange==1){
+            holder.txtisexchange.text="Exchange"
+            holder.txtisexchange.visibility=View.VISIBLE
         }
 
         else{
-            holder.txtisexchange.text=""
-            holder.exchange.setBackgroundColor(Color.WHITE);
+            holder.txtisexchange.text="0"
+            holder.txtisexchange.visibility=View.GONE
 
         }
-        if(holder.txtisfree.text=="1"){
-            holder.txtisfree.text="Is Free"
+        if(holder.getisfree==1){
+            holder.txtisfree.text="Free"
+            holder.txtisfree.visibility=View.VISIBLE
         }
         else{
-            holder.txtisfree.text=""
-            holder.free.setBackgroundColor(Color.WHITE);
+            holder.txtisfree.text="0"
+            holder.txtisfree.visibility=View.GONE
+
         }
         holder.actionedit.setOnClickListener {
             showpopupedit(
@@ -108,9 +119,11 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
                 holder.txtveriqtypo.text.toString().toInt(),
                 holder.POAutoIdTV.text.toString().toInt(),
                 position,
-                holder.txtisfree.text.toString(),
-                holder.txtisexchange.text.toString()
+                holder.getisfree,
+                holder.getisexchange,
+                holder.txtunitautoid.text.toString().toInt()
             )
+
         }
 
 
@@ -127,8 +140,9 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         VerifyQty: Int,
         POAutoIdTV: Int,
         position: Int,
-        ISFree: String,
-        ISExchange: String
+        ISFree: Int,
+        ISExchange: Int,
+        UnitAutoid:Int
     ) {
         var dialog: AlertDialog? = null
         val builder = AlertDialog.Builder(activity)
@@ -139,6 +153,9 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         val PIPID: TextView = view.findViewById(com.example.myapplication.R.id.txtpid)
         val PInStockType: TextView = view.findViewById(com.example.myapplication.R.id.PInStockType)
         val packedqty: TextView = view.findViewById(com.example.myapplication.R.id.packedqty)
+        val txisfreeverify: TextView = view.findViewById(com.example.myapplication.R.id.txisfreeverify)
+        val txisExchangeverify: TextView = view.findViewById(com.example.myapplication.R.id.txisExchangeverify)
+        val txthidenunitautoid: TextView = view.findViewById(com.example.myapplication.R.id.txthidenunitautoid)
         editpoqty = view.findViewById(com.example.myapplication.R.id.txteditpoqty)
         val btnpoqty: Button = view.findViewById(com.example.myapplication.R.id.btnsaevpoqty)
         val btncancel: Button = view.findViewById(com.example.myapplication.R.id.btncancel)
@@ -147,33 +164,41 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         POProductname.text = ProductName.toString()
         //editpoqty!!.setEnabled(true);
 
+        if (ISFree==1){
+            txisfreeverify.visibility=View.VISIBLE
+
+        }
+        if (ISExchange==1){
+            txisExchangeverify.visibility=View.VISIBLE
+
+        }
+
         PIPID.text = PID.toString()
-        packedqty.text = "Packed Qty:"+POQTY.toString()
+        txthidenunitautoid.text = UnitAutoid.toString()
+        packedqty.text = "PO Qty : "+POQTY.toString()
         PInStockType.text = "(In "+UNITYPW+")"
         editpoqty!!.text = VerifyQty.toString()
         plus.setOnClickListener {
             if(editpoqty!!.text.toString()!="") {
-                //Toast.makeText(this.activity,packedqty.text.toString(),Toast.LENGTH_SHORT).show()
+                if (POQTY != editpoqty!!.text.toString().toInt()) {
 
-                    if (editpoqty!!.text.toString().toInt() >= 0) {
-                        if (editpoqty!!.text.toString().toInt()<=packedqty!!.text.toString().toInt()) {
-                        totalqty(editpoqty!!.text.toString().toInt() + 1)
-                        }
-            //    else{
-//                    var alertbox = SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE)
-//                    alertbox.contentText = "Product ID -"+PIPID.text.toString()+" </b><br/> Verify quantity "+VerifyQty.toString()+" can not be more than Packed PO Qty "+POQTY.toString()+""
-//                    alertbox.confirmText = "ok"
-//                    alertbox.setConfirmClickListener { sDialog ->
-//                        alertbox.dismiss()
-//                    }
-//                    alertbox.setCanceledOnTouchOutside(false)
-//                    alertbox.show()
+                if (editpoqty!!.text.toString().toInt() >= 0) {
+                    totalqty(editpoqty!!.text.toString().toInt() + 1)
+                } else {
+                    editpoqty!!.text = "1"
+                }
+            }
+                else{
+                    var alertbox = SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE)
+                    alertbox.contentText = "Product ID -"+PIPID.text.toString()+" </b><br/> Verify quantity "+editpoqty!!.text.toString().toInt()+" can not be more than  PO Qty "+POQTY.toString()+""
+                    alertbox.confirmText = "ok"
+                    alertbox.setConfirmClickListener { sDialog ->
+                        alertbox.dismiss()
+                    }
+                    alertbox.setCanceledOnTouchOutside(false)
+                    alertbox.show()
 
-              //  }
-                    }
-                    else {
-                        editpoqty!!.text = "1"
-                    }
+                }
 
             }
 
@@ -186,22 +211,36 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
             }
             else {
                 editpoqty!!.text = "0"
+
             }
 
         }
         btnpoqty.setOnClickListener(View.OnClickListener {
             if (!(editpoqty!!.text.toString().isEmpty() || editpoqty!!.text.toString()
-                    .toInt() == 0)
-            ) {
-                poqtyupdate(
-                    PID.toString().toInt(),
-                    editpoqty!!.text.toString().toInt(),
-                    POAutoIdTV.toString().toInt(),
-                    position,
-                    ISFree,
-                    ISExchange
-                )
-                dialog?.dismiss()
+                    .toInt() == 0))
+            {
+                if (editpoqty!!.text.toString().toInt()<=POQTY) {
+                    poqtyupdate(
+                        PID.toString().toInt(),
+                        editpoqty!!.text.toString().toInt(),
+                        POAutoIdTV.toString().toInt(),
+                        position,
+                        ISFree ,
+                        ISExchange,
+                        txthidenunitautoid.text.toString().toInt()
+                    )
+                    dialog?.dismiss()
+                }
+                else{
+                    var alertbox = SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE)
+                    alertbox.contentText = "Product ID -"+PIPID.text.toString()+" </b><br/> Verify quantity "+editpoqty!!.text.toString().toInt()+" can not be more than  PO Qty "+POQTY.toString()+""
+                    alertbox.confirmText = "ok"
+                    alertbox.setConfirmClickListener { sDialog ->
+                        alertbox.dismiss()
+                    }
+                    alertbox.setCanceledOnTouchOutside(false)
+                    alertbox.show()
+                }
             } else {
                 var alertbox = SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE)
                 alertbox.contentText = "Quantity Required"
@@ -215,12 +254,15 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         })
         btncancel.setOnClickListener(View.OnClickListener {
             dialog?.dismiss()
+
         })
+
         builder.setView(view)
         dialog = builder.create()
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
+
     }
 
     private fun totalqty(number: Int) {
@@ -236,10 +278,12 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         verifyqty: Int,
         POid: Int,
         position: Int,
-        ISFree: String,
-        ISExchange: String
+        ISFree:Int,
+        ISExchange:Int,
+        UnitAutoid: Int
 
     ) {
+
 
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
@@ -259,9 +303,11 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
             JSONObj.put("cObj", Jsonarrabarcode.put("POAutoId", POid))
         }
         JSONObj.put("cObj", Jsonarrabarcode.put("ProductId", PID))
-        JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", ISExchange))
-        JSONObj.put("cObj", Jsonarrabarcode.put("UnitAutoId", PID))
-        JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", ISFree))
+
+            JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", ISFree))
+            JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", ISExchange))
+        JSONObj.put("cObj", Jsonarrabarcode.put("UnitAutoId", UnitAutoid))
+
         JSONObj.put("cObj", Jsonarrabarcode.put("VerifiedQty", verifyqty))
         val DELETE_PO_LIST = JsonObjectRequest(
             Request.Method.POST, AppPreferences.INTERNAL_PO_EDIT_VERIFYQTYPO_LIST_PRODUCT, JSONObj,
@@ -272,18 +318,23 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
                 val responseCode = resultobj.getString("responseCode")
                 val responseMessage = resultobj.getString("responseMessage")
                 if (responseCode == "201") {
+                    val jsondata = resultobj.getString("responseData")
+                    val jsonrepdu = JSONObject(jsondata.toString())
+                    val success = jsonrepdu.getString("success")
                     var updatepoqty =
                         SweetAlertDialog(activity, SweetAlertDialog.SUCCESS_TYPE).setContentText(
-                            responseMessage.toString()
+                            success.toString()
+
                         )
-                    var productList = ReceiveModelList[position]
-                    var to: Int? = 0
-                  //  to = productList.getasperunitqty()
-                    ReceiveModelList.get(position).setPackedPOQTY(verifyqty)
-                   // ReceiveModelList.get(position).getTotalPiece(to, verifyqty)
+                    ReceiveModelList.get(position).setIs_VerifyQty(verifyqty)
+
                     notifyDataSetChanged()
+                    ReceiveModelList.get(position).setIs_exchangey(ISExchange)
+                    ReceiveModelList.get(position).setIs_free(ISFree)
+                   // notifyItemChanged(ReceiveModelList)
                     updatepoqty.setCanceledOnTouchOutside(false)
                     updatepoqty.show()
+
                 } else {
                     var updatepoqty =
                         SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE).setContentText(
@@ -291,6 +342,7 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
                         )
                     updatepoqty.setCanceledOnTouchOutside(false)
                     updatepoqty.show()
+
                 }
 
             }, Response.ErrorListener { response ->

@@ -30,6 +30,8 @@ import com.example.myapplication.com.example.whm.ui.interpodetails.Detailsadapte
 import org.json.JSONObject
 import android.widget.CompoundButton
 import com.example.myapplication.com.example.whm.MainActivity2
+import com.example.whm.ui.draftpolist.draftpolistFragment
+import com.example.whm.ui.internalpolist.InternalpoListFragment
 import org.json.JSONArray
 
 
@@ -46,6 +48,7 @@ class Internalpodetails : AppCompatActivity() {
     var totalpicesqty: TextView? = null
     var getdefault: String? = null
     var tqty: Int = 0
+    var PoQuantity:Int=0
     var qtyperunit: Int = 0
     var ChkIsFree: CheckBox? = null
     var ChkIsExchange: CheckBox? = null
@@ -57,6 +60,8 @@ class Internalpodetails : AppCompatActivity() {
     var Qty: Int = 0
     var LinearLayoutV: LinearLayout? = null
     var spUnitType: Spinner? = null
+    var scheckedIsfree: Int = 0
+    var scheckedIsexchange: Int = 0
     var ReceiverpoList: ArrayList<DetailsItemsViewModel> = arrayListOf()
     lateinit var Detailsadapterpo: Detailsadapter
     var backarrow: ImageView? = null
@@ -67,6 +72,7 @@ class Internalpodetails : AppCompatActivity() {
         setContentView(R.layout.activity_internalpodetails)
         toolbar = findViewById(R.id.toolbarAction)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
         val preferencesid = PreferenceManager.getDefaultSharedPreferences(this@Internalpodetails)
         val editor = getSharedPreferences("CheckShared", MODE_PRIVATE).edit()
         POAutoid = preferencesid.getInt("POAutoid", 0)
@@ -165,7 +171,7 @@ class Internalpodetails : AppCompatActivity() {
 
             R.id.savesubmit -> {
                 if (ReceiverpoList.size > 0) {
-
+                    SubmitPoList()
                     ReceiverpoList.clear()
                     true
                 } else {
@@ -221,6 +227,7 @@ class Internalpodetails : AppCompatActivity() {
                 var POtAutoIdh:Int=0
                 var UnitAutoId:Int=0
                 var TotalPieces:Int=0
+
                 var PQuantity:Int=0
                 var VerifiedQty:Int=0
                 var QtyPerUnit:Int=0
@@ -261,19 +268,21 @@ class Internalpodetails : AppCompatActivity() {
                             if (UnitType != null) {
                                 if (PName != null) {
                                     DataBindPOLIST(
-                                        POtAutoIdh,
+                                        PID ,
                                         PName,
                                         UnitType,
                                         PQuantity,
                                         TotalPieces,
-                                        PID,
+                                        POtAutoIdh ,
                                         isFreeItem,
                                         IsExchange,
-                                        VerifiedQty
+                                        VerifiedQty,
+                                        UnitAutoId
                                     )
                                 }
 
                             }
+
 
                         }
 
@@ -306,7 +315,8 @@ class Internalpodetails : AppCompatActivity() {
         POautoID: Int,
         IS_free: Int,
         Is_exchaNGe: Int,
-        Is_VerifyQty: Int
+        Is_VerifyQty: Int,
+        UnitAutoid:Int
     ) {
         var POLIST = DetailsItemsViewModel(
             PID,
@@ -317,7 +327,8 @@ class Internalpodetails : AppCompatActivity() {
             POautoID,
             IS_free,
             Is_exchaNGe,
-            Is_VerifyQty
+            Is_VerifyQty,
+            UnitAutoid
         )
         ReceiverpoList.add(0, POLIST)
         Detailsadapterpo.notifyDataSetChanged()
@@ -385,6 +396,7 @@ class Internalpodetails : AppCompatActivity() {
         val view = layoutInflater.inflate(R.layout.internalpomanualproductadd, null)
         val btnpoqty: Button = view.findViewById(R.id.btnsaevpoqty)
         val btncancel: Button = view.findViewById(R.id.btncancel)
+
         btnpoadd = view.findViewById(R.id.btnpoadd)
         ChkIsExchange = view.findViewById(R.id.chkexchange)
         ChkIsFree = view.findViewById(R.id.chkfree)
@@ -411,11 +423,11 @@ class Internalpodetails : AppCompatActivity() {
                 before: Int,
                 count: Int
             ) {
-                //BindProductPOList()
+                BindProductPOList()
             }
 
             override fun afterTextChanged(s: Editable) {
-                //  BindProductPOList()
+                  BindProductPOList()
             }
         })
         qty!!.addTextChangedListener(object : TextWatcher {
@@ -448,8 +460,6 @@ class Internalpodetails : AppCompatActivity() {
         })
 
         spUnitType = view.findViewById(R.id.spunity)
-
-
         btnpoqty.setOnClickListener(View.OnClickListener {
             var name: String? = null
             name = spUnitType!!.selectedItem as String?
@@ -461,6 +471,7 @@ class Internalpodetails : AppCompatActivity() {
                     findViewById(com.example.myapplication.R.id.POlistproduct)
                 val layoutManager = LinearLayoutManager(this)
                 recyclerView.layoutManager = layoutManager
+                AddproductlistManual()
                 Detailsadapterpo = Detailsadapter(ReceiverpoList, this)
                 recyclerView.adapter = Detailsadapterpo
                 dialog?.dismiss()
@@ -486,11 +497,11 @@ class Internalpodetails : AppCompatActivity() {
         dialog.show()
         btnpoadd?.setOnClickListener {
             if (qty!!.text.toString() != "") {
+
                 if (qty!!.text.toString().toInt() >= 0) {
                     tqty = getdefault!!.trim().toInt()
                     Quantity = qty!!.text.toString().toInt() + 1
                     totalpices = tqty * Quantity
-                    //  Toast.makeText(this@Internalpodetails,Quantity.toString(),Toast.LENGTH_SHORT).show();
                     totalpicesqty!!.text = totalpices.toString()
                     qty!!.text = Quantity.toString()
                 } else {
@@ -545,7 +556,6 @@ class Internalpodetails : AppCompatActivity() {
         val isexchange: CheckBox = findViewById(com.example.myapplication.R.id.isexchange)
         val isfreeitem: CheckBox = findViewById(com.example.myapplication.R.id.isfreeitem)
         val txtrefno: TextView = findViewById(com.example.myapplication.R.id.txtrefno)
-        // Toast.makeText(this@Internalpodetails,draftAutoIdTV.toString(),Toast.LENGTH_SHORT).show()
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
         val JSONObj = JSONObject()
@@ -580,9 +590,7 @@ class Internalpodetails : AppCompatActivity() {
             )
         }
 
-        var scheckedIsfree: Int = 0
 
-        var scheckedIsexchange: Int = 0
 
         if (isexchange!!.isChecked) {
 
@@ -621,6 +629,7 @@ class Internalpodetails : AppCompatActivity() {
                         val ProductId = JSONOBJ.getInt("ProductId")
                         val ProductName = JSONOBJ.getString("ProductName")
                         val UnitType = JSONOBJ.getString("L_UnitType")
+                        val UnitAutoid = JSONOBJ.getInt("L_Unit")
                         val PQty = JSONOBJ.getInt("PackedQty")
                         val VerifiedQty = JSONOBJ.getInt("VerifiedQty")
                         val TotalPackedPieces = JSONOBJ.getInt("TotalPackedPieces")
@@ -631,15 +640,17 @@ class Internalpodetails : AppCompatActivity() {
                                     Detailsadapterpo.notifyItemChanged(n)
                                     ReceiverpoList.removeAt(n)
                                     DataBindPOLIST(
-                                        POAutoid,
+                                        ProductId,
                                         ProductName,
                                         UnitType,
                                         PQty,
                                         TotalPackedPieces,
-                                        ProductId,
+                                        POAutoid ,
                                         scheckedIsfree,
                                         scheckedIsexchange,
-                                        VerifiedQty
+                                        VerifiedQty,
+                                        UnitAutoid
+
                                     )
                                 }
                             } else if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() == 1 && ReceiverpoList[n].getIsexchaNGe() != 1) {
@@ -647,15 +658,16 @@ class Internalpodetails : AppCompatActivity() {
                                     Detailsadapterpo.notifyItemChanged(n)
                                     ReceiverpoList.removeAt(n)
                                     DataBindPOLIST(
-                                        POAutoid,
+                                        ProductId,
                                         ProductName,
                                         UnitType,
                                         PQty,
                                         TotalPackedPieces,
-                                        ProductId,
+                                        POAutoid ,
                                         scheckedIsfree,
                                         scheckedIsexchange,
-                                        VerifiedQty
+                                        VerifiedQty,
+                                        UnitAutoid
                                     )
                                 }
                             } else if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() != 1 && ReceiverpoList[n].getIsexchaNGe() == 1) {
@@ -663,15 +675,16 @@ class Internalpodetails : AppCompatActivity() {
                                     Detailsadapterpo.notifyItemChanged(n)
                                     ReceiverpoList.removeAt(n)
                                     DataBindPOLIST(
-                                        POAutoid,
+                                        ProductId,
                                         ProductName,
                                         UnitType,
                                         PQty,
                                         TotalPackedPieces,
-                                        ProductId,
+                                        POAutoid,
                                         scheckedIsfree,
                                         scheckedIsexchange,
-                                        VerifiedQty
+                                        VerifiedQty,
+                                        UnitAutoid
                                     )
                                 }
                             }
@@ -703,6 +716,393 @@ class Internalpodetails : AppCompatActivity() {
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         )
         queues.add(BARCODEADDPRODUCT)
+    }
+
+
+    fun BindProductPOList(){
+
+        val Jsonarra = JSONObject()
+        val JSONObj = JSONObject()
+        val Jsonarraplist = JSONObject()
+        val queues = Volley.newRequestQueue(this)
+        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var accessToken = preferences.getString("accessToken", "")
+        var EmpAutoId = preferences.getString("EmpAutoId", "")
+        JSONObj.put("requestContainer",Jsonarra.put("accessToken", accessToken))
+        JSONObj.put("requestContainer",Jsonarra.put("UserAutoId", EmpAutoId))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put("cObj", Jsonarraplist.put("search", autotextView!!.text))
+        JSONObj.put("cObj", Jsonarraplist.put("POAutoId", POAutoid))
+        val BINDPRODUCTLISTm = JsonObjectRequest(
+            Request.Method.POST, AppPreferences.INTERNAL_PO_PRODUCT_LIST, JSONObj,
+            { response ->
+                val resobj = (response.toString())
+                val responsemsg = JSONObject(resobj)
+                val resultobj = JSONObject(responsemsg.getString("d"))
+                val responseCode = resultobj.getString("responseCode")
+                val responseMessage = resultobj.getString("responseMessage")
+                if (responseCode == "201") {
+                    val ProductList: JSONArray = resultobj.getJSONArray("responseData")
+                    val n = ProductList.length()
+                    val productArray = arrayOfNulls<String>(n)
+                    val productArrayId = arrayOfNulls<String>(n)
+                    for (i in 0 until n) {
+                        val BINDLIST = ProductList.getJSONObject(i)
+                        val PID = BINDLIST.getInt("ProductId")
+                        val PNAME = BINDLIST.getString("ProductName")
+                        val IsExchange = BINDLIST.getInt("IsExchange")
+                        val isFreeItem = BINDLIST.getInt("isFreeItem")
+                        PoQuantity = BINDLIST.getInt("Qty")
+
+                            productArray[i] = PID.toString() + "-" + PNAME
+                            productArrayId[i] = PID.toString()
+
+                    }
+                    val adapter = ArrayAdapter(this,
+                        android.R.layout.simple_dropdown_item_1line, productArray)
+                    autotextView?.showDropDown()
+                    autotextView?.threshold =3
+                    autotextView?.setAdapter(adapter)
+                    adapter?.setNotifyOnChange(true)
+                    adapter?.notifyDataSetChanged()
+                    autotextView?.onItemClickListener =
+                        AdapterView.OnItemClickListener { _, _, j, _ ->
+                            sproductid = productArrayId[j].toString()
+                            qty!!.isEnabled = true
+                            btnpoadd?.isEnabled = true
+                            btnpoqtyminus?.isEnabled = true
+                            BindUnitList()
+
+
+                        }
+                }
+            }, { response ->
+
+                Log.e("onError", error(response.toString()))
+            })
+        BINDPRODUCTLISTm.retryPolicy = DefaultRetryPolicy(
+            1000000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queues.add(BINDPRODUCTLISTm)
+    }
+
+
+    fun BindUnitList(){
+        val Jsonarra = JSONObject()
+        val Jsonarryproduct = JSONObject()
+        val JSONObj = JSONObject()
+        val queues = Volley.newRequestQueue(this)
+        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID",Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var accessToken = preferences.getString("accessToken", "")
+        var EmpAutoId = preferences.getString("EmpAutoId", "")
+        JSONObj.put("requestContainer",Jsonarra.put("accessToken", accessToken))
+        JSONObj.put("requestContainer",Jsonarra.put("UserAutoId", EmpAutoId))
+        JSONObj.put("requestContainer", Jsonarra.put("filterkeyword", Jsonarryproduct))
+        JSONObj.put("filterkeyword", Jsonarryproduct.put("productId", sproductid))
+        val BINDUNITTYPE =spUnitType
+        val BindProductDetails = JsonObjectRequest(
+            Request.Method.POST,AppPreferences.GET_PRODUCT_DETAILS, JSONObj,
+            { response ->
+                val resobj = (response.toString())
+                val responsemsg = JSONObject(resobj)
+                val resultobj = JSONObject(responsemsg.getString("d"))
+                val responseCode = resultobj.getString("responseCode")
+                val responseMessage = resultobj.getString("responseMessage")
+                if (responseCode == "201") {
+                    var UnitType:Int=0
+                    val unitlist = resultobj.getJSONArray("responseData")
+                    val n = unitlist.length()
+                    val spinnerArray = arrayOfNulls<String>(n)
+                    val spinnerArrayId = arrayOfNulls<String>(n)
+                    for (i in 0 until unitlist.length()) {
+                        var unittype = unitlist.getJSONObject(i).getString("UName")
+
+                        Qty = unitlist.getJSONObject(i).getInt("Qty")
+                        UnitType = unitlist.getJSONObject(i).getInt("UnitType")
+                        DUnit = unitlist.getJSONObject(i).getInt("DUnit")
+                        if(DUnit==UnitType){
+                            spinnerArray[i] = unittype+" ("+Qty+"pcs) *"
+                        }
+                        else{
+                            spinnerArray[i] = unittype+" ("+Qty+"pcs)"
+                        }
+                        spinnerArrayId[i] = UnitType.toString()
+
+                        BINDUNITTYPE?.adapter = this.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) }
+                        BINDUNITTYPE!!.setSelection(spinnerArrayId.indexOf(DUnit.toString()))
+                        BINDUNITTYPE.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+                            }
+                            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                                spunitypeid = spinnerArrayId[position].toString()
+                                var  spunitypename = spinnerArray[position].toString()
+                                if (spunitypename.contains("(")){
+                                    val result1 = spunitypename.trim().split("(").toMutableList()
+                                    getdefault=result1[1].replace("pcs)","" ).replace("*","")
+                                    totalpicesqty!!.text = getdefault.toString()
+                                    var defaultqty:Int=1
+                                    qty!!.text = defaultqty.toString()
+
+                                }
+
+
+
+
+                            }
+                        }
+                    }
+                }
+                else{
+                    Toast.makeText(this@Internalpodetails,responseMessage,Toast.LENGTH_SHORT).show()
+
+                }
+
+            }, { response ->
+
+                Log.e("onError", error(response.toString()))
+            })
+        BindProductDetails.retryPolicy = DefaultRetryPolicy(
+            1000000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queues.add(BindProductDetails)
+    }
+
+    fun AddproductlistManual() {
+        val PAutoIdTV: TextView = findViewById(com.example.myapplication.R.id.POAutoId)
+
+        val Jsonarra = JSONObject()
+        val Jsonarrabarcode = JSONObject()
+        val JSONObj = JSONObject()
+        val queues = Volley.newRequestQueue(this)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        var accessToken = preferences.getString("accessToken", "")
+        var EmpAutoId = preferences.getString("EmpAutoId", "")
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put("accessToken", accessToken)
+        )
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put("UserAutoId", EmpAutoId)
+        )
+
+        if(POAutoid!=0){
+            JSONObj.put("cObj", Jsonarrabarcode.put("POAutoId", POAutoid))
+        }else{
+            JSONObj.put("cObj", Jsonarrabarcode.put("POAutoId", PAutoIdTV.text.toString().toInt()))
+        }
+        JSONObj.put("cObj", sproductid?.let { Jsonarrabarcode.put("productId", it.toInt()) })
+        JSONObj.put("cObj", spunitypeid?.let { Jsonarrabarcode.put("UnitAutoId", it.toInt()) })
+        if (ChkIsExchange!!.isChecked) {
+
+            scheckedIsexchange = 1
+            JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", scheckedIsexchange))
+        } else {
+            JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", 0))
+        }
+        if (ChkIsFree!!.isChecked) {
+            scheckedIsfree = 1
+            JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", scheckedIsfree))
+        } else {
+            JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", 0))
+        }
+        JSONObj.put("cObj", Jsonarrabarcode.put("POQty", qty!!.text.toString().toInt()))
+        val BARCODEADDPRODUCT = JsonObjectRequest(
+            Request.Method.POST, AppPreferences.INTERNAL_PO_ADD_PRODUCT_MANAUL, JSONObj,
+            { response ->
+                val resobj = (response.toString())
+                val responsemsg = JSONObject(resobj)
+                val resultobj = JSONObject(responsemsg.getString("d"))
+                val responseCode = resultobj.getString("responseCode")
+                val responseMessage = resultobj.getString("responseMessage")
+                if (responseCode == "201") {
+                    val jsondata = resultobj.getString("responseData")
+                    val JSONOBJ = JSONObject(jsondata.toString())
+                    val EMessage = JSONOBJ.getString("response")
+                    if (EMessage == "Error") {
+                        val ErrorMessage = JSONOBJ.getString("ErrorMessage")
+                        val dialog = SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                        dialog.contentText = ErrorMessage.toString()
+                        dialog.setCancelable(false)
+                        dialog.show()
+                    } else {
+
+                        val ProductId = JSONOBJ.getInt("ProductId")
+                        val ProductName = JSONOBJ.getString("ProductName")
+                        val UnitType = JSONOBJ.getString("L_UnitType")
+                        val UnitTypeid = JSONOBJ.getInt("L_Unit")
+                        val PQty = JSONOBJ.getInt("PackedQty")
+                        val TotalPackedPieces = JSONOBJ.getInt("TotalPackedPieces")
+                        PAutoIdTV.text = POAutoid.toString()
+
+
+                    for (n in 0..ReceiverpoList.size - 1) {
+                        if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() != 1 && ReceiverpoList[n].getIsexchaNGe() != 1) {
+
+                            if (ReceiverpoList[n].getIs_VerifyQty() != null) {
+                                Detailsadapterpo.notifyItemChanged(n)
+                                ReceiverpoList.removeAt(n)
+                                DataBindPOLIST(
+                                    ProductId,
+                                    ProductName,
+                                    UnitType,
+                                    PQty,
+                                    TotalPackedPieces,
+                                    POAutoid,
+                                    scheckedIsfree,
+                                    scheckedIsexchange,
+                                    qty!!.text.toString().toInt(),
+                                    UnitTypeid
+
+                                )
+                            }
+                        } else if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() == 1 && ReceiverpoList[n].getIsexchaNGe() != 1) {
+                            if (ReceiverpoList[n].getIs_VerifyQty() != null) {
+                                Detailsadapterpo.notifyItemChanged(n)
+                                ReceiverpoList.removeAt(n)
+                                DataBindPOLIST(
+                                    ProductId,
+                                    ProductName,
+                                    UnitType,
+                                    PQty,
+                                    TotalPackedPieces,
+                                    POAutoid,
+                                    scheckedIsfree,
+                                    scheckedIsexchange,
+                                    qty!!.text.toString().toInt(),
+                                    UnitTypeid
+                                )
+                            }
+                        } else if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() != 1 && ReceiverpoList[n].getIsexchaNGe() == 1) {
+                            if (ReceiverpoList[n].getIs_VerifyQty() != null) {
+                                Detailsadapterpo.notifyItemChanged(n)
+                                ReceiverpoList.removeAt(n)
+                                DataBindPOLIST(
+                                    ProductId,
+                                    ProductName,
+                                    UnitType,
+                                    PQty,
+                                    TotalPackedPieces,
+                                    POAutoid,
+                                    scheckedIsfree,
+                                    scheckedIsexchange,
+                                    qty!!.text.toString().toInt(),
+                                    UnitTypeid
+                                )
+                            }
+                        }
+                    }
+                }
+
+                } else {
+                    val dialog = SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                    dialog.contentText = responseMessage
+                    dialog.setCancelable(false)
+                    dialog.show()
+                }
+
+            }, { response ->
+
+                Log.e("onError", error(response.toString()))
+            })
+        BARCODEADDPRODUCT.retryPolicy = DefaultRetryPolicy(
+            1000000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queues.add(BARCODEADDPRODUCT)
+    }
+
+
+    fun SubmitPoList() {
+        val POAutoIdTV: TextView = findViewById(com.example.myapplication.R.id.POAutoId)
+        val Jsonarra = JSONObject()
+        val Jsonarrabarcode = JSONObject()
+        val JSONObj = JSONObject()
+        val queues = Volley.newRequestQueue(this)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var accessToken = preferences.getString("accessToken", "")
+        var EmpAutoId = preferences.getString("EmpAutoId", "")
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put("accessToken", accessToken)
+        )
+        JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put(
+            "requestContainer",
+            Jsonarra.put("UserAutoId", EmpAutoId)
+        )
+        if(POAutoid!=0) {
+            JSONObj.put("cObj", Jsonarrabarcode.put("POAutoId", POAutoid))
+        }
+        else {
+            JSONObj.put(
+                "cObj",
+                Jsonarrabarcode.put("POAutoId", POAutoIdTV.text.toString().toInt())
+            )
+        }
+
+        JSONObj.put("cObj", Jsonarrabarcode.put("Status", "1"))
+
+        val SUBMITPOLITS = JsonObjectRequest(
+            Request.Method.POST, AppPreferences.INTERNAL_PO_Submit, JSONObj,
+            Response.Listener { response ->
+                val resobj = (response.toString())
+                val responsemsg = JSONObject(resobj)
+                val resultobj = JSONObject(responsemsg.getString("d"))
+
+                val responseCode = resultobj.getString("responseCode")
+                val responseMessage = resultobj.getString("responseMessage")
+                if (responseCode == "201") {
+                    var alertbox = SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                    alertbox.contentText = responseMessage
+                    alertbox.confirmText = "ok"
+                    alertbox.setConfirmClickListener {
+                            sDialog ->
+                        var intent = Intent(this, MainActivity2::class.java)
+                        startActivity(intent)
+                    }
+                    alertbox.setCanceledOnTouchOutside(false)
+                    alertbox.show()
+
+                } else {
+                    var alertbox = SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                    alertbox.contentText = responseMessage
+                    alertbox.cancelButtonBackgroundColor = Color.parseColor("#4cae4c")
+
+                    alertbox.confirmText = "ok"
+                    alertbox.confirmButtonBackgroundColor = Color.parseColor("#E60606")
+                    alertbox.setConfirmClickListener {
+                            sDialog ->
+                        var intent = Intent(this, InternalpoListFragment::class.java)
+                        startActivity(intent)
+
+                    }
+                    alertbox.setCanceledOnTouchOutside(false)
+                    alertbox.show()
+
+                }
+
+            }, Response.ErrorListener { response ->
+
+                Log.e("onError", error(response.toString()))
+            })
+        SUBMITPOLITS.retryPolicy = DefaultRetryPolicy(
+            1000000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queues.add(SUBMITPOLITS)
     }
 }
 

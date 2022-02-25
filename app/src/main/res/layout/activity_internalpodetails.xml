@@ -99,13 +99,17 @@
                 android:layout_width="158dp"
                 android:layout_height="match_parent"
                 android:text="Is Exchange"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:onClick="onCheckboxClicked"/>
 
             <CheckBox
                 android:id="@+id/isfreeitem"
                 android:layout_width="155dp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:layout_height="match_parent"
-                android:text="Is Free Item"
+                android:text="Is Free"
                 android:onClick="onCheckboxClicked"/>
 
         </LinearLayout>
@@ -122,8 +126,8 @@
 
             <TextView
                 android:id="@+id/txtviewrefno"
-                android:layout_width="145dp"
-                android:layout_height="wrap_content"
+                android:layout_width="172dp"
+                android:layout_height="match_parent"
                 android:text="PO No"
                 android:textSize="16dp"
                 android:textStyle="bold" />

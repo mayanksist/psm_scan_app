@@ -41,6 +41,8 @@ object AppPreferences {
     const val INTERNAL_PO_PRODUCT_LIST = BASEURL+"WinternalPOReceive.asmx/getpoproducbindbypo"
     const val INTERNAL_PO_SCANBARCODE_PRODUCT = BASEURL+"WinternalPOReceive.asmx/getpoproductbybarcode"
     const val INTERNAL_PO_EDIT_VERIFYQTYPO_LIST_PRODUCT = BASEURL+"WinternalPOReceive.asmx/QtyverifyManual"
+    const val INTERNAL_PO_Submit = BASEURL+"WinternalPOReceive.asmx/Submitinternalpo"
+    const val INTERNAL_PO_ADD_PRODUCT_MANAUL = BASEURL+"WinternalPOReceive.asmx/getInPOproductbyproductid"
     //for devices
 
     var manufacturer = Build.MANUFACTURER

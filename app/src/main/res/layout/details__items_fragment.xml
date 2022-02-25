@@ -189,10 +189,11 @@
                     android:layout_marginEnd="6dp"
                     android:layout_marginBottom="2dp"
                     android:text="Is Free"
+
                     android:textAlignment="center"
                     android:textColor="#fff"
                     android:textStyle="bold"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -222,7 +223,7 @@
                     android:textAlignment="center"
                     android:textColor="#fff"
                     android:textStyle="bold"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -251,6 +252,17 @@
                 app:layout_constraintEnd_toStartOf="@+id/txttotalpiece"
                 app:layout_constraintTop_toTopOf="@+id/txtverifyqty"
                 app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/txtunitautoid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="unit Autoid"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/exchange"
+                app:layout_constraintEnd_toStartOf="@+id/actionedit"
+                app:layout_constraintStart_toEndOf="@+id/exchange"
+                app:layout_constraintTop_toTopOf="@+id/exchange" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
