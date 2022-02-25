@@ -179,11 +179,11 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         PInStockType.text = "(In "+UNITYPW+")"
         editpoqty!!.text = VerifyQty.toString()
         plus.setOnClickListener {
-            if(editpoqty!!.text.toString()!="") {
-                if (POQTY != editpoqty!!.text.toString().toInt()) {
+            if(editpoqty!!.text.toString().trim()!="") {
+                if (POQTY != editpoqty!!.text.toString().trim().toInt()) {
 
-                if (editpoqty!!.text.toString().toInt() >= 0) {
-                    totalqty(editpoqty!!.text.toString().toInt() + 1)
+                if (editpoqty!!.text.toString().trim().toInt() >= 0) {
+                    totalqty(editpoqty!!.text.toString().trim().toInt() + 1)
                 } else {
                     editpoqty!!.text = "1"
                 }
@@ -201,12 +201,15 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
                 }
 
             }
+            else {
+                editpoqty!!.text = "1"
 
+            }
         }
         minusbtn!!.setOnClickListener {
-            if (editpoqty!!.text.toString() != "") {
+            if (editpoqty!!.text.toString().trim() != "") {
                 if (editpoqty!!.text.toString().toInt() >0) {
-                    totalqty(editpoqty!!.text.toString().toInt() - 1)
+                    totalqty(editpoqty!!.text.toString().trim().toInt() - 1)
                 }
             }
             else {
@@ -216,10 +219,10 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
 
         }
         btnpoqty.setOnClickListener(View.OnClickListener {
-            if (!(editpoqty!!.text.toString().isEmpty() || editpoqty!!.text.toString()
+            if (!(editpoqty!!.text.toString().trim().isEmpty() || editpoqty!!.text.toString().trim()
                     .toInt() == 0))
             {
-                if (editpoqty!!.text.toString().toInt()<=POQTY) {
+                if (editpoqty!!.text.toString().trim().toInt()<=POQTY) {
                     poqtyupdate(
                         PID.toString().toInt(),
                         editpoqty!!.text.toString().toInt(),
@@ -233,7 +236,7 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
                 }
                 else{
                     var alertbox = SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE)
-                    alertbox.contentText = "Product ID -"+PIPID.text.toString()+" </b><br/> Verify quantity "+editpoqty!!.text.toString().toInt()+" can not be more than  PO Qty "+POQTY.toString()+""
+                    alertbox.contentText = "Product ID -"+PIPID.text.toString()+" </b><br/> Verify quantity "+editpoqty!!.text.toString().trim().toInt()+" can not be more than  PO Qty "+POQTY.toString()+""
                     alertbox.confirmText = "ok"
                     alertbox.setConfirmClickListener { sDialog ->
                         alertbox.dismiss()

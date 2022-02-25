@@ -153,15 +153,19 @@
         <entry key="..\:/Android App/psm_scan_app/app/src/main/res/drawable/oval.xml" value="0.3111111111111111" />
         <entry key="..\:/Android App/psm_scan_app/app/src/main/res/drawable/oval2.xml" value="0.3111111111111111" />
         <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/activity_internalpodetails.xml" value="0.33" />
+        <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/activity_receive_po.xml" value="0.3625" />
         <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/details__items_fragment.xml" value="0.5" />
         <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/editqtylayout.xml" value="0.5" />
         <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/fragment_gallery.xml" value="0.3625" />
         <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/fragment_inventory_fragment.xml" value="0.3625" />
+        <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/fragment_item_list.xml" value="0.3625" />
         <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/fragment_load_order_list.xml" value="0.3625" />
         <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/fragment_po_oreceive.xml" value="0.3625" />
         <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/fragment_po_oreceive_list.xml" value="0.3625" />
+        <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/fragment_revert_polist_list.xml" value="0.3625" />
         <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/internalpo_polist_lists.xml" value="0.3625" />
-        <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/internalpomanualproductadd.xml" value="0.33" />
+        <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/internalpomanualproductadd.xml" value="0.25" />
+        <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/manualaddprodctinventorym.xml" value="0.3625" />
         <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/manualproductadddailog.xml" value="0.25" />
         <entry key="..\:/Android App/psm_scan_app/app/src/main/res/layout/verifyeditqtylayout.xml" value="0.25" />
         <entry key="..\:/Android App/psm_scan_app/app/src/main/res/menu/activity_main_drawer.xml" value="0.3625" />

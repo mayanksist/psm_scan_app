@@ -591,17 +591,18 @@ class Internalpodetails : AppCompatActivity() {
         }
 
 
-
+        var SBcheckedIsfree: Int = 0
+        var SBcheckedIsexchange: Int = 0
         if (isexchange!!.isChecked) {
 
-            scheckedIsexchange = 1
-            JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", scheckedIsexchange))
+            SBcheckedIsexchange = 1
+            JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", SBcheckedIsexchange))
         } else {
             JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", 0))
         }
         if (isfreeitem!!.isChecked) {
-            scheckedIsfree = 1
-            JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", scheckedIsfree))
+            SBcheckedIsfree = 1
+            JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", SBcheckedIsfree))
         } else {
             JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", 0))
         }
@@ -634,7 +635,7 @@ class Internalpodetails : AppCompatActivity() {
                         val VerifiedQty = JSONOBJ.getInt("VerifiedQty")
                         val TotalPackedPieces = JSONOBJ.getInt("TotalPackedPieces")
                         for (n in 0..ReceiverpoList.size - 1) {
-                            if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() != 1 && ReceiverpoList[n].getIsexchaNGe() != 1) {
+                            if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() == SBcheckedIsfree && ReceiverpoList[n].getIsexchaNGe() == SBcheckedIsexchange) {
 
                                 if (ReceiverpoList[n].getIs_VerifyQty() != null) {
                                     Detailsadapterpo.notifyItemChanged(n)
@@ -651,43 +652,10 @@ class Internalpodetails : AppCompatActivity() {
                                         VerifiedQty,
                                         UnitAutoid
 
-                                    )
-                                }
-                            } else if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() == 1 && ReceiverpoList[n].getIsexchaNGe() != 1) {
-                                if (ReceiverpoList[n].getIs_VerifyQty() != null) {
-                                    Detailsadapterpo.notifyItemChanged(n)
-                                    ReceiverpoList.removeAt(n)
-                                    DataBindPOLIST(
-                                        ProductId,
-                                        ProductName,
-                                        UnitType,
-                                        PQty,
-                                        TotalPackedPieces,
-                                        POAutoid ,
-                                        scheckedIsfree,
-                                        scheckedIsexchange,
-                                        VerifiedQty,
-                                        UnitAutoid
-                                    )
-                                }
-                            } else if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() != 1 && ReceiverpoList[n].getIsexchaNGe() == 1) {
-                                if (ReceiverpoList[n].getIs_VerifyQty() != null) {
-                                    Detailsadapterpo.notifyItemChanged(n)
-                                    ReceiverpoList.removeAt(n)
-                                    DataBindPOLIST(
-                                        ProductId,
-                                        ProductName,
-                                        UnitType,
-                                        PQty,
-                                        TotalPackedPieces,
-                                        POAutoid,
-                                        scheckedIsfree,
-                                        scheckedIsexchange,
-                                        VerifiedQty,
-                                        UnitAutoid
                                     )
                                 }
                             }
+
                     }
 
                     }
@@ -761,7 +729,7 @@ class Internalpodetails : AppCompatActivity() {
                     }
                     val adapter = ArrayAdapter(this,
                         android.R.layout.simple_dropdown_item_1line, productArray)
-                    autotextView?.showDropDown()
+                   // autotextView?.showDropDown()
                     autotextView?.threshold =3
                     autotextView?.setAdapter(adapter)
                     adapter?.setNotifyOnChange(true)
@@ -849,10 +817,6 @@ class Internalpodetails : AppCompatActivity() {
                                     qty!!.text = defaultqty.toString()
 
                                 }
-
-
-
-
                             }
                         }
                     }
@@ -902,6 +866,7 @@ class Internalpodetails : AppCompatActivity() {
         }
         JSONObj.put("cObj", sproductid?.let { Jsonarrabarcode.put("productId", it.toInt()) })
         JSONObj.put("cObj", spunitypeid?.let { Jsonarrabarcode.put("UnitAutoId", it.toInt()) })
+        scheckedIsexchange=0
         if (ChkIsExchange!!.isChecked) {
 
             scheckedIsexchange = 1
@@ -909,6 +874,7 @@ class Internalpodetails : AppCompatActivity() {
         } else {
             JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", 0))
         }
+        scheckedIsfree=0
         if (ChkIsFree!!.isChecked) {
             scheckedIsfree = 1
             JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", scheckedIsfree))
@@ -946,7 +912,8 @@ class Internalpodetails : AppCompatActivity() {
 
 
                     for (n in 0..ReceiverpoList.size - 1) {
-                        if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() != 1 && ReceiverpoList[n].getIsexchaNGe() != 1) {
+
+                        if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() == scheckedIsfree && ReceiverpoList[n].getIsexchaNGe() == scheckedIsexchange) {
 
                             if (ReceiverpoList[n].getIs_VerifyQty() != null) {
                                 Detailsadapterpo.notifyItemChanged(n)
@@ -963,40 +930,6 @@ class Internalpodetails : AppCompatActivity() {
                                     qty!!.text.toString().toInt(),
                                     UnitTypeid
 
-                                )
-                            }
-                        } else if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() == 1 && ReceiverpoList[n].getIsexchaNGe() != 1) {
-                            if (ReceiverpoList[n].getIs_VerifyQty() != null) {
-                                Detailsadapterpo.notifyItemChanged(n)
-                                ReceiverpoList.removeAt(n)
-                                DataBindPOLIST(
-                                    ProductId,
-                                    ProductName,
-                                    UnitType,
-                                    PQty,
-                                    TotalPackedPieces,
-                                    POAutoid,
-                                    scheckedIsfree,
-                                    scheckedIsexchange,
-                                    qty!!.text.toString().toInt(),
-                                    UnitTypeid
-                                )
-                            }
-                        } else if (ReceiverpoList[n].getPID() == ProductId && ReceiverpoList[n].getISfree() != 1 && ReceiverpoList[n].getIsexchaNGe() == 1) {
-                            if (ReceiverpoList[n].getIs_VerifyQty() != null) {
-                                Detailsadapterpo.notifyItemChanged(n)
-                                ReceiverpoList.removeAt(n)
-                                DataBindPOLIST(
-                                    ProductId,
-                                    ProductName,
-                                    UnitType,
-                                    PQty,
-                                    TotalPackedPieces,
-                                    POAutoid,
-                                    scheckedIsfree,
-                                    scheckedIsexchange,
-                                    qty!!.text.toString().toInt(),
-                                    UnitTypeid
                                 )
                             }
                         }

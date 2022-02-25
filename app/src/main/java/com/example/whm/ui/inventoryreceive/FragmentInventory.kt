@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.Settings
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -31,7 +33,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
     var txtbildate: TextView? = null
     var   Bill_No: TextView? = null
     var edtbillNo: EditText? = null
-    var spvendor: Spinner? = null
+    var spvendor:AutoCompleteTextView? = null
     var spvendorid: String? = null
     var btnNext: Button?=null
     var test:Int?=0
@@ -60,7 +62,31 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
 //        txtbildate!!.requestFocus()
 //        spvendor!!.requestFocus()
         if (AppPreferences.internetConnectionCheck(context)) {
-            bindvenderlist()
+
+
+            spvendor!!.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+                    bindvenderlist()
+                }
+
+                override fun afterTextChanged(s: Editable) {
+                    bindvenderlist()
+                }
+            })
         }
         else {
             CheckInterNetDailog()
@@ -77,11 +103,8 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                         val date = bundle.getString("SELECTED_DATE")
                         txtbildate?.text =  date
                         txtbildate!!.clearFocus()
-                        spvendor!!.requestFocus()
+                      //  spvendor!!.requestFocus()
                         edtbillNo!!.clearFocus()
-
-
-
                     }
 
                 }
@@ -92,12 +115,15 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
         if (AppPreferences.internetConnectionCheck(context)) {
             btnNext?.setOnClickListener {
                 Bill_No = edtbillNo
+                val t=spvendorid
+                var vendorname = spvendor!!.text.toString()
                 val Bill_Date: CharSequence? = txtbildate?.text
                 if (TextUtils.isEmpty(Bill_No?.text.toString())) {
                     EnertBill_No()
                 } else if (TextUtils.isEmpty(Bill_Date.toString())) {
                     EnertBill_Date()
-                } else if (spvendorid.toString()=="null") {
+
+                } else if (vendorname.trim()=="") {
                     Select_Vendor()
                 } else {
                     val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -164,31 +190,35 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                 val responseMessage = resultobj.getString("responseMessage")
                 if (responseCode == "201") {
                     val venderlist: JSONArray = resultobj.getJSONArray("responseData")
-                    val n = venderlist.length()+1
+                    val n = venderlist.length()
                     val spinnerArray = arrayOfNulls<String>(n)
                     val spinnerArrayId = arrayOfNulls<String>(n)
-                    spinnerArray[0] = "Select Vendor"
-                    for (i in 1 until n) {
-                        val BINDLIST = venderlist.getJSONObject(i-1)
+                  //  spinnerArray[0] = "Select Vendor"
+                    for (i in 0 until n) {
+                        val BINDLIST = venderlist.getJSONObject(i)
                         val VID = BINDLIST.getInt("Aid")
                         val VNAME = BINDLIST.getString("VName")
                         spinnerArray[i] = VNAME
                         spinnerArrayId[i] = VID.toString()
                     }
-                    BINVENDERLIST?.adapter = context?.let { ArrayAdapter(it, R.layout.support_simple_spinner_dropdown_item, spinnerArray) } as SpinnerAdapter
-                    BINVENDERLIST?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
-                        override fun onNothingSelected(parent: AdapterView<*>?) {
-
-                        }
-                        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                            spvendorid = spinnerArrayId[position].toString()
-                            var  spunitypename = spinnerArray[position].toString()
-                            btnNext?.requestFocus()
-
-                          //  Toast.makeText(context,spvendorid.toString(),Toast.LENGTH_SHORT).show()
-
-                        }
+                    val adapter = context?.let {
+                        ArrayAdapter(
+                            it,
+                            android.R.layout.simple_dropdown_item_1line, spinnerArray)
                     }
+                    BINVENDERLIST?.threshold =2
+                    //BINVENDERLIST?.showDropDown()
+                    BINVENDERLIST?.setAdapter(adapter)
+                    adapter?.setNotifyOnChange(true)
+                    adapter?.notifyDataSetChanged()
+                    BINVENDERLIST?.onItemClickListener =
+                        AdapterView.OnItemClickListener { _, _, j, _ ->
+                            spvendorid = spinnerArrayId[j].toString()
+                            btnNext?.requestFocus()
+                             // Toast.makeText(context,spvendorid.toString(),Toast.LENGTH_SHORT).show()
+
+
+                        }
                 } else {
 
                     SweetAlertDialog(this.context, SweetAlertDialog.ERROR_TYPE).setContentText(responseMessage).show()
@@ -206,6 +236,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
         )
         queues.add(BINDVENDERLIST)
     }
+
 
     fun CheckBillNo(){
         val Jsonarra = JSONObject()

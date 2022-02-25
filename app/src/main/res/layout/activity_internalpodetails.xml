@@ -96,21 +96,21 @@
 
             <CheckBox
                 android:id="@+id/isexchange"
-                android:layout_width="158dp"
+                android:layout_width="173dp"
                 android:layout_height="match_parent"
-                android:text="Is Exchange"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:onClick="onCheckboxClicked"/>
+                android:onClick="onCheckboxClicked"
+                android:text="Is Exchange" />
 
             <CheckBox
                 android:id="@+id/isfreeitem"
                 android:layout_width="155dp"
+                android:layout_height="match_parent"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:layout_height="match_parent"
-                android:text="Is Free"
-                android:onClick="onCheckboxClicked"/>
+                android:onClick="onCheckboxClicked"
+                android:text="Is Free" />
 
         </LinearLayout>
 

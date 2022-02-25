@@ -705,7 +705,7 @@ class ReceivePO : AppCompatActivity() {
                     }
                     val adapter = ArrayAdapter(this,
                         android.R.layout.simple_dropdown_item_1line, productArray)
-                    autotextView?.showDropDown()
+                  //  autotextView?.showDropDown()
                     autotextView?.threshold = 2
                     autotextView?.setAdapter(adapter)
                     this.adapter?.setNotifyOnChange(true)
