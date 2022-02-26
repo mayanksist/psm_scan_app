@@ -673,7 +673,7 @@ class GalleryFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                BindProductList()
+               // BindProductList()
             }
         })
 
@@ -967,7 +967,7 @@ class GalleryFragment : Fragment() {
                                 R.layout.simple_dropdown_item_1line, productArray
                             )
                         }
-                        autotextView?.showDropDown()
+                      //  autotextView?.showDropDown()
                         autotextView?.threshold = 2
                         autotextView?.setAdapter(adapter)
 

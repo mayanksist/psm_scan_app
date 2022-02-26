@@ -429,7 +429,7 @@ class Internalpodetails : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                BindProductPOList()
+              //  BindProductPOList()
             }
         })
         qty!!.addTextChangedListener(object : TextWatcher {
@@ -753,8 +753,8 @@ class Internalpodetails : AppCompatActivity() {
                         this,
                         android.R.layout.simple_dropdown_item_1line, productArray
                     )
-                    autotextView?.showDropDown()
-                    autotextView?.threshold = 3
+//                    autotextView?.showDropDown()
+                    autotextView?.threshold = 2
                     autotextView?.setAdapter(adapter)
                     adapter?.setNotifyOnChange(true)
                     adapter?.notifyDataSetChanged()

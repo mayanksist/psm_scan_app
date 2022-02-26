@@ -27,11 +27,11 @@ class SlideshowFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mView = inflater.inflate(R.layout.fragment_slideshow, container, false)
-        SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
-            .setTitleText("Are you sure?")
-            .setContentText("You want to logout.")
-            .setConfirmText("Logout")
-            .setConfirmClickListener {
+        var Logoutalert =SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
+        Logoutalert.setTitleText("Are you sure?")
+        Logoutalert.setContentText("You want to logout.")
+        Logoutalert.setConfirmText("Logout")
+        Logoutalert.setConfirmClickListener {
                 val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
                 val editor = preferences.edit()
                 editor.clear()
@@ -40,13 +40,14 @@ class SlideshowFragment : Fragment() {
                 requireActivity().finish()
 
             }
-            .setCancelButton(
+        Logoutalert.setCancelButton(
                 "Cancel"
             ) {
                     sDialog -> sDialog.dismissWithAnimation()
                 this.findNavController().navigate(R.id.nav_home)
             }
-            .show()
+        Logoutalert.setCanceledOnTouchOutside(false)
+        Logoutalert.show()
         return mView
     }
 
