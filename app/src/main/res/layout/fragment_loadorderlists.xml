@@ -9,14 +9,17 @@
     android:name="com.example.whm.ui.load_order_page.LoadOrderListFragment"
     tools:context="com.example.whm.ui.load_order_page.LoadOrderListFragment"
     >
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/load_order"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
-        app:layoutManager="LinearLayoutManager"
 
+        app:layoutManager="LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/fragment_load_order_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
