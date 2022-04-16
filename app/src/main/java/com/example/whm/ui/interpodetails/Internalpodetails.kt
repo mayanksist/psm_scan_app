@@ -28,9 +28,7 @@ import com.example.myapplication.com.example.whm.AppPreferences
 import com.example.myapplication.com.example.whm.ui.home.HomeFragment
 import com.example.myapplication.com.example.whm.ui.interpodetails.Detailsadapter
 import org.json.JSONObject
-import android.widget.CompoundButton
 import com.example.myapplication.com.example.whm.MainActivity2
-import com.example.whm.ui.draftpolist.draftpolistFragment
 import com.example.whm.ui.internalpolist.InternalpoListFragment
 import org.json.JSONArray
 import android.widget.CheckBox
@@ -82,7 +80,7 @@ class Internalpodetails : AppCompatActivity() {
         val preferencesid = PreferenceManager.getDefaultSharedPreferences(this@Internalpodetails)
         val editor = getSharedPreferences("CheckShared", MODE_PRIVATE).edit()
         POAutoid = preferencesid.getInt("POAutoid", 0)
-        addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
+        addbarcode = findViewById(com.example.myapplication.R.id.enterbarcode)
         backarrow = findViewById(com.example.myapplication.R.id.imgbackbtm)
         LinearLayoutV = findViewById(com.example.myapplication.R.id.LinearFragmentContainer)
         if (POAutoid != null && POAutoid != 0) {
@@ -396,7 +394,7 @@ class Internalpodetails : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         val layoutInflater = LayoutInflater.from(this)
         val view = layoutInflater.inflate(R.layout.internalpomanualproductadd, null)
-        val btnpoqty: Button = view.findViewById(R.id.btnsaevpoqty)
+        val btnpoqty: Button = view.findViewById(R.id.btnaddbarcode)
         val btncancel: Button = view.findViewById(R.id.btncancel)
 
         btnpoadd = view.findViewById(R.id.btnpoadd)
@@ -573,7 +571,7 @@ class Internalpodetails : AppCompatActivity() {
     }
 
     fun Scanproductlist() {
-        val barcodeadd: EditText = findViewById(com.example.myapplication.R.id.enterbacode)
+        val barcodeadd: EditText = findViewById(com.example.myapplication.R.id.enterbarcode)
         val draftAutoIdTV: TextView = findViewById(com.example.myapplication.R.id.POAutoId)
         val isexchange: CheckBox = findViewById(com.example.myapplication.R.id.isexchange)
         val isfreeitem: CheckBox = findViewById(com.example.myapplication.R.id.isfreeitem)
@@ -756,6 +754,7 @@ class Internalpodetails : AppCompatActivity() {
 //                    autotextView?.showDropDown()
                     autotextView?.threshold = 2
                     autotextView?.setAdapter(adapter)
+
                     adapter?.setNotifyOnChange(true)
                     adapter?.notifyDataSetChanged()
                     autotextView?.onItemClickListener =
@@ -765,9 +764,8 @@ class Internalpodetails : AppCompatActivity() {
                             btnpoadd?.isEnabled = true
                             btnpoqtyminus?.isEnabled = true
                             BindUnitList()
-
-
                         }
+
                 }
             }, { response ->
 

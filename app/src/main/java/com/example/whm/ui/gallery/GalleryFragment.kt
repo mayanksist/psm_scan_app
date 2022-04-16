@@ -644,13 +644,10 @@ class GalleryFragment : Fragment() {
         }
     }
     fun manualproductadd() {
-
-
-
         val builder = AlertDialog.Builder(context)
         val layoutInflater = LayoutInflater.from(context)
         val view = layoutInflater.inflate(com.example.myapplication.R.layout.manualaddprodctinventorym, null)
-        val btnpoqty: Button = view.findViewById(com.example.myapplication.R.id.btnsaevpoqty)
+        val btnpoqty: Button = view.findViewById(com.example.myapplication.R.id.btnaddbarcode)
         val btncancel: Button = view.findViewById(com.example.myapplication.R.id.btncancel)
         autotextView = view.findViewById<AutoCompleteTextView>(com.example.myapplication.R.id.txtmpid)
         autotextView!!.addTextChangedListener(object : TextWatcher {
@@ -995,9 +992,6 @@ class GalleryFragment : Fragment() {
             dialog?.dismiss()
         }
     }
-
-
-
     fun manualbindproductdetails(sproductid: String) {
 
         val pDialog = SweetAlertDialog(this.context, SweetAlertDialog.PROGRESS_TYPE)

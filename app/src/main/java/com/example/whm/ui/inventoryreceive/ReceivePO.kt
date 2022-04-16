@@ -2,21 +2,18 @@ package com.example.whm.ui.inventoryreceive
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.text.Editable
-import android.text.TextUtils.split
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,7 +31,6 @@ import com.example.myapplication.com.example.whm.ui.inventoryreceive.ReceivePOAd
 import com.example.whm.ui.draftpolist.draftpolistFragment
 import org.json.JSONArray
 import org.json.JSONObject
-import android.content.SharedPreferences
 import android.provider.Settings
 
 
@@ -91,7 +87,7 @@ class ReceivePO : AppCompatActivity() {
         }
         editor.apply()
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        addbarcode = findViewById(com.example.myapplication.R.id.enterbacode)
+        addbarcode = findViewById(com.example.myapplication.R.id.enterbarcode)
         backarrow = findViewById(com.example.myapplication.R.id.imgbackbtm)
         LinearLayoutV = findViewById(com.example.myapplication.R.id.LinearFragmentContainer)
         btnpoadd = findViewById(R.id.btnpoadd)
@@ -207,7 +203,7 @@ class ReceivePO : AppCompatActivity() {
         SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setContentText("Atleast One Item Required").show()
     }
     fun Addproductlist() {
-        val barcodeadd: EditText = findViewById(com.example.myapplication.R.id.enterbacode)
+        val barcodeadd: EditText = findViewById(com.example.myapplication.R.id.enterbarcode)
         val draftAutoIdTV: TextView = findViewById(com.example.myapplication.R.id.draftAutoId)
         val Jsonarra = JSONObject()
         val Jsonarrabarcode = JSONObject()
@@ -440,7 +436,7 @@ class ReceivePO : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         val layoutInflater = LayoutInflater.from(this)
         val view = layoutInflater.inflate(R.layout.manualproductadddailog, null)
-        val btnpoqty: Button = view.findViewById(R.id.btnsaevpoqty)
+        val btnpoqty: Button = view.findViewById(R.id.btnaddbarcode)
         val btncancel: Button = view.findViewById(R.id.btncancel)
         btnpoadd = view.findViewById(R.id.btnpoadd)
         btnpoqtyminus = view.findViewById(R.id.btnpoqtyminus)
@@ -470,7 +466,7 @@ class ReceivePO : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                BindProductList()
+//                BindProductList()
             }
         })
         qty!!.addTextChangedListener(object : TextWatcher {

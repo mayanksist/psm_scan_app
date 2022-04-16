@@ -43,6 +43,7 @@ private var StatusS:Int=2
         })
     val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
     val btnInvCheck = mView.findViewById<Button>(com.example.myapplication.R.id.btnInvCheck)
+    val btnAddBar = mView.findViewById<Button>(com.example.myapplication.R.id.btnAddBar)
     val btnDriLoad = mView.findViewById<Button>(com.example.myapplication.R.id.btnDriLoad)
     val btnUnLoadList = mView.findViewById<Button>(com.example.myapplication.R.id.btnunloadOrderlist)
     val btnOrderList = mView.findViewById<Button>(com.example.myapplication.R.id.btnOrderList)
@@ -56,10 +57,12 @@ private var StatusS:Int=2
         val editor = preferences.edit()
         if (Usertype.toString() != "2"){
         btnInvCheck.visibility=   View.GONE
+            btnAddBar.visibility=   View.GONE
     }
         if (Usertype.toString() == "9") {
 
             btnInvCheck.visibility=   View.VISIBLE
+            btnAddBar.visibility=   View.VISIBLE
             btnDriLoad.visibility=   View.GONE
             btnUnLoadList.visibility=   View.GONE
             btnOrderList.visibility=   View.GONE
@@ -68,6 +71,7 @@ private var StatusS:Int=2
         if (Usertype.toString() == "11") {
          //   btnInvCheck.visibility=   View.VISIBLE
             btnInvCheck.visibility=   View.VISIBLE
+            btnAddBar.visibility=   View.VISIBLE
             btnDriLoad.visibility=   View.GONE
             btnUnLoadList.visibility=   View.GONE
             btnOrderList.visibility=   View.GONE
@@ -83,6 +87,11 @@ private var StatusS:Int=2
 
         this.findNavController().navigate(com.example.myapplication.R.id.nav_product)
     }
+
+        btnAddBar.setOnClickListener {
+
+            this.findNavController().navigate(com.example.myapplication.R.id.nav_addbar)
+        }
 
     btnDriLoad.setOnClickListener {
         this.findNavController().navigate(com.example.myapplication.R.id.nav_productlist)

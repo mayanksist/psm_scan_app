@@ -16,7 +16,7 @@ import java.security.AccessController.getContext
 
 object AppPreferences {
     const  val AppVersion = BuildConfig.VERSION_NAME
-    const val BASEURL = "http://api1.a1whm.com/AndroidAPI/"
+    const val BASEURL = "http://api.a1whm.com/AndroidAPI/"
     const val apiurl = "http://api1.a1whm.com/Packerapi/"
     const val GET_ORDERS = "WDriverOrder.asmx/getOrders"
     const val SUBMIT_LOAD_ORDER = "WDriverOrder.asmx/SubmitLoadOrder"
@@ -43,6 +43,7 @@ object AppPreferences {
     const val INTERNAL_PO_EDIT_VERIFYQTYPO_LIST_PRODUCT = BASEURL+"WinternalPOReceive.asmx/QtyverifyManual"
     const val INTERNAL_PO_Submit = BASEURL+"WinternalPOReceive.asmx/Submitinternalpo"
     const val INTERNAL_PO_ADD_PRODUCT_MANAUL = BASEURL+"WinternalPOReceive.asmx/getInPOproductbyproductid"
+    const val API_ADD_BARCODE = apiurl+"WPackerProductList.asmx/AddBarcode"
     //for devices
 
     var manufacturer = Build.MANUFACTURER

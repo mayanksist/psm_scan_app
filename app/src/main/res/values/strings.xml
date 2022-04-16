@@ -20,8 +20,10 @@
     <string name="OrderList">Load Orders  </string>
     <string name="menu_home" formatted="true">A1 WHM</string>
     <string name="menu_gallery">Inventory Check</string>
+    <string name="AddBar">Add Barcode</string>
     <string name="menuassignorder">Unload Orders</string>
     <string name="menu_slideshow">Logout</string>
+    <string name="info">Info</string>
     <string name="title_activity_scanproduct">scanproduct</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -39,7 +41,8 @@
     <string name="picallboxes">Pick all boxes</string>
     <string name="Api"></string>
     <string name="title_activity_main">MainActivity</string>
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

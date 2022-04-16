@@ -74,7 +74,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/toolbarAction">
 
                 <EditText
-                    android:id="@+id/enterbacode"
+                    android:id="@+id/enterbarcode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
@@ -107,7 +107,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/enterbacode"
+                    app:layout_constraintTop_toBottomOf="@+id/enterbarcode"
                     tools:ignore="UnknownId"
                     tools:listitem="@layout/receivepolist" />
 

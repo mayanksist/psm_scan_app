@@ -60,7 +60,7 @@
             app:layout_constraintTop_toBottomOf="@+id/layoutscan">
 
             <EditText
-                android:id="@+id/enterbacode"
+                android:id="@+id/enterbarcode"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"

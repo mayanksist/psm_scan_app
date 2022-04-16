@@ -49,7 +49,6 @@ class MainActivity2 : AppCompatActivity() {
         val navView: NavigationView = binding.navView
         usertype = EmpTypeNo.toString()
         val nav_Menu: Menu = navView.menu
-
      if(usertype=="5"){
 
          nav_Menu.findItem(com.example.myapplication.R.id.nav_productlist).isVisible = true
@@ -59,21 +58,21 @@ class MainActivity2 : AppCompatActivity() {
 
         if (usertype == "2") {
             nav_Menu.findItem(com.example.myapplication.R.id.nav_product).isVisible = true
+            nav_Menu.findItem(com.example.myapplication.R.id.nav_addbar).isVisible = true
             nav_Menu.findItem(com.example.myapplication.R.id.nav_productlist).isVisible = true
             nav_Menu.findItem(com.example.myapplication.R.id.nav_orderlist).isVisible = true
             nav_Menu.findItem(com.example.myapplication.R.id.nav_assignorder).isVisible = true
 
         }
-        val version: TextView = findViewById(com.example.myapplication.R.id.version)
-        version.text = "version : "+AppPreferences.AppVersion
-
         if (usertype == "9") {
             nav_Menu.findItem(com.example.myapplication.R.id.nav_product).isVisible = true
+            nav_Menu.findItem(com.example.myapplication.R.id.nav_addbar).isVisible = true
 
         }
 
             if (usertype == "11") {
             nav_Menu.findItem(com.example.myapplication.R.id.nav_product).isVisible = true
+            nav_Menu.findItem(com.example.myapplication.R.id.nav_addbar).isVisible = true
             nav_Menu.findItem(com.example.myapplication.R.id.nav_inventory).isVisible = true
             nav_Menu.findItem(com.example.myapplication.R.id.nav_drfatpolist).isVisible = true
             nav_Menu.findItem(com.example.myapplication.R.id.nav_submitpolist).isVisible = true
@@ -93,6 +92,7 @@ class MainActivity2 : AppCompatActivity() {
                 com.example.myapplication.R.id.nav_home,
                 com.example.myapplication.R.id.nav_slideshow,
                 com.example.myapplication.R.id.nav_product,
+                com.example.myapplication.R.id.nav_addbar,
                 com.example.myapplication.R.id.nav_productlist,
                 com.example.myapplication.R.id.nav_assignorder,
                 com.example.myapplication.R.id.nav_orderlist,
@@ -101,7 +101,8 @@ class MainActivity2 : AppCompatActivity() {
                 com.example.myapplication.R.id.nav_drfatpolist,
                 com.example.myapplication.R.id.nav_submitpolist,
                 com.example.myapplication.R.id.nav_revertpolist,
-                com.example.myapplication.R.id.nav_internalpos
+                com.example.myapplication.R.id.nav_internalpos,
+                com.example.myapplication.R.id.nav_info
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

@@ -114,7 +114,7 @@
                 app:layout_constraintVertical_bias="1.0" />
 
             <Button
-                android:id="@+id/btnsaevpoqty"
+                android:id="@+id/btnaddbarcode"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_alignParentStart="true"

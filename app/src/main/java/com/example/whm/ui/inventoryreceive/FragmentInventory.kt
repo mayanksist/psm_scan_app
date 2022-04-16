@@ -31,7 +31,7 @@ import com.example.myapplication.com.example.whm.ui.home.HomeFragment
 class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
     lateinit var mView: View
     var txtbildate: TextView? = null
-    var   Bill_No: TextView? = null
+    var Bill_No: TextView? = null
     var edtbillNo: EditText? = null
     var spvendor:AutoCompleteTextView? = null
     var spvendorid: String? = null
@@ -84,7 +84,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
                 }
 
                 override fun afterTextChanged(s: Editable) {
-                    bindvenderlist()
+//                    bindvenderlist()
                 }
             })
         }

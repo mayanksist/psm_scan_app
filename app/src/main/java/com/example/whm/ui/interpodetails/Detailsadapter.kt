@@ -157,7 +157,7 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         val txisExchangeverify: TextView = view.findViewById(com.example.myapplication.R.id.txisExchangeverify)
         val txthidenunitautoid: TextView = view.findViewById(com.example.myapplication.R.id.txthidenunitautoid)
         editpoqty = view.findViewById(com.example.myapplication.R.id.txteditpoqty)
-        val btnpoqty: Button = view.findViewById(com.example.myapplication.R.id.btnsaevpoqty)
+        val btnpoqty: Button = view.findViewById(com.example.myapplication.R.id.btnaddbarcode)
         val btncancel: Button = view.findViewById(com.example.myapplication.R.id.btncancel)
         val plus = view.findViewById<ImageView>(com.example.myapplication.R.id.increase)
         val minusbtn = view.findViewById<ImageView>(com.example.myapplication.R.id.decrease)

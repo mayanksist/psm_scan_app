@@ -12,7 +12,12 @@
             android:id="@+id/nav_product"
             android:visible="false"
             android:icon="@drawable/ic_product_adf_scanner_24"
-            android:title="Inventory Check" />
+            android:title="@string/menu_gallery" />
+        <item
+            android:id="@+id/nav_addbar"
+            android:visible="false"
+            android:icon="@drawable/ic_baseline_qr_code_scanner_24"
+            android:title="@string/AddBar" />
         <item
             android:id="@+id/nav_inventory"
             android:icon="@drawable/unloadorders"
@@ -65,6 +70,10 @@
             android:icon="@drawable/poinpo"
             android:visible="false"
             android:title="@string/btninternlpilist" />
+        <item
+            android:id="@+id/nav_info"
+            android:icon="@drawable/ic_baseline_info_24"
+            android:title="@string/info" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_logout"

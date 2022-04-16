@@ -274,7 +274,7 @@ class ReceivePOAdapter1(
         val PIPID: TextView = view.findViewById(com.example.myapplication.R.id.txtpid)
         val PInStockType: TextView = view.findViewById(com.example.myapplication.R.id.PInStockType)
         editpoqty = view.findViewById(com.example.myapplication.R.id.txteditpoqty)
-        val btnpoqty: Button = view.findViewById(com.example.myapplication.R.id.btnsaevpoqty)
+        val btnpoqty: Button = view.findViewById(com.example.myapplication.R.id.btnaddbarcode)
         val btncancel: Button = view.findViewById(com.example.myapplication.R.id.btncancel)
         val plus = view.findViewById<ImageView>(com.example.myapplication.R.id.increase)
         val minusbtn = view.findViewById<ImageView>(com.example.myapplication.R.id.decrease)

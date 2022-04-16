@@ -54,12 +54,7 @@ internal class Internalpoadapter(private var internalpoListViewModel: List<Inter
             val sharedLoadOrderPage = sharedLoadOrderPreferences.edit()
             sharedLoadOrderPage.putInt("POAutoid", holder.POAutoid)
             sharedLoadOrderPage.apply()
-
-
         })
-
-
-
     }
 
     override fun getItemCount(): Int {

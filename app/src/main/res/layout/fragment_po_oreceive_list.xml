@@ -33,7 +33,7 @@ tools:context="com.example.whm.ui.inventoryreceive.POreceiveFragment"
     app:title="PO Receive" />
 
 <EditText
-    android:id="@+id/enterbacode"
+    android:id="@+id/enterbarcode"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
@@ -72,7 +72,7 @@ tools:context="com.example.whm.ui.inventoryreceive.POreceiveFragment"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/enterbacode"
+    app:layout_constraintTop_toBottomOf="@+id/enterbarcode"
     app:layout_constraintVertical_bias="0.0"
     tools:ignore="UnknownId"
     tools:listitem="@layout/fragment_po_oreceive" />
