@@ -114,7 +114,7 @@ class picallboxesFragment : Fragment() {
             JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
             JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
             JSONObj.put("requestContainer", Jsonarra.put("deviceID",
-                Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
+                Settings.Secure.getString(context?.contentResolver, Settings.Secure.ANDROID_ID)))
             JSONObj.put("OrderNo", OrderNO)
             val alertsuborder = AlertDialog.Builder(activity)
             val resordernos = JsonObjectRequest(

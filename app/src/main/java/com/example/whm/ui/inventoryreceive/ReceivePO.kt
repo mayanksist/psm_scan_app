@@ -211,7 +211,7 @@ class ReceivePO : AppCompatActivity() {
         val queues = Volley.newRequestQueue(this)
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)))
         var accessToken = preferences.getString("accessToken", "")
         var Bill_No = preferences.getString("Bill_No", "")
         var Bill_Date = preferences.getString("Bill_Date", "")
@@ -350,7 +350,7 @@ class ReceivePO : AppCompatActivity() {
             Jsonarra.put("accessToken", accessToken)
         )
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)))
         JSONObj.put(
             "requestContainer",
             Jsonarra.put("UserAutoId", EmpAutoId)
@@ -590,7 +590,7 @@ class ReceivePO : AppCompatActivity() {
         val JSONObj = JSONObject()
         val queues = Volley.newRequestQueue(this)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID",Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID",Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)))
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         var accessToken = preferences.getString("accessToken", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")
@@ -677,7 +677,7 @@ class ReceivePO : AppCompatActivity() {
         var EmpAutoId = preferences.getString("EmpAutoId", "")
         JSONObj.put("requestContainer",Jsonarra.put("accessToken", accessToken))
         JSONObj.put("requestContainer",Jsonarra.put("UserAutoId", EmpAutoId))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)))
         JSONObj.put("cObj", Jsonarraplist.put("search", autotextView!!.text))
         val BINDPRODUCTLISTm = JsonObjectRequest(
             Request.Method.POST, AppPreferences.BIND_PRODUCT_IDNAME_BY_SEARCH, JSONObj,
@@ -739,7 +739,7 @@ class ReceivePO : AppCompatActivity() {
         val queues = Volley.newRequestQueue(this)
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)))
         var accessToken = preferences.getString("accessToken", "")
         var Bill_No = preferences.getString("Bill_No", "")
         var Bill_Date = preferences.getString("Bill_Date", "")
@@ -853,7 +853,7 @@ class ReceivePO : AppCompatActivity() {
         val queues = Volley.newRequestQueue(this)
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)))
         var accessToken = preferences.getString("accessToken", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")
         JSONObj.put("requestContainer",

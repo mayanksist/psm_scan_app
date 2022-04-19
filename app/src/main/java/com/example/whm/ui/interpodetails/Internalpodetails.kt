@@ -52,8 +52,8 @@ class Internalpodetails : AppCompatActivity() {
     var tqty: Int = 0
     var PoQuantity: Int = 0
     var qtyperunit: Int = 0
-    public final var ChkIsFree: CheckBox? = null
-    public final var ChkIsExchange: CheckBox? = null
+    var ChkIsFree: CheckBox? = null
+    var ChkIsExchange: CheckBox? = null
     var Quantity: Int = 0
     var totalpices: Int = 0
     var spunitypeid: String? = null
@@ -208,7 +208,7 @@ class Internalpodetails : AppCompatActivity() {
             "requestContainer",
             Jsonarra.put(
                 "deviceID",
-                Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)
+                Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
             )
         )
         var accessToken = preferences.getString("accessToken", "")
@@ -351,8 +351,8 @@ class Internalpodetails : AppCompatActivity() {
         if (view is CheckBox) {
 
             val checked: Boolean = view.isChecked
-            val isexchange = findViewById<CheckBox>(R.id.isexchange);
-            val isfreeitem = findViewById<CheckBox>(R.id.isfreeitem);
+            val isexchange = findViewById<CheckBox>(R.id.isexchange)
+            val isfreeitem = findViewById<CheckBox>(R.id.isfreeitem)
 
             when (view.id) {
                 R.id.isexchange -> {
@@ -586,7 +586,7 @@ class Internalpodetails : AppCompatActivity() {
             "requestContainer",
             Jsonarra.put(
                 "deviceID",
-                Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)
+                Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
             )
         )
         var accessToken = preferences.getString("accessToken", "")
@@ -613,15 +613,15 @@ class Internalpodetails : AppCompatActivity() {
 
         scheckedIsexchange = 0
         scheckedIsfree = 0
-        if (isexchange!!.isChecked) {
-            isfreeitem.setChecked(false)
+        if (isexchange.isChecked) {
+            isfreeitem.isChecked = false
             scheckedIsexchange = 1
             JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", scheckedIsexchange))
         } else {
             JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", 0))
         }
-        if (isfreeitem!!.isChecked) {
-            isexchange.setChecked(false)
+        if (isfreeitem.isChecked) {
+            isexchange.isChecked = false
             scheckedIsfree = 1
             JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", scheckedIsfree))
         } else {
@@ -717,7 +717,7 @@ class Internalpodetails : AppCompatActivity() {
             "requestContainer",
             Jsonarra.put(
                 "deviceID",
-                Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)
+                Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
             )
         )
         JSONObj.put("cObj", Jsonarraplist.put("search", autotextView!!.text))
@@ -755,8 +755,8 @@ class Internalpodetails : AppCompatActivity() {
                     autotextView?.threshold = 2
                     autotextView?.setAdapter(adapter)
 
-                    adapter?.setNotifyOnChange(true)
-                    adapter?.notifyDataSetChanged()
+                    adapter.setNotifyOnChange(true)
+                    adapter.notifyDataSetChanged()
                     autotextView?.onItemClickListener =
                         AdapterView.OnItemClickListener { _, _, j, _ ->
                             sproductid = productArrayId[j].toString()
@@ -790,7 +790,7 @@ class Internalpodetails : AppCompatActivity() {
             "requestContainer",
             Jsonarra.put(
                 "deviceID",
-                Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)
+                Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
             )
         )
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -892,7 +892,7 @@ class Internalpodetails : AppCompatActivity() {
             "requestContainer",
             Jsonarra.put(
                 "deviceID",
-                Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)
+                Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
             )
         )
         var accessToken = preferences.getString("accessToken", "")
@@ -915,7 +915,7 @@ class Internalpodetails : AppCompatActivity() {
         JSONObj.put("cObj", spunitypeid?.let { Jsonarrabarcode.put("UnitAutoId", it.toInt()) })
         scheckedIsexchange = 0
         if (ChkIsExchange!!.isChecked) {
-            ChkIsExchange!!.setChecked(false)
+            ChkIsExchange!!.isChecked = false
             scheckedIsexchange = 1
             JSONObj.put("cObj", Jsonarrabarcode.put("IsExchange", scheckedIsexchange))
         } else {
@@ -924,7 +924,7 @@ class Internalpodetails : AppCompatActivity() {
         scheckedIsfree = 0
         if (ChkIsFree!!.isChecked) {
             scheckedIsfree = 1
-            ChkIsFree!!.setChecked(false)
+            ChkIsFree!!.isChecked = false
             JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", scheckedIsfree))
         } else {
             JSONObj.put("cObj", Jsonarrabarcode.put("IsFree", 0))
@@ -1022,7 +1022,7 @@ class Internalpodetails : AppCompatActivity() {
             "requestContainer",
             Jsonarra.put(
                 "deviceID",
-                Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)
+                Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
             )
         )
         JSONObj.put(

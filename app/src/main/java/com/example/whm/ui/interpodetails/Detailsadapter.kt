@@ -297,7 +297,7 @@ class Detailsadapter(var ReceiveModelList: ArrayList<DetailsItemsViewModel>, var
         var EmpAutoId = preferences.getString("EmpAutoId", "")
         JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(activity?.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(activity?.contentResolver, Settings.Secure.ANDROID_ID)))
         JSONObj.put("requestContainer", Jsonarra.put("UserAutoId", EmpAutoId))
         var POAutoidE = preferences.getInt("POAutoId", 0)
         if (POAutoidE != null && POAutoidE != 0) {

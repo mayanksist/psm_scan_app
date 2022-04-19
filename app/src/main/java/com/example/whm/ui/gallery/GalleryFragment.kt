@@ -265,7 +265,7 @@ class GalleryFragment : Fragment() {
         editlayout?.visibility = View.GONE
         details.put("barcode", barcoded)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(context?.contentResolver, Settings.Secure.ANDROID_ID)))
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var accessToken = preferences.getString("accessToken", "")
         var EmpTypeNo = preferences.getString("EmpTypeNo", "")
@@ -438,7 +438,8 @@ class GalleryFragment : Fragment() {
                             "requestContainer",
                             Jsonarra.put("appVersion", AppPreferences.AppVersion)
                         )
-                        JSONObjs.put("requestContainer",Jsonarra.put("deviceID",Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
+                        JSONObjs.put("requestContainer",Jsonarra.put("deviceID",Settings.Secure.getString(
+                            context?.contentResolver, Settings.Secure.ANDROID_ID)))
                         val preferencesaccess =
                             PreferenceManager.getDefaultSharedPreferences(context)
                         var accessTokenS = preferencesaccess.getString("accessToken", "")
@@ -787,7 +788,7 @@ class GalleryFragment : Fragment() {
             val JSONObj = JSONObject()
             val queues = Volley.newRequestQueue(this.context)
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-            JSONObj.put("requestContainer",Jsonarra.put("deviceID",Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
+            JSONObj.put("requestContainer",Jsonarra.put("deviceID",Settings.Secure.getString(context?.contentResolver, Settings.Secure.ANDROID_ID)))
             val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
             var accessToken = preferences.getString("accessToken", "")
             var empautoid = preferences.getString("EmpAutoId", "")
@@ -879,7 +880,7 @@ class GalleryFragment : Fragment() {
     }
     fun RemarkMessage() {
         var Remarkalert=   SweetAlertDialog(this.context,SweetAlertDialog.ERROR_TYPE)
-        Remarkalert?.contentText = "Remark length should be 10 character"
+        Remarkalert.contentText = "Remark length should be 10 character"
         Remarkalert.setCanceledOnTouchOutside(false)
         Remarkalert.show()
 
@@ -932,7 +933,7 @@ class GalleryFragment : Fragment() {
                 Jsonarra.put(
                     "deviceID",
                     Settings.Secure.getString(
-                        getContext()?.getContentResolver(),
+                        context?.contentResolver,
                         Settings.Secure.ANDROID_ID
                     )
                 )
@@ -1019,7 +1020,7 @@ class GalleryFragment : Fragment() {
         editlayout?.visibility = View.GONE
 
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(context?.contentResolver, Settings.Secure.ANDROID_ID)))
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var accessToken = preferences.getString("accessToken", "")
 

@@ -168,7 +168,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
         val queues = Volley.newRequestQueue(this.context)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
         JSONObj.put("requestContainer",Jsonarra.put("deviceID",
-            Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
+            Settings.Secure.getString(context?.contentResolver, Settings.Secure.ANDROID_ID)))
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var accessToken = preferences.getString("accessToken", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")
@@ -244,7 +244,7 @@ class FragmentInventory  : Fragment(R.layout.fragment_inventory_fragment){
         val JSONObj = JSONObject()
         val queues = Volley.newRequestQueue(this.context)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID",Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID",Settings.Secure.getString(context?.contentResolver, Settings.Secure.ANDROID_ID)))
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         var accessToken = preferences.getString("accessToken", "")
         var EmpAutoId = preferences.getString("EmpAutoId", "")

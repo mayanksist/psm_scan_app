@@ -28,9 +28,9 @@ class SlideshowFragment : Fragment() {
     ): View? {
         mView = inflater.inflate(R.layout.fragment_slideshow, container, false)
         var Logoutalert =SweetAlertDialog(this.context, SweetAlertDialog.WARNING_TYPE)
-        Logoutalert.setTitleText("Are you sure?")
-        Logoutalert.setContentText("You want to logout.")
-        Logoutalert.setConfirmText("Logout")
+        Logoutalert.titleText = "Are you sure?"
+        Logoutalert.contentText = "You want to logout."
+        Logoutalert.confirmText = "Logout"
         Logoutalert.setConfirmClickListener {
                 val preferences = PreferenceManager.getDefaultSharedPreferences(this.context)
                 val editor = preferences.edit()

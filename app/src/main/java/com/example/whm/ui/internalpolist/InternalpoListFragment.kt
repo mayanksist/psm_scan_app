@@ -71,7 +71,8 @@ class InternalpoListFragment : Fragment() {
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
             JSONObj.put("requestContainer", Jsonarra.put("userAutoId", empautoid))
             JSONObj.put("requestContainer", Jsonarra.put("accessToken", accessToken))
-            JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(getContext()?.getContentResolver(), Settings.Secure.ANDROID_ID)))
+            JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(
+                context?.contentResolver, Settings.Secure.ANDROID_ID)))
             JSONObj.put("cObj", Jsonarrapolist.put("Status", StatusPO))
             val internalpolist = JsonObjectRequest(
                 Request.Method.POST, AppPreferences.InternalPOLIST,

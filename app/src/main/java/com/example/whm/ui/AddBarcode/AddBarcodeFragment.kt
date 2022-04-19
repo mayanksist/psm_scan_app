@@ -56,7 +56,6 @@ class AddBarcodeFragment : Fragment() {
                 count: Int,
                 after: Int
             ) {
-
             }
 
             override fun onTextChanged(
@@ -75,9 +74,8 @@ class AddBarcodeFragment : Fragment() {
         btnSaveBarcode.setOnClickListener(View.OnClickListener {
             var name: String? = null
             name = spUnitType!!.selectedItem as String?
-            var productname = autotextView!!.text.toString()
-            var a = addbarcode!!.text.toString()
-            if (spUnitType!!.selectedItem != null && addbarcode!!.text.toString() != "" && productname != "") {
+            var productname = autotextView!!.text.toString().trim()
+            if (spUnitType!!.selectedItem != null && addbarcode!!.text.toString().trim() != "" && productname != "") {
                 APIAddBarcode()
             } else {
                 if (productname == "") {
@@ -109,7 +107,7 @@ class AddBarcodeFragment : Fragment() {
             Jsonarra.put(
                 "deviceID",
                 Settings.Secure.getString(
-                    getContext()?.getContentResolver(),
+                    context?.contentResolver,
                     Settings.Secure.ANDROID_ID
                 )
             )
@@ -175,7 +173,7 @@ class AddBarcodeFragment : Fragment() {
             Jsonarra.put(
                 "deviceID",
                 Settings.Secure.getString(
-                    getContext()?.getContentResolver(),
+                    context?.contentResolver,
                     Settings.Secure.ANDROID_ID
                 )
             )
@@ -271,7 +269,7 @@ class AddBarcodeFragment : Fragment() {
             Jsonarra.put(
                 "deviceID",
                 Settings.Secure.getString(
-                    getContext()?.getContentResolver(),
+                    context?.contentResolver,
                     Settings.Secure.ANDROID_ID
                 )
             )
@@ -286,7 +284,7 @@ class AddBarcodeFragment : Fragment() {
         )
         JSONObj.put("pObj", Jsonarrabarcode.put("productId", sproductid))
         JSONObj.put("pObj", Jsonarrabarcode.put("UnitAutoId", spunitypeid))
-        JSONObj.put("pObj", Jsonarrabarcode.put("barcode", addbarcode!!.text.toString()))
+        JSONObj.put("pObj", Jsonarrabarcode.put("barcode", addbarcode!!.text.toString().trim()))
         val BARCODEADDPRODUCT = JsonObjectRequest(
             Request.Method.POST, AppPreferences.API_ADD_BARCODE, JSONObj,
             { response ->
@@ -341,7 +339,7 @@ class AddBarcodeFragment : Fragment() {
         SweetAlertDialog(
             this.context,
             SweetAlertDialog.ERROR_TYPE
-        ).setContentText("Please scan barcode").show()
+        ).setContentText("Please enter barcode").show()
     }
 
     fun Select_product() {
@@ -350,6 +348,4 @@ class AddBarcodeFragment : Fragment() {
             SweetAlertDialog.ERROR_TYPE
         ).setContentText("Select Product ").show()
     }
-
-
 }

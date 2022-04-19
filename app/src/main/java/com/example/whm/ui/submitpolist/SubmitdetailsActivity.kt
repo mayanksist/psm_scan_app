@@ -84,7 +84,7 @@ class SubmitdetailsActivity : AppCompatActivity() {
         val queues = Volley.newRequestQueue(this)
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         JSONObj.put("requestContainer", Jsonarra.put("appVersion", AppPreferences.AppVersion))
-        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+        JSONObj.put("requestContainer",Jsonarra.put("deviceID", Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)))
         var accessToken = preferences.getString("accessToken", "")
 
         var EmpAutoId = preferences.getString("EmpAutoId", "")
@@ -179,7 +179,7 @@ class SubmitdetailsActivity : AppCompatActivity() {
                         if(ReceiverpoList.size!=0) {
                             toolbar = findViewById(R.id.toolbarAction)
                             setSupportActionBar(toolbar)
-                            supportActionBar?.setTitle("Pending PO ("+ReceiverpoList.size+")")
+                            supportActionBar?.title = "Pending PO ("+ReceiverpoList.size+")"
                         }
                     }
                 } else {

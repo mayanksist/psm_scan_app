@@ -59,7 +59,7 @@ class SplashScreen : AppCompatActivity() {
             JSONObj.put("userName", email)
             JSONObj.put("requestContainer", Jsonarra.put("appVersion", appversion))
             JSONObj.put("requestContainer",Jsonarra.put("deviceID",
-                Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)))
+                Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)))
 
             val req = JsonObjectRequest(Request.Method.POST, APIURL, JSONObj,
                 Response.Listener { response ->
