@@ -17,8 +17,10 @@ import com.google.android.material.navigation.NavigationView
 import android.view.MenuItem
 import android.widget.Toast
 import android.R
+import android.content.Context
 import android.content.Intent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
@@ -122,6 +124,14 @@ class MainActivity2 : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
+
+        val view: View? = this.currentFocus
+        if (view != null) {
+            val imm: InputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0)
+        }
+
             val navController = findNavController(com.example.myapplication.R.id.nav_host_fragment_content_main)
             return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
